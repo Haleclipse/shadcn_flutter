@@ -822,6 +822,11 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   final SelectValueSelectionPredicate<T>? valueSelectionPredicate;
   @override
   final Predicate<T>? showValuePredicate;
+  
+  /// Custom trailing widget to replace the default dropdown icon.
+  /// If null, the default chevron icon will be shown.
+  /// Use SizedBox.shrink() to hide the trailing widget entirely.
+  final Widget? trailing;
 
   const Select({
     super.key,
@@ -844,6 +849,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
     this.valueSelectionHandler,
     this.valueSelectionPredicate,
     this.showValuePredicate,
+    this.trailing,
     required this.popup,
     required this.itemBuilder,
   });
@@ -1105,14 +1111,19 @@ class SelectState<T> extends State<Select<T>>
                           : _placeholder,
                     ),
                   ),
-                  SizedBox(width: 8 * scaling),
-                  IconTheme.merge(
-                    data: IconThemeData(
-                      color: theme.colorScheme.foreground,
-                      opacity: 0.5,
+                  if (widget.trailing != null) ...[
+                    SizedBox(width: 8 * scaling),
+                    widget.trailing!,
+                  ] else ...[
+                    SizedBox(width: 8 * scaling),
+                    IconTheme.merge(
+                      data: IconThemeData(
+                        color: theme.colorScheme.foreground,
+                        opacity: 0.5,
+                      ),
+                      child: const Icon(LucideIcons.chevronsUpDown).iconSmall(),
                     ),
-                    child: const Icon(LucideIcons.chevronsUpDown).iconSmall(),
-                  ),
+                  ],
                 ],
               ),
             ),
