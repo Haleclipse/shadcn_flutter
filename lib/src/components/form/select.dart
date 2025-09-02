@@ -540,6 +540,11 @@ class SelectItemButton<T> extends StatelessWidget {
   final Widget child;
   final AbstractButtonStyle style;
   final bool? enabled;
+  
+  /// Custom widget to show when item is selected.
+  /// If null, the default check icon will be shown.
+  /// Use SizedBox.shrink() to hide the selected icon entirely.
+  final Widget? selectedIcon;
 
   const SelectItemButton({
     super.key,
@@ -547,6 +552,7 @@ class SelectItemButton<T> extends StatelessWidget {
     required this.child,
     this.enabled,
     this.style = const ButtonStyle.ghost(),
+    this.selectedIcon,
   });
 
   @override
@@ -587,7 +593,7 @@ class SelectItemButton<T> extends StatelessWidget {
               },
             ),
             trailing: isSelected
-                ? const Icon(LucideIcons.check).iconSmall()
+                ? (selectedIcon ?? const Icon(LucideIcons.check).iconSmall())
                 : hasSelection
                     ? SizedBox(width: 16 * scaling)
                     : null,
