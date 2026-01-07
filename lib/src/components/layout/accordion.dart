@@ -56,7 +56,7 @@ class Accordion extends StatefulWidget {
   /// Creates an [Accordion] widget with the specified items.
   ///
   /// Parameters:
-  /// - [items] (List<Widget>, required): List of [AccordionItem] widgets to display.
+  /// - [items] (`List<Widget>`, required): List of [AccordionItem] widgets to display.
   ///
   /// The accordion automatically handles:
   /// - State management for mutual exclusion of expanded items
@@ -85,6 +85,10 @@ class Accordion extends StatefulWidget {
   AccordionState createState() => AccordionState();
 }
 
+/// State class for [Accordion] widget.
+///
+/// Manages the expansion state of accordion items, ensuring only one
+/// item can be expanded at a time in single-expansion mode.
 class AccordionState extends State<Accordion> {
   final ValueNotifier<_AccordionItemState?> _expanded = ValueNotifier(null);
 
@@ -134,7 +138,7 @@ class AccordionState extends State<Accordion> {
 ///   child: MyAccordionWidget(),
 /// );
 /// ```
-class AccordionTheme {
+class AccordionTheme extends ComponentThemeData {
   /// Duration of the expand/collapse animation.
   ///
   /// Controls how long it takes for accordion items to animate between
@@ -421,6 +425,13 @@ class _AccordionItemState extends State<AccordionItem>
       _theme = theme;
       _updateAnimations();
     }
+
+    if (accordion != null &&
+        accordion!._expanded.value == null &&
+        widget.expanded) {
+      accordion!._expanded.value = this;
+    }
+    _onExpandedChanged();
   }
 
   @override
@@ -431,13 +442,16 @@ class _AccordionItemState extends State<AccordionItem>
   }
 
   void _onExpandedChanged() {
-    if (_expanded.value != (accordion?._expanded.value == this)) {
-      _expanded.value = !_expanded.value;
-      if (_expanded.value) {
-        _expand();
-      } else {
-        _collapse();
-      }
+    final shouldBeExpanded = accordion?._expanded.value == this;
+    if (_expanded.value != shouldBeExpanded) {
+      setState(() {
+        _expanded.value = shouldBeExpanded;
+        if (shouldBeExpanded) {
+          _expand();
+        } else {
+          _collapse();
+        }
+      });
     }
   }
 
@@ -471,6 +485,7 @@ class _AccordionItemState extends State<AccordionItem>
           children: [
             widget.trigger,
             SizeTransition(
+              key: const ValueKey('accordion_size_transition'),
               sizeFactor: _easeInAnimation,
               axisAlignment: -1,
               child: Padding(

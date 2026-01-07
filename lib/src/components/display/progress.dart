@@ -8,7 +8,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 ///
 /// The theme integrates seamlessly with the design system by leveraging
 /// theme scaling factors and color schemes for consistent visual presentation.
-class ProgressTheme {
+class ProgressTheme extends ComponentThemeData {
   /// The foreground color of the progress indicator.
   ///
   /// Type: `Color?`. If null, uses the default progress color from theme.
@@ -176,7 +176,7 @@ class Progress extends StatelessWidget {
   /// Parameters:
   /// - [progress] (double?, optional): Current progress value or null for indeterminate
   /// - [min] (double, default: 0.0): Minimum progress value
-  /// - [max] (double, default: 1.0): Maximum progress value  
+  /// - [max] (double, default: 1.0): Maximum progress value
   /// - [disableAnimation] (bool, default: false): Whether to disable smooth transitions
   /// - [color] (Color?, optional): Progress fill color override
   /// - [backgroundColor] (Color?, optional): Progress track color override

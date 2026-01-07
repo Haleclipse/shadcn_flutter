@@ -9,7 +9,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// [Scaffold] widgets, including background colors for different sections,
 /// loading spark behavior, and keyboard avoidance settings. These properties
 /// can be set at the theme level to provide consistent styling across the application.
-class ScaffoldTheme {
+class ScaffoldTheme extends ComponentThemeData {
   /// Background color of the scaffold body.
   final Color? backgroundColor;
 
@@ -25,6 +25,7 @@ class ScaffoldTheme {
   /// Whether the scaffold should resize for the onscreen keyboard.
   final bool? resizeToAvoidBottomInset;
 
+  /// Creates a [ScaffoldTheme].
   const ScaffoldTheme({
     this.backgroundColor,
     this.headerBackgroundColor,
@@ -33,6 +34,7 @@ class ScaffoldTheme {
     this.resizeToAvoidBottomInset,
   });
 
+  /// Creates a copy of this theme with the given fields replaced.
   ScaffoldTheme copyWith({
     ValueGetter<Color?>? backgroundColor,
     ValueGetter<Color?>? headerBackgroundColor,
@@ -68,8 +70,13 @@ class ScaffoldTheme {
       other.resizeToAvoidBottomInset == resizeToAvoidBottomInset;
 
   @override
-  int get hashCode => Object.hash(backgroundColor, headerBackgroundColor,
-      footerBackgroundColor, showLoadingSparks, resizeToAvoidBottomInset);
+  int get hashCode => Object.hash(
+        backgroundColor,
+        headerBackgroundColor,
+        footerBackgroundColor,
+        showLoadingSparks,
+        resizeToAvoidBottomInset,
+      );
 
   @override
   String toString() =>
@@ -130,20 +137,43 @@ class ScaffoldTheme {
 /// );
 /// ```
 class Scaffold extends StatefulWidget {
+  /// Header widgets displayed at the top of the scaffold.
   final List<Widget> headers;
+
+  /// Footer widgets displayed at the bottom of the scaffold.
   final List<Widget> footers;
+
+  /// Main content widget.
   final Widget child;
+
+  /// Loading progress value (0.0 to 1.0).
   final double? loadingProgress;
+
+  /// Whether loading indicator shows indeterminate progress.
   final bool loadingProgressIndeterminate;
-  final bool
-      floatingHeader; // when header floats, it takes no space in the layout, and positioned on top of the content
+
+  /// Whether header floats above content (takes no layout space).
+  final bool floatingHeader;
+
+  /// Whether footer floats above content (takes no layout space).
   final bool floatingFooter;
+
+  /// Background color for header section.
   final Color? headerBackgroundColor;
+
+  /// Background color for footer section.
   final Color? footerBackgroundColor;
+
+  /// Background color for the scaffold.
   final Color? backgroundColor;
+
+  /// Whether to show loading sparks effect.
   final bool? showLoadingSparks;
+
+  /// Whether to resize when keyboard appears.
   final bool? resizeToAvoidBottomInset;
 
+  /// Creates a [Scaffold].
   const Scaffold({
     super.key,
     required this.child,
@@ -164,11 +194,21 @@ class Scaffold extends StatefulWidget {
   State<Scaffold> createState() => ScaffoldState();
 }
 
+/// Data class for identifying scaffold bar (header/footer) positioning.
+///
+/// Provides context about a bar's position within the scaffold layout,
+/// including whether it's a header or footer and its index among siblings.
 class ScaffoldBarData {
+  /// Whether this bar is in the header section (vs footer).
   final bool isHeader;
+
+  /// Zero-based index of this child bar.
   final int childIndex;
+
+  /// Total number of children in this section.
   final int childrenCount;
 
+  /// Creates [ScaffoldBarData].
   const ScaffoldBarData({
     this.isHeader = true,
     required this.childIndex,
@@ -176,7 +216,17 @@ class ScaffoldBarData {
   });
 }
 
+/// State class for [Scaffold] widget.
+///
+/// Manages the scaffold's layout state and provides methods for building
+/// header, footer, and body sections with proper theming and constraints.
 class ScaffoldState extends State<Scaffold> {
+  /// Builds the header section of the scaffold.
+  ///
+  /// Parameters:
+  /// - [context] (`BuildContext`, required): Build context.
+  ///
+  /// Returns: Widget tree for the header.
   Widget buildHeader(BuildContext context) {
     final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
     return RepaintBoundary(
@@ -213,17 +263,18 @@ class ScaffoldState extends State<Scaffold> {
                     ),
                   ),
                 Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      for (var i = 0; i < widget.headers.length; i++)
-                        Data.inherit(
-                          data: ScaffoldBarData(
-                            childIndex: i,
-                            childrenCount: widget.headers.length,
-                          ),
-                          child: widget.headers[i],
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var i = 0; i < widget.headers.length; i++)
+                      Data.inherit(
+                        data: ScaffoldBarData(
+                          childIndex: i,
+                          childrenCount: widget.headers.length,
                         ),
-                    ]),
+                        child: widget.headers[i],
+                      ),
+                  ],
+                ),
               ],
             ),
             if (widget.loadingProgress != null &&
@@ -257,6 +308,13 @@ class ScaffoldState extends State<Scaffold> {
     );
   }
 
+  /// Builds the footer section of the scaffold.
+  ///
+  /// Parameters:
+  /// - [context] (`BuildContext`, required): Build context.
+  /// - [viewInsets] (`EdgeInsets`, required): View insets (e.g., keyboard).
+  ///
+  /// Returns: Widget tree for the footer.
   Widget buildFooter(BuildContext context, EdgeInsets viewInsets) {
     final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
     return Offstage(
@@ -298,45 +356,42 @@ class ScaffoldState extends State<Scaffold> {
           floatingFooter: widget.floatingFooter,
           children: [
             buildHeader(context),
-            LayoutBuilder(builder: (context, constraints) {
-              Widget child = (widget.resizeToAvoidBottomInset ??
-                      compTheme?.resizeToAvoidBottomInset ??
-                      true)
-                  ? Container(
-                      padding: EdgeInsets.only(
-                        bottom: viewInsets.bottom,
-                      ),
-                      child: MediaQuery(
-                        data: MediaQuery.of(context).copyWith(
-                          viewInsets: viewInsets.copyWith(
-                            bottom: 0,
+            LayoutBuilder(
+              builder: (context, constraints) {
+                Widget child = (widget.resizeToAvoidBottomInset ??
+                        compTheme?.resizeToAvoidBottomInset ??
+                        true)
+                    ? Container(
+                        // Clamp to prevent negative padding on web when keyboard appears
+                        padding: EdgeInsets.only(bottom: viewInsets.bottom.clamp(0.0, double.infinity)),
+                        child: MediaQuery(
+                          data: MediaQuery.of(context).copyWith(
+                            viewInsets: viewInsets.copyWith(bottom: 0),
                           ),
+                          child: ToastLayer(child: widget.child),
                         ),
-                        child: ToastLayer(child: widget.child),
-                      ),
-                    )
-                  : ToastLayer(child: widget.child);
-              if (constraints is ScaffoldBoxConstraints &&
-                  (widget.floatingHeader || widget.floatingFooter)) {
-                final currentMediaQuery = MediaQuery.of(context);
-                EdgeInsets padding = currentMediaQuery.padding;
-                if (widget.floatingHeader) {
-                  padding += EdgeInsets.only(top: constraints.headerHeight);
+                      )
+                    : ToastLayer(child: widget.child);
+                if (constraints is ScaffoldBoxConstraints &&
+                    (widget.floatingHeader || widget.floatingFooter)) {
+                  final currentMediaQuery = MediaQuery.of(context);
+                  EdgeInsets padding = currentMediaQuery.padding;
+                  if (widget.floatingHeader) {
+                    padding += EdgeInsets.only(top: constraints.headerHeight);
+                  }
+                  if (widget.floatingFooter) {
+                    padding += EdgeInsets.only(
+                      bottom: constraints.footerHeight,
+                    );
+                  }
+                  child = MediaQuery(
+                    data: currentMediaQuery.copyWith(padding: padding),
+                    child: RepaintBoundary(child: child),
+                  );
                 }
-                if (widget.floatingFooter) {
-                  padding += EdgeInsets.only(bottom: constraints.footerHeight);
-                }
-                child = MediaQuery(
-                  data: currentMediaQuery.copyWith(
-                    padding: padding,
-                  ),
-                  child: RepaintBoundary(
-                    child: child,
-                  ),
-                );
-              }
-              return child;
-            }),
+                return child;
+              },
+            ),
             buildFooter(context, viewInsets),
           ],
         ),
@@ -346,22 +401,33 @@ class ScaffoldState extends State<Scaffold> {
 
   @override
   Widget build(BuildContext context) {
-    return Overlay(
-      initialEntries: [
-        OverlayEntry(
-          builder: _buildContent,
-        ),
-      ],
-    );
+    return Overlay(initialEntries: [OverlayEntry(builder: _buildContent)]);
   }
 }
 
+/// Storage for scaffold padding values.
+///
+/// Holds padding values for all four sides of the scaffold content area.
 class ScaffoldPaddingStorage {
+  /// Top padding value.
   double top;
+
+  /// Left padding value.
   double left;
+
+  /// Right padding value.
   double right;
+
+  /// Bottom padding value.
   double bottom;
 
+  /// Creates a [ScaffoldPaddingStorage].
+  ///
+  /// Parameters:
+  /// - [top] (`double`, required): Top padding.
+  /// - [left] (`double`, required): Left padding.
+  /// - [right] (`double`, required): Right padding.
+  /// - [bottom] (`double`, required): Bottom padding.
   ScaffoldPaddingStorage({
     required this.top,
     required this.left,
@@ -370,10 +436,22 @@ class ScaffoldPaddingStorage {
   });
 }
 
+/// Box constraints with additional header and footer height information.
+///
+/// Extends [BoxConstraints] to include scaffold-specific layout measurements.
 class ScaffoldBoxConstraints extends BoxConstraints {
+  /// Height of the header section.
   final double headerHeight;
+
+  /// Height of the footer section.
   final double footerHeight;
 
+  /// Creates [ScaffoldBoxConstraints].
+  ///
+  /// Parameters:
+  /// - [headerHeight] (`double`, required): Header height.
+  /// - [footerHeight] (`double`, required): Footer height.
+  /// - Additional [BoxConstraints] parameters.
   const ScaffoldBoxConstraints({
     required this.headerHeight,
     required this.footerHeight,
@@ -383,6 +461,14 @@ class ScaffoldBoxConstraints extends BoxConstraints {
     super.maxHeight,
   });
 
+  /// Creates [ScaffoldBoxConstraints] from existing [BoxConstraints].
+  ///
+  /// Parameters:
+  /// - [constraints] (`BoxConstraints`, required): Base constraints.
+  /// - [headerHeight] (`double`, required): Header height.
+  /// - [footerHeight] (`double`, required): Footer height.
+  ///
+  /// Returns: New [ScaffoldBoxConstraints] with scaffold-specific data.
   factory ScaffoldBoxConstraints.fromBoxConstraints({
     required BoxConstraints constraints,
     required double headerHeight,
@@ -588,8 +674,8 @@ class AppBar extends StatefulWidget {
   /// and trailing areas support multiple widgets with automatic spacing.
   ///
   /// Parameters:
-  /// - [leading] (List<Widget>, default: []): Leading area widgets (left side)
-  /// - [trailing] (List<Widget>, default: []): Trailing area widgets (right side)
+  /// - [leading] (`List<Widget>`, default: []): Leading area widgets (left side)
+  /// - [trailing] (`List<Widget>`, default: []): Trailing area widgets (right side)
   /// - [title] (Widget?, optional): Primary title content
   /// - [header] (Widget?, optional): Secondary content above title
   /// - [subtitle] (Widget?, optional): Secondary content below title
@@ -657,10 +743,7 @@ class _AppBarState extends State<AppBar> {
                 theme.colorScheme.card.scaleAlpha(surfaceOpacity ?? 1),
             alignment: widget.alignment,
             padding: widget.padding ??
-                (const EdgeInsets.symmetric(
-                      horizontal: 18,
-                      vertical: 12,
-                    ) *
+                (const EdgeInsets.symmetric(horizontal: 18, vertical: 12) *
                     scaling),
             child: SafeArea(
               top: widget.useSafeArea &&
@@ -753,7 +836,9 @@ class _ScaffoldFlex extends MultiChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, _ScaffoldRenderFlex renderObject) {
+    BuildContext context,
+    _ScaffoldRenderFlex renderObject,
+  ) {
     bool needsLayout = false;
     if (renderObject._floatingHeader != floatingHeader) {
       renderObject._floatingHeader = floatingHeader;
@@ -806,11 +891,17 @@ class _ScaffoldRenderFlex extends RenderBox
     RenderBox content = (header.parentData as _ScaffoldParentData).nextSibling!;
     RenderBox footer = (content.parentData as _ScaffoldParentData).nextSibling!;
     context.paintChild(
-        content, (content.parentData as BoxParentData).offset + offset);
+      content,
+      (content.parentData as BoxParentData).offset + offset,
+    );
     context.paintChild(
-        header, (header.parentData as BoxParentData).offset + offset);
+      header,
+      (header.parentData as BoxParentData).offset + offset,
+    );
     context.paintChild(
-        footer, (footer.parentData as BoxParentData).offset + offset);
+      footer,
+      (footer.parentData as BoxParentData).offset + offset,
+    );
   }
 
   bool _hitTestBox(BoxHitTestResult result, RenderBox child, Offset position) {
@@ -849,12 +940,22 @@ class _ScaffoldRenderFlex extends RenderBox
     RenderBox content = (header.parentData as _ScaffoldParentData).nextSibling!;
     RenderBox footer = (content.parentData as _ScaffoldParentData).nextSibling!;
     final constraints = this.constraints;
-    header.layout(constraints, parentUsesSize: true);
-    footer.layout(constraints, parentUsesSize: true);
+
+    header.layout(
+      constraints.copyWith(minHeight: 0, maxHeight: double.infinity),
+      parentUsesSize: true,
+    );
+    footer.layout(
+      constraints.copyWith(minHeight: 0, maxHeight: double.infinity),
+      parentUsesSize: true,
+    );
+
     BoxConstraints contentConstraints;
     Offset contentOffset;
-    double footerSize = footer.getMaxIntrinsicHeight(double.infinity);
-    double headerSize = header.getMaxIntrinsicHeight(double.infinity);
+
+    double footerSize = footer.size.height;
+    double headerSize = header.size.height;
+
     switch ((_floatingHeader, _floatingFooter)) {
       case (true, true): // floating header and footer
         contentConstraints = constraints;
@@ -874,19 +975,18 @@ class _ScaffoldRenderFlex extends RenderBox
         break;
       case (false, false):
         contentConstraints = constraints.deflate(
-          EdgeInsets.only(
-            top: headerSize,
-            bottom: footerSize,
-          ),
+          EdgeInsets.only(top: headerSize, bottom: footerSize),
         );
         contentOffset = Offset(0, headerSize);
         break;
     }
-    content.layout(ScaffoldBoxConstraints.fromBoxConstraints(
-      constraints: contentConstraints,
-      headerHeight: headerSize,
-      footerHeight: footerSize,
-    ));
+    content.layout(
+      ScaffoldBoxConstraints.fromBoxConstraints(
+        constraints: contentConstraints,
+        headerHeight: headerSize,
+        footerHeight: footerSize,
+      ),
+    );
     size = constraints.biggest;
     (content.parentData as BoxParentData).offset = contentOffset;
     (footer.parentData as BoxParentData).offset = Offset(
@@ -900,32 +1000,33 @@ class _ScaffoldRenderFlex extends RenderBox
   }
 }
 
+/// Widget that applies header-aware padding to its child.
+///
+/// Automatically adjusts padding based on scaffold header height.
 class ScaffoldHeaderPadding extends SingleChildRenderObjectWidget {
+  /// Creates [ScaffoldHeaderPadding].
   const ScaffoldHeaderPadding({super.key, super.child});
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return _RenderScaffoldPadding(
-      paddingType: _ScaffoldPaddingType.header,
-    );
+    return _RenderScaffoldPadding(paddingType: _ScaffoldPaddingType.header);
   }
 }
 
+/// Widget that applies footer-aware padding to its child.
+///
+/// Automatically adjusts padding based on scaffold footer height.
 class ScaffoldFooterPadding extends SingleChildRenderObjectWidget {
+  /// Creates [ScaffoldFooterPadding].
   const ScaffoldFooterPadding({super.key, super.child});
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return _RenderScaffoldPadding(
-      paddingType: _ScaffoldPaddingType.footer,
-    );
+    return _RenderScaffoldPadding(paddingType: _ScaffoldPaddingType.footer);
   }
 }
 
-enum _ScaffoldPaddingType {
-  header,
-  footer,
-}
+enum _ScaffoldPaddingType { header, footer }
 
 class _RenderScaffoldPadding extends RenderBox
     with

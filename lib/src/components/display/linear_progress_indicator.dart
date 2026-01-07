@@ -10,7 +10,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 ///
 /// The theme supports advanced features like spark effects for enhanced visual
 /// feedback and animation control for performance optimization scenarios.
-class LinearProgressIndicatorTheme {
+class LinearProgressIndicatorTheme extends ComponentThemeData {
   /// The primary color of the progress indicator fill.
   ///
   /// Type: `Color?`. If null, uses theme's primary color. Applied to the
@@ -82,15 +82,13 @@ class LinearProgressIndicatorTheme {
   }) {
     return LinearProgressIndicatorTheme(
       color: color == null ? this.color : color(),
-      backgroundColor: backgroundColor == null
-          ? this.backgroundColor
-          : backgroundColor(),
+      backgroundColor:
+          backgroundColor == null ? this.backgroundColor : backgroundColor(),
       minHeight: minHeight == null ? this.minHeight : minHeight(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       showSparks: showSparks == null ? this.showSparks : showSparks(),
-      disableAnimation: disableAnimation == null
-          ? this.disableAnimation
-          : disableAnimation(),
+      disableAnimation:
+          disableAnimation == null ? this.disableAnimation : disableAnimation(),
     );
   }
 
@@ -108,13 +106,13 @@ class LinearProgressIndicatorTheme {
 
   @override
   int get hashCode => Object.hash(
-    color,
-    backgroundColor,
-    minHeight,
-    borderRadius,
-    showSparks,
-    disableAnimation,
-  );
+        color,
+        backgroundColor,
+        minHeight,
+        borderRadius,
+        showSparks,
+        disableAnimation,
+      );
 }
 
 /// Duration constant for indeterminate linear progress animation cycle.
@@ -444,7 +442,7 @@ double? _lerpDouble(double? a, double? b, double t) {
 
 class _LinearProgressIndicatorPainter extends CustomPainter {
   static final gradientTransform =
-      (Matrix4.identity()..scale(1.0, 0.5)).storage;
+      (Matrix4.identity()..scaleByDouble(1.0, 0.5, 1, 1)).storage;
 
   final double start;
   final double end;

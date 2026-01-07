@@ -10,7 +10,7 @@ import '../../../shadcn_flutter.dart';
 ///
 /// All theme values respect the current theme's scaling factor and color scheme
 /// for consistent visual presentation across different screen densities and themes.
-class CircularProgressIndicatorTheme {
+class CircularProgressIndicatorTheme extends ComponentThemeData {
   /// The primary color of the progress indicator arc.
   ///
   /// Type: `Color?`. If null, uses theme's primary color or background color
@@ -56,6 +56,7 @@ class CircularProgressIndicatorTheme {
     this.strokeWidth,
   });
 
+  /// Creates a copy of this theme with the given fields replaced.
   CircularProgressIndicatorTheme copyWith({
     ValueGetter<Color?>? color,
     ValueGetter<Color?>? backgroundColor,

@@ -170,7 +170,7 @@ class TrackerData {
 ///   child: MyTrackerWidget(),
 /// );
 /// ```
-class TrackerTheme {
+class TrackerTheme extends ComponentThemeData {
   /// Corner radius for the tracker container in logical pixels.
   ///
   /// Type: `double?`. Controls the rounding of tracker corners. If null,
@@ -324,7 +324,7 @@ class Tracker extends StatelessWidget {
   /// with hover tooltips for additional context.
   ///
   /// Parameters:
-  /// - [data] (List<TrackerData>, required): Status data points to display
+  /// - [data] (`List<TrackerData>`, required): Status data points to display
   ///
   /// Example:
   /// ```dart

@@ -1,12 +1,19 @@
-library shadcn_flutter;
+library;
 
 // bundle from https://pub.dev/packages/country_flags
 export 'package:country_flags/country_flags.dart' show CountryFlag;
+
 // bundle cross_file
 export 'package:cross_file/cross_file.dart' show XFile;
+
 // bundle from data_widget
 export 'package:data_widget/data_widget.dart';
 export 'package:data_widget/extension.dart';
+
+// bundle from animation_kit
+export 'package:animation_kit/animation_kit.dart';
+
+// export text selection controls from cupertino
 export 'package:flutter/cupertino.dart'
     show
         cupertinoDesktopTextSelectionControls,
@@ -26,77 +33,13 @@ export 'package:flutter/widgets.dart'
         RadioGroup;
 // bundle from gap
 export 'package:gap/gap.dart';
-// hide pixel_snap overriden widgets
-// Column,
-// Row,
-// Text,
-// RichText,
-// Center,
-// FractionallySizedBox,
-// Align,
-// Baseline,
-// ConstrainedBox,
-// DecoratedBox,
-// Container,
-// FittedBox,
-// IntrinsicWidth,
-// LimitedBox,
-// OverflowBox,
-// Padding,
-// SizedBox,
-// SizedOverflowBox,
-// Positioned,
-// PhysicalModel,
-// CustomPaint,
-// Icon,
-// Image,
-// ImageIcon,
-// AnimatedAlign,
-// AnimatedContainer,
-// AnimatedCrossFade,
-// AnimatedPositioned,
-// AnimatedPhysicalModel,
-// AnimatedSize;
 // bundle from https://pub.dev/packages/phonecodes
 export 'package:phonecodes/phonecodes.dart' show Countries, Country;
-// export 'package:pixel_snap/widgets.dart'
-//     show
-//         Column,
-//         Row,
-//         Text,
-//         RichText,
-//         Center,
-//         FractionallySizedBox,
-//         Align,
-//         Baseline,
-//         ConstrainedBox,
-//         DecoratedBox,
-//         Container,
-//         FittedBox,
-//         IntrinsicWidth,
-//         LimitedBox,
-//         OverflowBox,
-//         Padding,
-//         SizedBox,
-//         SizedOverflowBox,
-//         Positioned,
-//         PhysicalModel,
-//         CustomPaint,
-//         Icon,
-//         Image,
-//         ImageIcon,
-//         AnimatedAlign,
-//         AnimatedContainer,
-//         AnimatedCrossFade,
-//         AnimatedPositioned,
-//         AnimatedPhysicalModel,
-//         AnimatedSize;
 // bundle from skeletonizer https://pub.dev/packages/skeletonizer
 export 'package:skeletonizer/skeletonizer.dart' show Bone, BoneMock;
 
 export 'src/animation.dart';
 export 'src/collection.dart';
-export 'src/components/animation.dart';
 export 'src/components/async.dart';
 export 'src/components/chart/tracker.dart';
 export 'src/components/control/button.dart';
@@ -121,7 +64,6 @@ export 'src/components/display/skeleton.dart';
 export 'src/components/form/autocomplete.dart';
 export 'src/components/form/checkbox.dart';
 export 'src/components/form/chip_input.dart';
-export 'src/components/form/color_picker.dart';
 export 'src/components/form/control.dart';
 export 'src/components/form/date_picker.dart';
 export 'src/components/form/form.dart';
@@ -130,7 +72,6 @@ export 'src/components/form/formatted_input.dart';
 export 'src/components/form/formatter.dart';
 export 'src/components/form/image.dart';
 export 'src/components/form/input_otp.dart';
-export 'src/components/form/number_input.dart';
 export 'src/components/form/phone_input.dart';
 export 'src/components/form/radio_group.dart';
 export 'src/components/form/select.dart';
@@ -167,6 +108,8 @@ export 'src/components/layout/timeline.dart';
 export 'src/components/layout/tree.dart';
 export 'src/components/layout/window.dart';
 export 'src/components/locale/shadcn_localizations.dart';
+export 'src/components/locale/shadcn_localizations_extensions.dart';
+export 'src/components/locale/locale_utils.dart';
 export 'src/components/menu/context_menu.dart';
 export 'src/components/menu/dropdown_menu.dart';
 export 'src/components/menu/menu.dart';
@@ -179,6 +122,7 @@ export 'src/components/navigation/tabs/tab_container.dart';
 export 'src/components/navigation/tabs/tab_list.dart';
 export 'src/components/navigation/tabs/tab_pane.dart';
 export 'src/components/navigation/tabs/tabs.dart';
+export 'src/components/display/chat.dart';
 export 'src/components/overlay/dialog.dart';
 export 'src/components/overlay/drawer.dart';
 export 'src/components/overlay/hover_card.dart';
@@ -208,3 +152,12 @@ export 'src/components/form/multiple_choice.dart';
 export 'src/components/wrapper.dart';
 export 'src/components/navigation/subfocus.dart';
 export 'src/components/navigation/switcher.dart';
+export 'src/components/layout/focus_outline.dart';
+export 'src/components/form/color/color.dart';
+export 'src/components/form/color/solid/color_picker.dart';
+export 'src/components/form/color/solid/eye_dropper.dart';
+export 'src/components/form/color/solid/history.dart';
+export 'src/components/form/color/solid/slider/alpha.dart';
+export 'src/components/form/color/solid/slider/hsl.dart';
+export 'src/components/form/color/solid/slider/hsv.dart';
+export 'src/components/form/color/solid/color_input.dart';

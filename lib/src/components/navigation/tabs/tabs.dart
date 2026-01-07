@@ -6,12 +6,34 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// [Tabs] widgets, including padding for the container and individual tabs,
 /// background colors, and border radius styling. These properties can be
 /// set at the theme level to provide consistent styling across the application.
-class TabsTheme {
+class TabsTheme extends ComponentThemeData {
+  /// Padding around the entire tabs container.
+  ///
+  /// Defines the outer spacing for the tabs widget. If `null`,
+  /// uses the theme's default container padding.
   final EdgeInsetsGeometry? containerPadding;
+
+  /// Padding inside individual tab headers.
+  ///
+  /// Defines the spacing within each tab button. If `null`,
+  /// uses the theme's default tab padding.
   final EdgeInsetsGeometry? tabPadding;
+
+  /// Background color for the tabs container.
+  ///
+  /// Applied to the tabs bar background. If `null`,
+  /// uses the theme's default background color.
   final Color? backgroundColor;
+
+  /// Corner radius for the tabs container.
+  ///
+  /// Defines rounded corners for the tabs widget. If `null`,
+  /// uses the theme's default border radius.
   final BorderRadiusGeometry? borderRadius;
 
+  /// Creates a tabs theme.
+  ///
+  /// All parameters are optional and default to theme values when `null`.
   const TabsTheme({
     this.containerPadding,
     this.tabPadding,
@@ -19,6 +41,18 @@ class TabsTheme {
     this.borderRadius,
   });
 
+  /// Creates a copy of this theme with optionally replaced values.
+  ///
+  /// Uses [ValueGetter] functions to allow nullable value replacement.
+  /// Properties not provided retain their current values.
+  ///
+  /// Parameters:
+  /// - [containerPadding]: Optional getter for new container padding
+  /// - [tabPadding]: Optional getter for new tab padding
+  /// - [backgroundColor]: Optional getter for new background color
+  /// - [borderRadius]: Optional getter for new border radius
+  ///
+  /// Returns a new [TabsTheme] with updated values.
   TabsTheme copyWith({
     ValueGetter<EdgeInsetsGeometry?>? containerPadding,
     ValueGetter<EdgeInsetsGeometry?>? tabPadding,
@@ -26,13 +60,11 @@ class TabsTheme {
     ValueGetter<BorderRadiusGeometry?>? borderRadius,
   }) {
     return TabsTheme(
-      containerPadding: containerPadding == null
-          ? this.containerPadding
-          : containerPadding(),
+      containerPadding:
+          containerPadding == null ? this.containerPadding : containerPadding(),
       tabPadding: tabPadding == null ? this.tabPadding : tabPadding(),
-      backgroundColor: backgroundColor == null
-          ? this.backgroundColor
-          : backgroundColor(),
+      backgroundColor:
+          backgroundColor == null ? this.backgroundColor : backgroundColor(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
     );
   }
@@ -101,17 +133,45 @@ class TabsTheme {
 /// );
 /// ```
 class Tabs extends StatelessWidget {
+  /// The index of the currently selected tab (0-indexed).
+  ///
+  /// Must be between 0 and `children.length - 1` inclusive.
   final int index;
+
+  /// Used to expand children horizontally
+  final bool expand;
+
+  /// Callback invoked when the user selects a different tab.
+  ///
+  /// Called with the new tab index when the user taps a tab header.
   final ValueChanged<int> onChanged;
+
+  /// List of tab children defining tab headers and content.
+  ///
+  /// Each [TabChild] contains a tab header widget and the associated
+  /// content panel widget. The list must not be empty.
   final List<TabChild> children;
+
+  /// Optional padding around individual tabs.
+  ///
+  /// Overrides the theme's tab padding if provided. If `null`,
+  /// uses the padding from [TabsTheme].
   final EdgeInsetsGeometry? padding;
 
+  /// Creates a tabs widget.
+  ///
+  /// Parameters:
+  /// - [index]: Currently selected tab index (required)
+  /// - [onChanged]: Tab selection callback (required)
+  /// - [children]: List of tab children (required, non-empty)
+  /// - [padding]: Custom tab padding (optional)
   const Tabs({
     super.key,
     required this.index,
     required this.onChanged,
     required this.children,
     this.padding,
+    this.expand = false,
   });
 
   Widget _childBuilder(
@@ -186,9 +246,11 @@ class Tabs extends StatelessWidget {
           padding: containerPadding,
           child: IntrinsicHeight(
             child: Row(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: children,
+              children: expand
+                  ? children.map((e) => Expanded(child: e)).toList()
+                  : children,
             ).muted(),
           ),
         );
