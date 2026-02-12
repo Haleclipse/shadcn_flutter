@@ -1,6 +1,6 @@
 ---
 title: "Class: InputPart"
-description: "Abstract base class for parts of a formatted input."
+description: "Abstract base class for parts of a formatted input.   [InputPart] defines the interface for components that make up a formatted  input field, such as static text, editable sections, or custom widgets.  Each part can be rendered and may optionally hold a value.   Example parts:  - Static text separators (e.g., \"/\", \"-\")  - Editable numeric fields (e.g., month, day, year)  - Custom widget decorations"
 ---
 
 ```dart
@@ -35,5 +35,7 @@ abstract class InputPart implements FormattedValuePart {
   InputPart get part;
   /// Creates a copy of this part with the specified value.
   FormattedValuePart withValue(String value);
+  bool operator ==(Object other);
+  int get hashCode;
 }
 ```

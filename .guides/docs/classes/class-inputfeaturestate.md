@@ -1,6 +1,6 @@
 ---
 title: "Class: InputFeatureState"
-description: "Abstract base state class for input features."
+description: "Abstract base state class for input features.   Manages the lifecycle and state of features that extend text field  functionality, such as clear buttons, counters, or custom decorations."
 ---
 
 ```dart
@@ -53,6 +53,22 @@ abstract class InputFeatureState<T extends InputFeature> {
   ///
   /// Override to provide widgets shown after the input.
   Iterable<Widget> buildTrailing();
+  /// Builds prefix widgets for the text field.
+  ///
+  /// Override to provide widgets shown before the editable text.
+  Iterable<Widget> buildPrefix();
+  /// Builds suffix widgets for the text field.
+  ///
+  /// Override to provide widgets shown after the editable text.
+  Iterable<Widget> buildSuffix();
+  /// Builds widgets displayed above the input, inside the decoration.
+  ///
+  /// Override to provide widgets rendered above the editable text.
+  Iterable<Widget> buildAbove();
+  /// Builds widgets displayed below the input, inside the decoration.
+  ///
+  /// Override to provide widgets rendered below the editable text.
+  Iterable<Widget> buildBelow();
   /// Builds actions for keyboard shortcuts.
   ///
   /// Override to provide custom actions.

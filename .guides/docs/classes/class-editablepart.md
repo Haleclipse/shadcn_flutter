@@ -1,6 +1,6 @@
 ---
 title: "Class: EditablePart"
-description: "A part that represents an editable input field section."
+description: "A part that represents an editable input field section.   [EditablePart] defines a user-editable portion of a formatted input,  such as a date component, time segment, or numeric field. Each editable  part can have a fixed length, input formatters, and optional obscuring.   Example:  ```dart  EditablePart(    length: 2,    width: 40.0,    inputFormatters: [FilteringTextInputFormatter.digitsOnly],    placeholder: Text('MM'),  )  ```"
 ---
 
 ```dart
@@ -36,5 +36,7 @@ class EditablePart extends InputPart {
   bool get canHaveValue;
   Widget build(BuildContext context, FormattedInputData data);
   String toString();
+  bool operator ==(Object other);
+  int get hashCode;
 }
 ```

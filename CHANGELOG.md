@@ -1,15 +1,165 @@
-## 0.0.48
+## [0.0.51] Unreleased
+
+### Fixed
+
+- Fixed ControlledComponent assertion error when no initial value is provided
+  despite having a nullable type parameter
+- Fixed NavigationGroup causing negative size errors when the children list is
+  empty
+- Fixed NavigationSidebar not working correctly after recent breaking changes
+
+### Changed
+
+- NavigationWidget is now a builder-only widget that requires a builder function
+  to be provided.
+
+## [0.0.50]
+
+### Added
+
+- Add min/max limits to increment/decrement input buttons and disable at bounds
+
+### Fixed
+
+- Fixed clip behavior in Dialog overlay widget
+- Removed haptic on iOS
+
+### Breaking Changes
+
+- [BREAKING] Navigation selection model changed from index-based (`int`) to
+  key-based (`Key?`) across `NavigationBar`, `NavigationRail`, and
+  `NavigationSidebar` (commits 53d2d8c3, 8d3104a9, 9ef28a81)
+  - `index` parameter removed; use `selectedKey` instead
+  - `onSelected` callback signature changed from `ValueChanged<int>?` to
+    `ValueChanged<Key?>?`
+  - `NavigationItem.index` parameter removed; use the widget's `key` for
+    selection identity
+- [BREAKING] `NavigationBarItem` abstract class removed; children parameters now
+  accept `List<Widget>` instead of `List<NavigationBarItem>`
+- [BREAKING] `NavigationContainerMixin` (and its `wrapChildren` method) removed
+- [BREAKING] `NavigationChildControlData` and `NavigationGroupControlData`
+  classes removed
+- [BREAKING] `NavigationBar.constraints` parameter removed; use `expandedSize`
+  and `collapsedSize` instead
+- [BREAKING] Several `NavigationBar` parameters changed from nullable with theme
+  fallback to non-nullable with explicit defaults:
+  - `alignment` (`NavigationBarAlignment?` → `NavigationBarAlignment`, default:
+    `start`)
+  - `labelType` (`NavigationLabelType?` → `NavigationLabelType`, default: `all`)
+  - `labelPosition` (`NavigationLabelPosition?` → `NavigationLabelPosition`,
+    default: `bottom`)
+  - `labelSize` (`NavigationLabelSize?` → `NavigationLabelSize`, default:
+    `small`)
+  - `expanded` (`bool?` → `bool`, default: `false`)
+- [BREAKING] `NavigationBar.expands` parameter removed
+- [BREAKING] `NavigationGap`, `NavigationDivider`, `NavigationLabel`, and
+  `NavigationWidget` no longer implement `NavigationBarItem`
+
+Migration guide:
+
+1. Replace `index` / `onSelected` with `selectedKey` / key-based callback.
+
+```dart
+// before
+NavigationBar(
+  index: selectedIndex,
+  onSelected: (index) => setState(() => selectedIndex = index),
+  children: [
+    NavigationItem(label: Text('Home'), child: Icon(Icons.home)),
+    NavigationItem(label: Text('Search'), child: Icon(Icons.search)),
+  ],
+)
+
+// after
+NavigationBar(
+  selectedKey: selectedKey,
+  onSelected: (key) => setState(() => selectedKey = key),
+  children: [
+    NavigationItem(key: ValueKey('home'), label: Text('Home'), child: Icon(Icons.home)),
+    NavigationItem(key: ValueKey('search'), label: Text('Search'), child: Icon(Icons.search)),
+  ],
+)
+```
+
+2. Remove any `NavigationBarItem` type annotations; use `Widget` instead.
+3. Remove any usage of `NavigationContainerMixin`, `NavigationChildControlData`,
+   or `NavigationGroupControlData`.
+4. Replace `NavigationBar(constraints: ...)` with `expandedSize` /
+   `collapsedSize`.
+
+## [0.0.49]
+
+- Fixed clip behavior in paint order patched layout widgets (Flex, Row, Column,
+  Stack)
+- Added TextFlipper widget (part of Number Ticker component)
+
+## [0.0.48]
+
+### Added
+
 - Added Chat component
 - New `ColorScheme.of` method to access color scheme from theme data
+- [#346] Added param to skip focus traversal in Input features
+- [PREVIEW] Added `ShadcnPreview` and `ShadcnMultiPreview` annotation to preview
+  widgets during development
+- Add density system and density-aware padding helpers (`Density`,
+  `EdgeInsetsDensity`)
+- Add paint-order support for `Flex`, `Row`, `Column`, and `Stack` with
+  `PaintOrder` and `Positioned.paintOrder`
+- Add `InputStepperButtonFeature` and support for
+  `InputFeaturePosition.above`/`below`
+- Add `Divider.childAlignment` to align divider content
+- Add `Widget.sized(size:)` convenience overload
+- Add `FadedScrollableViewport` helper for scroll fade masks
+- [#371] Create a new page to explain GoRouter integration (by @xdidx)
+
+### Breaking Changes
+
+- Remove sidebar-specific color tokens from `ColorScheme`
+- [BREAKING] `RepeatMode` has been renamed to `LoopingMode`
+- [BREAKING] `ShadcnLocalizationsDelegate.delegate` has been renamed to
+  `ShadcnLocalizations.delegate`
+
+Migration guide:
+
+1. Remove usages of `ColorScheme.sidebar`, `sidebarForeground`,
+   `sidebarPrimary`, `sidebarPrimaryForeground`, `sidebarAccent`,
+   `sidebarAccentForeground`, `sidebarBorder`, and `sidebarRing`.
+2. Replace them with existing tokens (for example, `background`, `card`, or
+   `accent`) or create a custom theme extension if you still need
+   sidebar-specific colors.
+
+```dart
+// before
+final colors = Theme.of(context).colorScheme;
+final bg = colors.sidebar;
+
+// after
+final colors = Theme.of(context).colorScheme;
+final bg = colors.background; // or a custom ThemeExtension
+```
+
+### Changed
+
+- Integrate density-aware spacing and padding into core layout widgets and form
+  controls
+- Extend density-aware spacing defaults across navigation, menus, overlays, and
+  display components
+- Align remaining layout and form spacing with density defaults
+- Revamp the theme docs page with a kitchen-sink preview and right-side options
+  panel
+
+### Fixed
+
+- Complete `ColorSchemeRecolorExtension` palette getters
+
 - [#380] Fixed issue with DatePicker when using PromptMode.popover
 - [#379] Fixed issue with intrinsic row height in Table component
 - [#378] Fixed issue with RepeatMode declaration in flutter master channel
-- [#346] Added param to skip focus traversal in Input features
-- [PREVIEW] Added `ShadcnPreview` and `ShadcnMultiPreview` annotation to preview widgets during development
-- [BREAKING] `RepeatMode` has been renamed to `LoopingMode`
-- [BREAKING] `ShadcnLocalizationsDelegate.delegate` has been renamed to `ShadcnLocalizations.delegate`
-- [#373] Scaffold: Set height constraints to correctly measure header size (by @xdidx)
-- [#371] Create a new page to explain GoRouter integration (by @xdidx)
+- [#373] Scaffold: Set height constraints to correctly measure header size (by
+  @xdidx)
+- [#394] Fixes ButtonStyle.withPadding by removing shadowed variable (by
+  @craiglabenz)
 
 ## 0.0.47
 

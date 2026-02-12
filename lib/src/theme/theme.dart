@@ -169,6 +169,12 @@ class ThemeData {
   /// Default blur radius for surface effects.
   final double? surfaceBlur;
 
+  /// Default setting for feedback on mobile platforms (e.g., iOS, Android, Fuchsia).
+  final bool? enableFeedback;
+
+  /// Density settings that scale spacing and padding.
+  final Density density;
+
   /// Creates a [ThemeData] with light color scheme.
   ///
   /// Parameters:
@@ -181,14 +187,16 @@ class ThemeData {
   /// - [surfaceOpacity] (`double?`, optional): Surface overlay opacity.
   /// - [surfaceBlur] (`double?`, optional): Surface blur radius.
   const ThemeData({
-    this.colorScheme = ColorSchemes.lightDefaultColor,
+    this.colorScheme = ColorSchemes.lightSlate,
     this.radius = 0.5,
     this.scaling = 1,
     this.typography = const Typography.geist(),
     this.iconTheme = const IconThemeProperties(),
     TargetPlatform? platform,
     this.surfaceOpacity,
+    this.enableFeedback,
     this.surfaceBlur,
+    this.density = Density.defaultDensity,
   }) : _platform = platform;
 
   /// Creates a [ThemeData] with dark color scheme.
@@ -203,7 +211,7 @@ class ThemeData {
   /// - [surfaceOpacity] (`double?`, optional): Surface overlay opacity.
   /// - [surfaceBlur] (`double?`, optional): Surface blur radius.
   const ThemeData.dark({
-    this.colorScheme = ColorSchemes.darkDefaultColor,
+    this.colorScheme = ColorSchemes.darkSlate,
     this.radius = 0.5,
     this.scaling = 1,
     this.typography = const Typography.geist(),
@@ -211,6 +219,8 @@ class ThemeData {
     TargetPlatform? platform,
     this.surfaceOpacity,
     this.surfaceBlur,
+    this.density = Density.defaultDensity,
+    this.enableFeedback,
   }) : _platform = platform;
 
   /// The current platform.
@@ -219,23 +229,31 @@ class ThemeData {
   /// The specified platform, or null if not overridden.
   TargetPlatform? get specifiedPlatform => _platform;
 
+  double get _densityRadiusScale {
+    final base = Density.defaultDensity.baseContentPadding;
+    if (base == 0) {
+      return 1;
+    }
+    return density.baseContentPadding / base;
+  }
+
   /// At normal radius, the scaled radius is 24
-  double get radiusXxl => radius * 24;
+  double get radiusXxl => radius * 24 * _densityRadiusScale;
 
   /// At normal radius, the scaled radius is 20
-  double get radiusXl => radius * 20;
+  double get radiusXl => radius * 20 * _densityRadiusScale;
 
   /// At normal radius, the scaled radius is 16
-  double get radiusLg => radius * 16;
+  double get radiusLg => radius * 16 * _densityRadiusScale;
 
   /// At normal radius, the scaled radius is 12
-  double get radiusMd => radius * 12;
+  double get radiusMd => radius * 12 * _densityRadiusScale;
 
   /// At normal radius, the scaled radius is 8
-  double get radiusSm => radius * 8;
+  double get radiusSm => radius * 8 * _densityRadiusScale;
 
   /// At normal radius, the scaled radius is 4
-  double get radiusXs => radius * 4;
+  double get radiusXs => radius * 4 * _densityRadiusScale;
 
   /// Creates a circular border radius using [radiusXxl].
   BorderRadius get borderRadiusXxl => BorderRadius.circular(radiusXxl);
@@ -290,6 +308,8 @@ class ThemeData {
     ValueGetter<IconThemeProperties>? iconTheme,
     ValueGetter<double>? surfaceOpacity,
     ValueGetter<double>? surfaceBlur,
+    ValueGetter<bool?>? enableFeedback,
+    ValueGetter<Density>? density,
   }) {
     return ThemeData(
       colorScheme: colorScheme == null ? this.colorScheme : colorScheme(),
@@ -301,6 +321,9 @@ class ThemeData {
       surfaceOpacity:
           surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
       surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
+      enableFeedback:
+          enableFeedback == null ? this.enableFeedback : enableFeedback(),
+      density: density == null ? this.density : density(),
     );
   }
 
@@ -326,6 +349,8 @@ class ThemeData {
       iconTheme: IconThemeProperties.lerp(a.iconTheme, b.iconTheme, t),
       surfaceOpacity: lerpDouble(a.surfaceOpacity, b.surfaceOpacity, t),
       surfaceBlur: lerpDouble(a.surfaceBlur, b.surfaceBlur, t),
+      enableFeedback: t < 0.5 ? a.enableFeedback : b.enableFeedback,
+      density: Density.lerp(a.density, b.density, t),
     );
   }
 
@@ -340,7 +365,9 @@ class ThemeData {
         other.scaling == scaling &&
         other.iconTheme == iconTheme &&
         other.surfaceOpacity == surfaceOpacity &&
-        other.surfaceBlur == surfaceBlur;
+        other.surfaceBlur == surfaceBlur &&
+        other.density == density &&
+        other.enableFeedback == enableFeedback;
   }
 
   @override
@@ -353,12 +380,14 @@ class ThemeData {
       iconTheme,
       surfaceOpacity,
       surfaceBlur,
+      enableFeedback,
+      density,
     );
   }
 
   @override
   String toString() {
-    return 'ThemeData(colorScheme: $colorScheme, typography: $typography, radius: $radius, scaling: $scaling, iconTheme: $iconTheme, surfaceOpacity: $surfaceOpacity, surfaceBlur: $surfaceBlur)';
+    return 'ThemeData(colorScheme: $colorScheme, typography: $typography, radius: $radius, scaling: $scaling, iconTheme: $iconTheme, surfaceOpacity: $surfaceOpacity, surfaceBlur: $surfaceBlur, density: $density, enableFeedback: $enableFeedback)';
   }
 }
 

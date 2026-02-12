@@ -2839,6 +2839,7 @@ class FormField<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final densityGap = theme.density.baseGap * theme.scaling;
     return FormEntry<T>(
       key: key,
       validator: validator,
@@ -2859,48 +2860,50 @@ class FormField<T> extends StatelessWidget {
                     ? Border.all(color: theme.colorScheme.destructive)
                     : null,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: padding!,
-                    child: Row(
-                      mainAxisAlignment: labelAxisAlignment!,
-                      children: [
-                        if (leadingLabel != null)
-                          leadingLabel!.textSmall().muted(),
-                        if (leadingLabel != null)
-                          Gap(leadingGap ?? theme.scaling * 8),
-                        Expanded(
-                          child: DefaultTextStyle.merge(
-                            style: error != null
-                                ? TextStyle(
-                                    color: theme.colorScheme.destructive)
-                                : null,
-                            child: label.textSmall(),
+              child: IntrinsicWidth(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: padding!,
+                      child: Row(
+                        mainAxisAlignment: labelAxisAlignment!,
+                        children: [
+                          if (leadingLabel != null)
+                            leadingLabel!.textSmall().muted(),
+                          if (leadingLabel != null)
+                            Gap(leadingGap ?? densityGap),
+                          Expanded(
+                            child: DefaultTextStyle.merge(
+                              style: error != null
+                                  ? TextStyle(
+                                      color: theme.colorScheme.destructive)
+                                  : null,
+                              child: label.textSmall(),
+                            ),
                           ),
-                        ),
-                        if (trailingLabel != null)
-                          Gap(trailingGap ?? theme.scaling * 8),
-                        if (trailingLabel != null)
-                          trailingLabel!.textSmall().muted(),
-                      ],
+                          if (trailingLabel != null)
+                            Gap(trailingGap ?? densityGap),
+                          if (trailingLabel != null)
+                            trailingLabel!.textSmall().muted(),
+                        ],
+                      ),
                     ),
-                  ),
-                  Gap(theme.scaling * 8),
-                  child!,
-                  if (hint != null) ...[
-                    Gap(theme.scaling * 8),
-                    hint!.xSmall().muted(),
+                    Gap(densityGap),
+                    child!,
+                    if (hint != null) ...[
+                      Gap(densityGap),
+                      hint!.xSmall().muted(),
+                    ],
+                    if (error is InvalidResult) ...[
+                      Gap(densityGap),
+                      DefaultTextStyle.merge(
+                        style: TextStyle(color: theme.colorScheme.destructive),
+                        child: Text(error.message).xSmall().medium(),
+                      ),
+                    ],
                   ],
-                  if (error is InvalidResult) ...[
-                    Gap(theme.scaling * 8),
-                    DefaultTextStyle.merge(
-                      style: TextStyle(color: theme.colorScheme.destructive),
-                      child: Text(error.message).xSmall().medium(),
-                    ),
-                  ],
-                ],
+                ),
               ),
             ),
           );
@@ -2947,6 +2950,7 @@ class FormInline<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final densityGap = theme.density.baseGap * theme.scaling;
     return FormEntry<T>(
       key: key,
       validator: validator,
@@ -2967,17 +2971,17 @@ class FormInline<T> extends StatelessWidget {
                             : null,
                         child: label.textSmall(),
                       ),
-                      Gap(theme.scaling * 8),
+                      Gap(densityGap),
                       Expanded(child: child!),
                     ],
                   ),
                 ),
                 if (hint != null) ...[
-                  const Gap(8),
+                  Gap(densityGap),
                   hint!.xSmall().muted(),
                 ],
                 if (error is InvalidResult) ...[
-                  const Gap(8),
+                  Gap(densityGap),
                   DefaultTextStyle.merge(
                     style: TextStyle(color: theme.colorScheme.destructive),
                     child: Text(error.message).xSmall().medium(),
@@ -3014,6 +3018,7 @@ class FormTableLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
+    final densityGap = theme.density.baseGap * scaling;
     var spacing = this.spacing ?? scaling * 16;
     return DefaultTextStyle.merge(
       style: TextStyle(color: Theme.of(context).colorScheme.foreground),
@@ -3064,11 +3069,11 @@ class FormTableLayout extends StatelessWidget {
                               children: [
                                 child!,
                                 if (rows[i].hint != null) ...[
-                                  Gap(8 * scaling),
+                                  Gap(densityGap),
                                   rows[i].hint!.xSmall().muted(),
                                 ],
                                 if (error is InvalidResult) ...[
-                                  Gap(8 * scaling),
+                                  Gap(densityGap),
                                   DefaultTextStyle.merge(
                                     style: TextStyle(
                                         color: Theme.of(context)

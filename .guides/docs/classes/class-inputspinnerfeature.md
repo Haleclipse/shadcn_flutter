@@ -1,6 +1,6 @@
 ---
 title: "Class: InputSpinnerFeature"
-description: "Adds spinner controls (increment/decrement) to numeric input fields."
+description: "Adds spinner controls (increment/decrement) to numeric input fields.   Provides up/down buttons to adjust numeric values in fixed steps.  Optionally supports gesture-based adjustments (e.g., drag to change value).   Example:  ```dart  TextField(    keyboardType: TextInputType.number,    features: [      InputSpinnerFeature(        step: 5.0,        enableGesture: true,      ),    ],  )  ```"
 ---
 
 ```dart
@@ -28,15 +28,21 @@ class InputSpinnerFeature extends InputFeature {
   final bool enableGesture;
   /// Default value when the input is invalid or empty.
   final double? invalidValue;
+  /// Minimum allowed value.
+  final double? min;
+  /// Maximum allowed value.
+  final double? max;
   /// Creates an [InputSpinnerFeature].
   ///
   /// Parameters:
   /// - [step] (`double`, default: `1.0`): Increment/decrement step size.
   /// - [enableGesture] (`bool`, default: `true`): Enable drag gestures.
   /// - [invalidValue] (`double?`, default: `0.0`): Fallback value for invalid input.
+  /// - [min] (`double?`, optional): Minimum allowed value.
+  /// - [max] (`double?`, optional): Maximum allowed value.
   /// - [visibility] (`InputFeatureVisibility`, optional): Controls visibility.
   /// - [skipFocusTraversal] (`bool`, optional): Whether to skip in focus order.
-  const InputSpinnerFeature({super.visibility, super.skipFocusTraversal, this.step = 1.0, this.enableGesture = true, this.invalidValue = 0.0});
+  const InputSpinnerFeature({super.visibility, super.skipFocusTraversal, this.step = 1.0, this.enableGesture = true, this.invalidValue = 0.0, this.min, this.max});
   InputFeatureState createState();
 }
 ```

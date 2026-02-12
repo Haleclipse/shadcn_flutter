@@ -1,6 +1,6 @@
 ---
 title: "Class: DividerTheme"
-description: "Theme data for customizing [Divider] widget appearance."
+description: "Theme data for customizing [Divider] widget appearance.   This class defines the visual properties that can be applied to  [Divider] widgets, including line color, dimensions, spacing, and  child padding. These properties can be set at the theme level  to provide consistent styling across the application."
 ---
 
 ```dart
@@ -23,11 +23,13 @@ class DividerTheme extends ComponentThemeData {
   final double? endIndent;
   /// Padding around the [Divider.child].
   final EdgeInsetsGeometry? padding;
+  /// Alignment of [Divider.child] along the divider axis.
+  final AxisAlignmentGeometry? childAlignment;
   /// Creates a [DividerTheme].
-  const DividerTheme({this.color, this.height, this.thickness, this.indent, this.endIndent, this.padding});
+  const DividerTheme({this.color, this.height, this.thickness, this.indent, this.endIndent, this.padding, this.childAlignment});
   /// Creates a copy of this theme but with the given fields replaced by the
   /// new values.
-  DividerTheme copyWith({ValueGetter<Color?>? color, ValueGetter<double?>? height, ValueGetter<double?>? thickness, ValueGetter<double?>? indent, ValueGetter<double?>? endIndent, ValueGetter<EdgeInsetsGeometry?>? padding});
+  DividerTheme copyWith({ValueGetter<Color?>? color, ValueGetter<double?>? height, ValueGetter<double?>? thickness, ValueGetter<double?>? indent, ValueGetter<double?>? endIndent, ValueGetter<EdgeInsetsGeometry?>? padding, ValueGetter<AxisAlignmentGeometry?>? childAlignment});
   bool operator ==(Object other);
   int get hashCode;
 }
