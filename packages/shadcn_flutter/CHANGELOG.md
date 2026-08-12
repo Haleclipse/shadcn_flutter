@@ -1,3 +1,22 @@
+## [0.0.54]
+### Changed
+- `builder` now lives in the `showOverlay` method signature instead of `OverlayConfiguration`.
+- Overlay components (e.g., `Select`, `AutoComplete`, `ObjectFormField`, `FormattedObjectInput`, `showItemPicker`, `NavigationMenu`, `Tooltip`, `InstantTooltip`, and `HoverCard`) now have been migrated to use `OverlayConfiguration` instead of `OverlayHandler`.
+- `ShadcnApp` and `ShadcnLayer` no longer take `popooverHandler`/`tooltipHandler`/`menuHandler`.
+- `adaptiveOverlay` is now set to false.
+- Removed `OverlayHandler`, `OverlayManager`, `OverlayManagerLayer`, and `*OverlayHandler` from internal use.
+- `bool? adaptiveOverlay` and `OverlayConfiguration? overlayConfiguration` now lives in overlay component's component themes.
+- `DrawerContainer.intrinsic` and `DrawerContainer.expands` is moved to `PinnedSheet.contentExpands` and `DrawerContainer.contentIntrinsic`
+
+### Fixed
+- **[#420] DatePicker**: Calendar navigation arrow icons now flip to match RTL
+  layouts instead of always pointing left/right.
+- **[#419] PinnedSheet**: Nested sheets on different drag axes (e.g. a
+  horizontal `SideSheet` inside a vertical `BottomSheet`) no longer leak
+  leftover drag delta into the parent sheet's own axis; the drag chain now
+  only propagates between sheets that share the same drag axis.
+- Fixed PinnedSheet not immediately layout the sheet.
+
 ## [0.0.53]
 
 ### Added
