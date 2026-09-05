@@ -625,7 +625,7 @@ class WindowController extends ValueNotifier<WindowState> {
 /// - [WindowController] for programmatic window control
 /// - [WindowTheme] for styling options
 /// - [WindowState] for state configuration details
-class WindowWidget extends StatefulWidget {
+class WindowWidget extends StatefulWidget implements Styleable<WindowTheme> {
   /// Widget displayed in the window's title bar.
   ///
   /// Typically a [Text] widget, but can be any widget. Positioned on the
@@ -712,6 +712,10 @@ class WindowWidget extends StatefulWidget {
   /// If `null`, uses the theme's default resize thickness.
   final double? resizeThickness;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final WindowTheme? theme;
+
   /// Creates a window with direct state management.
   ///
   /// All window state properties ([bounds], [minimized], etc.) are managed
@@ -751,6 +755,7 @@ class WindowWidget extends StatefulWidget {
     this.maximized,
     bool this.minimized = false,
     BoxConstraints this.constraints = kDefaultWindowConstraints,
+    this.theme,
   }) : controller = null;
 
   /// Creates a window with controller-based state management.
@@ -791,6 +796,7 @@ class WindowWidget extends StatefulWidget {
     required WindowController this.controller,
     this.titleBarHeight,
     this.resizeThickness,
+    this.theme,
   }) : bounds = null,
        maximized = null,
        minimized = null,
@@ -818,6 +824,7 @@ class WindowWidget extends StatefulWidget {
     this.maximized,
     this.minimized,
     this.constraints,
+    this.theme,
   }) : titleBarHeight = null,
        resizeThickness = null;
 
@@ -1018,7 +1025,8 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
       child: ListenableBuilder(
         listenable: controller,
         builder: (context, child) {
-          final compTheme = ComponentTheme.maybeOf<WindowTheme>(context);
+          final compTheme =
+              widget.theme ?? ComponentTheme.maybeOf<WindowTheme>(context);
           var resizeThickness =
               widget.resizeThickness ?? compTheme?.resizeThickness ?? 8;
           final titleBarHeight =
@@ -1026,11 +1034,13 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
               theme.scaling;
 
           Widget windowClient = Card(
-            clipBehavior: Clip.antiAlias,
-            padding: EdgeInsets.zero,
-            borderRadius: state.maximized != null
-                ? BorderRadius.zero
-                : theme.borderRadiusMd,
+            theme: CardTheme(
+              clipBehavior: Clip.antiAlias,
+              padding: EdgeInsets.zero,
+              borderRadius: state.maximized != null
+                  ? BorderRadius.zero
+                  : theme.borderRadiusMd,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -1519,7 +1529,7 @@ class _WindowWidgetState extends State<WindowWidget> with WindowHandle {
 ///   ],
 /// )
 /// ```
-class WindowNavigator extends StatefulWidget {
+class WindowNavigator extends StatefulWidget implements Styleable<WindowTheme> {
   /// Initial list of windows to display.
   final List<Window> initialWindows;
 
@@ -1528,6 +1538,10 @@ class WindowNavigator extends StatefulWidget {
 
   /// Whether to show the top snap bar for window snapping.
   final bool showTopSnapBar;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final WindowTheme? theme;
 
   /// Creates a [WindowNavigator].
   ///
@@ -1540,6 +1554,7 @@ class WindowNavigator extends StatefulWidget {
     required this.initialWindows,
     this.child,
     this.showTopSnapBar = true,
+    this.theme,
   });
 
   @override
@@ -1641,6 +1656,12 @@ class Window {
   /// Size constraints for the window (min/max width and height).
   final BoxConstraints? constraints;
 
+  /// Styling for this window alone.
+  ///
+  /// Overrides any [WindowTheme] the surrounding [WindowNavigator] or an
+  /// ancestor [ComponentTheme] provides. Leave null to inherit.
+  final WindowTheme? theme;
+
   final GlobalKey<_WindowWidgetState> _key = GlobalKey<_WindowWidgetState>(
     debugLabel: 'Window',
   );
@@ -1675,6 +1696,7 @@ class Window {
     this.actions = const WindowActions(),
     this.content,
     required this.controller,
+    this.theme,
   }) : bounds = null,
        maximized = null,
        minimized = null,
@@ -1733,6 +1755,7 @@ class Window {
     bool this.minimized = false,
     bool this.alwaysOnTop = false,
     BoxConstraints this.constraints = kDefaultWindowConstraints,
+    this.theme,
   }) : controller = null;
 
   /// Gets a handle to the window's internal state.
@@ -1787,6 +1810,7 @@ class Window {
           maximized: maximized,
           minimized: minimized,
           constraints: constraints,
+          theme: theme,
         ),
       ),
       builder: (context, child) {
@@ -2004,8 +2028,10 @@ class _WindowLayerGroup extends StatelessWidget {
                             translation: Offset(0, value),
                             child: OutlinedContainer(
                               height: 100,
-                              padding: EdgeInsets.all(
-                                theme.density.baseGap * theme.scaling,
+                              theme: OutlinedContainerTheme(
+                                padding: EdgeInsets.all(
+                                  theme.density.baseGap * theme.scaling,
+                                ),
                               ),
                               child: Opacity(
                                 opacity: unlerpDouble(
@@ -2472,7 +2498,8 @@ class _WindowNavigatorState extends State<WindowNavigator>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<WindowTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<WindowTheme>(context);
     final titleBarHeight = (compTheme?.titleBarHeight ?? 32) * theme.scaling;
     return LayoutBuilder(
       builder: (context, constraints) {

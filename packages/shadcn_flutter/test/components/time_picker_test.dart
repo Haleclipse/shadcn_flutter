@@ -9,10 +9,7 @@ void main() {
       const time = TimeOfDay(hour: 10, minute: 30);
       await tester.pumpWidget(
         SimpleApp(
-          child: TimePicker(
-            value: time,
-            onChanged: (value) {},
-          ),
+          child: TimePicker(value: time, onChanged: (value) {}),
         ),
       );
 
@@ -58,11 +55,7 @@ void main() {
       final controller = TimePickerController(time);
 
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledTimePicker(
-            controller: controller,
-          ),
-        ),
+        SimpleApp(child: ControlledTimePicker(controller: controller)),
       );
 
       expect(find.text('10:30 AM'), findsOneWidget);
@@ -76,11 +69,7 @@ void main() {
     testWidgets('works with initialValue', (tester) async {
       const time = TimeOfDay(hour: 10, minute: 30);
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledTimePicker(
-            initialValue: time,
-          ),
-        ),
+        SimpleApp(child: ControlledTimePicker(initialValue: time)),
       );
 
       expect(find.text('10:30 AM'), findsOneWidget);

@@ -145,7 +145,7 @@ class AvatarTile extends StatelessWidget implements IComponentPage {
               provider: const NetworkImage(
                   'https://avatars.githubusercontent.com/u/64018564?v=4'),
             ),
-            const Gap(16),
+            const SizedBox(width: 16),
             Avatar(
               initials: Avatar.getInitials('sunarya-thito'),
             ),

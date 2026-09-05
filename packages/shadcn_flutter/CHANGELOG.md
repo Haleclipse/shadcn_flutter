@@ -1,3 +1,126 @@
+## [0.0.55]
+
+### Breaking
+
+- `Gap`, `SliverGap` and `MaxGap` are no longer exported, and the top-level
+  `gap(double, {double? crossGap})` helper is removed. Use `SizedBox`,
+  `Column(...).gap(8)`, `Row(...).gap(8)` or `DensityGap`. Add `package:gap` to
+  your own pubspec if you want `Gap` back.
+- `DensityGap` takes a `direction`, defaulting to `Axis.vertical`. Pass
+  `Axis.horizontal` for the ones inside a `Row`.
+- Skeleton loading moved to the new `shadcn_flutter_skeletonizer` package.
+  `asSkeleton`, `Bone` and `BoneMock` come from there now, and you need a
+  `SkeletonizerLayer` in the tree. Its README has the three-step migration.
+- `CountryFlag` renders regional indicator emoji instead of bundled artwork.
+  Sizing moved from `theme: ImageTheme(...)` to plain `width`, `height` and
+  `shape` arguments, `fromLanguageCode` is gone, and unknown country codes draw
+  an empty box. Set `CountryFlagTheme.builder` to supply real artwork, for
+  example by delegating to `package:country_flags`.
+- `PhoneInputTheme.flagShape` takes a `ShapeBorder?`. Use
+  `RoundedRectangleBorder` and `CircleBorder` in place of `RoundedRectangle`
+  and `Circle`.
+- `ShadcnLocalizations.localizationsDelegates` is now just
+  `[ShadcnLocalizations.delegate]`. The `Global*Localizations` delegates it used
+  to include come from the SDK material and cupertino libraries, whose types do
+  not match the `material_ui` and `cupertino_ui` ones the companion packages
+  use. Add `flutter_localizations` yourself if you want them, or use
+  `kMaterialLocalizationsDelegates` / `kCupertinoLocalizationsDelegates` from
+  `shadcn_flutter_material` and `shadcn_flutter_cupertino`.
+- If you subclass `ShadcnLocalizations`, six messages take a `String` instead of
+  a `double`: `formLessThan`, `formGreaterThan`, `formLessThanOrEqualTo`,
+  `formGreaterThanOrEqualTo`, `formBetweenInclusively` and
+  `formBetweenExclusively`. `formEqualTo` is new and also required. Wrap numbers
+  in `formatDecimal` to keep the old output.
+- Dropped the `skeletonizer`, `country_flags`, `phonecodes`, `gap`,
+  `expressions`, `email_validator`, `web`, `intl` and `flutter_localizations`
+  dependencies. Only `data_widget` and `animation_kit` are left. `Country`,
+  `Countries`, `Currency`, `Filter` and `EmailValidator` are still exported and
+  unchanged, and `TextInputFormatters.mathExpression` still accepts the same
+  syntax.
+
+### Added
+
+- Translations for 39 more languages: Arabic, Bengali, Bulgarian, Chinese
+  (Simplified and Traditional), Czech, Danish, Dutch, Filipino, Finnish,
+  French, German, Greek, Hebrew, Hindi, Hungarian, Indonesian, Italian,
+  Japanese, Korean, Malay, Marathi, Norwegian Bokmål, Pashto, Persian, Polish,
+  Portuguese, Romanian, Russian, Slovak, Spanish, Swedish, Tamil, Telugu, Thai,
+  Turkish, Ukrainian, Urdu and Vietnamese. Pass
+  `ShadcnLocalizations.supportedLocales` to `ShadcnApp` to opt into all of them.
+  None have been checked by a native speaker yet, so corrections are welcome.
+- Right to left locales now mirror the app. Arabic, Hebrew, Persian, Pashto and
+  Urdu all ship.
+- Region and script variants. `zh_Hant` ships, and `zh_TW`, `zh_HK` and `zh_MO`
+  reach it without carrying a script subtag.
+- Every locale's class is exported, so you can subclass one to reword a single
+  string:
+
+  ```dart
+  class MyStrings extends ShadcnLocalizationsDe {
+    @override
+    String get buttonSave => 'Sichern';
+  }
+  ```
+- A `theme:` argument on 113 components, taking that component's
+  `ComponentThemeData`. It applies to that widget alone and takes precedence
+  over an ancestor `ComponentTheme`.
+
+  ```dart
+  Card(
+    theme: CardTheme(padding: EdgeInsets.all(8)),
+    child: const Text('One card'),
+  )
+  ```
+- `.inheritStyle(theme)` and `.resetInheritedStyle()` on those same components,
+  for when you want the whole subtree instead of the one widget, plus
+  `.restoreInheritedStyle(context)` to carry a theme into content built
+  elsewhere, such as an overlay.
+- `ComponentTheme.reset()`, which clears the theme of type `T` for its subtree
+  so components fall back to their built-in defaults.
+- `Window.theme`, for styling one window without touching the navigator's
+  `WindowTheme`.
+- `ShadcnLocalizations.textDirection`, `ShadcnLocalizations.maybeOf` and
+  `ShadcnLocalizations.formEqualTo`.
+- `formatDecimal` for grouping digits, and `canonicalizeLocale` for normalizing
+  a locale string.
+- `ShadcnApp.surfaceBuilder` and `ShadcnLayer.surfaceBuilder`, which wrap the
+  shadcn surface from outside the toast, eye dropper and keyboard shortcut
+  layers. Use it instead of `builder` when what you install has to reach overlay
+  content.
+
+### Deprecated
+
+- The per property styling arguments on those 113 components: `Card`'s
+  `padding`, `Avatar`'s `size`, `Divider`'s `thickness` and so on. Pass the
+  component's theme instead. They still work, and still win over `theme:`, so
+  nothing breaks today.
+
+  ```dart
+  // before
+  Card(padding: EdgeInsets.all(8), borderRadius: BorderRadius.zero, child: ...)
+  // after
+  Card(
+    theme: CardTheme(
+      padding: EdgeInsets.all(8),
+      borderRadius: BorderRadius.zero,
+    ),
+    child: ...,
+  )
+  ```
+
+### Fixed
+
+- **[#426]**: a Material or Cupertino widget inside a shadcn toast threw for
+  want of an ancestor. `MaterialShadcnApp` and `CupertinoShadcnApp` install
+  theirs above the overlay layers now.
+- `CompareWith.equal` and `CompareTo.equal` threw `NoSuchMethodError` instead of
+  reporting a validation failure.
+- `MenuGap` and `NavigationGap` spaced along the wrong axis inside a horizontal
+  menu or navigation bar.
+- Documentation and examples used `ColorSchemes.lightZinc()`, which does not
+  compile. `ColorSchemes` members are constants; the function is on
+  `LegacyColorSchemes`.
+
 ## [0.0.54]
 ### Breaking
 - Minimum Flutter is now 3.47.0 (Dart 3.13.0), up from 3.32.3 (Dart 3.6.0).

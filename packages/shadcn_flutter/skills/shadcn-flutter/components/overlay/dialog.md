@@ -65,7 +65,7 @@ class DialogExample1 extends StatelessWidget {
                 children: [
                   const Text(
                       'Make changes to your profile here. Click save when you\'re done'),
-                  const Gap(16),
+                  const SizedBox(height: 16),
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 400),
                     child: Form(
@@ -137,7 +137,7 @@ class DialogTile extends StatelessWidget implements IComponentPage {
             children: [
               const Text(
                   'Make changes to your profile here. Click save when you\'re done'),
-              const Gap(16),
+              const SizedBox(height: 16),
               const Form(
                 child: FormTableLayout(rows: [
                   FormField<String>(

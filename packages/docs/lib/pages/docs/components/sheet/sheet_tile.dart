@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SheetTile extends StatelessWidget implements IComponentPage {
   const SheetTile({super.key});

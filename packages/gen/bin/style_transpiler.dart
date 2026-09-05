@@ -41,8 +41,8 @@ void main() {
     )
     or
     ShadcnApp(
-    theme: ThemeData(colorScheme: ColorSchemes.lightZinc()),
-    darkTheme: ThemeData(colorScheme: ColorSchemes.darkZinc()),
+    theme: ThemeData(colorScheme: ColorSchemes.lightZinc),
+    darkTheme: ThemeData(colorScheme: ColorSchemes.darkZinc),
     )
     instead of
     ShadcnApp(

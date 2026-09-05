@@ -36,7 +36,7 @@ Column(
   children: [
     const Text('Welcome to Shadcn').h1(),
     const Text('A cohesive UI ecosystem for Flutter.').lead(),
-    const Gap(16),
+    const SizedBox(height: 16),
     const Text('This is standard body text.').p(),
     const Text('Important highlight').large().bold(),
   ],

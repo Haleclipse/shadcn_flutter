@@ -671,7 +671,7 @@ class _FormExample1State extends State<FormExample1> {
                 ),
               ],
             ),
-            const Gap(24),
+            const SizedBox(height: 24),
             FormErrorBuilder(
               builder: (context, errors, child) {
                 // Disable the submit button while there are validation errors.
@@ -820,7 +820,7 @@ class _FormExample2State extends State<FormExample2> {
                 ),
               ],
             ).gap(24),
-            const Gap(24),
+            const SizedBox(height: 24),
             FormErrorBuilder(
               builder: (context, errors, child) {
                 return PrimaryButton(
@@ -941,7 +941,7 @@ class _FormExample3State extends State<FormExample3> {
                 ),
               ],
             ),
-            const Gap(24),
+            const SizedBox(height: 24),
             const SubmitButton(
               loadingTrailing: AspectRatio(
                 aspectRatio: 1,
@@ -1111,7 +1111,7 @@ class _FormExample4State extends State<FormExample4> {
                 ),
               ],
             ).gap(24),
-            const Gap(24),
+            const SizedBox(height: 24),
             FormErrorBuilder(
               builder: (context, errors, child) {
                 return PrimaryButton(
@@ -1211,7 +1211,7 @@ class FormExample5 extends StatelessWidget {
                 ),
               ],
             ),
-            const Gap(24),
+            const SizedBox(height: 24),
             const SubmitButton(child: Text('Validate')),
           ],
         ),
@@ -1295,7 +1295,7 @@ class FormExample6 extends StatelessWidget {
                 ),
               ],
             ),
-            const Gap(24),
+            const SizedBox(height: 24),
             const SubmitButton(
               loadingTrailing: AspectRatio(
                 aspectRatio: 1,
@@ -1362,7 +1362,7 @@ class FormExample7 extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Gap(16),
+            const SizedBox(height: 16),
             FormTableLayout(
               rows: [
                 const FormField<String>(
@@ -1391,7 +1391,7 @@ class FormExample7 extends StatelessWidget {
                 ),
               ],
             ),
-            const Gap(24),
+            const SizedBox(height: 24),
             const SubmitButton(child: Text('Submit')),
           ],
         ),
@@ -1473,7 +1473,7 @@ class FormExample8 extends StatelessWidget {
                 ),
               ],
             ),
-            const Gap(24),
+            const SizedBox(height: 24),
             // Option 1: Manual submit with FormErrorBuilder
             FormErrorBuilder(
               builder: (context, errors, child) {
@@ -1483,7 +1483,7 @@ class FormExample8 extends StatelessWidget {
                 );
               },
             ),
-            const Gap(8),
+            const SizedBox(height: 8),
             // Option 2: Automatic submit with SubmitButton
             const SubmitButton(
               loadingTrailing: AspectRatio(
@@ -1532,7 +1532,7 @@ class _FormExample9State extends State<FormExample9> {
         children: [
           // ── Standard: you manage the state ──
           const Text('Standard (manual state)').semiBold,
-          const Gap(24),
+          const SizedBox(height: 24),
           Checkbox(
             state: _checkboxState,
             onChanged: (value) {
@@ -1542,7 +1542,7 @@ class _FormExample9State extends State<FormExample9> {
             },
             trailing: const Text('Accept terms'),
           ),
-          const Gap(8),
+          const SizedBox(height: 8),
           Switch(
             value: _switchValue,
             onChanged: (value) {
@@ -1552,16 +1552,16 @@ class _FormExample9State extends State<FormExample9> {
             },
             trailing: const Text('Dark mode'),
           ),
-          const Gap(32),
+          const SizedBox(height: 32),
           const Divider(),
-          const Gap(32),
+          const SizedBox(height: 32),
           // ── Controlled: zero boilerplate ──
           const Text('Controlled (no manual state)').semiBold,
-          const Gap(24),
+          const SizedBox(height: 24),
           const ControlledCheckbox(
             trailing: Text('Accept terms'),
           ),
-          const Gap(8),
+          const SizedBox(height: 8),
           const ControlledSwitch(
             trailing: Text('Dark mode'),
           ),

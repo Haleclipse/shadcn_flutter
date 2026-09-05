@@ -229,7 +229,7 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
                         ),
                       ),
                     ),
-                    const Gap(4),
+                    const SizedBox(width: 4),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
@@ -238,7 +238,7 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
                         style: TextStyle(fontSize: 14),
                       ),
                     ),
-                    const Gap(4),
+                    const SizedBox(width: 4),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),

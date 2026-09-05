@@ -243,7 +243,7 @@ class InputOTPTile extends StatelessWidget implements IComponentPage {
           const Card(
             child: InputOTPExample2(),
           ),
-          const Gap(24),
+          const SizedBox(height: 24),
           Transform.translate(
             offset: const Offset(-150, 0),
             child: Card(

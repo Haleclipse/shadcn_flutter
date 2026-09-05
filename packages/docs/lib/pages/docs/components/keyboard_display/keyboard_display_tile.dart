@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class KeyboardDisplayTile extends StatelessWidget implements IComponentPage {
   const KeyboardDisplayTile({super.key});
@@ -23,8 +24,10 @@ class KeyboardDisplayTile extends StatelessWidget implements IComponentPage {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.muted,
                     borderRadius: BorderRadius.circular(4),
@@ -36,8 +39,10 @@ class KeyboardDisplayTile extends StatelessWidget implements IComponentPage {
                 const Text('+'),
                 const Gap(4),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.muted,
                     borderRadius: BorderRadius.circular(4),
@@ -54,8 +59,10 @@ class KeyboardDisplayTile extends StatelessWidget implements IComponentPage {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.muted,
                     borderRadius: BorderRadius.circular(4),
@@ -67,8 +74,10 @@ class KeyboardDisplayTile extends StatelessWidget implements IComponentPage {
                 const Text('+'),
                 const Gap(4),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.muted,
                     borderRadius: BorderRadius.circular(4),

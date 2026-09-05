@@ -103,7 +103,7 @@ class StagedBreakpoint implements StageBreakpoint {
 
   /// Creates a [StagedBreakpoint] with default responsive breakpoints.
   const StagedBreakpoint.defaultBreakpoints()
-      : breakpoints = _defaultBreakpoints;
+    : breakpoints = _defaultBreakpoints;
 
   @override
   double getMinWidth(double width) {
@@ -187,7 +187,8 @@ class StageContainerTheme extends ComponentThemeData {
 ///   },
 /// )
 /// ```
-class StageContainer extends StatelessWidget {
+class StageContainer extends StatelessWidget
+    implements Styleable<StageContainerTheme> {
   /// The breakpoint strategy for determining container width.
   ///
   /// Defaults to [StageBreakpoint.defaultBreakpoints].
@@ -203,17 +204,23 @@ class StageContainer extends StatelessWidget {
   /// Defaults to `EdgeInsets.symmetric(horizontal: 72)`.
   final EdgeInsets padding;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final StageContainerTheme? theme;
+
   /// Creates a [StageContainer].
   const StageContainer({
     super.key,
     this.breakpoint = StageBreakpoint.defaultBreakpoints,
     required this.builder,
     this.padding = const EdgeInsets.symmetric(horizontal: 72),
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<StageContainerTheme>(context);
+    final compTheme =
+        theme ?? ComponentTheme.maybeOf<StageContainerTheme>(context);
     final StageBreakpoint breakpoint = compTheme?.breakpoint ?? this.breakpoint;
     final EdgeInsets padding = styleValue(
       defaultValue: this.padding,

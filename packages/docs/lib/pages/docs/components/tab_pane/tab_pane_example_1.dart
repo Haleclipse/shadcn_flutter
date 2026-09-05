@@ -45,10 +45,12 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
         constraints: const BoxConstraints(minWidth: 150),
         child: Label(
           leading: OutlinedContainer(
-            backgroundColor: Colors.white,
             width: 18,
             height: 18,
-            borderRadius: Theme.of(context).borderRadiusMd,
+            theme: OutlinedContainerTheme(
+              backgroundColor: Colors.white,
+              borderRadius: Theme.of(context).borderRadiusMd,
+            ),
             child: Center(
               child: Text(
                 data.count.toString(),
@@ -115,18 +117,19 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
                     ? element.data.count
                     : previousValue;
               });
-              tabs.add(TabPaneData(
-                  MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}')));
+              tabs.add(
+                TabPaneData(
+                  MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}'),
+                ),
+              );
             });
           },
-        )
+        ),
       ],
       // The content area; you can render based on the focused index.
       child: SizedBox(
         height: 400,
-        child: Center(
-          child: Text('Tab ${focused + 1}').xLarge().bold(),
-        ),
+        child: Center(child: Text('Tab ${focused + 1}').xLarge().bold()),
       ),
     );
   }

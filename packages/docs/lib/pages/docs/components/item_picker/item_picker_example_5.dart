@@ -39,12 +39,8 @@ class _ItemPickerExample5State extends State<ItemPickerExample5> {
         return ItemPickerOption(
           value: item,
           label: Text(item.name),
-          style: const ButtonStyle.ghostIcon(
-            shape: ButtonShape.circle,
-          ),
-          selectedStyle: const ButtonStyle.primary(
-            shape: ButtonShape.circle,
-          ),
+          style: const ButtonStyle.ghostIcon(shape: ButtonShape.circle),
+          selectedStyle: const ButtonStyle.primary(shape: ButtonShape.circle),
           child: Container(
             constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
             decoration: BoxDecoration(

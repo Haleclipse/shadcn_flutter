@@ -609,7 +609,7 @@ class DecreaseSliderValue extends Intent {
 ///   },
 /// )
 /// ```
-class Slider extends StatefulWidget {
+class Slider extends StatefulWidget implements Styleable<SliderTheme> {
   /// The current value of the slider.
   ///
   /// Can be either a single value or a range. The slider's visual state
@@ -680,6 +680,10 @@ class Slider extends StatefulWidget {
   /// `valueIndicatorBuilder: (context, value) => SliderValueIndicator(value: value)`.
   final SliderValueIndicatorBuilder? valueIndicatorBuilder;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final SliderTheme? theme;
+
   /// Creates a [Slider].
   ///
   /// Parameters:
@@ -719,6 +723,7 @@ class Slider extends StatefulWidget {
     this.decreaseStep,
     this.enabled = true,
     this.valueIndicatorBuilder,
+    this.theme,
   }) : assert(min <= max);
 
   @override
@@ -1279,7 +1284,8 @@ class _SliderState extends State<Slider>
   ) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<SliderTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<SliderTheme>(context);
     var value = widget.value;
     var start = value.start;
     var end = value.end;
@@ -1342,7 +1348,8 @@ class _SliderState extends State<Slider>
   ) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<SliderTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<SliderTheme>(context);
     return Positioned(
       left: 0,
       right: 0,
@@ -1376,7 +1383,8 @@ class _SliderState extends State<Slider>
   ) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<SliderTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<SliderTheme>(context);
     final resolvedIndicatorBuilder =
         widget.valueIndicatorBuilder ?? compTheme?.valueIndicatorBuilder;
     if (widget.divisions != null) {

@@ -107,7 +107,7 @@ void main() {
           child: BasicLayout(
             leading: Icon(LucideIcons.star),
             title: Text('Title'),
-            contentSpacing: 24,
+            theme: BasicTheme(contentSpacing: 24),
           ),
         ),
       );
@@ -123,7 +123,7 @@ void main() {
           child: BasicLayout(
             title: Text('Title'),
             subtitle: Text('Subtitle'),
-            titleSpacing: 8,
+            theme: BasicTheme(titleSpacing: 8),
           ),
         ),
       );
@@ -153,7 +153,7 @@ void main() {
           child: BasicLayout(
             leading: Icon(LucideIcons.star),
             title: Text('Title'),
-            leadingAlignment: Alignment.center,
+            theme: BasicTheme(leadingAlignment: Alignment.center),
           ),
         ),
       );
@@ -169,7 +169,7 @@ void main() {
           child: BasicLayout(
             title: Text('Title'),
             trailing: Icon(LucideIcons.arrowRight),
-            trailingAlignment: Alignment.center,
+            theme: BasicTheme(trailingAlignment: Alignment.center),
           ),
         ),
       );
@@ -184,7 +184,7 @@ void main() {
         SimpleApp(
           child: BasicLayout(
             title: Text('Title'),
-            titleAlignment: Alignment.center,
+            theme: BasicTheme(titleAlignment: Alignment.center),
           ),
         ),
       );
@@ -199,7 +199,7 @@ void main() {
           child: BasicLayout(
             title: Text('Title'),
             subtitle: Text('Subtitle'),
-            subtitleAlignment: Alignment.center,
+            theme: BasicTheme(subtitleAlignment: Alignment.center),
           ),
         ),
       );
@@ -215,7 +215,7 @@ void main() {
           child: BasicLayout(
             title: Text('Title'),
             content: Text('Content'),
-            contentAlignment: Alignment.center,
+            theme: BasicTheme(contentAlignment: Alignment.center),
           ),
         ),
       );
@@ -329,7 +329,7 @@ void main() {
               child: ColoredBox(color: Colors.red),
             ),
             title: Text('Title'),
-            contentSpacing: 16,
+            theme: BasicTheme(contentSpacing: 16),
           ),
         ),
       );
@@ -407,7 +407,7 @@ void main() {
             title: Text('Title'),
             subtitle: Text('Subtitle'),
             content: Text('Content'),
-            titleSpacing: 12,
+            theme: BasicTheme(titleSpacing: 12),
           ),
         ),
       );

@@ -85,7 +85,7 @@ class _ColorPickerExample1State extends State<ColorPickerExample1> {
               },
             ),
           ),
-          const Gap(16),
+          const SizedBox(height: 16),
           ColorInput(
             value: color,
             // Full dialog mode with a title.
@@ -132,7 +132,7 @@ class ColorPickerExample2 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Color: ${colorToHex(result)}'),
-                  const Gap(16),
+                  const SizedBox(width: 16),
                   Container(
                     width: 24,
                     height: 24,
@@ -212,7 +212,7 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
             child: const Text('Open Color Picker Popover'),
           ),
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         PrimaryButton(
           onPressed: () {
             // Show the color picker as a dialog with a title.

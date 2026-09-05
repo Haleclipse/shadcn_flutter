@@ -247,7 +247,7 @@ class ContextMenuTile extends StatelessWidget implements IComponentPage {
           const CustomPaint(
             painter: CursorPainter(),
           ),
-          const Gap(24),
+          const SizedBox(width: 24),
           SizedBox(
             width: 192,
             child: MenuPopup(children: [

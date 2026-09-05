@@ -35,6 +35,7 @@ class ShadcnApp extends StatefulWidget {
     this.onNavigationNotification,
     this.navigatorObservers = const [],
     this.builder,
+    this.surfaceBuilder,
     this.title = '',
     this.onGenerateTitle,
     this.color,
@@ -81,6 +82,7 @@ class ShadcnApp extends StatefulWidget {
     this.routerConfig,
     this.backButtonDispatcher,
     this.builder,
+    this.surfaceBuilder,
     this.title = '',
     this.onGenerateTitle,
     this.onNavigationNotification,
@@ -168,6 +170,12 @@ class ShadcnApp extends StatefulWidget {
 
   /// A builder that wraps the app's content.
   final TransitionBuilder? builder;
+
+  /// Wraps the whole shadcn surface, outside every overlay layer.
+  ///
+  /// See [ShadcnLayer.surfaceBuilder]. Prefer `MaterialShadcnApp` or
+  /// `CupertinoShadcnApp` from the companion packages, which set this for you.
+  final Widget Function(BuildContext context, Widget child)? surfaceBuilder;
 
   /// A one-line description used by the device to identify the app.
   final String title;
@@ -399,19 +407,34 @@ class _ShadcnAppState extends State<ShadcnApp> {
   }
 
   Widget _builder(BuildContext context, Widget? child) {
-    return ShadcnLayer(
+    Widget result = ShadcnLayer(
       theme: widget.theme,
       scaling: widget.scaling,
       initialRecentColors: widget.initialRecentColors,
       maxRecentColors: widget.maxRecentColors,
       onRecentColorsChanged: widget.onRecentColorsChanged,
       builder: widget.builder,
+      surfaceBuilder: widget.surfaceBuilder,
       enableScrollInterception: widget.enableScrollInterception,
       darkTheme: widget.darkTheme,
       themeMode: widget.themeMode,
       enableThemeAnimation: widget.enableThemeAnimation,
       child: child,
     );
+    // WidgetsApp takes the ambient direction from WidgetsLocalizations, which
+    // without `package:flutter_localizations` is always
+    // DefaultWidgetsLocalizations — left-to-right for every locale, so an
+    // Arabic or Hebrew app would not mirror. ShadcnLocalizations knows the
+    // direction of every locale it ships, so use that instead. This sits
+    // outside ShadcnLayer, so overlays inherit it too.
+    final localizations = ShadcnLocalizations.maybeOf(context);
+    if (localizations != null) {
+      result = Directionality(
+        textDirection: localizations.textDirection,
+        child: result,
+      );
+    }
+    return result;
   }
 
   Widget _buildWidgetApp(BuildContext context) {
@@ -546,6 +569,25 @@ class ShadcnLayer extends StatelessWidget {
   /// A builder to wrap the child widget.
   final Widget Function(BuildContext context, Widget? child)? builder;
 
+  /// Wraps the entire shadcn surface, outside every overlay layer.
+  ///
+  /// Unlike [builder], which is applied around [child] and therefore *inside*
+  /// the toast, eye dropper and keyboard shortcut layers, this wraps all of
+  /// them. Anything it installs is visible to overlay content as well as to
+  /// pages, while still being able to read the shadcn [Theme].
+  ///
+  /// This exists for the Material and Cupertino companion packages, which use
+  /// it to install their theme, ancestors and localizations so that overlays
+  /// get them too:
+  ///
+  /// ```dart
+  /// ShadcnApp(
+  ///   surfaceBuilder: (context, child) => MaterialLayer(child: child),
+  ///   home: const HomePage(),
+  /// );
+  /// ```
+  final Widget Function(BuildContext context, Widget child)? surfaceBuilder;
+
   /// Whether to enable scroll interception.
   final bool enableScrollInterception;
 
@@ -562,6 +604,7 @@ class ShadcnLayer extends StatelessWidget {
     this.maxRecentColors = 50,
     this.onRecentColorsChanged,
     this.builder,
+    this.surfaceBuilder,
     this.enableScrollInterception = false,
     this.darkTheme,
     this.themeMode = ThemeMode.system,
@@ -587,31 +630,28 @@ class ShadcnLayer extends StatelessWidget {
           var theme = Theme.of(context);
           var scrollViewInterceptor = ScrollViewInterceptor(
             enabled: enableScrollInterception,
-            child: ShadcnSkeletonizerConfigLayer(
-              theme: theme,
-              child: DefaultTextStyle.merge(
-                style: theme.typography.base.copyWith(
+            child: DefaultTextStyle.merge(
+              style: theme.typography.base.copyWith(
+                color: theme.colorScheme.foreground,
+              ),
+              child: IconTheme.merge(
+                data: theme.iconTheme.medium.copyWith(
                   color: theme.colorScheme.foreground,
                 ),
-                child: IconTheme.merge(
-                  data: theme.iconTheme.medium.copyWith(
-                    color: theme.colorScheme.foreground,
-                  ),
-                  child: RecentColorsScope(
-                    initialRecentColors: initialRecentColors,
-                    maxRecentColors: maxRecentColors,
-                    onRecentColorsChanged: onRecentColorsChanged,
-                    child: EyeDropperLayer(
-                      child: KeyboardShortcutDisplayMapper(
-                        child: ToastLayer(
-                          child: builder != null
-                              ? Builder(
-                                  builder: (BuildContext context) {
-                                    return builder!(context, child);
-                                  },
-                                )
-                              : child ?? const SizedBox.shrink(),
-                        ),
+                child: RecentColorsScope(
+                  initialRecentColors: initialRecentColors,
+                  maxRecentColors: maxRecentColors,
+                  onRecentColorsChanged: onRecentColorsChanged,
+                  child: EyeDropperLayer(
+                    child: KeyboardShortcutDisplayMapper(
+                      child: ToastLayer(
+                        child: builder != null
+                            ? Builder(
+                                builder: (BuildContext context) {
+                                  return builder!(context, child);
+                                },
+                              )
+                            : child ?? const SizedBox.shrink(),
                       ),
                     ),
                   ),
@@ -619,10 +659,13 @@ class ShadcnLayer extends StatelessWidget {
               ),
             ),
           );
+          Widget surface = surfaceBuilder != null
+              ? surfaceBuilder!(context, scrollViewInterceptor)
+              : scrollViewInterceptor;
           if (!hasShadcnApp) {
-            return DataMessengerRoot(child: scrollViewInterceptor);
+            return DataMessengerRoot(child: surface);
           } else {
-            return scrollViewInterceptor;
+            return surface;
           }
         },
       ),

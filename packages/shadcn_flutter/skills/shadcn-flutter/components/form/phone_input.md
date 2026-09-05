@@ -65,7 +65,7 @@ class _PhoneInputExample1State extends State<PhoneInputExample1> {
             },
           ),
         ),
-        const Gap(24),
+        const SizedBox(height: 24),
         Text(
           _phoneNumber?.value ?? '(No value)',
         ),

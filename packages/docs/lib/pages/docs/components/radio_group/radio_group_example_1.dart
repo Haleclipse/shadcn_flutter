@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class RadioGroupExample1 extends StatefulWidget {
   const RadioGroupExample1({super.key});
@@ -29,18 +30,9 @@ class _RadioGroupExample1State extends State<RadioGroupExample1> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Each RadioItem represents a single choice with an associated integer value.
-              RadioItem(
-                value: 1,
-                trailing: Text('Option 1'),
-              ),
-              RadioItem(
-                value: 2,
-                trailing: Text('Option 2'),
-              ),
-              RadioItem(
-                value: 3,
-                trailing: Text('Option 3'),
-              ),
+              RadioItem(value: 1, trailing: Text('Option 1')),
+              RadioItem(value: 2, trailing: Text('Option 2')),
+              RadioItem(value: 3, trailing: Text('Option 3')),
             ],
           ),
         ),

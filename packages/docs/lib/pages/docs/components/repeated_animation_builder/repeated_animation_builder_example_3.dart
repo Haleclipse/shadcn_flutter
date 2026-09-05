@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class RepeatedAnimationBuilderExample3 extends StatefulWidget {
   const RepeatedAnimationBuilderExample3({super.key});
@@ -33,11 +34,7 @@ class _RepeatedAnimationBuilderExample3State
           builder: (context, value, child) {
             return Transform.translate(
               offset: value,
-              child: Container(
-                width: 100,
-                height: 100,
-                color: Colors.red,
-              ),
+              child: Container(width: 100, height: 100, color: Colors.red),
             );
           },
         ),
@@ -50,7 +47,7 @@ class _RepeatedAnimationBuilderExample3State
             });
           },
           child: Text(play ? 'Stop' : 'Play'),
-        )
+        ),
       ],
     );
   }

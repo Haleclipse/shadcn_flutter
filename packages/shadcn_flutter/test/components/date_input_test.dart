@@ -9,10 +9,7 @@ void main() {
       final date = DateTime(2023, 1, 1);
       await tester.pumpWidget(
         SimpleApp(
-          child: DateInput(
-            initialValue: date,
-            onChanged: (value) {},
-          ),
+          child: DateInput(initialValue: date, onChanged: (value) {}),
         ),
       );
 

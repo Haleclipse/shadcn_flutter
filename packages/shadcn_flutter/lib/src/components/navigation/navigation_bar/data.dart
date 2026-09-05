@@ -43,7 +43,7 @@ enum NavigationRailAlignment {
   center,
 
   /// Align items to the end (bottom) of the rail.
-  end
+  end,
 }
 
 /// Enumeration defining the type of navigation container.
@@ -58,7 +58,7 @@ enum NavigationContainerType {
   bar,
 
   /// Expandable sidebar navigation with more space for content.
-  sidebar
+  sidebar,
 }
 
 /// Determines when labels are shown in navigation items.

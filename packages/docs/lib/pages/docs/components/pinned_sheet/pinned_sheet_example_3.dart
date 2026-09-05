@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// A [PinnedSheet] using a [SheetContainer] that does not stretch edge-to-edge:
 /// it is sized to 70% of the width and centered ([SheetContainer.alignCenter]
@@ -17,12 +18,9 @@ class _PinnedSheetExample3State extends State<PinnedSheetExample3> {
   // Expanded, but 40px short of fully covering, with a gentler backdrop scale.
   static final SheetStage expanded =
       const SheetStage.expanded(backdropTransform: 0.4) -
-          const SheetStage.fixed(40);
+      const SheetStage.fixed(40);
 
-  late final List<SheetStage> stages = [
-    const SheetStage.closed(),
-    expanded,
-  ];
+  late final List<SheetStage> stages = [const SheetStage.closed(), expanded];
 
   @override
   void dispose() {

@@ -69,11 +69,7 @@ void main() {
     testWidgets('works with controller', (tester) async {
       final controller = SliderController(const SliderValue.single(0.0));
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledSlider(
-            controller: controller,
-          ),
-        ),
+        SimpleApp(child: ControlledSlider(controller: controller)),
       );
 
       expect(find.byType(Slider), findsOneWidget);
@@ -89,9 +85,7 @@ void main() {
     testWidgets('works with initialValue', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: ControlledSlider(
-            initialValue: const SliderValue.single(0.5),
-          ),
+          child: ControlledSlider(initialValue: const SliderValue.single(0.5)),
         ),
       );
 
@@ -125,17 +119,19 @@ void main() {
         ),
       );
 
-      AnimatedOpacity findOpacityWidget() =>
-          tester.widget<AnimatedOpacity>(find.ancestor(
-            of: find.byType(SliderValueIndicator),
-            matching: find.byType(AnimatedOpacity),
-          ));
+      AnimatedOpacity findOpacityWidget() => tester.widget<AnimatedOpacity>(
+        find.ancestor(
+          of: find.byType(SliderValueIndicator),
+          matching: find.byType(AnimatedOpacity),
+        ),
+      );
 
       expect(find.byType(SliderValueIndicator), findsOneWidget);
       expect(findOpacityWidget().opacity, 0.0);
 
-      final gesture =
-          await tester.startGesture(tester.getCenter(find.byType(Slider)));
+      final gesture = await tester.startGesture(
+        tester.getCenter(find.byType(Slider)),
+      );
       await tester.pump(const Duration(milliseconds: 100));
       // The first move past the touch-slop threshold only triggers
       // onHorizontalDragStart (no setState there); a second move is needed

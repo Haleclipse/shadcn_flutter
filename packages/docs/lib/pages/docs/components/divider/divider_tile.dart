@@ -1,5 +1,6 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../divider/divider_example_3.dart';
 
 class DividerTile extends StatelessWidget implements IComponentPage {

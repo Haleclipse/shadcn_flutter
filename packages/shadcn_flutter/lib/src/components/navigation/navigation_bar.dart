@@ -9,5 +9,6 @@ export 'navigation_bar/misc.dart'
     hide
         startPadding,
         endPadding,
+        sliverGap,
         NavigationLabeled,
         NavigationChildOverflowHandle;

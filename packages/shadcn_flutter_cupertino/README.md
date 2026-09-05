@@ -22,6 +22,63 @@ widgets in your own code, which you almost always will:
 flutter pub add cupertino_ui
 ```
 
+## Migrating from `package:flutter/cupertino.dart`
+
+**This is the one thing to get right, and it is the most common upgrade
+problem.** Flutter still ships `package:flutter/cupertino.dart`, so an app that
+keeps its old imports goes on compiling after the upgrade — but it will not
+work.
+
+`package:flutter/cupertino.dart` and `package:cupertino_ui/cupertino_ui.dart`
+are two separate libraries that each define their own `CupertinoTheme`,
+`CupertinoLocalizations`, `CupertinoPageScaffold` and so on. They are different
+Dart types, so a widget from the SDK copy cannot see the theme or the
+localizations that `CupertinoLayer` installs, and throws:
+
+```
+No CupertinoLocalizations found.
+```
+
+These checks live inside `assert`s, so they only surface in debug builds.
+Release builds stay silent while still missing the Cupertino defaults.
+
+The fix is to change the import, not to add more layers:
+
+```diff
+- import 'package:flutter/cupertino.dart';
++ import 'package:cupertino_ui/cupertino_ui.dart';
+```
+
+Do this everywhere in your app. Mixing the two libraries in one widget tree does
+not work, and no amount of `CupertinoLayer` or `CupertinoShadcnApp` nesting will
+make it work.
+
+See [issue #426](https://github.com/sunarya-thito/shadcn_flutter/issues/426).
+
+## Localizations and overlays
+
+`CupertinoShadcnApp` handles both of these for you. They are worth knowing about
+if you compose `ShadcnApp` yourself:
+
+- **Localizations have to be registered app-wide.** Cupertino widgets assert on
+  `CupertinoLocalizations.of` — a date picker, a nav bar back label or a text
+  selection toolbar throws without it. `CupertinoLayer` installs them over its
+  own subtree, but a route pushed by `showCupertinoDialog` builds outside that
+  subtree, on the root navigator. For those, put `kCupertinoLocalizationsDelegates` on
+  `ShadcnApp.localizationsDelegates`.
+- **Use `surfaceBuilder`, not `builder`.** `ShadcnApp.builder` is applied inside
+  shadcn's own overlay layers, so a Cupertino widget shown in a toast would find
+  no `CupertinoTheme` above it. `ShadcnApp.surfaceBuilder` wraps the whole surface
+  instead:
+
+  ```dart
+  ShadcnApp(
+    localizationsDelegates: kCupertinoLocalizationsDelegates,
+    surfaceBuilder: (context, child) => CupertinoLayer(child: child),
+    home: const HomePage(),
+  );
+  ```
+
 ## Use
 
 `CupertinoShadcnApp` is a drop-in replacement for `ShadcnApp`. It takes exactly
@@ -38,7 +95,7 @@ void main() {
     CupertinoShadcnApp(
       title: 'My App',
       theme: ThemeData(
-        colorScheme: ColorSchemes.lightZinc(),
+        colorScheme: ColorSchemes.lightZinc,
         radius: 0.5,
       ),
       home: CupertinoPageScaffold(

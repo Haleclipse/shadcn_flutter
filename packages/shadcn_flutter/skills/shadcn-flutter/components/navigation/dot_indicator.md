@@ -88,7 +88,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
         child: Column(
           children: [
             const Text('Page Indicators:').bold(),
-            const Gap(16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -100,7 +100,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const Gap(8),
+                const SizedBox(width: 8),
                 Container(
                   width: 8,
                   height: 8,
@@ -109,7 +109,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const Gap(8),
+                const SizedBox(width: 8),
                 Container(
                   width: 8,
                   height: 8,
@@ -118,7 +118,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const Gap(8),
+                const SizedBox(width: 8),
                 Container(
                   width: 8,
                   height: 8,
@@ -127,7 +127,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const Gap(8),
+                const SizedBox(width: 8),
                 Container(
                   width: 8,
                   height: 8,
@@ -138,7 +138,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                 ),
               ],
             ),
-            const Gap(16),
+            const SizedBox(height: 16),
             const Text('Step 1 of 5').muted(),
           ],
         ).withPadding(all: 16),

@@ -14,11 +14,12 @@ class _InputExample2State extends State<InputExample2> {
     // - A leading search icon that reacts to the hover state when the field is empty
     // - A clear button that appears when there's text and the field is focused or hovered
     return TextField(
-        initialValue: 'Hello World!',
-        placeholder: const Text('Search something...'),
-        features: [
-          // Leading icon only visible when the text is empty
-          InputFeature.leading(StatedWidget.builder(
+      initialValue: 'Hello World!',
+      placeholder: const Text('Search something...'),
+      features: [
+        // Leading icon only visible when the text is empty
+        InputFeature.leading(
+          StatedWidget.builder(
             builder: (context, states) {
               // Use a muted icon normally, switch to the full icon on hover
               if (states.hovered) {
@@ -27,14 +28,18 @@ class _InputExample2State extends State<InputExample2> {
                 return const Icon(LucideIcons.search).iconMutedForeground();
               }
             },
-          ), visibility: InputFeatureVisibility.textEmpty),
-          // Clear button visible when there is text and the field is focused,
-          // or whenever the field is hovered
-          InputFeature.clear(
-            visibility: (InputFeatureVisibility.textNotEmpty &
-                    InputFeatureVisibility.focused) |
-                InputFeatureVisibility.hovered,
           ),
-        ]);
+          visibility: InputFeatureVisibility.textEmpty,
+        ),
+        // Clear button visible when there is text and the field is focused,
+        // or whenever the field is hovered
+        InputFeature.clear(
+          visibility:
+              (InputFeatureVisibility.textNotEmpty &
+                  InputFeatureVisibility.focused) |
+              InputFeatureVisibility.hovered,
+        ),
+      ],
+    );
   }
 }

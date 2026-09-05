@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ScaffoldTile extends StatelessWidget implements IComponentPage {
   const ScaffoldTile({super.key});
@@ -37,8 +38,10 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
                 ),
                 child: Row(
                   children: [
-                    Icon(LucideIcons.menu,
-                        color: theme.colorScheme.primaryForeground),
+                    Icon(
+                      LucideIcons.menu,
+                      color: theme.colorScheme.primaryForeground,
+                    ),
                     const Gap(16),
                     Text(
                       'Scaffold',
@@ -54,9 +57,7 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Center(
-                    child: Text('Scaffold Body Content'),
-                  ),
+                  child: const Center(child: Text('Scaffold Body Content')),
                 ),
               ),
               // Bottom Navigation

@@ -120,7 +120,8 @@ typedef ScrollableBuilder = Widget Function(
 ///   child: MyContent(),
 /// )
 /// ```
-class ScrollableClient extends StatelessWidget {
+class ScrollableClient extends StatelessWidget
+    implements Styleable<ScrollableClientTheme> {
   /// Whether this is the primary scrollable in the widget tree.
   final bool? primary;
 
@@ -157,6 +158,10 @@ class ScrollableClient extends StatelessWidget {
   /// Whether overscroll effects are enabled.
   final bool? overscroll;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ScrollableClientTheme? theme;
+
   /// Creates a [ScrollableClient].
   const ScrollableClient({
     super.key,
@@ -172,6 +177,7 @@ class ScrollableClient extends StatelessWidget {
     this.clipBehavior,
     this.hitTestBehavior,
     this.overscroll,
+    this.theme,
   });
 
   Widget _buildViewport(
@@ -221,7 +227,8 @@ class ScrollableClient extends StatelessWidget {
       'TwoDimensionalScrollView.horizontalDetails are not Axis.horizontal.',
     );
 
-    final compTheme = ComponentTheme.maybeOf<ScrollableClientTheme>(context);
+    final compTheme =
+        theme ?? ComponentTheme.maybeOf<ScrollableClientTheme>(context);
     final diag =
         diagonalDragBehavior ??
         compTheme?.diagonalDragBehavior ??

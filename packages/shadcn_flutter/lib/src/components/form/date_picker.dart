@@ -71,15 +71,18 @@ class DatePickerTheme extends ComponentThemeData {
     return DatePickerTheme(
       mode: mode == null ? this.mode : mode(),
       initialView: initialView == null ? this.initialView : initialView(),
-      initialViewType:
-          initialViewType == null ? this.initialViewType : initialViewType(),
-      popoverAlignment:
-          popoverAlignment == null ? this.popoverAlignment : popoverAlignment(),
+      initialViewType: initialViewType == null
+          ? this.initialViewType
+          : initialViewType(),
+      popoverAlignment: popoverAlignment == null
+          ? this.popoverAlignment
+          : popoverAlignment(),
       popoverAnchorAlignment: popoverAnchorAlignment == null
           ? this.popoverAnchorAlignment
           : popoverAnchorAlignment(),
-      popoverPadding:
-          popoverPadding == null ? this.popoverPadding : popoverPadding(),
+      popoverPadding: popoverPadding == null
+          ? this.popoverPadding
+          : popoverPadding(),
     );
   }
 
@@ -96,13 +99,13 @@ class DatePickerTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        mode,
-        initialView,
-        initialViewType,
-        popoverAlignment,
-        popoverAnchorAlignment,
-        popoverPadding,
-      );
+    mode,
+    initialView,
+    initialViewType,
+    popoverAlignment,
+    popoverAnchorAlignment,
+    popoverPadding,
+  );
 }
 
 /// A controller for managing the selected date in a [DatePicker].
@@ -151,22 +154,18 @@ class DatePickerController extends ValueNotifier<DateTime?>
 class ControlledDatePicker extends StatelessWidget
     with ControlledComponent<DateTime?> {
   @override
-
   /// The initial date value.
   final DateTime? initialValue;
 
   @override
-
   /// Called when the selected date changes.
   final ValueChanged<DateTime?>? onChanged;
 
   @override
-
   /// Whether the date picker is enabled.
   final bool enabled;
 
   @override
-
   /// Optional controller for programmatic access.
   final DatePickerController? controller;
 
@@ -228,14 +227,16 @@ class ControlledDatePicker extends StatelessWidget
           value: data.value,
           onChanged: data.onChanged,
           placeholder: placeholder,
-          mode: mode,
-          initialView: initialView,
-          popoverAlignment: popoverAlignment,
-          popoverAnchorAlignment: popoverAnchorAlignment,
-          popoverPadding: popoverPadding,
           dialogTitle: dialogTitle,
-          initialViewType: initialViewType,
           stateBuilder: stateBuilder,
+          theme: DatePickerTheme(
+            mode: mode,
+            initialView: initialView,
+            popoverAlignment: popoverAlignment,
+            popoverAnchorAlignment: popoverAnchorAlignment,
+            popoverPadding: popoverPadding,
+            initialViewType: initialViewType,
+          ),
         );
       },
     );
@@ -246,7 +247,7 @@ class ControlledDatePicker extends StatelessWidget
 ///
 /// Provides a date selection interface with calendar view in either
 /// popover or dialog mode.
-class DatePicker extends StatelessWidget {
+class DatePicker extends StatelessWidget implements Styleable<DatePickerTheme> {
   /// The currently selected date value.
   final DateTime? value;
 
@@ -257,24 +258,32 @@ class DatePicker extends StatelessWidget {
   final Widget? placeholder;
 
   /// The display mode for the date picker (popover or dialog).
+  @Deprecated('Use theme: DatePickerTheme(mode: ...) instead.')
   final PromptMode? mode;
 
   /// The initial calendar view to display.
+  @Deprecated('Use theme: DatePickerTheme(initialView: ...) instead.')
   final CalendarView? initialView;
 
   /// Alignment of the popover relative to the anchor.
+  @Deprecated('Use theme: DatePickerTheme(popoverAlignment: ...) instead.')
   final AlignmentGeometry? popoverAlignment;
 
   /// Anchor alignment for the popover.
+  @Deprecated(
+    'Use theme: DatePickerTheme(popoverAnchorAlignment: ...) instead.',
+  )
   final AlignmentGeometry? popoverAnchorAlignment;
 
   /// Padding inside the popover.
+  @Deprecated('Use theme: DatePickerTheme(popoverPadding: ...) instead.')
   final EdgeInsetsGeometry? popoverPadding;
 
   /// Title widget for the dialog mode.
   final Widget? dialogTitle;
 
   /// The initial calendar view type (date, month, or year).
+  @Deprecated('Use theme: DatePickerTheme(initialViewType: ...) instead.')
   final CalendarViewType? initialViewType;
 
   /// Builder function to determine the state of each date.
@@ -282,6 +291,10 @@ class DatePicker extends StatelessWidget {
 
   /// Whether the date picker is enabled.
   final bool? enabled;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final DatePickerTheme? theme;
 
   /// Creates a date picker.
   const DatePicker({
@@ -298,12 +311,13 @@ class DatePicker extends StatelessWidget {
     this.initialViewType,
     this.stateBuilder,
     this.enabled,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
-    final compTheme = ComponentTheme.maybeOf<DatePickerTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<DatePickerTheme>(context);
     final resolvedMode = styleValue(
       widgetValue: mode,
       themeValue: compTheme?.mode,
@@ -357,8 +371,9 @@ class DatePicker extends StatelessWidget {
               ? null
               : CalendarValue.single(handler.value!),
           onChanged: (value) {
-            handler.value =
-                value == null ? null : (value as SingleCalendarValue).date;
+            handler.value = value == null
+                ? null
+                : (value as SingleCalendarValue).date;
           },
           stateBuilder: stateBuilder,
         );

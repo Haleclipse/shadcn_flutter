@@ -995,7 +995,7 @@ class TreeItemExpandDefaultHandler<T> {
 ///   },
 /// )
 /// ```
-class Tree<T> extends StatefulWidget {
+class Tree<T> extends StatefulWidget implements Styleable<TreeTheme> {
   /// Creates a default selection changed handler for tree nodes.
   ///
   /// Returns a handler that manages node selection state changes in a tree view.
@@ -1629,6 +1629,10 @@ class Tree<T> extends StatefulWidget {
   /// selection operations recursively affect all descendant nodes.
   final bool? recursiveSelection;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TreeTheme? theme;
+
   /// Creates a [Tree] with hierarchical data display and interaction.
   ///
   /// Configures a tree view widget that displays hierarchical data with support
@@ -1678,6 +1682,7 @@ class Tree<T> extends StatefulWidget {
     this.focusNode,
     this.onSelectionChanged,
     this.recursiveSelection,
+    this.theme,
   });
 
   @override
@@ -1761,7 +1766,8 @@ class _TreeState<T> extends State<Tree<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<TreeTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<TreeTheme>(context);
     final branchLine =
         widget.branchLine ?? compTheme?.branchLine ?? BranchLine.path;
     final expandIcon = widget.expandIcon ?? compTheme?.expandIcon ?? true;

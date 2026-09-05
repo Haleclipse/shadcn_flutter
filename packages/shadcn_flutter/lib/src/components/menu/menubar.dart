@@ -83,12 +83,14 @@ class MenubarTheme extends ComponentThemeData {
   }) {
     return MenubarTheme(
       border: border == null ? this.border : border(),
-      subMenuOffset:
-          subMenuOffset == null ? this.subMenuOffset : subMenuOffset(),
+      subMenuOffset: subMenuOffset == null
+          ? this.subMenuOffset
+          : subMenuOffset(),
       padding: padding == null ? this.padding : padding(),
       borderColor: borderColor == null ? this.borderColor : borderColor(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
     );
   }
@@ -107,13 +109,13 @@ class MenubarTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        border,
-        subMenuOffset,
-        padding,
-        borderColor,
-        backgroundColor,
-        borderRadius,
-      );
+    border,
+    subMenuOffset,
+    padding,
+    borderColor,
+    backgroundColor,
+    borderRadius,
+  );
 }
 
 /// A horizontal menubar widget for displaying application menus and menu items.
@@ -174,7 +176,7 @@ class MenubarTheme extends ComponentThemeData {
 ///   ],
 /// )
 /// ```
-class Menubar extends StatefulWidget {
+class Menubar extends StatefulWidget implements Styleable<MenubarTheme> {
   /// List of menu items to display in the menubar.
   ///
   /// Type: `List<MenuItem>`. Each MenuItem represents a top-level menu that
@@ -194,6 +196,10 @@ class Menubar extends StatefulWidget {
   /// Type: `bool`, default: `true`. When true, the menubar is wrapped with
   /// an outlined container using theme colors and border radius.
   final bool border;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final MenubarTheme? theme;
 
   /// Creates a [Menubar] with horizontal menu layout.
   ///
@@ -236,6 +242,7 @@ class Menubar extends StatefulWidget {
     this.popoverOffset,
     this.border = true,
     required this.children,
+    this.theme,
   });
 
   @override
@@ -250,7 +257,8 @@ class MenubarState extends State<Menubar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final densityGap = theme.density.baseGap * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<MenubarTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<MenubarTheme>(context);
     final bool border = compTheme?.border ?? widget.border;
     final borderColor = compTheme?.borderColor ?? theme.colorScheme.border;
     final backgroundColor =
@@ -260,19 +268,29 @@ class MenubarState extends State<Menubar> {
 
     if (border) {
       return OutlinedContainer(
-        borderColor: borderColor,
-        backgroundColor: backgroundColor,
-        borderRadius: borderRadius,
+        theme: OutlinedContainerTheme(
+          borderColor: borderColor,
+          backgroundColor: backgroundColor,
+          borderRadius: borderRadius,
+        ),
         child: AnimatedPadding(
           duration: kDefaultDuration,
           padding: padding,
-          child: buildContainer(context, theme,
-              compTheme?.subMenuOffset ?? widget.popoverOffset, border),
+          child: buildContainer(
+            context,
+            theme,
+            compTheme?.subMenuOffset ?? widget.popoverOffset,
+            border,
+          ),
         ),
       );
     }
-    return buildContainer(context, theme,
-        compTheme?.subMenuOffset ?? widget.popoverOffset, border);
+    return buildContainer(
+      context,
+      theme,
+      compTheme?.subMenuOffset ?? widget.popoverOffset,
+      border,
+    );
   }
 
   /// Builds the container widget for the menubar.
@@ -284,11 +302,16 @@ class MenubarState extends State<Menubar> {
   /// - [border] (`bool`, required): whether to show border
   ///
   /// Returns: `Widget` — container with menu items
-  Widget buildContainer(BuildContext context, ThemeData theme,
-      Offset? subMenuOffset, bool border) {
+  Widget buildContainer(
+    BuildContext context,
+    ThemeData theme,
+    Offset? subMenuOffset,
+    bool border,
+  ) {
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final offset = subMenuOffset ??
+    final offset =
+        subMenuOffset ??
         (border
             ? Offset(-densityGap * 0.5, densityGap)
             : Offset(0, densityGap * 0.5));

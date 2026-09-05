@@ -8,6 +8,8 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 import '../docs_page.dart';
 import '../docs/sidebar_nav.dart';
 
+import 'package:gap/gap.dart';
+
 class ThemePage extends StatefulWidget {
   const ThemePage({super.key});
 
@@ -225,11 +227,12 @@ class _ThemePageState extends State<ThemePage> {
       },
       child: Actions(
         actions: {
-          OpenSearchCommandIntent:
-              CallbackAction<OpenSearchCommandIntent>(onInvoke: (intent) {
-            _showSearchBar();
-            return null;
-          }),
+          OpenSearchCommandIntent: CallbackAction<OpenSearchCommandIntent>(
+            onInvoke: (intent) {
+              _showSearchBar();
+              return null;
+            },
+          ),
         },
         child: ClipRect(
           child: PageStorage(
@@ -237,14 +240,13 @@ class _ThemePageState extends State<ThemePage> {
             child: Scaffold(
               headers: [
                 Container(
-                  color:
-                      Theme.of(context).colorScheme.background.scaleAlpha(0.3),
+                  color: Theme.of(context).colorScheme.background
+                      .scaleAlpha(0.3),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       MediaQueryVisibility(
-                        minWidth: breakpointWidth,
                         alternateChild: AppBar(
                           padding: EdgeInsets.symmetric(
                             vertical: 12 * Theme.of(context).scaling,
@@ -289,9 +291,16 @@ class _ThemePageState extends State<ThemePage> {
                             ),
                           ),
                         ),
+                        theme: MediaQueryVisibilityTheme(
+                          minWidth: breakpointWidth,
+                        ),
                         child: _buildAppBar(
                           const EdgeInsets.only(
-                                  top: 12, bottom: 12, left: 32, right: 32) *
+                                top: 12,
+                                bottom: 12,
+                                left: 32,
+                                right: 32,
+                              ) *
                               Theme.of(context).scaling,
                         ),
                       ),
@@ -304,12 +313,16 @@ class _ThemePageState extends State<ThemePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MediaQueryVisibility(
-                    minWidth: breakpointWidth,
+                    theme: MediaQueryVisibilityTheme(minWidth: breakpointWidth),
                     child: FocusTraversalGroup(
                       child: SingleChildScrollView(
                         key: const PageStorageKey('sidebar'),
-                        padding: const EdgeInsets.only(
-                                top: 32, left: 24, bottom: 32) *
+                        padding:
+                            const EdgeInsets.only(
+                              top: 32,
+                              left: 24,
+                              bottom: 32,
+                            ) *
                             Theme.of(context).scaling,
                         child: _ThemeSidebar(
                           sections: DocsPageState.sections,
@@ -323,7 +336,8 @@ class _ThemePageState extends State<ThemePage> {
                       child: SingleChildScrollView(
                         controller: _scrollController,
                         clipBehavior: Clip.none,
-                        padding: const EdgeInsets.symmetric(
+                        padding:
+                            const EdgeInsets.symmetric(
                                   horizontal: 40,
                                   vertical: 32,
                                 ) *
@@ -349,7 +363,9 @@ class _ThemePageState extends State<ThemePage> {
                             _buildKitchenPreview(context),
                             const Gap(24),
                             MediaQueryVisibility(
-                              maxWidth: breakpointWidth2,
+                              theme: MediaQueryVisibilityTheme(
+                                maxWidth: breakpointWidth2,
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
@@ -358,23 +374,23 @@ class _ThemePageState extends State<ThemePage> {
                               ),
                             ),
                             const Text('Code').h2(),
-                            CodeBlock(
-                              code: buildCode(),
-                              mode: 'dart',
-                            ).p(),
+                            CodeBlock(code: buildCode(), mode: 'dart').p(),
                           ],
                         ),
                       ),
                     ),
                   ),
                   MediaQueryVisibility(
-                    minWidth: breakpointWidth2,
+                    theme: MediaQueryVisibilityTheme(
+                      minWidth: breakpointWidth2,
+                    ),
                     child: Container(
                       width: 240,
                       alignment: Alignment.topLeft,
                       child: FocusTraversalGroup(
                         child: SingleChildScrollView(
-                          padding: const EdgeInsets.only(
+                          padding:
+                              const EdgeInsets.only(
                                 top: 32,
                                 right: 24,
                                 bottom: 32,
@@ -398,7 +414,6 @@ class _ThemePageState extends State<ThemePage> {
   // KITCHEN PREVIEWS
   Widget _buildKitchenPreview(BuildContext context) {
     return MediaQueryVisibility(
-      minWidth: 1350,
       alternateChild: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -409,6 +424,7 @@ class _ThemePageState extends State<ThemePage> {
           _buildKitchenAppearanceSettings(context),
         ],
       ),
+      theme: MediaQueryVisibilityTheme(minWidth: 1350),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -430,7 +446,7 @@ class _ThemePageState extends State<ThemePage> {
   Widget _buildKitchenPaymentMethod(BuildContext context) {
     final currentYear = DateTime.now().year;
     return Card(
-      padding: const EdgeInsetsDensity.all(padMd),
+      theme: CardTheme(padding: const EdgeInsetsDensity.all(padMd)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -440,9 +456,7 @@ class _ThemePageState extends State<ThemePage> {
           const DensityGap(gapXl),
           const Text('Name on Card').medium,
           const DensityGap(gapSm),
-          const TextField(
-            placeholder: Text('John Doe'),
-          ),
+          const TextField(placeholder: Text('John Doe')),
           const DensityGap(gapXl),
           Row(
             children: [
@@ -453,9 +467,7 @@ class _ThemePageState extends State<ThemePage> {
                   children: [
                     const Text('Card Number').medium,
                     const DensityGap(gapSm),
-                    const TextField(
-                      placeholder: Text('1234 5678 9012 3456'),
-                    ),
+                    const TextField(placeholder: Text('1234 5678 9012 3456')),
                   ],
                 ),
               ),
@@ -467,9 +479,7 @@ class _ThemePageState extends State<ThemePage> {
                   children: [
                     const Text('CVV').medium,
                     const DensityGap(gapSm),
-                    const TextField(
-                      placeholder: Text('123'),
-                    ),
+                    const TextField(placeholder: Text('123')),
                   ],
                 ),
               ),
@@ -494,15 +504,16 @@ class _ThemePageState extends State<ThemePage> {
                       value: null,
                       onChanged: (value) {},
                       popup: SelectPopup.noVirtualization(
-                          items: SelectItemList(
-                        children: [
-                          for (var i = 1; i <= 12; i++)
-                            SelectItemButton(
-                              value: i.toString().padLeft(2, '0'),
-                              child: Text(i.toString().padLeft(2, '0')),
-                            ),
-                        ],
-                      )),
+                        items: SelectItemList(
+                          children: [
+                            for (var i = 1; i <= 12; i++)
+                              SelectItemButton(
+                                value: i.toString().padLeft(2, '0'),
+                                child: Text(i.toString().padLeft(2, '0')),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -521,15 +532,16 @@ class _ThemePageState extends State<ThemePage> {
                       value: null,
                       onChanged: (value) {},
                       popup: SelectPopup.noVirtualization(
-                          items: SelectItemList(
-                        children: [
-                          for (var i = 0; i < 12; i++)
-                            SelectItemButton(
-                              value: (currentYear + i).toString(),
-                              child: Text((currentYear + i).toString()),
-                            ),
-                        ],
-                      )),
+                        items: SelectItemList(
+                          children: [
+                            for (var i = 0; i < 12; i++)
+                              SelectItemButton(
+                                value: (currentYear + i).toString(),
+                                child: Text((currentYear + i).toString()),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -563,15 +575,9 @@ class _ThemePageState extends State<ThemePage> {
           const DensityGap(gapLg),
           Row(
             children: [
-              Button.primary(
-                child: const Text('Submit'),
-                onPressed: () {},
-              ),
+              Button.primary(child: const Text('Submit'), onPressed: () {}),
               const DensityGap(gapMd),
-              Button.outline(
-                child: const Text('Cancel'),
-                onPressed: () {},
-              ),
+              Button.outline(child: const Text('Cancel'), onPressed: () {}),
             ],
           ),
         ],
@@ -648,9 +654,7 @@ class _ThemePageState extends State<ThemePage> {
             ),
           ),
           const DensityGap(gapXl),
-          Divider(
-            child: const Text('Appearance Settings').muted.small,
-          ),
+          Divider(child: const Text('Appearance Settings').muted.small),
           const DensityGap(gapXl),
           const Text('Compute Environment').medium,
           const DensityGap(gapXs),
@@ -727,7 +731,7 @@ class _ThemePageState extends State<ThemePage> {
                     InputFeature.decrementButton(),
                   ],
                 ),
-              )
+              ),
             ],
           ),
           const DensityGap(gapXl),
@@ -745,10 +749,7 @@ class _ThemePageState extends State<ThemePage> {
                   ],
                 ),
               ),
-              Switch(
-                value: true,
-                onChanged: (value) {},
-              ),
+              Switch(value: true, onChanged: (value) {}),
             ],
           ),
         ],
@@ -758,37 +759,36 @@ class _ThemePageState extends State<ThemePage> {
 
   Widget _buildKitchenMembers(BuildContext context) {
     return DashedContainer(
-        child: DensityContainerPadding(
-      padding: const EdgeInsetsDensity.all(padLg),
-      child: Column(
-        children: [
-          AvatarGroup.toLeft(
-            gap: 2,
-            offset: 0.7,
-            children: const [
-              Avatar(initials: 'ST'),
-              Avatar(initials: 'JS'),
-              Avatar(initials: 'MD'),
-            ],
-          ),
-          const DensityGap(gapXl),
-          const Text('No Team Members').small,
-          const DensityGap(gapSm),
-          const Text('Invite your team to collaborate on this project.')
-              .muted
-              .small,
-          const DensityGap(gapMd),
-          Button(
-            leading: const Icon(LucideIcons.plus),
-            style: const ButtonStyle.primary(
-              density: ButtonDensity.dense,
+      child: DensityContainerPadding(
+        padding: const EdgeInsetsDensity.all(padLg),
+        child: Column(
+          children: [
+            AvatarGroup.toLeft(
+              gap: 2,
+              offset: 0.7,
+              children: const [
+                Avatar(initials: 'ST'),
+                Avatar(initials: 'JS'),
+                Avatar(initials: 'MD'),
+              ],
             ),
-            onPressed: () {},
-            child: const Text('Invite Members').small,
-          ),
-        ],
+            const DensityGap(gapXl),
+            const Text('No Team Members').small,
+            const DensityGap(gapSm),
+            const Text('Invite your team to collaborate on this project.')
+                .muted
+                .small,
+            const DensityGap(gapMd),
+            Button(
+              leading: const Icon(LucideIcons.plus),
+              style: const ButtonStyle.primary(density: ButtonDensity.dense),
+              onPressed: () {},
+              child: const Text('Invite Members').small,
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _buildKitchenBadges(BuildContext context) {
@@ -799,7 +799,7 @@ class _ThemePageState extends State<ThemePage> {
             leading: const Center(
               child: CircularProgressIndicator(
                 onSurface: true,
-                size: 10,
+                theme: CircularProgressIndicatorTheme(size: 10),
               ),
             ),
             child: const Text('Syncing').small,
@@ -808,7 +808,7 @@ class _ThemePageState extends State<ThemePage> {
           SecondaryBadge(
             leading: const Center(
               child: CircularProgressIndicator(
-                size: 10,
+                theme: CircularProgressIndicatorTheme(size: 10),
               ),
             ),
             child: const Text('Updating').small,
@@ -817,7 +817,7 @@ class _ThemePageState extends State<ThemePage> {
           OutlineBadge(
             leading: const Center(
               child: CircularProgressIndicator(
-                size: 10,
+                theme: CircularProgressIndicatorTheme(size: 10),
               ),
             ),
             child: const Text('Loading').small,
@@ -829,35 +829,43 @@ class _ThemePageState extends State<ThemePage> {
 
   Widget _buildKitchenChatBox(BuildContext context) {
     return IntrinsicHeight(
-      child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        IconButton.outline(icon: const Icon(LucideIcons.plus), onPressed: () {}),
-        const DensityGap(gapSm),
-        Expanded(
-          child: TextField(
-            placeholder: const Text('Send a message...'),
-            padding: const DirectionalEdgeInsetsDensity.only(
-              start: padSm,
-              end: padXs,
-              top: 0,
-              bottom: 0,
-            ),
-            features: [
-              InputFeature.trailing(
-                WidgetStatesProvider.boundary(
-                  child: Tooltip(
-                    tooltip: const TooltipContainer(child: Text('Voice Mode')),
-                    child: IconButton.ghost(
-                      icon: const Icon(LucideIcons.audioLines),
-                      onPressed: () {},
-                      shape: ButtonShape.circle,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          IconButton.outline(
+            icon: const Icon(LucideIcons.plus),
+            onPressed: () {},
+          ),
+          const DensityGap(gapSm),
+          Expanded(
+            child: TextField(
+              placeholder: const Text('Send a message...'),
+              padding: const DirectionalEdgeInsetsDensity.only(
+                start: padSm,
+                end: padXs,
+                top: 0,
+                bottom: 0,
+              ),
+              features: [
+                InputFeature.trailing(
+                  WidgetStatesProvider.boundary(
+                    child: Tooltip(
+                      tooltip: const TooltipContainer(
+                        child: Text('Voice Mode'),
+                      ),
+                      child: IconButton.ghost(
+                        icon: const Icon(LucideIcons.audioLines),
+                        onPressed: () {},
+                        shape: ButtonShape.circle,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 
@@ -884,7 +892,9 @@ class _ThemePageState extends State<ThemePage> {
     return TextField(
       placeholder: const Text('Search...'),
       features: [
-        InputFeature.leading(const Icon(LucideIcons.search).iconMutedForeground),
+        InputFeature.leading(
+          const Icon(LucideIcons.search).iconMutedForeground,
+        ),
         InputFeature.trailing(const Text('12 Results').muted.small.medium),
       ],
     );
@@ -896,8 +906,10 @@ class _ThemePageState extends State<ThemePage> {
       features: [
         InputFeature.leading(const Text('https://').muted.small.medium),
         InputFeature.hint(
-            popupBuilder: const TooltipContainer(
-                child: Text('This is content in a tooltip'))),
+          popupBuilder: const TooltipContainer(
+            child: Text('This is content in a tooltip'),
+          ),
+        ),
       ],
     );
   }
@@ -908,63 +920,69 @@ class _ThemePageState extends State<ThemePage> {
       maxLines: 3,
       placeholder: const Text('Ask, Search, or Chat...'),
       features: [
-        InputFeature.below(WidgetStatesProvider.boundary(
-          child: Padding(
-            padding: const EdgeInsetsDensity.only(top: padXl),
-            child: IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  IconButton.outline(
+        InputFeature.below(
+          WidgetStatesProvider.boundary(
+            child: Padding(
+              padding: const EdgeInsetsDensity.only(top: padXl),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    IconButton.outline(
                       density: ButtonDensity.iconDense,
                       icon: const Icon(LucideIcons.plus),
-                      onPressed: () {}),
-                  const DensityGap(gapSm),
-                  Builder(builder: (context) {
-                    return Button(
-                      style: const ButtonStyle.ghost(
-                        density: ButtonDensity.dense,
-                      ),
-                      child: const Text('Auto'),
-                      onPressed: () {
-                        showDropdown(
-                            context: context,
-                            builder: (context) {
-                              return DropdownMenu(
-                                children: [
-                                  MenuButton(
-                                    child: const Text('Auto'),
-                                    onPressed: (ctx) {},
-                                  ),
-                                  MenuButton(
-                                    child: const Text('Agent'),
-                                    onPressed: (ctx) {},
-                                  ),
-                                  MenuButton(
-                                    child: const Text('Manual'),
-                                    onPressed: (ctx) {},
-                                  ),
-                                ],
-                              );
-                            });
+                      onPressed: () {},
+                    ),
+                    const DensityGap(gapSm),
+                    Builder(
+                      builder: (context) {
+                        return Button(
+                          style: const ButtonStyle.ghost(
+                            density: ButtonDensity.dense,
+                          ),
+                          child: const Text('Auto'),
+                          onPressed: () {
+                            showDropdown(
+                              context: context,
+                              builder: (context) {
+                                return DropdownMenu(
+                                  children: [
+                                    MenuButton(
+                                      child: const Text('Auto'),
+                                      onPressed: (ctx) {},
+                                    ),
+                                    MenuButton(
+                                      child: const Text('Agent'),
+                                      onPressed: (ctx) {},
+                                    ),
+                                    MenuButton(
+                                      child: const Text('Manual'),
+                                      onPressed: (ctx) {},
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        );
                       },
-                    );
-                  }),
-                  const Spacer(),
-                  const Text('52% Used').muted.small.center(),
-                  const DensityGap(gapSm),
-                  const VerticalDivider(),
-                  const DensityGap(gapSm),
-                  IconButton.primary(
-                    density: ButtonDensity.iconDense,
-                    icon: const Icon(LucideIcons.arrowUp),
-                    onPressed: () {},
-                  )
-                ],
+                    ),
+                    const Spacer(),
+                    const Text('52% Used').muted.small.center(),
+                    const DensityGap(gapSm),
+                    const VerticalDivider(),
+                    const DensityGap(gapSm),
+                    IconButton.primary(
+                      density: ButtonDensity.iconDense,
+                      icon: const Icon(LucideIcons.arrowUp),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        )),
+        ),
       ],
     );
   }
@@ -973,13 +991,15 @@ class _ThemePageState extends State<ThemePage> {
     return TextField(
       placeholder: const Text('@sunarya-thito'),
       features: [
-        InputFeature.trailing(IconButton.primary(
-          density: ButtonDensity.iconDense,
-          size: ButtonSize.small,
-          shape: ButtonShape.circle,
-          icon: const Icon(LucideIcons.check),
-          onPressed: () {},
-        )),
+        InputFeature.trailing(
+          IconButton.primary(
+            density: ButtonDensity.iconDense,
+            size: ButtonSize.small,
+            shape: ButtonShape.circle,
+            icon: const Icon(LucideIcons.check),
+            onPressed: () {},
+          ),
+        ),
       ],
     );
   }
@@ -1013,9 +1033,7 @@ class _ThemePageState extends State<ThemePage> {
             theme.colorScheme.secondaryForeground,
             BlendMode.srcIn,
           ),
-          child: FlutterLogo(
-            size: 24 * theme.scaling,
-          ),
+          child: FlutterLogo(size: 24 * theme.scaling),
         ),
       ),
     ];
@@ -1026,9 +1044,7 @@ class _ThemePageState extends State<ThemePage> {
     return AppBar(
       padding: padding,
       title: Basic(
-        leading: FlutterLogo(
-          size: 32 * theme.scaling,
-        ),
+        leading: FlutterLogo(size: 32 * theme.scaling),
         content: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -1046,15 +1062,18 @@ class _ThemePageState extends State<ThemePage> {
             width: 320 - 18,
             child: OutlineButton(
               onPressed: _showSearchBar,
-              trailing:
-                  const Icon(LucideIcons.search).iconSmall().iconMutedForeground(),
+              trailing: const Icon(LucideIcons.search)
+                  .iconSmall()
+                  .iconMutedForeground(),
               child: Row(
                 spacing: 16,
                 children: [
                   const Text('Search documentation...').muted().normal(),
                   const KeyboardDisplay.fromActivator(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyF, control: true),
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyF,
+                      control: true,
+                    ),
                   ).xSmall.withOpacity(0.8),
                 ],
               ),
@@ -1076,13 +1095,15 @@ class _ThemePageState extends State<ThemePage> {
           for (final page in section.pages) {
             if (query == null ||
                 page.title.toLowerCase().contains(query.toLowerCase())) {
-              resultItems.add(CommandItem(
-                title: Text(page.title),
-                trailing: Icon(section.icon),
-                onTap: () {
-                  context.goNamed(page.name);
-                },
-              ));
+              resultItems.add(
+                CommandItem(
+                  title: Text(page.title),
+                  trailing: Icon(section.icon),
+                  onTap: () {
+                    context.goNamed(page.name);
+                  },
+                ),
+              );
             }
           }
           if (resultItems.isNotEmpty) {
@@ -1177,9 +1198,7 @@ class _ThemePageState extends State<ThemePage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  FlutterLogo(
-                    size: 24 * scaling,
-                  ),
+                  FlutterLogo(size: 24 * scaling),
                   Gap(18 * scaling),
                   const Text('shadcn_flutter').medium().mono(),
                   Gap(12 * scaling),
@@ -1199,66 +1218,68 @@ class _ThemePageState extends State<ThemePage> {
               Expanded(
                 child: FocusTraversalGroup(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(
-                          left: 32,
-                          right: 32,
-                          bottom: 48,
-                        ) *
+                    padding:
+                        const EdgeInsets.only(left: 32, right: 32, bottom: 48) *
                         scaling,
                     key: const PageStorageKey('sidebar'),
-                    child: SidebarNav(children: [
-                      for (var section in DocsPageState.sections)
-                        SidebarSection(
-                          header: Text(section.title),
-                          children: [
-                            for (var page in section.pages)
-                              Semantics(
-                                link: true,
-                                linkUrl: Uri.tryParse(
-                                  'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, page.name)}',
-                                ),
-                                child: DocsNavigationButton(
-                                  onPressed: () {
-                                    if (page.tag ==
-                                        ShadcnFeatureTag.workInProgress) {
-                                      showOverlay(
-                                        context,
-                                        DialogConfiguration(),
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                'Work in Progress'),
-                                            content: const Text(
-                                                'This page is still under development. Please come back later.'),
-                                            actions: [
-                                              PrimaryButton(
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .pop();
-                                                },
-                                                child: const Text('Close'),
+                    child: SidebarNav(
+                      children: [
+                        for (var section in DocsPageState.sections)
+                          SidebarSection(
+                            header: Text(section.title),
+                            children: [
+                              for (var page in section.pages)
+                                Semantics(
+                                  link: true,
+                                  linkUrl: Uri.tryParse(
+                                    'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, page.name)}',
+                                  ),
+                                  child: DocsNavigationButton(
+                                    onPressed: () {
+                                      if (page.tag ==
+                                          ShadcnFeatureTag.workInProgress) {
+                                        showOverlay(
+                                          context,
+                                          DialogConfiguration(),
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: const Text(
+                                                'Work in Progress',
                                               ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                      return;
-                                    }
-                                    context.goNamed(page.name);
-                                    closeDrawer(context);
-                                  },
-                                  selected: page.name == _pageName,
-                                  child: Basic(
-                                    trailing: page.tag?.buildBadge(context),
-                                    trailingAlignment:
-                                        AlignmentDirectional.centerStart,
-                                    content: Text(page.title),
+                                              content: const Text(
+                                                'This page is still under development. Please come back later.',
+                                              ),
+                                              actions: [
+                                                PrimaryButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text('Close'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        return;
+                                      }
+                                      context.goNamed(page.name);
+                                      closeDrawer(context);
+                                    },
+                                    selected: page.name == _pageName,
+                                    child: Basic(
+                                      trailing: page.tag?.buildBadge(context),
+                                      content: Text(page.title),
+                                      theme: BasicTheme(
+                                        trailingAlignment:
+                                            AlignmentDirectional.centerStart,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                          ],
-                        ),
-                    ]),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -1277,27 +1298,40 @@ class _ThemePageState extends State<ThemePage> {
     }
   }
 
-  Widget _buildOptionsPanel(MyAppState state, ColorScheme baseScheme,
-      [bool padded = true]) {
+  Widget _buildOptionsPanel(
+    MyAppState state,
+    ColorScheme baseScheme, [
+    bool padded = true,
+  ]) {
     final radiusKey = _radiusOptions.entries
-        .firstWhere((entry) => entry.value == radius,
-            orElse: () => const MapEntry('Default', 0.5))
+        .firstWhere(
+          (entry) => entry.value == radius,
+          orElse: () => const MapEntry('Default', 0.5),
+        )
         .key;
     final densityKey = _densityOptions.entries
-        .firstWhere((entry) => entry.value == density,
-            orElse: () => const MapEntry('Default', Density.defaultDensity))
+        .firstWhere(
+          (entry) => entry.value == density,
+          orElse: () => const MapEntry('Default', Density.defaultDensity),
+        )
         .key;
     final scalingKey = _scalingOptions.entries
-        .firstWhere((entry) => entry.value == scaling,
-            orElse: () => const MapEntry('Default', 1.0))
+        .firstWhere(
+          (entry) => entry.value == scaling,
+          orElse: () => const MapEntry('Default', 1.0),
+        )
         .key;
     final surfaceOpacityKey = _surfaceOpacityOptions.entries
-        .firstWhere((entry) => entry.value == surfaceOpacity,
-            orElse: () => const MapEntry('Solid', 1.0))
+        .firstWhere(
+          (entry) => entry.value == surfaceOpacity,
+          orElse: () => const MapEntry('Solid', 1.0),
+        )
         .key;
     final surfaceBlurKey = _surfaceBlurOptions.entries
-        .firstWhere((entry) => entry.value == surfaceBlur,
-            orElse: () => const MapEntry('None', 0.0))
+        .firstWhere(
+          (entry) => entry.value == surfaceBlur,
+          orElse: () => const MapEntry('None', 0.0),
+        )
         .key;
     return Container(
       padding: padded ? const EdgeInsets.only(left: 8, right: 16) : null,
@@ -1315,8 +1349,10 @@ class _ThemePageState extends State<ThemePage> {
               _updateThemeMode(state, value == 'dark');
             },
             itemBuilder: (context, item) => _selectRow(
-              Icon(item == 'dark' ? LucideIcons.moon : LucideIcons.sun,
-                  size: 16),
+              Icon(
+                item == 'dark' ? LucideIcons.moon : LucideIcons.sun,
+                size: 16,
+              ),
               item == 'dark' ? 'Dark' : 'Light',
             ),
             placeholder: const Text('Theme mode'),
@@ -1359,8 +1395,11 @@ class _ThemePageState extends State<ThemePage> {
             itemBuilder: (context, item) {
               final option = _baseSchemes.firstWhere((s) => s.id == item);
               return _selectRow(
-                Icon(LucideIcons.circle,
-                    size: 12, color: _baseSwatchColor(option.id)),
+                Icon(
+                  LucideIcons.circle,
+                  size: 12,
+                  color: _baseSwatchColor(option.id),
+                ),
                 option.label,
               );
             },
@@ -1373,8 +1412,11 @@ class _ThemePageState extends State<ThemePage> {
                       value: option.id,
                       child: Row(
                         children: [
-                          Icon(LucideIcons.circle,
-                              size: 12, color: _baseSwatchColor(option.id)),
+                          Icon(
+                            LucideIcons.circle,
+                            size: 12,
+                            color: _baseSwatchColor(option.id),
+                          ),
                           const Gap(8),
                           Text(option.label),
                         ],
@@ -1435,8 +1477,10 @@ class _ThemePageState extends State<ThemePage> {
               if (nextRadius == null) return;
               _updateRadius(state, nextRadius);
             },
-            itemBuilder: (context, item) =>
-                _selectRow(const Icon(LucideIcons.squareRoundCorner, size: 16), item),
+            itemBuilder: (context, item) => _selectRow(
+              const Icon(LucideIcons.squareRoundCorner, size: 16),
+              item,
+            ),
             placeholder: const Text('Radius'),
             popup: SelectPopup(
               items: SelectItemList(
@@ -1649,8 +1693,9 @@ class _ThemePageState extends State<ThemePage> {
 
   void _applyScheme(MyAppState state) {
     final baseScheme = _baseScheme(baseKey, isDark);
-    final accent =
-        _accentOptions.firstWhere((option) => option.id == accentKey).color;
+    final accent = _accentOptions
+        .firstWhere((option) => option.id == accentKey)
+        .color;
     final nextScheme = accent == null ? baseScheme : baseScheme.recolor(accent);
     setState(() {
       colorScheme = nextScheme;
@@ -1729,11 +1774,7 @@ class _ThemePageState extends State<ThemePage> {
   Widget _selectRow(Widget leading, String label) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        leading,
-        const Gap(8),
-        Text(label),
-      ],
+      children: [leading, const Gap(8), Text(label)],
     );
   }
 
@@ -1754,7 +1795,8 @@ class _ThemePageState extends State<ThemePage> {
 
   String buildCode() {
     final isDefaultScheme = isDark && baseKey == 'slate' && accentKey == 'base';
-    final isDefaultTheme = isDefaultScheme &&
+    final isDefaultTheme =
+        isDefaultScheme &&
         radius == 0.5 &&
         density == Density.defaultDensity &&
         surfaceOpacity == 1.0 &&
@@ -1830,10 +1872,7 @@ class _ThemePageState extends State<ThemePage> {
 }
 
 class _ThemeSidebar extends StatefulWidget {
-  const _ThemeSidebar({
-    required this.sections,
-    required this.pageName,
-  });
+  const _ThemeSidebar({required this.sections, required this.pageName});
 
   final List<ShadcnDocsSection> sections;
   final String pageName;
@@ -1874,7 +1913,8 @@ class _ThemeSidebarState extends State<_ThemeSidebar> {
                           return AlertDialog(
                             title: const Text('Work in Progress'),
                             content: const Text(
-                                'This page is still under development. Please come back later.'),
+                              'This page is still under development. Please come back later.',
+                            ),
                             actions: [
                               PrimaryButton(
                                 onPressed: () {
@@ -1893,8 +1933,10 @@ class _ThemeSidebarState extends State<_ThemeSidebar> {
                   selected: page.name == widget.pageName,
                   child: Basic(
                     trailing: page.tag?.buildBadge(context),
-                    trailingAlignment: AlignmentDirectional.centerStart,
                     content: Text(page.title),
+                    theme: BasicTheme(
+                      trailingAlignment: AlignmentDirectional.centerStart,
+                    ),
                   ),
                 ),
               ),

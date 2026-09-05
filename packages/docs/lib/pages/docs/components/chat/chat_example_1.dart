@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ChatExample1 extends StatefulWidget {
   const ChatExample1({super.key});
@@ -19,28 +20,28 @@ class _ChatExample1State extends State<ChatExample1> {
   ChatType type = ChatType.tail;
 
   ChatBubbleType get selfType => switch (type) {
-        ChatType.tail => ChatBubbleType.tail.copyWith(
-            position: () => selfPosition,
-            tailAlignment: () => selfTailAlignment,
-            tailBehavior: () => selfBehavior,
-          ),
-        ChatType.sharpCorner => ChatBubbleType.sharpCorner.copyWith(
-            tailBehavior: () => selfBehavior,
-          ),
-        _ => ChatBubbleType.plain,
-      };
+    ChatType.tail => ChatBubbleType.tail.copyWith(
+      position: () => selfPosition,
+      tailAlignment: () => selfTailAlignment,
+      tailBehavior: () => selfBehavior,
+    ),
+    ChatType.sharpCorner => ChatBubbleType.sharpCorner.copyWith(
+      tailBehavior: () => selfBehavior,
+    ),
+    _ => ChatBubbleType.plain,
+  };
 
   ChatBubbleType get otherType => switch (type) {
-        ChatType.tail => ChatBubbleType.tail.copyWith(
-            position: () => otherPosition,
-            tailAlignment: () => otherTailAlignment,
-            tailBehavior: () => otherBehavior,
-          ),
-        ChatType.sharpCorner => ChatBubbleType.sharpCorner.copyWith(
-            tailBehavior: () => otherBehavior,
-          ),
-        _ => ChatBubbleType.plain,
-      };
+    ChatType.tail => ChatBubbleType.tail.copyWith(
+      position: () => otherPosition,
+      tailAlignment: () => otherTailAlignment,
+      tailBehavior: () => otherBehavior,
+    ),
+    ChatType.sharpCorner => ChatBubbleType.sharpCorner.copyWith(
+      tailBehavior: () => otherBehavior,
+    ),
+    _ => ChatBubbleType.plain,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +55,10 @@ class _ChatExample1State extends State<ChatExample1> {
           alignment: selfAlignment,
           children: const [
             ChatBubble(
-                child: Text(
-                    'John, did you remember what time you took the call with Mrs. Smith?')),
+              child: Text(
+                'John, did you remember what time you took the call with Mrs. Smith?',
+              ),
+            ),
             ChatBubble(child: Text('Reply ASAP')),
           ],
         ),
@@ -71,8 +74,7 @@ class _ChatExample1State extends State<ChatExample1> {
         ),
         ChatBubble(
           color: Colors.blue,
-          type: selfType,
-          alignment: selfAlignment,
+          theme: ChatTheme(type: selfType, alignment: selfAlignment),
           child: const Text('SIX SEVENNN 🤤🤪'),
         ),
         ChatGroup(
@@ -87,131 +89,174 @@ class _ChatExample1State extends State<ChatExample1> {
           ],
         ),
         // controls
-        gap(24),
-        Wrap(spacing: 8, runSpacing: 8, children: [
-          _withLabel(
-            label: 'Type',
-            child: Select(
-              value: type,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    type = value;
-                  });
-                }
-              },
-              popup: SelectPopup.noVirtualization(
-                  items: SelectItemList(children: [
-                for (var e in ChatType.values)
-                  SelectItemButton(value: e, child: Text(e.name)),
-              ])),
-              itemBuilder: (BuildContext context, ChatType value) {
-                return Text(value.name);
-              },
+        Gap(24),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            _withLabel(
+              label: 'Type',
+              child: Select(
+                value: type,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      type = value;
+                    });
+                  }
+                },
+                popup: SelectPopup.noVirtualization(
+                  items: SelectItemList(
+                    children: [
+                      for (var e in ChatType.values)
+                        SelectItemButton(value: e, child: Text(e.name)),
+                    ],
+                  ),
+                ),
+                itemBuilder: (BuildContext context, ChatType value) {
+                  return Text(value.name);
+                },
+              ),
             ),
-          ),
-          _withLabel(
-            label: 'Self Position',
-            child: Select(
-              value: selfPosition,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    selfPosition = value;
-                  });
-                }
-              },
-              popup: const SelectPopup.noVirtualization(
-                  items: SelectItemList(children: [
-                SelectItemButton(
-                    value: AxisDirectional.start, child: Text('Start')),
-                SelectItemButton(
-                    value: AxisDirectional.end, child: Text('End')),
-                SelectItemButton(value: AxisDirectional.up, child: Text('Up')),
-                SelectItemButton(
-                    value: AxisDirectional.down, child: Text('Down')),
-              ])),
-              itemBuilder: (BuildContext context, AxisDirectional value) {
-                return Text(value == AxisDirectional.start ? 'Start' : 'End');
-              },
+            _withLabel(
+              label: 'Self Position',
+              child: Select(
+                value: selfPosition,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      selfPosition = value;
+                    });
+                  }
+                },
+                popup: const SelectPopup.noVirtualization(
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: AxisDirectional.start,
+                        child: Text('Start'),
+                      ),
+                      SelectItemButton(
+                        value: AxisDirectional.end,
+                        child: Text('End'),
+                      ),
+                      SelectItemButton(
+                        value: AxisDirectional.up,
+                        child: Text('Up'),
+                      ),
+                      SelectItemButton(
+                        value: AxisDirectional.down,
+                        child: Text('Down'),
+                      ),
+                    ],
+                  ),
+                ),
+                itemBuilder: (BuildContext context, AxisDirectional value) {
+                  return Text(value == AxisDirectional.start ? 'Start' : 'End');
+                },
+              ),
             ),
-          ),
-          _withLabel(
-            label: 'Other Position',
-            child: Select(
-              value: otherPosition,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    otherPosition = value;
-                  });
-                }
-              },
-              popup: const SelectPopup.noVirtualization(
-                  items: SelectItemList(children: [
-                SelectItemButton(
-                    value: AxisDirectional.start, child: Text('Start')),
-                SelectItemButton(
-                    value: AxisDirectional.end, child: Text('End')),
-              ])),
-              itemBuilder: (BuildContext context, AxisDirectional value) {
-                return Text(value == AxisDirectional.start ? 'Start' : 'End');
-              },
+            _withLabel(
+              label: 'Other Position',
+              child: Select(
+                value: otherPosition,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      otherPosition = value;
+                    });
+                  }
+                },
+                popup: const SelectPopup.noVirtualization(
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: AxisDirectional.start,
+                        child: Text('Start'),
+                      ),
+                      SelectItemButton(
+                        value: AxisDirectional.end,
+                        child: Text('End'),
+                      ),
+                    ],
+                  ),
+                ),
+                itemBuilder: (BuildContext context, AxisDirectional value) {
+                  return Text(value == AxisDirectional.start ? 'Start' : 'End');
+                },
+              ),
             ),
-          ),
-          _withLabel(
-            label: 'Self Alignment',
-            child: Select(
-              value: selfAlignment,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    selfAlignment = value;
-                  });
-                }
-              },
-              popup: const SelectPopup.noVirtualization(
-                  items: SelectItemList(children: [
-                SelectItemButton(
-                    value: AxisAlignmentDirectional.start,
-                    child: Text('Start')),
-                SelectItemButton(
-                    value: AxisAlignmentDirectional.end, child: Text('End')),
-              ])),
-              itemBuilder:
-                  (BuildContext context, AxisAlignmentDirectional value) {
-                return Text(
-                    value == AxisAlignmentDirectional.start ? 'Start' : 'End');
-              },
+            _withLabel(
+              label: 'Self Alignment',
+              child: Select(
+                value: selfAlignment,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      selfAlignment = value;
+                    });
+                  }
+                },
+                popup: const SelectPopup.noVirtualization(
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: AxisAlignmentDirectional.start,
+                        child: Text('Start'),
+                      ),
+                      SelectItemButton(
+                        value: AxisAlignmentDirectional.end,
+                        child: Text('End'),
+                      ),
+                    ],
+                  ),
+                ),
+                itemBuilder:
+                    (BuildContext context, AxisAlignmentDirectional value) {
+                      return Text(
+                        value == AxisAlignmentDirectional.start
+                            ? 'Start'
+                            : 'End',
+                      );
+                    },
+              ),
             ),
-          ),
-          _withLabel(
-            label: 'Self Tail Alignment',
-            child: Select(
-              value: selfTailAlignment,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    selfTailAlignment = value;
-                  });
-                }
-              },
-              popup: const SelectPopup.noVirtualization(
-                  items: SelectItemList(children: [
-                SelectItemButton(
-                    value: AxisAlignmentDirectional.start,
-                    child: Text('Start')),
-                SelectItemButton(
-                    value: AxisAlignmentDirectional.end, child: Text('End')),
-              ])),
-              itemBuilder:
-                  (BuildContext context, AxisAlignmentDirectional value) {
-                return Text(
-                    value == AxisAlignmentDirectional.start ? 'Start' : 'End');
-              },
+            _withLabel(
+              label: 'Self Tail Alignment',
+              child: Select(
+                value: selfTailAlignment,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      selfTailAlignment = value;
+                    });
+                  }
+                },
+                popup: const SelectPopup.noVirtualization(
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: AxisAlignmentDirectional.start,
+                        child: Text('Start'),
+                      ),
+                      SelectItemButton(
+                        value: AxisAlignmentDirectional.end,
+                        child: Text('End'),
+                      ),
+                    ],
+                  ),
+                ),
+                itemBuilder:
+                    (BuildContext context, AxisAlignmentDirectional value) {
+                      return Text(
+                        value == AxisAlignmentDirectional.start
+                            ? 'Start'
+                            : 'End',
+                      );
+                    },
+              ),
             ),
-          ),
-          _withLabel(
+            _withLabel(
               label: 'Self Behavior',
               child: Select(
                 value: selfBehavior,
@@ -223,46 +268,70 @@ class _ChatExample1State extends State<ChatExample1> {
                   }
                 },
                 popup: const SelectPopup.noVirtualization(
-                    items: SelectItemList(children: [
-                  SelectItemButton(
-                      value: TailBehavior.first, child: Text('First')),
-                  SelectItemButton(
-                      value: TailBehavior.last, child: Text('Last')),
-                ])),
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: TailBehavior.first,
+                        child: Text('First'),
+                      ),
+                      SelectItemButton(
+                        value: TailBehavior.last,
+                        child: Text('Last'),
+                      ),
+                    ],
+                  ),
+                ),
                 itemBuilder: (BuildContext context, TailBehavior value) {
                   return Text(value == TailBehavior.first ? 'First' : 'Last');
                 },
-              )),
-        ]),
-        gap(24),
-        Wrap(spacing: 8, runSpacing: 8, children: [
-          _withLabel(
-            label: 'Other Position',
-            child: Select(
-              value: otherPosition,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    otherPosition = value;
-                  });
-                }
-              },
-              popup: const SelectPopup.noVirtualization(
-                  items: SelectItemList(children: [
-                SelectItemButton(
-                    value: AxisDirectional.start, child: Text('Start')),
-                SelectItemButton(
-                    value: AxisDirectional.end, child: Text('End')),
-                SelectItemButton(value: AxisDirectional.up, child: Text('Up')),
-                SelectItemButton(
-                    value: AxisDirectional.down, child: Text('Down')),
-              ])),
-              itemBuilder: (BuildContext context, AxisDirectional value) {
-                return Text(value == AxisDirectional.start ? 'Start' : 'End');
-              },
+              ),
             ),
-          ),
-          _withLabel(
+          ],
+        ),
+        Gap(24),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            _withLabel(
+              label: 'Other Position',
+              child: Select(
+                value: otherPosition,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      otherPosition = value;
+                    });
+                  }
+                },
+                popup: const SelectPopup.noVirtualization(
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: AxisDirectional.start,
+                        child: Text('Start'),
+                      ),
+                      SelectItemButton(
+                        value: AxisDirectional.end,
+                        child: Text('End'),
+                      ),
+                      SelectItemButton(
+                        value: AxisDirectional.up,
+                        child: Text('Up'),
+                      ),
+                      SelectItemButton(
+                        value: AxisDirectional.down,
+                        child: Text('Down'),
+                      ),
+                    ],
+                  ),
+                ),
+                itemBuilder: (BuildContext context, AxisDirectional value) {
+                  return Text(value == AxisDirectional.start ? 'Start' : 'End');
+                },
+              ),
+            ),
+            _withLabel(
               label: 'Other Alignment',
               child: Select(
                 value: otherAlignment,
@@ -274,21 +343,30 @@ class _ChatExample1State extends State<ChatExample1> {
                   }
                 },
                 popup: const SelectPopup.noVirtualization(
-                    items: SelectItemList(children: [
-                  SelectItemButton(
-                      value: AxisAlignmentDirectional.start,
-                      child: Text('Start')),
-                  SelectItemButton(
-                      value: AxisAlignmentDirectional.end, child: Text('End')),
-                ])),
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: AxisAlignmentDirectional.start,
+                        child: Text('Start'),
+                      ),
+                      SelectItemButton(
+                        value: AxisAlignmentDirectional.end,
+                        child: Text('End'),
+                      ),
+                    ],
+                  ),
+                ),
                 itemBuilder:
                     (BuildContext context, AxisAlignmentDirectional value) {
-                  return Text(value == AxisAlignmentDirectional.start
-                      ? 'Start'
-                      : 'End');
-                },
-              )),
-          _withLabel(
+                      return Text(
+                        value == AxisAlignmentDirectional.start
+                            ? 'Start'
+                            : 'End',
+                      );
+                    },
+              ),
+            ),
+            _withLabel(
               label: 'Other Tail Alignment',
               child: Select(
                 value: otherTailAlignment,
@@ -300,21 +378,30 @@ class _ChatExample1State extends State<ChatExample1> {
                   }
                 },
                 popup: const SelectPopup.noVirtualization(
-                    items: SelectItemList(children: [
-                  SelectItemButton(
-                      value: AxisAlignmentDirectional.start,
-                      child: Text('Start')),
-                  SelectItemButton(
-                      value: AxisAlignmentDirectional.end, child: Text('End')),
-                ])),
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: AxisAlignmentDirectional.start,
+                        child: Text('Start'),
+                      ),
+                      SelectItemButton(
+                        value: AxisAlignmentDirectional.end,
+                        child: Text('End'),
+                      ),
+                    ],
+                  ),
+                ),
                 itemBuilder:
                     (BuildContext context, AxisAlignmentDirectional value) {
-                  return Text(value == AxisAlignmentDirectional.start
-                      ? 'Start'
-                      : 'End');
-                },
-              )),
-          _withLabel(
+                      return Text(
+                        value == AxisAlignmentDirectional.start
+                            ? 'Start'
+                            : 'End',
+                      );
+                    },
+              ),
+            ),
+            _withLabel(
               label: 'Other Behavior',
               child: Select(
                 value: otherBehavior,
@@ -326,17 +413,26 @@ class _ChatExample1State extends State<ChatExample1> {
                   }
                 },
                 popup: const SelectPopup.noVirtualization(
-                    items: SelectItemList(children: [
-                  SelectItemButton(
-                      value: TailBehavior.first, child: Text('First')),
-                  SelectItemButton(
-                      value: TailBehavior.last, child: Text('Last')),
-                ])),
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(
+                        value: TailBehavior.first,
+                        child: Text('First'),
+                      ),
+                      SelectItemButton(
+                        value: TailBehavior.last,
+                        child: Text('Last'),
+                      ),
+                    ],
+                  ),
+                ),
                 itemBuilder: (BuildContext context, TailBehavior value) {
                   return Text(value == TailBehavior.first ? 'First' : 'Last');
                 },
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -346,18 +442,10 @@ class _ChatExample1State extends State<ChatExample1> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(label),
-          gap(8),
-          child,
-        ],
+        children: [Text(label), Gap(8), child],
       ),
     );
   }
 }
 
-enum ChatType {
-  plain,
-  tail,
-  sharpCorner,
-}
+enum ChatType { plain, tail, sharpCorner }

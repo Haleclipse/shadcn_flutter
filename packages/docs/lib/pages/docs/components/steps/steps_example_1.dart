@@ -17,15 +17,11 @@ class StepsExample1 extends StatelessWidget {
         ),
         StepItem(
           title: Text('Add dependencies'),
-          content: [
-            Text('Add the required dependencies to the project.'),
-          ],
+          content: [Text('Add the required dependencies to the project.')],
         ),
         StepItem(
           title: Text('Run the project'),
-          content: [
-            Text('Run the project in the project manager.'),
-          ],
+          content: [Text('Run the project in the project manager.')],
         ),
       ],
     );

@@ -191,7 +191,7 @@ typedef TabPaneItemBuilder<T> = TabChild Function(
 ///   ),
 /// )
 /// ```
-class TabPane<T> extends StatefulWidget {
+class TabPane<T> extends StatefulWidget implements Styleable<TabPaneTheme> {
   /// List of tab data items to display in the tab pane.
   ///
   /// Type: `List<TabPaneData<T>>`. Each item contains the data for one tab
@@ -264,6 +264,10 @@ class TabPane<T> extends StatefulWidget {
   /// Determines the vertical space allocated for tab buttons.
   final double? barHeight;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TabPaneTheme? theme;
+
   /// Creates a [TabPane] with sortable tabs and integrated content display.
   ///
   /// Configures a comprehensive tab interface that combines sortable tab management
@@ -319,6 +323,7 @@ class TabPane<T> extends StatefulWidget {
     this.onSort,
     required this.child,
     this.barHeight,
+    this.theme,
   });
 
   @override
@@ -352,7 +357,8 @@ class TabPaneState<T> extends State<TabPane<T>> {
     final theme = Theme.of(context);
     final densityContentPadding =
         theme.density.baseContentPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<TabPaneTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<TabPaneTheme>(context);
     final isFocused = data.index == data.selected;
     final backgroundColor =
         widget.backgroundColor ??
@@ -403,7 +409,8 @@ class TabPaneState<T> extends State<TabPane<T>> {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<TabPaneTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<TabPaneTheme>(context);
     final BorderRadiusGeometry borderRadius =
         widget.borderRadius ?? compTheme?.borderRadius ?? theme.borderRadiusLg;
     final BorderRadius resolvedBorderRadius = borderRadius.optionallyResolve(
@@ -428,8 +435,10 @@ class TabPaneState<T> extends State<TabPane<T>> {
         children: [
           Flexible(
             child: OutlinedContainer(
-              borderRadius: resolvedBorderRadius,
-              backgroundColor: backgroundColor,
+              theme: OutlinedContainerTheme(
+                borderRadius: resolvedBorderRadius,
+                backgroundColor: backgroundColor,
+              ),
               child: widget.child,
             ),
           ),
@@ -451,11 +460,13 @@ class TabPaneState<T> extends State<TabPane<T>> {
                 ),
                 Flexible(
                   child: FadeScroll(
-                    startOffset: resolvedBorderRadius.bottomLeft.x,
-                    endOffset: resolvedBorderRadius.bottomRight.x,
-                    gradient: [Colors.white.withAlpha(0)],
                     endCrossOffset: border?.width ?? 1,
                     controller: _scrollController,
+                    theme: FadeScrollTheme(
+                      startOffset: resolvedBorderRadius.bottomLeft.x,
+                      endOffset: resolvedBorderRadius.bottomRight.x,
+                      gradient: [Colors.white.withAlpha(0)],
+                    ),
                     child: ClipRect(
                       clipper: _ClipRectWithAdjustment(border?.width ?? 1),
                       child: SortableLayer(

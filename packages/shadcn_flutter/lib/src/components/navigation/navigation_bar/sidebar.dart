@@ -256,7 +256,10 @@ class _NavigationSidebarState extends State<NavigationSidebar> {
                         shrinkWrap: true,
                         scrollDirection: direction,
                         slivers: [
-                          SliverGap(startPadding(resolvedPadding, direction)),
+                          sliverGap(
+                            startPadding(resolvedPadding, direction),
+                            direction,
+                          ),
                           ...bodyChildren
                               .map((e) {
                                 return SliverPadding(
@@ -267,8 +270,13 @@ class _NavigationSidebarState extends State<NavigationSidebar> {
                                   sliver: e,
                                 ) as Widget;
                               })
-                              .joinSeparator(SliverGap(widget.spacing ?? 0)),
-                          SliverGap(endPadding(resolvedPadding, direction)),
+                              .joinSeparator(
+                                sliverGap(widget.spacing ?? 0, direction),
+                              ),
+                          sliverGap(
+                            endPadding(resolvedPadding, direction),
+                            direction,
+                          ),
                         ],
                       ),
                     ),
@@ -315,7 +323,10 @@ class _NavigationSidebarState extends State<NavigationSidebar> {
         physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         slivers: [
-          SliverGap(startPadding(resolvedPadding, Axis.vertical)),
+          sliverGap(
+            startPadding(resolvedPadding, Axis.vertical),
+            Axis.vertical,
+          ),
           ...items
               .map((e) {
                 return SliverPadding(
@@ -323,8 +334,8 @@ class _NavigationSidebarState extends State<NavigationSidebar> {
                   sliver: e,
                 ) as Widget;
               })
-              .joinSeparator(SliverGap(widget.spacing ?? 0)),
-          SliverGap(endPadding(resolvedPadding, Axis.vertical)),
+              .joinSeparator(sliverGap(widget.spacing ?? 0, Axis.vertical)),
+          sliverGap(endPadding(resolvedPadding, Axis.vertical), Axis.vertical),
         ],
       ),
     );

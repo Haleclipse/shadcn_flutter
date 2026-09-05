@@ -864,17 +864,6 @@ class WidgetTreeChangeDetectorState extends State<WidgetTreeChangeDetector> {
   }
 }
 
-/// Creates a gap widget with specified spacing.
-///
-/// Parameters:
-/// - [gap] (`double`, required): Main axis spacing.
-/// - [crossGap] (`double?`, optional): Cross axis spacing.
-///
-/// Returns: `Widget` — a Gap widget.
-Widget gap(double gap, {double? crossGap}) {
-  return Gap(gap, crossAxisExtent: crossGap);
-}
-
 /// Extension for joining lists of widgets with a separator.
 extension Joinable<T extends Widget> on List<T> {
   /// Joins widgets with a separator between each item.

@@ -17,7 +17,8 @@ class _SelectExample3State extends State<SelectExample3> {
   String? selectedValue;
 
   Iterable<MapEntry<String, List<String>>> _filteredFruits(
-      String searchQuery) sync* {
+    String searchQuery,
+  ) sync* {
     for (final entry in fruits.entries) {
       final filteredValues = entry.value
           .where((value) => _filterName(value, searchQuery))
@@ -44,14 +45,10 @@ class _SelectExample3State extends State<SelectExample3> {
         // Popup with async data loading and custom empty/loading UI.
         searchPlaceholder: const Text('Search fruit'),
         emptyBuilder: (context) {
-          return const Center(
-            child: Text('No fruit found'),
-          );
+          return const Center(child: Text('No fruit found'));
         },
         loadingBuilder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         },
         builder: (context, searchQuery) async {
           final filteredFruits = searchQuery == null
@@ -66,17 +63,10 @@ class _SelectExample3State extends State<SelectExample3> {
             builder: (context, index) {
               final entry = filteredFruits[index % filteredFruits.length];
               return SelectGroup(
-                headers: [
-                  SelectLabel(
-                    child: Text(entry.key),
-                  ),
-                ],
+                headers: [SelectLabel(child: Text(entry.key))],
                 children: [
                   for (final value in entry.value)
-                    SelectItemButton(
-                      value: value,
-                      child: Text(value),
-                    ),
+                    SelectItemButton(value: value, child: Text(value)),
                 ],
               );
             },
@@ -88,9 +78,7 @@ class _SelectExample3State extends State<SelectExample3> {
           selectedValue = value;
         });
       },
-      constraints: const BoxConstraints(
-        minWidth: 200,
-      ),
+      constraints: const BoxConstraints(minWidth: 200),
       value: selectedValue,
       placeholder: const Text('Select a fruit'),
     );

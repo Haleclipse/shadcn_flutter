@@ -79,8 +79,10 @@ void main() {
               return Text('Item $index');
             },
             transition: const CarouselTransition.sliding(),
-            autoplaySpeed: const Duration(milliseconds: 100),
             waitOnStart: false,
+            theme: CarouselTheme(
+              autoplaySpeed: const Duration(milliseconds: 100),
+            ),
           ),
         ),
       );
@@ -112,10 +114,7 @@ void main() {
                   transition: const CarouselTransition.sliding(),
                 ),
               ),
-              CarouselDotIndicator(
-                itemCount: 3,
-                controller: controller,
-              ),
+              CarouselDotIndicator(itemCount: 3, controller: controller),
             ],
           ),
         ),

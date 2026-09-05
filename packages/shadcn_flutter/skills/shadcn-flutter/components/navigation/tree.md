@@ -163,7 +163,7 @@ class _TreeExample1State extends State<TreeExample1> {
             ),
           ),
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -175,7 +175,7 @@ class _TreeExample1State extends State<TreeExample1> {
               },
               child: const Text('Expand All'),
             ),
-            const Gap(8),
+            const SizedBox(width: 8),
             PrimaryButton(
               onPressed: () {
                 setState(() {
@@ -186,7 +186,7 @@ class _TreeExample1State extends State<TreeExample1> {
             ),
           ],
         ),
-        const Gap(8),
+        const SizedBox(height: 8),
         Checkbox(
           state: expandIcon ? CheckboxState.checked : CheckboxState.unchecked,
           onChanged: (value) {
@@ -196,7 +196,7 @@ class _TreeExample1State extends State<TreeExample1> {
           },
           trailing: const Text('Expand Icon'),
         ),
-        const Gap(8),
+        const SizedBox(height: 8),
         Checkbox(
           state: usePath ? CheckboxState.checked : CheckboxState.unchecked,
           onChanged: (value) {
@@ -206,7 +206,7 @@ class _TreeExample1State extends State<TreeExample1> {
           },
           trailing: const Text('Use Path Branch Line'),
         ),
-        const Gap(8),
+        const SizedBox(height: 8),
         Checkbox(
           state: recursiveSelection
               ? CheckboxState.checked

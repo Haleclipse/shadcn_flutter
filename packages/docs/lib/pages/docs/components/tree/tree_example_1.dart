@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates Tree with expandable items, branch lines (path/line),
 // and optional recursive selection behavior.
@@ -19,10 +20,13 @@ class _TreeExample1State extends State<TreeExample1> {
       data: 'Apple',
       expanded: true,
       children: [
-        TreeItemNode(data: 'Red Apple', children: [
-          TreeItemNode(data: 'Red Apple 1'),
-          TreeItemNode(data: 'Red Apple 2'),
-        ]),
+        TreeItemNode(
+          data: 'Red Apple',
+          children: [
+            TreeItemNode(data: 'Red Apple 1'),
+            TreeItemNode(data: 'Red Apple 2'),
+          ],
+        ),
         TreeItemNode(data: 'Green Apple'),
       ],
     ),
@@ -30,11 +34,14 @@ class _TreeExample1State extends State<TreeExample1> {
       data: 'Banana',
       children: [
         TreeItemNode(data: 'Yellow Banana'),
-        TreeItemNode(data: 'Green Banana', children: [
-          TreeItemNode(data: 'Green Banana 1'),
-          TreeItemNode(data: 'Green Banana 2'),
-          TreeItemNode(data: 'Green Banana 3'),
-        ]),
+        TreeItemNode(
+          data: 'Green Banana',
+          children: [
+            TreeItemNode(data: 'Green Banana 1'),
+            TreeItemNode(data: 'Green Banana 2'),
+            TreeItemNode(data: 'Green Banana 3'),
+          ],
+        ),
       ],
     ),
     TreeItemNode(
@@ -44,9 +51,7 @@ class _TreeExample1State extends State<TreeExample1> {
         TreeItemNode(data: 'Green Cherry'),
       ],
     ),
-    TreeItemNode(
-      data: 'Date',
-    ),
+    TreeItemNode(data: 'Date'),
     // Tree Root acts as a parent node with no data,
     // it will flatten the children into the parent node
     TreeRootNode(
@@ -88,14 +93,13 @@ class _TreeExample1State extends State<TreeExample1> {
               // Draw connecting lines either as path curves or straight lines.
               branchLine: usePath ? BranchLine.path : BranchLine.line,
               // Use a built-in handler to update selection state across nodes.
-              onSelectionChanged: Tree.defaultSelectionHandler(
-                treeItems,
-                (value) {
-                  setState(() {
-                    treeItems = value;
-                  });
-                },
-              ),
+              onSelectionChanged: Tree.defaultSelectionHandler(treeItems, (
+                value,
+              ) {
+                setState(() {
+                  treeItems = value;
+                });
+              }),
               builder: (context, node) {
                 return TreeItem(
                   onPressed: () {},
@@ -109,12 +113,15 @@ class _TreeExample1State extends State<TreeExample1> {
                       : null,
                   leading: node.leaf
                       ? const Icon(BootstrapIcons.fileImage)
-                      : Icon(node.expanded
-                          ? BootstrapIcons.folder2Open
-                          : BootstrapIcons.folder2),
+                      : Icon(
+                          node.expanded
+                              ? BootstrapIcons.folder2Open
+                              : BootstrapIcons.folder2,
+                        ),
                   // Expand/collapse handling; updates treeItems with new expanded state.
-                  onExpand:
-                      Tree.defaultItemExpandHandler(treeItems, node, (value) {
+                  onExpand: Tree.defaultItemExpandHandler(treeItems, node, (
+                    value,
+                  ) {
                     setState(() {
                       treeItems = value;
                     });

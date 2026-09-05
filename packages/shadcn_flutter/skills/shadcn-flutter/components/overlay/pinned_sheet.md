@@ -138,7 +138,7 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
                             .large()
                             .medium()
                             .center(),
-                        const Gap(8),
+                        const SizedBox(height: 8),
                         ListenableBuilder(
                           listenable: controller,
                           builder: (context, child) {
@@ -148,21 +148,21 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
                                 .center();
                           },
                         ),
-                        const Gap(24),
+                        const SizedBox(height: 24),
                         PrimaryButton(
                           onPressed: () =>
                               controller.stage = const SheetStage.expanded(),
                           alignment: Alignment.center,
                           child: const Text('Expand'),
                         ),
-                        const Gap(8),
+                        const SizedBox(height: 8),
                         PrimaryButton(
                           onPressed: () =>
                               controller.stage = const SheetStage.fraction(0.4),
                           alignment: Alignment.center,
                           child: const Text('Peek'),
                         ),
-                        const Gap(8),
+                        const SizedBox(height: 8),
                         PrimaryButton(
                           onPressed: () => controller.animateTo(
                             const SheetStage.closed(),
@@ -190,7 +190,7 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Pinned sheet').large().medium(),
-                  const Gap(8),
+                  const SizedBox(height: 8),
                   const Text(
                     'Drag the handle to snap between closed, peek and '
                     'expanded, or use the buttons on the backdrop.',
@@ -267,7 +267,7 @@ class _PinnedSheetExample2State extends State<PinnedSheetExample2> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Peek the drag handle').large().medium(),
-                    const Gap(8),
+                    const SizedBox(height: 8),
                     const Text(
                       'At rest only the drag handle peeks out. Drag it up to '
                       'expand the sheet fully.',
@@ -354,12 +354,12 @@ class _PinnedSheetExample3State extends State<PinnedSheetExample3> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Centered sheet').large().medium(),
-                    const Gap(8),
+                    const SizedBox(height: 8),
                     const Text(
                       'This sheet is 70% of the width and centered, and its '
                       'expanded stage stops 40px short of full.',
                     ).muted(),
-                    const Gap(16),
+                    const SizedBox(height: 16),
                     SecondaryButton(
                       onPressed: () =>
                           controller.stage = const SheetStage.closed(),
@@ -414,9 +414,9 @@ class _PinnedSheetExample4State extends State<PinnedSheetExample4> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(title).large().medium(),
-              const Gap(8),
+              const SizedBox(height: 8),
               const Text('Drag me, or use the buttons.').muted(),
-              const Gap(16),
+              const SizedBox(height: 16),
               SecondaryButton(onPressed: onClose, child: const Text('Close')),
             ],
           ),
@@ -456,16 +456,16 @@ class _PinnedSheetExample4State extends State<PinnedSheetExample4> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Nested pinned sheets. ').large().medium(),
-                  const Gap(8),
+                  const SizedBox(height: 8),
                   const Text(
                           'You can press the button or drag this container to open it.')
                       .muted(),
-                  const Gap(16),
+                  const SizedBox(height: 16),
                   PrimaryButton(
                     onPressed: () => inner.stage = const SheetStage.expanded(),
                     child: const Text('Open inner'),
                   ),
-                  const Gap(8),
+                  const SizedBox(height: 8),
                   PrimaryButton(
                     onPressed: () => outer.stage = const SheetStage.expanded(),
                     child: const Text('Open outer'),
@@ -546,13 +546,13 @@ class _PinnedSheetExample5State extends State<PinnedSheetExample5> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Full-height sheet').large().medium(),
-                const Gap(16),
+                const SizedBox(height: 16),
                 PrimaryButton(
                   onPressed: () =>
                       controller.stage = const SheetStage.expanded(),
                   child: const Text('Cover backdrop'),
                 ),
-                const Gap(8),
+                const SizedBox(height: 8),
                 PrimaryButton(
                   onPressed: () => controller.stage = sixty,
                   child: const Text('60% (stops short)'),
@@ -568,12 +568,12 @@ class _PinnedSheetExample5State extends State<PinnedSheetExample5> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Sized to the visible extent').large().medium(),
-                  const Gap(8),
+                  const SizedBox(height: 8),
                   const Text(
                     'With expands:true the sheet grows and shrinks with its '
                     'value instead of sliding. Drag it down to close.',
                   ).muted(),
-                  // const Gap(16),
+                  // const SizedBox(height: 16),
                   Spacer(),
                   Align(
                     alignment: Alignment.centerRight,
@@ -656,7 +656,7 @@ class _PinnedSheetTileState extends State<PinnedSheetTile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('Pinned Sheet').large().medium(),
-                      const Gap(4),
+                      const SizedBox(height: 4),
                       const Text('Drag the handle to expand').muted(),
                     ],
                   ),

@@ -256,7 +256,8 @@ typedef TabChildBuilder = Widget Function(
 /// Container widget for managing multiple tabs.
 ///
 /// Provides tab selection and content display with customizable builders.
-class TabContainer extends StatelessWidget {
+class TabContainer extends StatelessWidget
+    implements Styleable<TabContainerTheme> {
   /// Currently selected tab index.
   final int selected;
 
@@ -271,6 +272,10 @@ class TabContainer extends StatelessWidget {
 
   /// Optional custom child widget builder.
   final TabChildBuilder? childBuilder;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TabContainerTheme? theme;
 
   /// Creates a [TabContainer].
   ///
@@ -287,11 +292,13 @@ class TabContainer extends StatelessWidget {
     required this.children,
     this.builder,
     this.childBuilder,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<TabContainerTheme>(context);
+    final compTheme =
+        theme ?? ComponentTheme.maybeOf<TabContainerTheme>(context);
     final tabBuilder =
         builder ??
         compTheme?.builder ??

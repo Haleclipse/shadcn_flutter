@@ -78,7 +78,7 @@ import 'package:shadcn_flutter_material/shadcn_flutter_material.dart';
 void main() {
   runApp(
     MaterialShadcnApp(
-      theme: ThemeData(colorScheme: ColorSchemes.lightZinc(), radius: 0.5),
+      theme: ThemeData(colorScheme: ColorSchemes.lightZinc, radius: 0.5),
       home: Scaffold(
         appBar: AppBar(title: const Text('Hybrid app')),
         body: const Center(child: PrimaryButton(child: Text('shadcn'))),

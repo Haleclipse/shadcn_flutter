@@ -17,7 +17,8 @@ class _MultiSelectExample2State extends State<MultiSelectExample2> {
   Iterable<String>? selectedValues;
 
   Iterable<MapEntry<String, List<String>>> _filteredFruits(
-      String searchQuery) sync* {
+    String searchQuery,
+  ) sync* {
     for (final entry in fruits.entries) {
       final filteredValues = entry.value
           .where((value) => _filterName(value, searchQuery))
@@ -52,17 +53,10 @@ class _MultiSelectExample2State extends State<MultiSelectExample2> {
             children: [
               for (final entry in filteredFruits)
                 SelectGroup(
-                  headers: [
-                    SelectLabel(
-                      child: Text(entry.key),
-                    ),
-                  ],
+                  headers: [SelectLabel(child: Text(entry.key))],
                   children: [
                     for (final value in entry.value)
-                      SelectItemButton(
-                        value: value,
-                        child: Text(value),
-                      ),
+                      SelectItemButton(value: value, child: Text(value)),
                   ],
                 ),
             ],
@@ -74,9 +68,7 @@ class _MultiSelectExample2State extends State<MultiSelectExample2> {
           selectedValues = value;
         });
       },
-      constraints: const BoxConstraints(
-        minWidth: 200,
-      ),
+      constraints: const BoxConstraints(minWidth: 200),
       value: selectedValues,
       placeholder: const Text('Select a fruit'),
     );

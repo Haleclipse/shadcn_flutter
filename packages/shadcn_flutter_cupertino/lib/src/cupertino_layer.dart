@@ -53,14 +53,43 @@ class CupertinoLayer extends StatelessWidget {
   /// Defaults to [cupertinoThemeFor] applied to the ambient shadcn theme.
   final cupertino.CupertinoThemeData? theme;
 
+  /// Whether to install [kCupertinoLocalizationsDelegates] over this subtree.
+  ///
+  /// Cupertino widgets assert on `CupertinoLocalizations.of` — a date picker,
+  /// a text selection toolbar or a nav bar back label will throw without it.
+  /// Installing the delegates here means a [CupertinoLayer] works on its own,
+  /// without the surrounding app having registered anything.
+  ///
+  /// This only covers the subtree. Routes pushed on the root navigator
+  /// (`showCupertinoDialog`, `Navigator.push`) build outside it, so an app that
+  /// opens Cupertino routes still needs [kCupertinoLocalizationsDelegates] on
+  /// `ShadcnApp.localizationsDelegates` — which is what [CupertinoShadcnApp]
+  /// does.
+  ///
+  /// Set to false if an ancestor already provides them.
+  final bool localizations;
+
   /// Creates a Cupertino compatibility layer around [child].
-  const CupertinoLayer({super.key, required this.child, this.theme});
+  const CupertinoLayer({
+    super.key,
+    required this.child,
+    this.theme,
+    this.localizations = true,
+  });
 
   @override
   Widget build(BuildContext context) {
+    Widget result = child;
+    if (localizations) {
+      result = Localizations.override(
+        context: context,
+        delegates: kCupertinoLocalizationsDelegates,
+        child: result,
+      );
+    }
     return cupertino.CupertinoTheme(
       data: theme ?? cupertinoThemeFor(Theme.of(context)),
-      child: child,
+      child: result,
     );
   }
 }

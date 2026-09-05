@@ -63,7 +63,7 @@ class SkeletonExample1 extends StatelessWidget {
           ),
           trailing: Icon(LucideIcons.arrowRight),
         ),
-        const Gap(24),
+        const SizedBox(height: 24),
         Basic(
           title: const Text('Skeleton Example 1'),
           content: const Text(
@@ -113,7 +113,7 @@ class SkeletonTile extends StatelessWidget implements IComponentPage {
               // Note: Avatar and other Image related widget needs its own skeleton
               trailing: const Icon(LucideIcons.arrowRight),
             ).asSkeleton(),
-            const Gap(16),
+            const SizedBox(height: 16),
             Basic(
               title: const Text('Skeleton Example 1'),
               content: const Text(
@@ -124,7 +124,7 @@ class SkeletonTile extends StatelessWidget implements IComponentPage {
               // Note: Avatar and other Image related widget needs its own skeleton
               trailing: const Icon(LucideIcons.arrowRight),
             ).asSkeleton(),
-            const Gap(16),
+            const SizedBox(height: 16),
             Basic(
               title: const Text('Skeleton Example 1'),
               content: const Text(

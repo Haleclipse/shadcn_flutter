@@ -2,8 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 void main() {
-  testWidgets('Table row height adjusts to wrapped text in Flex column',
-      (WidgetTester tester) async {
+  testWidgets('Table row height adjusts to wrapped text in Flex column', (
+    WidgetTester tester,
+  ) async {
     // A long text that is expected to wrap
     const longText =
         'This is some much longer text. This text should be too long to fit on one line and should wrap into additional lines.';
@@ -45,8 +46,11 @@ void main() {
     // The text should be wrapped, so its height should be significantly larger than a single line.
     // A single line of default text is usually around 14-20 pixels.
     // With 300px width, this text should wrap to at least 2 lines.
-    expect(textSize.height, greaterThan(20.0),
-        reason: 'Text should wrap and have height > 20');
+    expect(
+      textSize.height,
+      greaterThan(20.0),
+      reason: 'Text should wrap and have height > 20',
+    );
 
     // Verify that the table row height is also adjusted.
     // We can check the height of the TableCell or the row itself if we can access it,

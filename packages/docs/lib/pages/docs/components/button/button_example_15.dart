@@ -9,8 +9,7 @@ class ButtonExample15 extends StatelessWidget {
       leading: const StatedWidget.map(
         states: {
           'disabled': Icon(LucideIcons.x),
-          {WidgetState.hovered, WidgetState.focused}:
-              Icon(LucideIcons.camera),
+          {WidgetState.hovered, WidgetState.focused}: Icon(LucideIcons.camera),
           WidgetState.hovered: Icon(LucideIcons.camera),
         },
         child: Icon(LucideIcons.camera),

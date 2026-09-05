@@ -7,6 +7,8 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import 'material/cupertino_example_1.dart';
 
+import 'package:gap/gap.dart';
+
 class MaterialExample extends StatelessWidget {
   const MaterialExample({super.key});
 
@@ -30,10 +32,7 @@ class MaterialExample extends StatelessWidget {
 
   static TableCell _textCell(String text) {
     return TableCell(
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Text(text),
-      ),
+      child: Container(padding: const EdgeInsets.all(8), child: Text(text)),
     );
   }
 
@@ -67,38 +66,75 @@ class MaterialExample extends StatelessWidget {
         const Gap(16),
         Table(
           rows: [
-            TableHeader(cells: [
-              _headerCell('Package'),
-              _headerCell('Use it when'),
-            ]),
-            TableRow(cells: [
-              _codeCell('shadcn_flutter'),
-              _textCell(
-                'Always. Depends on package:flutter/widgets.dart only — no Material, '
-                'no Cupertino, no MaterialIcons font.',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('shadcn_flutter_material'),
-              _textCell(
-                'You use Material widgets — Scaffold, AppBar, showDialog, '
-                'ScaffoldMessenger, Icons — alongside shadcn_flutter components.',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('shadcn_flutter_cupertino'),
-              _textCell(
-                'You use Cupertino widgets — CupertinoPageScaffold, '
-                'CupertinoNavigationBar, showCupertinoDialog, CupertinoIcons.',
-              ),
-            ]),
+            TableHeader(
+              cells: [_headerCell('Package'), _headerCell('Use it when')],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('shadcn_flutter'),
+                _textCell(
+                  'Always. Depends on package:flutter/widgets.dart only — no Material, '
+                  'no Cupertino, no MaterialIcons font.',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('shadcn_flutter_material'),
+                _textCell(
+                  'You use Material widgets — Scaffold, AppBar, showDialog, '
+                  'ScaffoldMessenger, Icons — alongside shadcn_flutter components.',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('shadcn_flutter_cupertino'),
+                _textCell(
+                  'You use Cupertino widgets — CupertinoPageScaffold, '
+                  'CupertinoNavigationBar, showCupertinoDialog, CupertinoIcons.',
+                ),
+              ],
+            ),
           ],
+        ).p(),
+        const Gap(32),
+        const Text('Migrating your imports').h2(),
+        const Alert(
+          destructive: true,
+          leading: Icon(LucideIcons.triangleAlert),
+          title: Text('Change your imports, or Material widgets will fail'),
+          content: Text(
+            'Flutter still ships package:flutter/material.dart, so an app that keeps '
+            'its old imports goes on compiling — but it will not work. The SDK copy '
+            'and material_ui are separate libraries defining separate Material, Theme '
+            'and MaterialLocalizations types, and a widget from one cannot see the '
+            'ancestors installed by the other.',
+          ),
+        ),
+        const Gap(16),
+        const Text(
+          'A TextField imported from package:flutter/material.dart inside a '
+          'MaterialShadcnApp throws "No Material widget found." Because the check '
+          'lives in an assert, it only appears in debug builds — release builds stay '
+          'silent while still missing the Material defaults. No amount of '
+          'MaterialLayer nesting fixes it; the import itself has to change.',
+        ).p(),
+        const CodeBlock(
+          code:
+              "- import 'package:flutter/material.dart';\n"
+              "+ import 'package:material_ui/material_ui.dart';\n"
+              "\n"
+              "- import 'package:flutter/cupertino.dart';\n"
+              "+ import 'package:cupertino_ui/cupertino_ui.dart';",
+          mode: 'diff',
         ).p(),
         const Gap(16),
         const Text('Installation').h2(),
         const Text('Add the companion package next to shadcn_flutter:').p(),
         const CodeBlock(
-          code: 'flutter pub add shadcn_flutter_material\n'
+          code:
+              'flutter pub add shadcn_flutter_material\n'
               '# or\n'
               'flutter pub add shadcn_flutter_cupertino',
           mode: 'shell',
@@ -127,7 +163,7 @@ void main() {
     MaterialShadcnApp(
       title: 'My App',
       theme: ThemeData(
-        colorScheme: ColorSchemes.lightZinc(),
+        colorScheme: ColorSchemes.lightZinc,
         radius: 0.5,
       ),
       home: Scaffold(
@@ -182,10 +218,10 @@ ShadcnApp(
         const Gap(16),
         const Text('The other direction').h2(),
         const Text(
-          'To use shadcn_flutter components inside an existing MaterialApp or '
-          'CupertinoApp you need neither companion package: wrap the subtree in a '
-          'ShadcnLayer, or a single widget in ShadcnUI. ',
-        )
+              'To use shadcn_flutter components inside an existing MaterialApp or '
+              'CupertinoApp you need neither companion package: wrap the subtree in a '
+              'ShadcnLayer, or a single widget in ShadcnUI. ',
+            )
             .thenButton(
               onPressed: () {
                 context.goNamed('wrapper');
@@ -203,90 +239,112 @@ ShadcnApp(
         const Gap(16),
         Table(
           rows: [
-            TableHeader(cells: [
-              _headerCell('Before'),
-              _headerCell('Now'),
-            ]),
-            TableRow(cells: [
-              _codeCell('Icons.add'),
-              _textCell(
-                'LucideIcons.plus (core), or Icons.add from shadcn_flutter_material',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('MaterialPageRoute, MaterialPage'),
-              _textCell('ShadcnPageRoute, ShadcnPage (core)'),
-            ]),
-            TableRow(cells: [
-              _codeCell('SliverAppBar'),
-              _textCell(
-                'SliverPersistentHeader (core), or SliverAppBar from '
-                'shadcn_flutter_material',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('cupertinoDesktopTextSelectionHandleControls'),
-              _textCell(
-                'shadcnTextSelectionHandleControls (core), or the original from '
-                'shadcn_flutter_cupertino',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('TextField.nativeContextMenuBuilder()'),
-              _textCell(
-                'buildAdaptiveEditableTextContextMenu from shadcn_flutter_material',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('TextField.materialContextMenuBuilder()'),
-              _textCell(
-                'buildMaterialEditableTextContextMenu from shadcn_flutter_material',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('TextField.cupertinoContextMenuBuilder()'),
-              _textCell(
-                'buildCupertinoEditableTextContextMenu from shadcn_flutter_cupertino',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('CupertinoSpellCheckSuggestionsToolbar'),
-              _textCell(
-                'SpellCheckSuggestionsToolbar (core), which renders shadcn styled '
-                'menus',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('ShadcnApp.materialTheme / .cupertinoTheme'),
-              _textCell(
-                'MaterialShadcnApp.materialTheme / CupertinoShadcnApp.cupertinoTheme',
-              ),
-            ]),
-            TableRow(cells: [
-              _codeCell('ShadcnApp.debugShowMaterialGrid'),
-              _textCell('ShadcnApp.debugShowGrid (core)'),
-            ]),
-            TableRow(cells: [
-              _codeCell('SelectableText.useNativeContextMenu'),
-              _textCell(
-                'Pass contextMenuBuilder directly, e.g. '
-                'buildAdaptiveEditableTextContextMenu',
-              ),
-            ]),
+            TableHeader(cells: [_headerCell('Before'), _headerCell('Now')]),
+            TableRow(
+              cells: [
+                _codeCell('Icons.add'),
+                _textCell(
+                  'LucideIcons.plus (core), or Icons.add from shadcn_flutter_material',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('MaterialPageRoute, MaterialPage'),
+                _textCell('ShadcnPageRoute, ShadcnPage (core)'),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('SliverAppBar'),
+                _textCell(
+                  'SliverPersistentHeader (core), or SliverAppBar from '
+                  'shadcn_flutter_material',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('cupertinoDesktopTextSelectionHandleControls'),
+                _textCell(
+                  'shadcnTextSelectionHandleControls (core), or the original from '
+                  'shadcn_flutter_cupertino',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('TextField.nativeContextMenuBuilder()'),
+                _textCell(
+                  'buildAdaptiveEditableTextContextMenu from shadcn_flutter_material',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('TextField.materialContextMenuBuilder()'),
+                _textCell(
+                  'buildMaterialEditableTextContextMenu from shadcn_flutter_material',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('TextField.cupertinoContextMenuBuilder()'),
+                _textCell(
+                  'buildCupertinoEditableTextContextMenu from shadcn_flutter_cupertino',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('CupertinoSpellCheckSuggestionsToolbar'),
+                _textCell(
+                  'SpellCheckSuggestionsToolbar (core), which renders shadcn styled '
+                  'menus',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('ShadcnApp.materialTheme / .cupertinoTheme'),
+                _textCell(
+                  'MaterialShadcnApp.materialTheme / CupertinoShadcnApp.cupertinoTheme',
+                ),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('ShadcnApp.debugShowMaterialGrid'),
+                _textCell('ShadcnApp.debugShowGrid (core)'),
+              ],
+            ),
+            TableRow(
+              cells: [
+                _codeCell('SelectableText.useNativeContextMenu'),
+                _textCell(
+                  'Pass contextMenuBuilder directly, e.g. '
+                  'buildAdaptiveEditableTextContextMenu',
+                ),
+              ],
+            ),
           ],
         ).p(),
         const Gap(16),
         Alert(
           leading: const Icon(LucideIcons.info),
           title: const Text('Note'),
-          content: const Text(
-                  'By default, Material/Cupertino Theme will follow shadcn_flutter theme. ')
-              .thenButton(
-                  onPressed: () {
-                    context.goNamed('theme');
-                  },
-                  child: const Text(
-                      'Try changing the shadcn_flutter theme right here!')),
+          content:
+              const Text(
+                'By default, Material/Cupertino Theme will follow shadcn_flutter theme. ',
+              ).thenButton(
+                onPressed: () {
+                  context.goNamed('theme');
+                },
+                child: const Text(
+                  'Try changing the shadcn_flutter theme right here!',
+                ),
+              ),
         ),
         WidgetUsageExample(
           title: 'Material Example',

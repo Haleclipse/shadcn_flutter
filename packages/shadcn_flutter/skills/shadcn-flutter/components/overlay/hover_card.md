@@ -119,7 +119,7 @@ class HoverCardTile extends StatelessWidget implements IComponentPage {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text('@flutter').medium().underline(),
-              const Gap(16),
+              const SizedBox(height: 16),
               const Card(
                 child: Basic(
                   leading: FlutterLogo(),

@@ -693,7 +693,7 @@ class _StepperExample6State extends State<StepperExample6> {
             ),
           ],
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         Stepper(
           controller: controller,
           direction: direction,

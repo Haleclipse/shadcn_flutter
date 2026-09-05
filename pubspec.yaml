@@ -9,6 +9,7 @@ workspace:
 - packages/shadcn_flutter/example
 - packages/shadcn_flutter_material
 - packages/shadcn_flutter_cupertino
+- packages/shadcn_flutter_skeletonizer
 - packages/docs
 - packages/gen
 - packages/shadcn_flutter_genui

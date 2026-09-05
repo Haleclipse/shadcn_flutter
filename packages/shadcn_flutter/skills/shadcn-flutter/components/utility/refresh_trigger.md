@@ -81,7 +81,7 @@ class _RefreshTriggerExample1State extends State<RefreshTriggerExample1> {
           child: Column(
             children: [
               const Text('Pull Me'),
-              const Gap(16),
+              const SizedBox(height: 16),
               PrimaryButton(
                 onPressed: () {
                   // Programmatically trigger the refresh without a pull gesture.
@@ -148,7 +148,7 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                           color: theme.colorScheme.primary,
                         ),
                       ),
-                      const Gap(4),
+                      const SizedBox(height: 4),
                       Text(
                         'Pull to refresh',
                         style: TextStyle(
@@ -167,7 +167,7 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                   child: Column(
                     children: [
                       const Text('Content List:').bold(),
-                      const Gap(12),
+                      const SizedBox(height: 12),
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(8),
@@ -178,7 +178,7 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                         child:
                             const Text('Item 1', textAlign: TextAlign.center),
                       ),
-                      const Gap(4),
+                      const SizedBox(height: 4),
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(8),
@@ -189,7 +189,7 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                         child:
                             const Text('Item 2', textAlign: TextAlign.center),
                       ),
-                      const Gap(4),
+                      const SizedBox(height: 4),
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(8),

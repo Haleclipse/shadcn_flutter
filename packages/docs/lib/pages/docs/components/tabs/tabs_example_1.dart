@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates Tabs as a header paired with an IndexedStack body.
 // Tabs manages the active index; the stack swaps content without unmounting.
@@ -38,15 +39,9 @@ class _TabsExample1State extends State<TabsExample1> {
         IndexedStack(
           index: index,
           children: const [
-            NumberedContainer(
-              index: 1,
-            ),
-            NumberedContainer(
-              index: 2,
-            ),
-            NumberedContainer(
-              index: 3,
-            ),
+            NumberedContainer(index: 1),
+            NumberedContainer(index: 2),
+            NumberedContainer(index: 3),
           ],
         ).sized(height: 300),
       ],

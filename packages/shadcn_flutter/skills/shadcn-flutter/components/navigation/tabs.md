@@ -70,7 +70,7 @@ class _TabsExample1State extends State<TabsExample1> {
             });
           },
         ),
-        const Gap(8),
+        const SizedBox(height: 8),
         // The IndexedStack acts as the tab body; it switches content by index
         // without unmounting inactive children.
         IndexedStack(

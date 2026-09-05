@@ -24,7 +24,7 @@ class CarouselFixedConstraint extends CarouselSizeConstraint {
 
   /// Creates a fixed carousel size constraint.
   const CarouselFixedConstraint(this.size)
-      : assert(size > 0, 'size must be greater than 0');
+    : assert(size > 0, 'size must be greater than 0');
 }
 
 /// A fractional carousel size constraint.
@@ -34,7 +34,7 @@ class CarouselFractionalConstraint extends CarouselSizeConstraint {
 
   /// Creates a fractional carousel size constraint.
   const CarouselFractionalConstraint(this.fraction)
-      : assert(fraction > 0, 'fraction must be greater than 0');
+    : assert(fraction > 0, 'fraction must be greater than 0');
 }
 
 /// A carousel layout.
@@ -148,7 +148,8 @@ class SlidingCarouselTransition extends CarouselTransition {
       return [
         for (var item in items)
           Positioned(
-            left: snapOffsetAlignment +
+            left:
+                snapOffsetAlignment +
                 (item.position - currentIndex) * size +
                 (gap * item.relativeIndex),
             width: size,
@@ -160,7 +161,8 @@ class SlidingCarouselTransition extends CarouselTransition {
       return [
         for (var item in items)
           Positioned(
-            top: snapOffsetAlignment +
+            top:
+                snapOffsetAlignment +
                 (item.position - currentIndex) * size +
                 (gap * item.relativeIndex),
             width: constraints.maxWidth,
@@ -435,8 +437,9 @@ class CarouselTheme extends ComponentThemeData {
       direction: direction == null ? this.direction : direction(),
       wrap: wrap == null ? this.wrap : wrap(),
       pauseOnHover: pauseOnHover == null ? this.pauseOnHover : pauseOnHover(),
-      autoplaySpeed:
-          autoplaySpeed == null ? this.autoplaySpeed : autoplaySpeed(),
+      autoplaySpeed: autoplaySpeed == null
+          ? this.autoplaySpeed
+          : autoplaySpeed(),
       draggable: draggable == null ? this.draggable : draggable(),
       speed: speed == null ? this.speed : speed(),
       curve: curve == null ? this.curve : curve(),
@@ -458,15 +461,15 @@ class CarouselTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        alignment,
-        direction,
-        wrap,
-        pauseOnHover,
-        autoplaySpeed,
-        draggable,
-        speed,
-        curve,
-      );
+    alignment,
+    direction,
+    wrap,
+    pauseOnHover,
+    autoplaySpeed,
+    draggable,
+    speed,
+    curve,
+  );
 }
 
 /// Interactive carousel widget with automatic transitions and customizable layouts.
@@ -509,7 +512,7 @@ class CarouselTheme extends ComponentThemeData {
 ///   pauseOnHover: true,
 /// )
 /// ```
-class Carousel extends StatefulWidget {
+class Carousel extends StatefulWidget implements Styleable<CarouselTheme> {
   /// The carousel transition.
   final CarouselTransition transition;
 
@@ -529,27 +532,33 @@ class Carousel extends StatefulWidget {
   final CarouselController? controller;
 
   /// The carousel alignment.
+  @Deprecated('Use theme: CarouselTheme(alignment: ...) instead.')
   final CarouselAlignment alignment;
 
   /// The carousel direction.
+  @Deprecated('Use theme: CarouselTheme(direction: ...) instead.')
   final Axis direction;
 
   /// Whether the carousel should wrap.
+  @Deprecated('Use theme: CarouselTheme(wrap: ...) instead.')
   final bool wrap;
 
   /// Whether the carousel should pause on hover.
+  @Deprecated('Use theme: CarouselTheme(pauseOnHover: ...) instead.')
   final bool pauseOnHover;
 
   /// Whether the carousel should wait the item duration on start.
   final bool waitOnStart;
 
   /// The autoplay speed of the carousel.
+  @Deprecated('Use theme: CarouselTheme(autoplaySpeed: ...) instead.')
   final Duration? autoplaySpeed;
 
   /// Whether the carousel should autoplay in reverse.
   final bool autoplayReverse;
 
   /// Whether the carousel is draggable.
+  @Deprecated('Use theme: CarouselTheme(draggable: ...) instead.')
   final bool draggable;
 
   /// Whether the carousel is reverse in layout direction.
@@ -559,9 +568,11 @@ class Carousel extends StatefulWidget {
   final CarouselSizeConstraint sizeConstraint;
 
   /// The speed of the carousel.
+  @Deprecated('Use theme: CarouselTheme(speed: ...) instead.')
   final Duration speed;
 
   /// The curve of the carousel.
+  @Deprecated('Use theme: CarouselTheme(curve: ...) instead.')
   final Curve curve;
 
   /// The index change callback.
@@ -572,6 +583,10 @@ class Carousel extends StatefulWidget {
 
   /// Whether to disable dragging velocity.
   final bool disableDraggingVelocity;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CarouselTheme? theme;
 
   /// Creates a carousel.
   const Carousel({
@@ -597,10 +612,11 @@ class Carousel extends StatefulWidget {
     this.disableOverheadScrolling = true,
     this.disableDraggingVelocity = false,
     required this.transition,
+    this.theme,
   }) : assert(
-          wrap || itemCount != null,
-          'itemCount must be provided if wrap is false',
-        );
+         wrap || itemCount != null,
+         'itemCount must be provided if wrap is false',
+       );
 
   @override
   State<Carousel> createState() => _CarouselState();
@@ -624,56 +640,56 @@ class _CarouselState extends State<Carousel>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _theme = ComponentTheme.maybeOf<CarouselTheme>(context);
+    _theme = widget.theme ?? ComponentTheme.maybeOf<CarouselTheme>(context);
   }
 
   CarouselAlignment get _alignment => styleValue(
-        widgetValue: widget.alignment,
-        themeValue: _theme?.alignment,
-        defaultValue: CarouselAlignment.center,
-      );
+    widgetValue: widget.alignment,
+    themeValue: _theme?.alignment,
+    defaultValue: CarouselAlignment.center,
+  );
 
   Axis get _direction => styleValue(
-        widgetValue: widget.direction,
-        themeValue: _theme?.direction,
-        defaultValue: Axis.horizontal,
-      );
+    widgetValue: widget.direction,
+    themeValue: _theme?.direction,
+    defaultValue: Axis.horizontal,
+  );
 
   bool get _wrap => styleValue(
-        widgetValue: widget.wrap,
-        themeValue: _theme?.wrap,
-        defaultValue: true,
-      );
+    widgetValue: widget.wrap,
+    themeValue: _theme?.wrap,
+    defaultValue: true,
+  );
 
   bool get _pauseOnHover => styleValue(
-        widgetValue: widget.pauseOnHover,
-        themeValue: _theme?.pauseOnHover,
-        defaultValue: true,
-      );
+    widgetValue: widget.pauseOnHover,
+    themeValue: _theme?.pauseOnHover,
+    defaultValue: true,
+  );
 
   Duration? get _autoplaySpeed => styleValue(
-        widgetValue: widget.autoplaySpeed,
-        themeValue: _theme?.autoplaySpeed,
-        defaultValue: null,
-      );
+    widgetValue: widget.autoplaySpeed,
+    themeValue: _theme?.autoplaySpeed,
+    defaultValue: null,
+  );
 
   bool get _draggable => styleValue(
-        widgetValue: widget.draggable,
-        themeValue: _theme?.draggable,
-        defaultValue: true,
-      );
+    widgetValue: widget.draggable,
+    themeValue: _theme?.draggable,
+    defaultValue: true,
+  );
 
   Duration get _speed => styleValue(
-        widgetValue: widget.speed,
-        themeValue: _theme?.speed,
-        defaultValue: const Duration(milliseconds: 200),
-      );
+    widgetValue: widget.speed,
+    themeValue: _theme?.speed,
+    defaultValue: const Duration(milliseconds: 200),
+  );
 
   Curve get _curve => styleValue(
-        widgetValue: widget.curve,
-        themeValue: _theme?.curve,
-        defaultValue: Curves.easeInOut,
-      );
+    widgetValue: widget.curve,
+    themeValue: _theme?.curve,
+    defaultValue: Curves.easeInOut,
+  );
 
   Duration? get _currentSlideDuration {
     double currentIndex = _controller.getCurrentIndex(widget.itemCount);
@@ -881,7 +897,8 @@ class _CarouselState extends State<Carousel>
     if (widget.sizeConstraint is CarouselFixedConstraint) {
       size = (widget.sizeConstraint as CarouselFixedConstraint).size;
     } else if (widget.sizeConstraint is CarouselFractionalConstraint) {
-      size = constraints.maxHeight *
+      size =
+          constraints.maxHeight *
           (widget.sizeConstraint as CarouselFractionalConstraint).fraction;
     } else {
       size = constraints.maxHeight;
@@ -924,7 +941,8 @@ class _CarouselState extends State<Carousel>
     if (widget.sizeConstraint is CarouselFixedConstraint) {
       size = (widget.sizeConstraint as CarouselFixedConstraint).size;
     } else if (widget.sizeConstraint is CarouselFractionalConstraint) {
-      size = constraints.maxWidth *
+      size =
+          constraints.maxWidth *
           (widget.sizeConstraint as CarouselFractionalConstraint).fraction;
     } else {
       size = constraints.maxWidth;

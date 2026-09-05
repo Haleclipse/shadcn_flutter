@@ -22,40 +22,49 @@ class _RemoveListState extends State<_RemoveList> {
   @override
   Widget build(BuildContext context) {
     return SortableLayer(
-      child: Builder(builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (int i = 0; i < names.length; i++)
-              Sortable<String>(
-                key: ValueKey(names[i].data),
-                data: names[i],
-                onAcceptTop: (v) => setState(() => names.swapItem(v, i)),
-                onAcceptBottom: (v) => setState(() => names.swapItem(v, i + 1)),
-                onDropFailed: () => setState(() {
-                  final removed = names.removeAt(i);
-                  SortableLayer.ensureAndDismissDrop(context, removed);
-                }),
-                child: SizedBox(
-                  height: 40,
-                  child: Center(child: Text(names[i].data)),
+      child: Builder(
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (int i = 0; i < names.length; i++)
+                Sortable<String>(
+                  key: ValueKey(names[i].data),
+                  data: names[i],
+                  onAcceptTop: (v) => setState(() => names.swapItem(v, i)),
+                  onAcceptBottom: (v) =>
+                      setState(() => names.swapItem(v, i + 1)),
+                  onDropFailed: () => setState(() {
+                    final removed = names.removeAt(i);
+                    SortableLayer.ensureAndDismissDrop(context, removed);
+                  }),
+                  child: SizedBox(
+                    height: 40,
+                    child: Center(child: Text(names[i].data)),
+                  ),
                 ),
-              ),
-          ],
-        );
-      }),
+            ],
+          );
+        },
+      ),
     );
   }
 }
 
-Future<bool> _dragAndCheckRemoved(WidgetTester tester, Offset totalDelta,
-    {String item = 'C'}) async {
+Future<bool> _dragAndCheckRemoved(
+  WidgetTester tester,
+  Offset totalDelta, {
+  String item = 'C',
+}) async {
   // Fresh key each call so a new State (full A-E list) is built.
   await tester.pumpWidget(SimpleApp(child: _RemoveList(key: UniqueKey())));
   await tester.pumpAndSettle();
   final start = tester.getCenter(find.text(item));
-  final gesture = await tester.startGesture(start, kind: PointerDeviceKind.touch);
+  final gesture = await tester.startGesture(
+    start,
+    kind: PointerDeviceKind.touch,
+  );
   await tester.pump(const Duration(milliseconds: 50));
   const steps = 12;
   for (int i = 0; i < steps; i++) {
@@ -93,7 +102,10 @@ void main() {
     // Grab 'C' near its top edge (like a handle), then drag up ~2.5 items.
     final rect = tester.getRect(find.text('C'));
     final grab = Offset(rect.center.dx, rect.top + 2);
-    final gesture = await tester.startGesture(grab, kind: PointerDeviceKind.touch);
+    final gesture = await tester.startGesture(
+      grab,
+      kind: PointerDeviceKind.touch,
+    );
     await tester.pump(const Duration(milliseconds: 50));
     for (int i = 0; i < 12; i++) {
       await gesture.moveBy(const Offset(0, -9));

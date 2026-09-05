@@ -8,9 +8,6 @@ class ButtonExample3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
-      onPressed: () {},
-      child: const Text('Outlined'),
-    );
+    return OutlineButton(onPressed: () {}, child: const Text('Outlined'));
   }
 }

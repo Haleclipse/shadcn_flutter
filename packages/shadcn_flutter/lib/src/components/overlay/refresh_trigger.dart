@@ -182,7 +182,8 @@ class RefreshTriggerTheme extends ComponentThemeData {
 ///   ),
 /// )
 /// ```
-class RefreshTrigger extends StatefulWidget {
+class RefreshTrigger extends StatefulWidget
+    implements Styleable<RefreshTriggerTheme> {
   /// Default indicator builder that creates a spinning progress indicator.
   ///
   /// Displays a platform-appropriate circular progress indicator that rotates
@@ -198,12 +199,14 @@ class RefreshTrigger extends StatefulWidget {
   ///
   /// Pull distance must exceed this value to activate the refresh callback.
   /// If null, uses theme or default value.
+  @Deprecated('Use theme: RefreshTriggerTheme(minExtent: ...) instead.')
   final double? minExtent;
 
   /// Maximum pull extent allowed.
   ///
   /// Limits how far the user can pull to prevent excessive stretching.
   /// If null, uses theme or default value.
+  @Deprecated('Use theme: RefreshTriggerTheme(maxExtent: ...) instead.')
   final double? maxExtent;
 
   /// Callback invoked when refresh is triggered.
@@ -239,6 +242,10 @@ class RefreshTrigger extends StatefulWidget {
   ///
   /// Time to display the completion state before hiding the indicator.
   final Duration? completeDuration;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final RefreshTriggerTheme? theme;
 
   /// Creates a [RefreshTrigger] with pull-to-refresh functionality.
   ///
@@ -282,6 +289,7 @@ class RefreshTrigger extends StatefulWidget {
     this.curve,
     this.completeDuration,
     required this.child,
+    this.theme,
   });
 
   @override
@@ -419,13 +427,15 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
     final densityGap = theme.density.baseGap * theme.scaling;
     return Center(
       child: SurfaceCard(
-        padding: widget.stage.stage == TriggerStage.pulling
-            ? EdgeInsets.all(densityGap * 0.5)
-            : EdgeInsets.symmetric(
-                horizontal: densityGap * 1.5,
-                vertical: densityGap * 0.5,
-              ),
         borderRadius: theme.borderRadiusXl,
+        theme: CardTheme(
+          padding: widget.stage.stage == TriggerStage.pulling
+              ? EdgeInsets.all(densityGap * 0.5)
+              : EdgeInsets.symmetric(
+                  horizontal: densityGap * 1.5,
+                  vertical: densityGap * 0.5,
+                ),
+        ),
         child: CrossFadedTransition(
           child: KeyedSubtree(key: ValueKey(widget.stage.stage), child: child),
         ),
@@ -479,7 +489,8 @@ class RefreshTriggerState extends State<RefreshTrigger>
 
   void _updateThemeValues() {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<RefreshTriggerTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<RefreshTriggerTheme>(context);
     final densityContainerPadding =
         theme.density.baseContainerPadding * theme.scaling;
 

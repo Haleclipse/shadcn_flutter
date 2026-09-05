@@ -123,7 +123,7 @@ class TooltipTile extends StatelessWidget implements IComponentPage {
                 child: const Text('Delete'),
                 onPressed: () {},
               ),
-              const Gap(4),
+              const SizedBox(height: 4),
               const TooltipContainer(
                 child: Text('Click to delete this item'),
               ),

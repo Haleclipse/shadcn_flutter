@@ -24,10 +24,7 @@ void main() {
     testWidgets('renders in checked state', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: Checkbox(
-            state: CheckboxState.checked,
-            onChanged: (value) {},
-          ),
+          child: Checkbox(state: CheckboxState.checked, onChanged: (value) {}),
         ),
       );
 
@@ -141,8 +138,9 @@ void main() {
       expect(find.byType(Checkbox), findsOneWidget);
 
       // Tap to toggle
-      await tester.tap(find
-          .text('Label')); // Tapping label should work if wrapped in Clickable?
+      await tester.tap(
+        find.text('Label'),
+      ); // Tapping label should work if wrapped in Clickable?
       // Checkbox implementation wraps Row in Clickable (line 675 in checkbox.dart).
       // So tapping anywhere in the row (including leading/trailing) should work.
 

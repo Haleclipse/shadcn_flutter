@@ -24,8 +24,9 @@ void main() {
       expect(find.text('Item 1'), findsOneWidget);
       // Content is always in tree but sized to 0 when collapsed
       expect(find.text('Content 1'), findsOneWidget);
-      final transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      final transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, 0); // Initially collapsed
     });
 
@@ -44,8 +45,9 @@ void main() {
       );
 
       // Initially collapsed
-      var transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      var transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, 0);
 
       // Tap trigger
@@ -53,8 +55,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Should be expanded
-      transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, greaterThan(0));
 
       // Tap again
@@ -62,8 +65,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Should be collapsed
-      transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, 0);
     });
 
@@ -136,11 +140,7 @@ void main() {
     });
 
     testWidgets('handles empty items list', (tester) async {
-      await tester.pumpWidget(
-        SimpleApp(
-          child: Accordion(items: []),
-        ),
-      );
+      await tester.pumpWidget(SimpleApp(child: Accordion(items: [])));
 
       expect(find.byType(Accordion), findsOneWidget);
       // Should not crash
@@ -150,10 +150,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: ComponentTheme<AccordionTheme>(
-            data: AccordionTheme(
-              padding: 20,
-              dividerHeight: 2,
-            ),
+            data: AccordionTheme(padding: 20, dividerHeight: 2),
             child: Accordion(
               items: [
                 AccordionItem(
@@ -215,17 +212,21 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100)); // Midway
 
       // Check size during animation
-      final transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      final transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, greaterThan(0));
-      expect(transitionSize.height,
-          lessThan(18)); // Assuming full height is around 18
+      expect(
+        transitionSize.height,
+        lessThan(18),
+      ); // Assuming full height is around 18
 
       await tester.pumpAndSettle(); // Complete animation
 
       // Fully expanded
-      final finalSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      final finalSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(finalSize.height, greaterThan(0));
     });
   });

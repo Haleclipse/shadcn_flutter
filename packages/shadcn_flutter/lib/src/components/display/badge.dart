@@ -101,7 +101,7 @@ class BadgeTheme extends ComponentThemeData {
 ///   trailing: Icon(LucideIcons.bell, size: 14),
 /// );
 /// ```
-class PrimaryBadge extends StatelessWidget {
+class PrimaryBadge extends StatelessWidget implements Styleable<BadgeTheme> {
   /// The main content of the badge.
   final Widget child;
 
@@ -121,6 +121,10 @@ class PrimaryBadge extends StatelessWidget {
   /// If `null`, uses theme's primary badge style or default primary styling.
   final AbstractButtonStyle? style;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final BadgeTheme? theme;
+
   /// Creates a primary badge.
   const PrimaryBadge({
     super.key,
@@ -129,11 +133,12 @@ class PrimaryBadge extends StatelessWidget {
     this.leading,
     this.trailing,
     this.style,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BadgeTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<BadgeTheme>(context);
     final baseStyle =
         style ??
         compTheme?.primaryStyle ??
@@ -163,7 +168,7 @@ class PrimaryBadge extends StatelessWidget {
 ///
 /// Similar to [PrimaryBadge] but with secondary (muted) styling suitable for
 /// less prominent information.
-class SecondaryBadge extends StatelessWidget {
+class SecondaryBadge extends StatelessWidget implements Styleable<BadgeTheme> {
   /// The main content of the badge.
   final Widget child;
 
@@ -179,6 +184,10 @@ class SecondaryBadge extends StatelessWidget {
   /// Optional custom style override for the badge.
   final AbstractButtonStyle? style;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final BadgeTheme? theme;
+
   /// Creates a secondary badge with the specified child content.
   const SecondaryBadge({
     super.key,
@@ -187,11 +196,12 @@ class SecondaryBadge extends StatelessWidget {
     this.leading,
     this.trailing,
     this.style,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BadgeTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<BadgeTheme>(context);
     final baseStyle =
         style ??
         compTheme?.secondaryStyle ??
@@ -221,7 +231,7 @@ class SecondaryBadge extends StatelessWidget {
 ///
 /// Uses outline styling with a visible border and no background fill,
 /// suitable for less visually prominent badge elements.
-class OutlineBadge extends StatelessWidget {
+class OutlineBadge extends StatelessWidget implements Styleable<BadgeTheme> {
   /// The main content of the badge.
   final Widget child;
 
@@ -237,6 +247,10 @@ class OutlineBadge extends StatelessWidget {
   /// Optional custom style override for the badge.
   final AbstractButtonStyle? style;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final BadgeTheme? theme;
+
   /// Creates an outline badge with the specified child content.
   const OutlineBadge({
     super.key,
@@ -245,11 +259,12 @@ class OutlineBadge extends StatelessWidget {
     this.leading,
     this.trailing,
     this.style,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BadgeTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<BadgeTheme>(context);
     final baseStyle =
         style ??
         compTheme?.outlineStyle ??
@@ -279,7 +294,8 @@ class OutlineBadge extends StatelessWidget {
 ///
 /// Uses destructive (typically red) styling to indicate dangerous, destructive,
 /// or critical information that requires user attention.
-class DestructiveBadge extends StatelessWidget {
+class DestructiveBadge extends StatelessWidget
+    implements Styleable<BadgeTheme> {
   /// The main content of the badge.
   final Widget child;
 
@@ -295,6 +311,10 @@ class DestructiveBadge extends StatelessWidget {
   /// Optional custom style override for the badge.
   final AbstractButtonStyle? style;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final BadgeTheme? theme;
+
   /// Creates a destructive badge with the specified child content.
   const DestructiveBadge({
     super.key,
@@ -303,11 +323,12 @@ class DestructiveBadge extends StatelessWidget {
     this.leading,
     this.trailing,
     this.style,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BadgeTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<BadgeTheme>(context);
     final baseStyle =
         style ??
         compTheme?.destructiveStyle ??

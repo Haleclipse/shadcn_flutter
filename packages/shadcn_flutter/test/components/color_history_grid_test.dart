@@ -9,11 +9,13 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: RecentColorsScope(
-            child: Builder(builder: (context) {
-              return ColorHistoryGrid(
-                storage: ColorHistoryStorage.of(context),
-              );
-            }),
+            child: Builder(
+              builder: (context) {
+                return ColorHistoryGrid(
+                  storage: ColorHistoryStorage.of(context),
+                );
+              },
+            ),
           ),
         ),
       );
@@ -26,11 +28,13 @@ void main() {
         SimpleApp(
           child: RecentColorsScope(
             initialRecentColors: [Colors.red, Colors.blue],
-            child: Builder(builder: (context) {
-              return ColorHistoryGrid(
-                storage: ColorHistoryStorage.of(context),
-              );
-            }),
+            child: Builder(
+              builder: (context) {
+                return ColorHistoryGrid(
+                  storage: ColorHistoryStorage.of(context),
+                );
+              },
+            ),
           ),
         ),
       );
@@ -46,12 +50,14 @@ void main() {
         SimpleApp(
           child: RecentColorsScope(
             initialRecentColors: [Colors.red],
-            child: Builder(builder: (context) {
-              return ColorHistoryGrid(
-                storage: ColorHistoryStorage.of(context),
-                onColorPicked: (color) => pickedColor = color,
-              );
-            }),
+            child: Builder(
+              builder: (context) {
+                return ColorHistoryGrid(
+                  storage: ColorHistoryStorage.of(context),
+                  onColorPicked: (color) => pickedColor = color,
+                );
+              },
+            ),
           ),
         ),
       );
@@ -69,12 +75,14 @@ void main() {
         SimpleApp(
           child: RecentColorsScope(
             initialRecentColors: [Colors.red, Colors.blue, Colors.green],
-            child: Builder(builder: (context) {
-              return ColorHistoryGrid(
-                storage: ColorHistoryStorage.of(context),
-                maxTotalColors: 2,
-              );
-            }),
+            child: Builder(
+              builder: (context) {
+                return ColorHistoryGrid(
+                  storage: ColorHistoryStorage.of(context),
+                  maxTotalColors: 2,
+                );
+              },
+            ),
           ),
         ),
       );

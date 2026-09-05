@@ -114,7 +114,7 @@ class _FormattedInputExample2State extends State<FormattedInputExample2> {
         DateInput(
           onChanged: (value) => setState(() => _selectedDate = value),
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         if (_selectedDate != null) Text('Selected date: $_selectedDate'),
       ],
     );
@@ -144,7 +144,7 @@ class _FormattedInputExample3State extends State<FormattedInputExample3> {
           // Built-in formatted control for time-of-day values.
           onChanged: (value) => setState(() => _selected = value),
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         if (_selected != null) Text('Selected time: $_selected'),
       ],
     );
@@ -175,7 +175,7 @@ class _FormattedInputExample4State extends State<FormattedInputExample4> {
           onChanged: (value) => setState(() => _selected = value),
           showSeconds: true,
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         if (_selected != null) Text('Selected duration: $_selected'),
       ],
     );
@@ -208,12 +208,12 @@ class FormattedInputTile extends StatelessWidget implements IComponentPage {
               placeholder: Text('(123) 456-7890'),
               initialValue: '1234567890',
             ),
-            Gap(16),
+            SizedBox(height: 16),
             TextField(
               placeholder: Text('1234 5678 9012 3456'),
               initialValue: '1234567890123456',
             ),
-            Gap(16),
+            SizedBox(height: 16),
             TextField(
               placeholder: Text('MM/DD/YYYY'),
               initialValue: '12/25/2024',

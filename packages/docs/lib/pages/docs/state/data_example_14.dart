@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DataExample14 extends StatefulWidget {
   const DataExample14({super.key});
@@ -88,8 +89,9 @@ class _LeafWidgetState extends State<LeafWidget> {
     int secondCounter = Model.of(context, #secondCounter);
     rebuildCount++;
     return Card(
-      child:
-          Text('Second Counter: $secondCounter (Rebuild Count: $rebuildCount)'),
+      child: Text(
+        'Second Counter: $secondCounter (Rebuild Count: $rebuildCount)',
+      ),
     );
   }
 }

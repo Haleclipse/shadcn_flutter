@@ -16,7 +16,7 @@ import 'material_layer.dart';
 ///   runApp(
 ///     MaterialShadcnApp(
 ///       theme: ThemeData(
-///         colorScheme: ColorSchemes.darkZinc(),
+///         colorScheme: ColorSchemes.darkZinc,
 ///         radius: 0.5,
 ///       ),
 ///       home: const MyHomePage(),
@@ -298,14 +298,21 @@ class MaterialShadcnApp extends StatelessWidget {
         ...kMaterialLocalizationsDelegates,
       ];
 
-  Widget _builder(BuildContext context, Widget? child) {
+  // Installed through ShadcnApp.surfaceBuilder rather than ShadcnApp.builder,
+  // so the Material ancestors also cover the toast, eye dropper and keyboard
+  // shortcut layers. Installed via `builder` they would sit underneath those,
+  // and a Material widget inside a toast would find no Material ancestor.
+  // The caller's own `builder` is forwarded separately and stays where callers
+  // expect it, wrapping the routing widget.
+  Widget _surfaceBuilder(BuildContext context, Widget child) {
     return MaterialLayer(
       theme: materialTheme,
       background: materialBackground,
       scaffoldMessenger: scaffoldMessenger,
-      child: builder != null
-          ? Builder(builder: (context) => builder!(context, child))
-          : child ?? const SizedBox.shrink(),
+      // ShadcnApp already registers the delegates app-wide; a second copy over
+      // the subtree would be redundant.
+      localizations: false,
+      child: child,
     );
   }
 
@@ -318,7 +325,8 @@ class MaterialShadcnApp extends StatelessWidget {
         routerDelegate: routerDelegate,
         routerConfig: routerConfig,
         backButtonDispatcher: backButtonDispatcher,
-        builder: _builder,
+        builder: builder,
+        surfaceBuilder: _surfaceBuilder,
         title: title,
         onGenerateTitle: onGenerateTitle,
         onNavigationNotification: onNavigationNotification,
@@ -360,7 +368,8 @@ class MaterialShadcnApp extends StatelessWidget {
       onUnknownRoute: onUnknownRoute,
       onNavigationNotification: onNavigationNotification,
       navigatorObservers: navigatorObservers ?? const [],
-      builder: _builder,
+      builder: builder,
+      surfaceBuilder: _surfaceBuilder,
       title: title,
       onGenerateTitle: onGenerateTitle,
       color: color,

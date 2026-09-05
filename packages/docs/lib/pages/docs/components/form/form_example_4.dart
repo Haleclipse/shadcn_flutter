@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates using the correct typed FormKey for each widget.
 ///
@@ -25,8 +26,9 @@ class _FormExample4State extends State<FormExample4> {
   final _nameKey = const TextFieldKey('name'); // TextField → String
   final _agreeKey = const CheckboxKey('agree'); // Checkbox → CheckboxState
   final _birthdayKey = const DatePickerKey('birthday'); // DatePicker → DateTime
-  final _genderKey =
-      const SelectKey<Gender>('gender'); // Select → T (Gender in this case)
+  final _genderKey = const SelectKey<Gender>(
+    'gender',
+  ); // Select → T (Gender in this case)
   final _notifyKey = const SwitchKey('notify'); // Switch → bool
 
   CheckboxState _agreeState = CheckboxState.unchecked;
@@ -82,15 +84,15 @@ class _FormExample4State extends State<FormExample4> {
                   key: _nameKey,
                   label: const Text('Name'),
                   validator: const LengthValidator(min: 2),
-                  child: const TextField(
-                    initialValue: 'Jane Doe',
-                  ),
+                  child: const TextField(initialValue: 'Jane Doe'),
                 ),
                 FormInline<CheckboxState>(
                   key: _agreeKey,
                   label: const Text('I agree to the terms'),
-                  validator: const CompareTo.equal(CheckboxState.checked,
-                      message: 'You must agree'),
+                  validator: const CompareTo.equal(
+                    CheckboxState.checked,
+                    message: 'You must agree',
+                  ),
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: Checkbox(
@@ -106,24 +108,28 @@ class _FormExample4State extends State<FormExample4> {
                 FormField<DateTime>(
                   key: _birthdayKey,
                   label: const Text('Birthday'),
-                  validator:
-                      const NonNullValidator(message: 'Please select a date'),
+                  validator: const NonNullValidator(
+                    message: 'Please select a date',
+                  ),
                   child: const ControlledDatePicker(),
                 ),
                 FormField<Gender>(
                   key: _genderKey,
                   label: const Text('Gender'),
-                  validator:
-                      const NonNullValidator(message: 'Please select a gender'),
+                  validator: const NonNullValidator(
+                    message: 'Please select a gender',
+                  ),
                   child: ControlledSelect<Gender>(
                     popup: SelectPopup(
-                      items: SelectItemList(children: [
-                        for (var gender in Gender.values)
-                          SelectItemButton(
-                            value: gender,
-                            child: Text(gender.displayName),
-                          ),
-                      ]),
+                      items: SelectItemList(
+                        children: [
+                          for (var gender in Gender.values)
+                            SelectItemButton(
+                              value: gender,
+                              child: Text(gender.displayName),
+                            ),
+                        ],
+                      ),
                     ),
                     itemBuilder: (BuildContext context, Gender value) {
                       return Text(value.displayName);

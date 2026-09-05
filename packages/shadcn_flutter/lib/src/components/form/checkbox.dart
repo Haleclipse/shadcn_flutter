@@ -377,12 +377,14 @@ class ControlledCheckbox extends StatelessWidget
           trailing: trailing,
           enabled: data.enabled,
           tristate: tristate,
-          size: size,
-          gap: gap,
-          backgroundColor: backgroundColor,
-          activeColor: activeColor,
-          borderColor: borderColor,
-          borderRadius: borderRadius,
+          theme: CheckboxTheme(
+            size: size,
+            gap: gap,
+            backgroundColor: backgroundColor,
+            activeColor: activeColor,
+            borderColor: borderColor,
+            borderRadius: borderRadius,
+          ),
         );
       },
     );
@@ -458,7 +460,7 @@ enum CheckboxState implements Comparable<CheckboxState> {
 ///   trailing: Text('Enable security features'),
 /// )
 /// ```
-class Checkbox extends StatefulWidget {
+class Checkbox extends StatefulWidget implements Styleable<CheckboxTheme> {
   /// Current state of the checkbox.
   ///
   /// Must be one of [CheckboxState.checked], [CheckboxState.unchecked], or
@@ -507,37 +509,47 @@ class Checkbox extends StatefulWidget {
   ///
   /// Overrides the theme default. When null, uses [CheckboxTheme.size] or
   /// framework default (16 logical pixels scaled by theme scaling factor).
+  @Deprecated('Use theme: CheckboxTheme(size: ...) instead.')
   final double? size;
 
   /// Spacing between the checkbox and its leading/trailing widgets.
   ///
   /// Overrides the theme default. Applied on both sides when leading or trailing
   /// widgets are present. When null, uses [CheckboxTheme.gap] or framework default.
+  @Deprecated('Use theme: CheckboxTheme(gap: ...) instead.')
   final double? gap;
 
   /// Color of the checkbox background when in unchecked state.
   ///
   /// Overrides the theme default. Applied as the background color when unchecked.
   /// When null, uses a semi-transparent version of the theme's input background color.
+  @Deprecated('Use theme: CheckboxTheme(backgroundColor: ...) instead.')
   final Color? backgroundColor;
 
   /// Color used for the checkbox when in checked state.
   ///
   /// Overrides the theme default. Applied as both background and border color
   /// when checked. When null, uses [CheckboxTheme.activeColor] or theme primary color.
+  @Deprecated('Use theme: CheckboxTheme(activeColor: ...) instead.')
   final Color? activeColor;
 
   /// Color used for the checkbox border when unchecked or indeterminate.
   ///
   /// Overrides the theme default. Only visible in unchecked state as checked
   /// state uses [activeColor]. When null, uses [CheckboxTheme.borderColor] or theme border color.
+  @Deprecated('Use theme: CheckboxTheme(borderColor: ...) instead.')
   final Color? borderColor;
 
   /// Border radius applied to the checkbox square.
   ///
   /// Overrides the theme default. Creates rounded corners on the checkbox container.
   /// When null, uses [CheckboxTheme.borderRadius] or theme small radius.
+  @Deprecated('Use theme: CheckboxTheme(borderRadius: ...) instead.')
   final BorderRadiusGeometry? borderRadius;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CheckboxTheme? theme;
 
   /// Creates a [Checkbox] widget.
   ///
@@ -583,6 +595,7 @@ class Checkbox extends StatefulWidget {
     this.activeColor,
     this.borderColor,
     this.borderRadius,
+    this.theme,
   });
 
   @override
@@ -648,7 +661,8 @@ class _CheckboxState extends State<Checkbox>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<CheckboxTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<CheckboxTheme>(context);
     final size = styleValue(
       widgetValue: widget.size,
       themeValue: compTheme?.size,
@@ -691,7 +705,7 @@ class _CheckboxState extends State<Checkbox>
         mainAxisSize: MainAxisSize.min,
         children: [
           if (widget.leading != null) widget.leading!.small().medium(),
-          if (widget.leading != null) Gap(gap),
+          if (widget.leading != null) SizedBox(width: gap),
           AnimatedContainer(
             duration: kDefaultDuration,
             width: size,
@@ -757,7 +771,7 @@ class _CheckboxState extends State<Checkbox>
                     ),
                   ),
           ),
-          if (widget.trailing != null) Gap(gap),
+          if (widget.trailing != null) SizedBox(width: gap),
           if (widget.trailing != null) widget.trailing!.small().medium(),
         ],
       ),

@@ -18,10 +18,11 @@ class SkeletonExample extends StatelessWidget {
       children: [
         const Text('This component uses widget from ')
             .thenButton(
-                child: const Text('https://pub.dev/packages/skeletonizer'),
-                onPressed: () {
-                  openInNewTab('https://pub.dev/packages/skeletonizer');
-                })
+              child: const Text('https://pub.dev/packages/skeletonizer'),
+              onPressed: () {
+                openInNewTab('https://pub.dev/packages/skeletonizer');
+              },
+            )
             .p(),
         const WidgetUsageExample(
           title: 'Example',

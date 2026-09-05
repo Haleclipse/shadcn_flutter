@@ -214,7 +214,8 @@ class DropdownMenuTheme extends ComponentThemeData {
 /// - [MenuItem] for individual menu items
 /// - [MenuPopup] for the popup container
 /// - [showDropdown] for displaying dropdowns programmatically
-class DropdownMenu extends StatefulWidget {
+class DropdownMenu extends StatefulWidget
+    implements Styleable<DropdownMenuTheme> {
   /// Opacity of the surface blur effect.
   ///
   /// If `null`, uses theme default.
@@ -230,6 +231,10 @@ class DropdownMenu extends StatefulWidget {
   /// Each item should be a [MenuItem] or similar menu component.
   final List<MenuItem> children;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final DropdownMenuTheme? theme;
+
   /// Creates a dropdown menu.
   ///
   /// Parameters:
@@ -241,6 +246,7 @@ class DropdownMenu extends StatefulWidget {
     this.surfaceOpacity,
     this.surfaceBlur,
     required this.children,
+    this.theme,
   });
 
   @override
@@ -256,7 +262,8 @@ class _DropdownMenuState extends State<DropdownMenu> {
         theme.density.baseContentPadding * theme.scaling;
     final isSheetOverlay =
         OverlayConfiguration.maybeOf(context) is SheetConfiguration;
-    final compTheme = ComponentTheme.maybeOf<DropdownMenuTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<DropdownMenuTheme>(context);
     return ConstrainedBox(
       constraints: const BoxConstraints(minWidth: 192),
       child: MenuGroup(
@@ -274,7 +281,9 @@ class _DropdownMenuState extends State<DropdownMenu> {
             // does not need to check for theme.surfaceOpacity and theme.surfaceBlur
             // MenuPopup already has default values for these properties
             surfaceOpacity: widget.surfaceOpacity ?? compTheme?.surfaceOpacity,
-            surfaceBlur: widget.surfaceBlur ?? compTheme?.surfaceBlur,
+            theme: MenuPopupTheme(
+              surfaceBlur: widget.surfaceBlur ?? compTheme?.surfaceBlur,
+            ),
             children: children,
           );
         },

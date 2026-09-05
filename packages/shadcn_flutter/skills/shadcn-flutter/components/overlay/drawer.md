@@ -87,7 +87,7 @@ class _DrawerExample1State extends State<DrawerExample1> {
                 children: [
                   Text(
                       'Drawer ${count + 1} at ${positions[count % positions.length].name}'),
-                  const Gap(16),
+                  const SizedBox(height: 16),
                   PrimaryButton(
                     onPressed: () {
                       // Open another drawer on top.
@@ -95,7 +95,7 @@ class _DrawerExample1State extends State<DrawerExample1> {
                     },
                     child: const Text('Open Another Drawer'),
                   ),
-                  const Gap(8),
+                  const SizedBox(height: 8),
                   SecondaryButton(
                     onPressed: () {
                       // Close the current top-most overlay.
@@ -153,7 +153,7 @@ class DrawerTile extends StatelessWidget implements IComponentPage {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('Drawer!').large().medium(),
-            const Gap(4),
+            const SizedBox(height: 4),
             const Text('This is a drawer that you can use to display content')
                 .muted(),
           ],

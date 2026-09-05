@@ -47,20 +47,29 @@ class ChipTheme extends ComponentThemeData {
 ///   child: Icon(LucideIcons.x, size: 14),
 /// );
 /// ```
-class ChipButton extends StatelessWidget {
+class ChipButton extends StatelessWidget implements Styleable<ChipTheme> {
   /// The widget to display as the button content.
   final Widget child;
 
   /// Callback invoked when the button is pressed.
   final VoidCallback? onPressed;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ChipTheme? theme;
+
   /// Creates a chip button with the specified child and callback.
-  const ChipButton({super.key, required this.child, this.onPressed});
+  const ChipButton({
+    super.key,
+    required this.child,
+    this.onPressed,
+    this.theme,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ChipTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<ChipTheme>(context);
     final padding = styleValue(
       themeValue: compTheme?.padding,
       defaultValue: EdgeInsets.zero,
@@ -126,7 +135,7 @@ class ChipButton extends StatelessWidget {
 ///   style: ButtonStyle.secondary(),
 /// );
 /// ```
-class Chip extends StatelessWidget {
+class Chip extends StatelessWidget implements Styleable<ChipTheme> {
   /// The main content of the chip.
   final Widget child;
 
@@ -141,6 +150,10 @@ class Chip extends StatelessWidget {
 
   /// Custom button style for the chip.
   final AbstractButtonStyle? style;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ChipTheme? theme;
 
   /// Creates a [Chip].
   ///
@@ -173,12 +186,13 @@ class Chip extends StatelessWidget {
     this.trailing,
     this.onPressed,
     this.style,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ChipTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<ChipTheme>(context);
     final baseStyle = style ?? compTheme?.style ?? ButtonVariance.secondary;
     return Button(
       style: baseStyle.copyWith(

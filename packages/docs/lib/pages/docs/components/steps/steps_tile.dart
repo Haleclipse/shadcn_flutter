@@ -13,27 +13,25 @@ class StepsTile extends StatelessWidget implements IComponentPage {
       name: 'steps',
       title: 'Steps',
       example: Card(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        child: Steps(children: [
-          StepItem(
-            title: Text('Create a project'),
-            content: [
-              Text('Create a new flutter project'),
-            ],
-          ),
-          StepItem(
-            title: Text('Add dependencies'),
-            content: [
-              Text('Add dependencies to pubspec.yaml'),
-            ],
-          ),
-          StepItem(
-            title: Text('Run the project'),
-            content: [
-              Text('Run the project using flutter run'),
-            ],
-          ),
-        ]),
+        theme: CardTheme(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        ),
+        child: Steps(
+          children: [
+            StepItem(
+              title: Text('Create a project'),
+              content: [Text('Create a new flutter project')],
+            ),
+            StepItem(
+              title: Text('Add dependencies'),
+              content: [Text('Add dependencies to pubspec.yaml')],
+            ),
+            StepItem(
+              title: Text('Run the project'),
+              content: [Text('Run the project using flutter run')],
+            ),
+          ],
+        ),
       ),
     );
   }

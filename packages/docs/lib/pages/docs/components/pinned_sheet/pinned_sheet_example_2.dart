@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// A [PinnedSheet] with no backdrop transform, using [SheetStage.peekDragHandle]
 /// so the closed-ish resting stage shows only the drag handle.
@@ -40,11 +41,10 @@ class _PinnedSheetExample2State extends State<PinnedSheetExample2> {
           initialStage: const SheetStage.peekDragHandle(),
           // No backdropTransform: the backdrop is not scaled.
           backdrop: Card(
-            fillColor: theme.colorScheme.muted,
-            filled: true,
+            theme: CardTheme(fillColor: theme.colorScheme.muted, filled: true),
             child: Center(
-                child:
-                    const Text('Drag the handle to expand the sheet').muted()),
+              child: const Text('Drag the handle to expand the sheet').muted(),
+            ),
           ),
           child: DrawerContainer(
             child: SizedBox(

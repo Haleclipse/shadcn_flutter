@@ -217,7 +217,7 @@ void main() {
   result += '  }\n';
   result += '}\n';
   result += 'class ColorSchemes {\n';
-  result += '  ColorSchemes._();\n';
+  result += '  ColorSchemes._;\n';
 
   // Process each CSS file
   for (final cssFile in cssFiles) {

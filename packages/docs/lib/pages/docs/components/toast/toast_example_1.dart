@@ -18,13 +18,14 @@ class _ToastExample1State extends State<ToastExample1> {
         title: const Text('Event has been created'),
         subtitle: const Text('Sunday, July 07, 2024 at 12:00 PM'),
         trailing: PrimaryButton(
-            size: ButtonSize.small,
-            onPressed: () {
-              // Close the toast programmatically when clicking Undo.
-              overlay.close();
-            },
-            child: const Text('Undo')),
-        trailingAlignment: Alignment.center,
+          size: ButtonSize.small,
+          onPressed: () {
+            // Close the toast programmatically when clicking Undo.
+            overlay.close();
+          },
+          child: const Text('Undo'),
+        ),
+        theme: BasicTheme(trailingAlignment: Alignment.center),
       ),
     );
   }

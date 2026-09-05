@@ -12,8 +12,9 @@ class MultipleChoiceTheme extends ComponentThemeData {
   /// non-null parameters.
   MultipleChoiceTheme copyWith({ValueGetter<bool?>? allowUnselect}) {
     return MultipleChoiceTheme(
-      allowUnselect:
-          allowUnselect == null ? this.allowUnselect : allowUnselect(),
+      allowUnselect: allowUnselect == null
+          ? this.allowUnselect
+          : allowUnselect(),
     );
   }
 
@@ -332,7 +333,8 @@ class ControlledMultipleChoice<T> extends StatelessWidget
 ///   ),
 /// )
 /// ```
-class MultipleChoice<T> extends StatefulWidget {
+class MultipleChoice<T> extends StatefulWidget
+    implements Styleable<MultipleChoiceTheme> {
   /// The child widget tree containing choice items.
   final Widget child;
 
@@ -347,6 +349,10 @@ class MultipleChoice<T> extends StatefulWidget {
 
   /// Whether the current selection can be unselected.
   final bool? allowUnselect;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final MultipleChoiceTheme? theme;
 
   /// Creates a [MultipleChoice].
   ///
@@ -363,6 +369,7 @@ class MultipleChoice<T> extends StatefulWidget {
     this.onChanged,
     this.enabled,
     this.allowUnselect,
+    this.theme,
   });
 
   @override
@@ -392,10 +399,7 @@ class _MultipleChoiceState<T> extends State<MultipleChoice<T>>
 
   @override
   Widget build(BuildContext context) {
-    return Data<Choice<T>>.inherit(
-      data: this,
-      child: widget.child,
-    );
+    return Data<Choice<T>>.inherit(data: this, child: widget.child);
   }
 
   @override
@@ -427,7 +431,8 @@ class _MultipleChoiceState<T> extends State<MultipleChoice<T>>
   }
 
   bool get _allowUnselect {
-    final theme = ComponentTheme.maybeOf<MultipleChoiceTheme>(context);
+    final theme =
+        widget.theme ?? ComponentTheme.maybeOf<MultipleChoiceTheme>(context);
     return widget.allowUnselect ?? theme?.allowUnselect ?? false;
   }
 }
@@ -454,7 +459,8 @@ class _MultipleChoiceState<T> extends State<MultipleChoice<T>>
 ///   ),
 /// )
 /// ```
-class MultipleAnswer<T> extends StatefulWidget {
+class MultipleAnswer<T> extends StatefulWidget
+    implements Styleable<MultipleChoiceTheme> {
   /// The child widget tree containing choice items.
   final Widget child;
 
@@ -469,6 +475,10 @@ class MultipleAnswer<T> extends StatefulWidget {
 
   /// Whether all selections can be unselected.
   final bool? allowUnselect;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final MultipleChoiceTheme? theme;
 
   /// Creates a [MultipleAnswer].
   ///
@@ -485,6 +495,7 @@ class MultipleAnswer<T> extends StatefulWidget {
     this.onChanged,
     this.enabled,
     this.allowUnselect,
+    this.theme,
   });
 
   @override
@@ -509,10 +520,7 @@ class _MultipleAnswerState<T> extends State<MultipleAnswer<T>>
 
   @override
   Widget build(BuildContext context) {
-    return Data<Choice<T>>.inherit(
-      data: this,
-      child: widget.child,
-    );
+    return Data<Choice<T>>.inherit(data: this, child: widget.child);
   }
 
   @override
@@ -543,7 +551,8 @@ class _MultipleAnswerState<T> extends State<MultipleAnswer<T>>
   }
 
   bool get _allowUnselect {
-    final theme = ComponentTheme.maybeOf<MultipleChoiceTheme>(context);
+    final theme =
+        widget.theme ?? ComponentTheme.maybeOf<MultipleChoiceTheme>(context);
     return widget.allowUnselect ?? theme?.allowUnselect ?? true;
   }
 }

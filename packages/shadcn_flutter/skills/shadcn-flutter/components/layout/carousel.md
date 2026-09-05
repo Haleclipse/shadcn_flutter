@@ -124,7 +124,7 @@ class _CarouselExample1State extends State<CarouselExample1> {
                 controller.animatePrevious(const Duration(milliseconds: 500));
               },
               child: const Icon(LucideIcons.arrowLeft)),
-          const Gap(24),
+          const SizedBox(width: 24),
           Expanded(
             child: SizedBox(
               height: 200,
@@ -146,7 +146,7 @@ class _CarouselExample1State extends State<CarouselExample1> {
               ),
             ),
           ),
-          const Gap(24),
+          const SizedBox(width: 24),
           OutlineButton(
               shape: ButtonShape.circle,
               onPressed: () {
@@ -195,7 +195,7 @@ class _CarouselExample2State extends State<CarouselExample2> {
                 controller.animatePrevious(const Duration(milliseconds: 500));
               },
               child: const Icon(LucideIcons.arrowUp)),
-          const Gap(24),
+          const SizedBox(height: 24),
           Expanded(
             child: SizedBox(
               width: 200,
@@ -214,7 +214,7 @@ class _CarouselExample2State extends State<CarouselExample2> {
               ),
             ),
           ),
-          const Gap(24),
+          const SizedBox(height: 24),
           OutlineButton(
               shape: ButtonShape.circle,
               onPressed: () {
@@ -274,7 +274,7 @@ class _CarouselExample3State extends State<CarouselExample3> {
               duration: const Duration(seconds: 1),
             ),
           ),
-          const Gap(8),
+          const SizedBox(height: 8),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -288,7 +288,7 @@ class _CarouselExample3State extends State<CarouselExample3> {
                         .animatePrevious(const Duration(milliseconds: 500));
                   },
                   child: const Icon(LucideIcons.arrowLeft)),
-              const Gap(8),
+              const SizedBox(width: 8),
               OutlineButton(
                   shape: ButtonShape.circle,
                   onPressed: () {

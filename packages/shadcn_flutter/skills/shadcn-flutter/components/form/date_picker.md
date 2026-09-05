@@ -80,7 +80,7 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
             });
           },
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         DatePicker(
           value: _value,
           mode: PromptMode.dialog,
@@ -134,7 +134,7 @@ class _DatePickerExample2State extends State<DatePickerExample2> {
             });
           },
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         DateRangePicker(
           value: _value,
           mode: PromptMode.dialog,

@@ -156,11 +156,11 @@ class CardImageTile extends StatelessWidget implements IComponentPage {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Card Title').bold().large(),
-                    const Gap(8),
+                    const SizedBox(height: 8),
                     const Text(
                             'This is a description of the card content. It provides additional information about the image above.')
                         .muted(),
-                    const Gap(16),
+                    const SizedBox(height: 16),
                     Row(
                       children: [
                         Expanded(
@@ -169,7 +169,7 @@ class CardImageTile extends StatelessWidget implements IComponentPage {
                             child: const Text('Cancel'),
                           ),
                         ),
-                        const Gap(8),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: PrimaryButton(
                             onPressed: () {},

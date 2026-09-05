@@ -24,7 +24,10 @@ typedef SortableItemBuilder<T> = T Function(BuildContext context, int index);
 ///
 /// Returns: `Widget` — the visual representation.
 typedef SortableWidgetBuilder<T> = Widget Function(
-    BuildContext context, int index, T item);
+  BuildContext context,
+  int index,
+  T item,
+);
 
 /// Represents a collection of list modifications.
 ///
@@ -213,10 +216,7 @@ class RawSortableItemPositioned
 /// additional layout or styling. Clamps child positions to widget bounds.
 class RawSortableStack extends MultiChildRenderObjectWidget {
   /// Creates a raw sortable stack.
-  const RawSortableStack({
-    super.key,
-    required super.children,
-  });
+  const RawSortableStack({super.key, required super.children});
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -225,7 +225,9 @@ class RawSortableStack extends MultiChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, RenderRawSortableStack renderObject) {
+    BuildContext context,
+    RenderRawSortableStack renderObject,
+  ) {
     renderObject.enabled = true;
   }
 }
@@ -281,8 +283,10 @@ class RenderRawSortableStack extends RenderBox
           offset: childParentData.position!,
           position: position,
           hitTest: (BoxHitTestResult result, Offset position) {
-            return child!.hitTest(result,
-                position: position - childParentData.position!);
+            return child!.hitTest(
+              result,
+              position: position - childParentData.position!,
+            );
           },
         );
       }
@@ -345,7 +349,6 @@ class SortableChildListDelegate<T> extends SortableListDelegate<T> {
 /// Useful for large or lazily-generated item sets.
 class SortableChildBuilderDelegate<T> extends SortableListDelegate<T> {
   @override
-
   /// The number of items, or `null` for infinite lists.
   final int? itemCount;
 

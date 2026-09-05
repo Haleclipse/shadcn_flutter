@@ -66,7 +66,7 @@ class _TimePickerExample1State extends State<TimePickerExample1> {
             });
           },
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         TimePicker(
           value: _value,
           // Dialog mode opens a modal sheet/dialog for selection.

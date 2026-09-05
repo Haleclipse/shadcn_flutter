@@ -37,7 +37,7 @@ void main() {
   runApp(
     MaterialShadcnApp(
       title: 'My App',
-      theme: ThemeData(colorScheme: ColorSchemes.lightZinc(), radius: 0.5),
+      theme: ThemeData(colorScheme: ColorSchemes.lightZinc, radius: 0.5),
       home: Scaffold(
         appBar: AppBar(title: const Text('Hybrid app')),
         body: const Center(child: PrimaryButton(child: Text('shadcn'))),

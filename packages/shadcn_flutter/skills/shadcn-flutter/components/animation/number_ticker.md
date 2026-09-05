@@ -42,7 +42,7 @@ class _NumberTickerExample1State extends State<NumberTickerExample1> {
             return NumberFormat.compact().format(number);
           },
         ),
-        const Gap(24),
+        const SizedBox(height: 24),
         TextField(
           // Show the current number as the initial text.
           initialValue: _number.toString(),

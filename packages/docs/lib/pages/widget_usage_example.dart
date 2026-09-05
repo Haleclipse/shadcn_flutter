@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:gap/gap.dart';
 
 class WidgetUsageExample extends StatefulWidget {
   final String? title;
@@ -37,18 +38,16 @@ class _WidgetUsageExampleState extends State<WidgetUsageExample> {
             child: Container(
               padding: const EdgeInsets.all(40),
               constraints: const BoxConstraints(minHeight: 350),
-              child: Center(
-                child: widget.child,
-              ),
+              child: Center(child: widget.child),
             ),
           ),
         ),
-        gap(12),
+        Gap(12),
         CodeBlockFutureBuilder(
           path: widget.path,
           mode: 'dart',
           summarize: widget.summarize,
-        )
+        ),
       ],
     );
   }
@@ -77,18 +76,20 @@ class _CodeBlockFutureBuilderState extends State<CodeBlockFutureBuilder> {
     //https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/packages/docs/lib/pages/docs/layout_page/layout_page_example_1.dart
     String url =
         'https://raw.githubusercontent.com/sunarya-thito/shadcn_flutter/master/packages/docs/${widget.path}';
-    futureCode =
-        http.get(Uri.parse(url)).then((response) => response.body).then((code) {
-      try {
-        return widget.summarize ? _formatCode(code) : code;
-      } catch (e, stackTrace) {
-        if (kDebugMode) {
-          print(e);
-          print(stackTrace);
-        }
-        return code;
-      }
-    });
+    futureCode = http
+        .get(Uri.parse(url))
+        .then((response) => response.body)
+        .then((code) {
+          try {
+            return widget.summarize ? _formatCode(code) : code;
+          } catch (e, stackTrace) {
+            if (kDebugMode) {
+              print(e);
+              print(stackTrace);
+            }
+            return code;
+          }
+        });
   }
 
   @override
@@ -126,10 +127,7 @@ class _CodeBlockFutureBuilderState extends State<CodeBlockFutureBuilder> {
               GhostButton(
                 density: ButtonDensity.icon,
                 onPressed: _refresh,
-                child: const Icon(
-                  LucideIcons.refreshCw,
-                  size: 16,
-                ),
+                child: const Icon(LucideIcons.refreshCw, size: 16),
               ),
             ],
           );
@@ -149,10 +147,7 @@ class _CodeBlockFutureBuilderState extends State<CodeBlockFutureBuilder> {
                     // html.window.open(url, 'blank');
                     launchUrlString(url);
                   },
-                  child: const Icon(
-                    LucideIcons.externalLink,
-                    size: 16,
-                  ),
+                  child: const Icon(LucideIcons.externalLink, size: 16),
                 ),
               ],
             );
@@ -171,27 +166,19 @@ class _CodeBlockFutureBuilderState extends State<CodeBlockFutureBuilder> {
                   // html.window.open(url, 'blank');
                   launchUrlString(url);
                 },
-                child: const Icon(
-                  LucideIcons.externalLink,
-                  size: 16,
-                ),
-              )
+                child: const Icon(LucideIcons.externalLink, size: 16),
+              ),
             ],
           );
         } else {
           return Container(
             decoration: BoxDecoration(
               color: theme.colorScheme.card,
-              border: Border.all(
-                color: theme.colorScheme.border,
-                width: 1,
-              ),
+              border: Border.all(color: theme.colorScheme.border, width: 1),
               borderRadius: BorderRadius.circular(theme.radiusLg),
             ),
             height: 350,
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
+            child: const Center(child: CircularProgressIndicator()),
           );
         }
       },
@@ -202,8 +189,11 @@ class _CodeBlockFutureBuilderState extends State<CodeBlockFutureBuilder> {
 String _formatCode(String code) {
   // check if code uses stateful widget
   if (code.contains('StatefulWidget')) {
-    RegExp exp = RegExp(r'extends[\s]*State<.+?>[\s]*{[\s]*\n(.*)[\s]*}',
-        multiLine: true, dotAll: true);
+    RegExp exp = RegExp(
+      r'extends[\s]*State<.+?>[\s]*{[\s]*\n(.*)[\s]*}',
+      multiLine: true,
+      dotAll: true,
+    );
     var firstMatch = exp.firstMatch(code);
     if (firstMatch == null) {
       return code;

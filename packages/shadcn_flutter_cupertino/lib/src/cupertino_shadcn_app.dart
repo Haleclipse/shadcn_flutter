@@ -16,7 +16,7 @@ import 'cupertino_layer.dart';
 ///   runApp(
 ///     CupertinoShadcnApp(
 ///       theme: ThemeData(
-///         colorScheme: ColorSchemes.darkZinc(),
+///         colorScheme: ColorSchemes.darkZinc,
 ///         radius: 0.5,
 ///       ),
 ///       home: const MyHomePage(),
@@ -285,12 +285,17 @@ class CupertinoShadcnApp extends StatelessWidget {
         ...kCupertinoLocalizationsDelegates,
       ];
 
-  Widget _builder(BuildContext context, Widget? child) {
+  // Installed through ShadcnApp.surfaceBuilder rather than ShadcnApp.builder,
+  // so the CupertinoTheme also covers the toast, eye dropper and keyboard
+  // shortcut layers. Installed via `builder` it would sit underneath those.
+  // The caller's own `builder` is forwarded separately and stays where callers
+  // expect it, wrapping the routing widget.
+  Widget _surfaceBuilder(BuildContext context, Widget child) {
     return CupertinoLayer(
       theme: cupertinoTheme,
-      child: builder != null
-          ? Builder(builder: (context) => builder!(context, child))
-          : child ?? const SizedBox.shrink(),
+      // ShadcnApp already registers the delegates app-wide.
+      localizations: false,
+      child: child,
     );
   }
 
@@ -303,7 +308,8 @@ class CupertinoShadcnApp extends StatelessWidget {
         routerDelegate: routerDelegate,
         routerConfig: routerConfig,
         backButtonDispatcher: backButtonDispatcher,
-        builder: _builder,
+        builder: builder,
+        surfaceBuilder: _surfaceBuilder,
         title: title,
         onGenerateTitle: onGenerateTitle,
         onNavigationNotification: onNavigationNotification,
@@ -345,7 +351,8 @@ class CupertinoShadcnApp extends StatelessWidget {
       onUnknownRoute: onUnknownRoute,
       onNavigationNotification: onNavigationNotification,
       navigatorObservers: navigatorObservers ?? const [],
-      builder: _builder,
+      builder: builder,
+      surfaceBuilder: _surfaceBuilder,
       title: title,
       onGenerateTitle: onGenerateTitle,
       color: color,

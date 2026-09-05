@@ -342,7 +342,7 @@ class MenubarTile extends StatelessWidget implements IComponentPage {
                 ),
               ),
             ),
-            const Gap(4),
+            const SizedBox(height: 4),
             Container(
               width: 192,
               margin: const EdgeInsets.only(left: 48),

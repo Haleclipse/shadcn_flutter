@@ -91,9 +91,9 @@ class NavigationMenuExample1 extends StatelessWidget {
                       const FlutterLogo(
                         size: 32,
                       ),
-                      const Gap(16),
+                      const SizedBox(height: 16),
                       const Text('shadcn_flutter').mono().semiBold().large(),
-                      const Gap(8),
+                      const SizedBox(height: 8),
                       const Text(
                               'Beautifully designed components from Shadcn/UI is now available for Flutter')
                           .muted(),
@@ -225,7 +225,7 @@ class NavigationMenuTile extends StatelessWidget implements IComponentPage {
                 ),
               ],
             ),
-            const Gap(8),
+            const SizedBox(height: 8),
             OutlinedContainer(
               borderRadius: theme.borderRadiusMd,
               child: Padding(

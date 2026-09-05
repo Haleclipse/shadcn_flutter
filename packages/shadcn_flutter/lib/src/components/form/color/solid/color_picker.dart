@@ -190,7 +190,8 @@ class ColorPickerTheme extends ComponentThemeData {
 ///   enableEyeDropper: true,
 /// )
 /// ```
-class ColorPicker extends StatefulWidget {
+class ColorPicker extends StatefulWidget
+    implements Styleable<ColorPickerTheme> {
   /// The current color value.
   final ColorDerivative value;
 
@@ -222,16 +223,24 @@ class ColorPicker extends StatefulWidget {
   final bool? enableEyeDropper;
 
   /// Layout orientation of the color picker.
+  @Deprecated('Use theme: ColorPickerTheme(orientation: ...) instead.')
   final Axis? orientation;
 
   /// Spacing between major sections.
+  @Deprecated('Use theme: ColorPickerTheme(spacing: ...) instead.')
   final double? spacing;
 
   /// Spacing between individual controls.
+  @Deprecated('Use theme: ColorPickerTheme(controlSpacing: ...) instead.')
   final double? controlSpacing;
 
   /// Size of the color sliders.
+  @Deprecated('Use theme: ColorPickerTheme(sliderSize: ...) instead.')
   final double? sliderSize;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ColorPickerTheme? theme;
 
   /// Creates a [ColorPicker] widget.
   const ColorPicker({
@@ -250,6 +259,7 @@ class ColorPicker extends StatefulWidget {
     this.sliderSize,
     this.showHistoryButton = true,
     this.initialShowHistory = false,
+    this.theme,
   });
 
   @override
@@ -291,7 +301,8 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final componentTheme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final componentTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ColorPickerTheme>(context);
     final spacing = styleValue(
       defaultValue: 12.0,
       themeValue: componentTheme?.spacing,
@@ -314,7 +325,6 @@ class _ColorPickerState extends State<ColorPicker> {
       onChanging: _onChanging,
       showAlpha: widget.showAlpha,
       mode: _mode,
-      enableEyeDropper: widget.enableEyeDropper,
       onEyeDropperRequested: widget.onEyeDropperRequested,
       showHistory: _showHistory,
       showHistoryButton:
@@ -330,10 +340,13 @@ class _ColorPickerState extends State<ColorPicker> {
         });
         widget.onModeChanged?.call(mode);
       },
-      controlSpacing: styleValue(
-        defaultValue: 8.0,
-        themeValue: componentTheme?.controlSpacing,
-        widgetValue: widget.controlSpacing,
+      theme: ColorPickerTheme(
+        enableEyeDropper: widget.enableEyeDropper,
+        controlSpacing: styleValue(
+          defaultValue: 8.0,
+          themeValue: componentTheme?.controlSpacing,
+          widgetValue: widget.controlSpacing,
+        ),
       ),
     );
     var content = Flex(
@@ -399,7 +412,8 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   List<Widget> buildSliders(BuildContext context) {
-    final componentTheme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final componentTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ColorPickerTheme>(context);
     final sliderSize = styleValue(
       defaultValue: 24.0,
       themeValue: componentTheme?.sliderSize,
@@ -525,7 +539,8 @@ class _ColorPickerState extends State<ColorPicker> {
 ///
 /// Displays inputs for editing colors in RGB, HSL, HSV, or HEX formats
 /// with optional alpha channel and eye dropper tool support.
-class ColorControls extends StatelessWidget {
+class ColorControls extends StatelessWidget
+    implements Styleable<ColorPickerTheme> {
   /// The current color value.
   final ColorDerivative value;
 
@@ -545,9 +560,11 @@ class ColorControls extends StatelessWidget {
   final ColorPickerMode mode;
 
   /// Spacing between control elements.
+  @Deprecated('Use theme: ColorPickerTheme(controlSpacing: ...) instead.')
   final double? controlSpacing;
 
   /// Whether to enable the eye dropper tool.
+  @Deprecated('Use theme: ColorPickerTheme(enableEyeDropper: ...) instead.')
   final bool? enableEyeDropper;
 
   /// Callback invoked when the eye dropper tool is requested.
@@ -561,6 +578,10 @@ class ColorControls extends StatelessWidget {
 
   /// Whether to show the color history button.
   final bool showHistoryButton;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ColorPickerTheme? theme;
 
   /// Creates color controls.
   const ColorControls({
@@ -577,11 +598,13 @@ class ColorControls extends StatelessWidget {
     this.showHistory = false,
     this.onShowHistoryChanged,
     this.showHistoryButton = true,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final theme =
+        this.theme ?? ComponentTheme.maybeOf<ColorPickerTheme>(context);
     final locale = ShadcnLocalizations.of(context);
     final enableEyeDropper = styleValue(
       defaultValue: true,

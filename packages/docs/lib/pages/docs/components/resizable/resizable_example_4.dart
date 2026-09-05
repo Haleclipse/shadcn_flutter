@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ResizableExample4 extends StatefulWidget {
   const ResizableExample4({super.key});
@@ -149,7 +150,7 @@ class _ResizableExample4State extends State<ResizableExample4> {
               child: const Text('Expand Panel 4'),
             ),
           ],
-        )
+        ),
       ],
     );
   }

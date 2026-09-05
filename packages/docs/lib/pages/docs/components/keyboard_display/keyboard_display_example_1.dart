@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class KeyboardDisplayExample1 extends StatelessWidget {
   const KeyboardDisplayExample1({super.key});
@@ -10,11 +11,13 @@ class KeyboardDisplayExample1 extends StatelessWidget {
     // Below we show two variants: explicit key list and a SingleActivator.
     return const Column(
       children: [
-        KeyboardDisplay(keys: [
-          LogicalKeyboardKey.control,
-          LogicalKeyboardKey.alt,
-          LogicalKeyboardKey.delete,
-        ]),
+        KeyboardDisplay(
+          keys: [
+            LogicalKeyboardKey.control,
+            LogicalKeyboardKey.alt,
+            LogicalKeyboardKey.delete,
+          ],
+        ),
         Gap(24),
         KeyboardDisplay.fromActivator(
           activator: SingleActivator(
@@ -22,7 +25,7 @@ class KeyboardDisplayExample1 extends StatelessWidget {
             control: true,
             shift: true,
           ),
-        )
+        ),
       ],
     ).textSmall();
   }

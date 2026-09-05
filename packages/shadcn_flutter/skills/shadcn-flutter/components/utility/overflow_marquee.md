@@ -83,13 +83,13 @@ class OverflowMarqueeTile extends StatelessWidget implements IComponentPage {
           child: Column(
             children: [
               const Text('Scrolling Text:').bold(),
-              const Gap(16),
+              const SizedBox(height: 16),
               const OverflowMarquee(
                 child: Text(
                   'This is a very long text that will scroll horizontally when it overflows the container width',
                 ),
               ),
-              const Gap(8),
+              const SizedBox(height: 8),
               const Text('Auto-scrolling overflow text').muted(),
             ],
           ),

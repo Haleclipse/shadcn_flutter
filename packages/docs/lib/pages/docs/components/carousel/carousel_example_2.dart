@@ -2,6 +2,8 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import '../carousel_example.dart';
 
+import 'package:gap/gap.dart';
+
 /// Vertical carousel centered in a column with manual controls.
 ///
 /// Demonstrates changing [direction] to [Axis.vertical] and centering items
@@ -23,12 +25,13 @@ class _CarouselExample2State extends State<CarouselExample2> {
         mainAxisSize: MainAxisSize.min,
         children: [
           OutlineButton(
-              shape: ButtonShape.circle,
-              onPressed: () {
-                // Move to previous item (upwards).
-                controller.animatePrevious(const Duration(milliseconds: 500));
-              },
-              child: const Icon(LucideIcons.arrowUp)),
+            shape: ButtonShape.circle,
+            onPressed: () {
+              // Move to previous item (upwards).
+              controller.animatePrevious(const Duration(milliseconds: 500));
+            },
+            child: const Icon(LucideIcons.arrowUp),
+          ),
           const Gap(24),
           Expanded(
             child: SizedBox(
@@ -50,12 +53,13 @@ class _CarouselExample2State extends State<CarouselExample2> {
           ),
           const Gap(24),
           OutlineButton(
-              shape: ButtonShape.circle,
-              onPressed: () {
-                // Move to next item (downwards).
-                controller.animateNext(const Duration(milliseconds: 500));
-              },
-              child: const Icon(LucideIcons.arrowDown)),
+            shape: ButtonShape.circle,
+            onPressed: () {
+              // Move to next item (downwards).
+              controller.animateNext(const Duration(milliseconds: 500));
+            },
+            child: const Icon(LucideIcons.arrowDown),
+          ),
         ],
       ),
     );

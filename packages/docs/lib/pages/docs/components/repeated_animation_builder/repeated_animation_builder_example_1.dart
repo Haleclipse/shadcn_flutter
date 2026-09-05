@@ -16,11 +16,7 @@ class RepeatedAnimationBuilderExample1 extends StatelessWidget {
         return Transform.translate(
           // Move a square horizontally based on the current animated value.
           offset: value,
-          child: Container(
-            width: 100,
-            height: 100,
-            color: Colors.red,
-          ),
+          child: Container(width: 100, height: 100, color: Colors.red),
         );
       },
     );

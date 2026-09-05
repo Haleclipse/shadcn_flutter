@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SheetExample1 extends StatefulWidget {
   const SheetExample1({super.key});
@@ -46,9 +47,7 @@ class _SheetExample1State extends State<SheetExample1> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: const Text('Edit profile').large().medium(),
-                ),
+                Expanded(child: const Text('Edit profile').large().medium()),
                 TextButton(
                   density: ButtonDensity.icon,
                   child: const Icon(LucideIcons.x),
@@ -61,8 +60,8 @@ class _SheetExample1State extends State<SheetExample1> {
             ),
             const Gap(8),
             const Text(
-                    'Make changes to your profile here. Click save when you\'re done.')
-                .muted(),
+              'Make changes to your profile here. Click save when you\'re done.',
+            ).muted(),
             const Gap(16),
             FormTableLayout(
               rows: [
@@ -100,17 +99,13 @@ class _SheetExample1State extends State<SheetExample1> {
                         : () {
                             // Attempt to submit the form; close the sheet when successful
                             // and show a confirmation dialog.
-                            context.submitForm().then(
-                              (value) {
-                                if (value.errors.isEmpty) {
-                                  closeSheet(context).then(
-                                    (value) {
-                                      saveProfile();
-                                    },
-                                  );
-                                }
-                              },
-                            );
+                            context.submitForm().then((value) {
+                              if (value.errors.isEmpty) {
+                                closeSheet(context).then((value) {
+                                  saveProfile();
+                                });
+                              }
+                            });
                           },
                     child: const Text('Save changes'),
                   );

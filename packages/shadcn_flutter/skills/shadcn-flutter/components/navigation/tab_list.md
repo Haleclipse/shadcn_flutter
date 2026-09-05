@@ -76,7 +76,7 @@ class _TabListExample1State extends State<TabListExample1> {
             ),
           ],
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         // Like Tabs example, use an IndexedStack to switch the content area.
         IndexedStack(
           index: index,

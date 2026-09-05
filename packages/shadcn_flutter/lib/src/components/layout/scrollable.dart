@@ -54,8 +54,9 @@ class ScrollableClientTheme extends ComponentThemeData {
           ? this.keyboardDismissBehavior
           : keyboardDismissBehavior(),
       clipBehavior: clipBehavior == null ? this.clipBehavior : clipBehavior(),
-      hitTestBehavior:
-          hitTestBehavior == null ? this.hitTestBehavior : hitTestBehavior(),
+      hitTestBehavior: hitTestBehavior == null
+          ? this.hitTestBehavior
+          : hitTestBehavior(),
       overscroll: overscroll == null ? this.overscroll : overscroll(),
     );
   }
@@ -71,8 +72,14 @@ class ScrollableClientTheme extends ComponentThemeData {
       other.overscroll == overscroll;
 
   @override
-  int get hashCode => Object.hash(diagonalDragBehavior, dragStartBehavior,
-      keyboardDismissBehavior, clipBehavior, hitTestBehavior, overscroll);
+  int get hashCode => Object.hash(
+    diagonalDragBehavior,
+    dragStartBehavior,
+    keyboardDismissBehavior,
+    clipBehavior,
+    hitTestBehavior,
+    overscroll,
+  );
 
   @override
   String toString() =>
@@ -87,7 +94,11 @@ class ScrollableClientTheme extends ComponentThemeData {
 /// - [viewportSize] (`Size`): Size of the visible viewport.
 /// - [child] (`Widget?`): Optional child widget.
 typedef ScrollableBuilder = Widget Function(
-    BuildContext context, Offset offset, Size viewportSize, Widget? child);
+  BuildContext context,
+  Offset offset,
+  Size viewportSize,
+  Widget? child,
+);
 
 /// A customizable scrollable widget with two-axis scrolling support.
 ///
@@ -171,50 +182,56 @@ class ScrollableClient extends StatelessWidget {
     Clip clipBehavior,
   ) {
     return ScrollableClientViewport(
-        overscroll: overscroll,
-        verticalOffset: verticalOffset,
-        verticalAxisDirection: verticalDetails.direction,
-        horizontalOffset: horizontalOffset,
-        horizontalAxisDirection: horizontalDetails.direction,
-        clipBehavior: clipBehavior,
-        delegate: TwoDimensionalChildBuilderDelegate(
-          builder: (context, vicinity) {
-            return ListenableBuilder(
-              listenable: Listenable.merge([
-                verticalOffset,
-                horizontalOffset,
-              ]),
-              builder: (context, child) {
-                var horizontalPixels = horizontalOffset.pixels;
-                var verticalPixels = verticalOffset.pixels;
-                return builder(
-                    context,
-                    Offset(horizontalPixels, verticalPixels),
-                    (vicinity as _ScrollableClientChildVicinity).viewportSize,
-                    child);
-              },
-              child: child,
-            );
-          },
-        ),
-        mainAxis: mainAxis);
+      overscroll: overscroll,
+      verticalOffset: verticalOffset,
+      verticalAxisDirection: verticalDetails.direction,
+      horizontalOffset: horizontalOffset,
+      horizontalAxisDirection: horizontalDetails.direction,
+      clipBehavior: clipBehavior,
+      delegate: TwoDimensionalChildBuilderDelegate(
+        builder: (context, vicinity) {
+          return ListenableBuilder(
+            listenable: Listenable.merge([verticalOffset, horizontalOffset]),
+            builder: (context, child) {
+              var horizontalPixels = horizontalOffset.pixels;
+              var verticalPixels = verticalOffset.pixels;
+              return builder(
+                context,
+                Offset(horizontalPixels, verticalPixels),
+                (vicinity as _ScrollableClientChildVicinity).viewportSize,
+                child,
+              );
+            },
+            child: child,
+          );
+        },
+      ),
+      mainAxis: mainAxis,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    assert(axisDirectionToAxis(verticalDetails.direction) == Axis.vertical,
-        'TwoDimensionalScrollView.verticalDetails are not Axis.vertical.');
-    assert(axisDirectionToAxis(horizontalDetails.direction) == Axis.horizontal,
-        'TwoDimensionalScrollView.horizontalDetails are not Axis.horizontal.');
+    assert(
+      axisDirectionToAxis(verticalDetails.direction) == Axis.vertical,
+      'TwoDimensionalScrollView.verticalDetails are not Axis.vertical.',
+    );
+    assert(
+      axisDirectionToAxis(horizontalDetails.direction) == Axis.horizontal,
+      'TwoDimensionalScrollView.horizontalDetails are not Axis.horizontal.',
+    );
 
     final compTheme = ComponentTheme.maybeOf<ScrollableClientTheme>(context);
-    final diag = diagonalDragBehavior ??
+    final diag =
+        diagonalDragBehavior ??
         compTheme?.diagonalDragBehavior ??
         DiagonalDragBehavior.none;
-    final dragStart = dragStartBehavior ??
+    final dragStart =
+        dragStartBehavior ??
         compTheme?.dragStartBehavior ??
         DragStartBehavior.start;
-    final keyboardDismiss = keyboardDismissBehavior ??
+    final keyboardDismiss =
+        keyboardDismissBehavior ??
         compTheme?.keyboardDismissBehavior ??
         ScrollViewKeyboardDismissBehavior.manual;
     final clip = clipBehavior ?? compTheme?.clipBehavior ?? Clip.hardEdge;
@@ -227,20 +244,19 @@ class ScrollableClient extends StatelessWidget {
       Axis.horizontal => horizontalDetails,
     };
 
-    final bool effectivePrimary = primary ??
+    final bool effectivePrimary =
+        primary ??
         mainAxisDetails.controller == null &&
-            PrimaryScrollController.shouldInherit(
-              context,
-              mainAxis,
-            );
+            PrimaryScrollController.shouldInherit(context, mainAxis);
 
     if (effectivePrimary) {
       // Using PrimaryScrollController for mainAxis.
       assert(
-          mainAxisDetails.controller == null,
-          'TwoDimensionalScrollView.primary was explicitly set to true, but a '
-          'ScrollController was provided in the ScrollableDetails of the '
-          'TwoDimensionalScrollView.mainAxis.');
+        mainAxisDetails.controller == null,
+        'TwoDimensionalScrollView.primary was explicitly set to true, but a '
+        'ScrollController was provided in the ScrollableDetails of the '
+        'TwoDimensionalScrollView.mainAxis.',
+      );
       mainAxisDetails = mainAxisDetails.copyWith(
         controller: PrimaryScrollController.of(context),
       );
@@ -354,11 +370,12 @@ class RenderScrollableClientViewport extends RenderTwoDimensionalViewport {
     );
     final RenderBox child = buildOrObtainChildFor(vicinity)!;
     child.layout(
-        BoxConstraints(
-          minWidth: constraints.maxWidth,
-          minHeight: constraints.maxHeight,
-        ),
-        parentUsesSize: true);
+      BoxConstraints(
+        minWidth: constraints.maxWidth,
+        minHeight: constraints.maxHeight,
+      ),
+      parentUsesSize: true,
+    );
     if (!overscroll) {
       horizontalPixels = max(0.0, horizontalPixels);
       verticalPixels = max(0.0, verticalPixels);
@@ -367,16 +384,21 @@ class RenderScrollableClientViewport extends RenderTwoDimensionalViewport {
       horizontalPixels = min(horizontalPixels, maxHorizontalPixels);
       verticalPixels = min(verticalPixels, maxVerticalPixels);
     }
-    parentDataOf(child).layoutOffset =
-        Offset(-horizontalPixels, -verticalPixels);
+    parentDataOf(child).layoutOffset = Offset(
+      -horizontalPixels,
+      -verticalPixels,
+    );
     horizontalOffset.applyContentDimensions(
-        0,
-        (child.size.width - viewportDimension.width)
-            .clamp(0.0, double.infinity));
+      0,
+      (child.size.width - viewportDimension.width).clamp(0.0, double.infinity),
+    );
     verticalOffset.applyContentDimensions(
-        0,
-        (child.size.height - viewportDimension.height)
-            .clamp(0.0, double.infinity));
+      0,
+      (child.size.height - viewportDimension.height).clamp(
+        0.0,
+        double.infinity,
+      ),
+    );
     horizontalOffset.applyViewportDimension(viewportDimension.width);
     verticalOffset.applyViewportDimension(viewportDimension.height);
   }
@@ -434,8 +456,10 @@ class _FadedScrollableViewportState extends State<FadedScrollableViewport> {
     if (_scrollExtent <= 0) {
       return 0.0;
     }
-    return ((_scrollExtent - _scrollOffset) / widget.fadeExtent)
-        .clamp(0.0, 1.0);
+    return ((_scrollExtent - _scrollOffset) / widget.fadeExtent).clamp(
+      0.0,
+      1.0,
+    );
   }
 
   @override

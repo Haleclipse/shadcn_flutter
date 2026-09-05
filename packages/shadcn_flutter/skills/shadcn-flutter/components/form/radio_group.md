@@ -83,7 +83,7 @@ class _RadioGroupExample1State extends State<RadioGroupExample1> {
             ],
           ),
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         // Echo the selection below for demonstration purposes.
         Text('Selected: $selectedValue'),
       ],

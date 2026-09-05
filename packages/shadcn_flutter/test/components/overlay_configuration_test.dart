@@ -19,9 +19,7 @@ void main() {
               onPressed: () {
                 showOverlay(
                   context,
-                  PopoverConfiguration(
-                    alignment: Alignment.bottomCenter,
-                  ),
+                  PopoverConfiguration(alignment: Alignment.bottomCenter),
                   builder: (context) => const Text('Popover Content'),
                 );
               },
@@ -41,8 +39,9 @@ void main() {
       expect(find.byType(DrawerWrapper), findsNothing);
     });
 
-    testWidgets('adapts to a bottom drawer on mobile platforms',
-        (tester) async {
+    testWidgets('adapts to a bottom drawer on mobile platforms', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         _appWithPlatform(
           TargetPlatform.android,
@@ -51,9 +50,7 @@ void main() {
               onPressed: () {
                 showOverlay(
                   context,
-                  PopoverConfiguration(
-                    alignment: Alignment.bottomCenter,
-                  ),
+                  PopoverConfiguration(alignment: Alignment.bottomCenter),
                   builder: (context) => const Text('Popover Content'),
                 );
               },
@@ -71,8 +68,9 @@ void main() {
       expect(find.byType(DrawerWrapper), findsOneWidget);
     });
 
-    testWidgets('adaptive: false keeps a real popover on mobile platforms',
-        (tester) async {
+    testWidgets('adaptive: false keeps a real popover on mobile platforms', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         _appWithPlatform(
           TargetPlatform.android,
@@ -81,9 +79,7 @@ void main() {
               onPressed: () {
                 showOverlay(
                   context,
-                  PopoverConfiguration(
-                    alignment: Alignment.bottomCenter,
-                  ),
+                  PopoverConfiguration(alignment: Alignment.bottomCenter),
                   builder: (context) => const Text('Popover Content'),
                   adaptive: false,
                 );

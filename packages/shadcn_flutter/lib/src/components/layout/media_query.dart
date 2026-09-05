@@ -49,15 +49,18 @@ class MediaQueryVisibilityTheme extends ComponentThemeData {
 ///   alternateChild: MobileLayout(),
 /// )
 /// ```
-class MediaQueryVisibility extends StatelessWidget {
+class MediaQueryVisibility extends StatelessWidget
+    implements Styleable<MediaQueryVisibilityTheme> {
   /// Minimum screen width to show [child].
   ///
   /// If `null`, no minimum constraint is applied.
+  @Deprecated('Use theme: MediaQueryVisibilityTheme(minWidth: ...) instead.')
   final double? minWidth;
 
   /// Maximum screen width to show [child].
   ///
   /// If `null`, no maximum constraint is applied.
+  @Deprecated('Use theme: MediaQueryVisibilityTheme(maxWidth: ...) instead.')
   final double? maxWidth;
 
   /// Widget to display when width is within range.
@@ -67,6 +70,10 @@ class MediaQueryVisibility extends StatelessWidget {
   ///
   /// If `null`, nothing is displayed when outside range.
   final Widget? alternateChild;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final MediaQueryVisibilityTheme? theme;
 
   /// Creates a [MediaQueryVisibility].
   ///
@@ -81,35 +88,33 @@ class MediaQueryVisibility extends StatelessWidget {
     this.maxWidth,
     required this.child,
     this.alternateChild,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final compTheme =
-        ComponentTheme.maybeOf<MediaQueryVisibilityTheme>(context);
+    final compTheme = ComponentTheme.maybeOf<MediaQueryVisibilityTheme>(
+      context,
+    );
     final size = mediaQuery.size.width;
     final minWidth = styleValue(
-        widgetValue: this.minWidth,
-        themeValue: compTheme?.minWidth,
-        defaultValue: null);
+      widgetValue: this.minWidth,
+      themeValue: compTheme?.minWidth,
+      defaultValue: null,
+    );
     final maxWidth = styleValue(
-        widgetValue: this.maxWidth,
-        themeValue: compTheme?.maxWidth,
-        defaultValue: null);
+      widgetValue: this.maxWidth,
+      themeValue: compTheme?.maxWidth,
+      defaultValue: null,
+    );
     if (minWidth != null && size < minWidth) {
-      return SizedBox(
-        child: alternateChild,
-      );
+      return SizedBox(child: alternateChild);
     }
     if (maxWidth != null && size > maxWidth) {
-      return SizedBox(
-        child: alternateChild,
-      );
+      return SizedBox(child: alternateChild);
     }
     // to prevent widget tree from changing
-    return SizedBox(
-      child: child,
-    );
+    return SizedBox(child: child);
   }
 }

@@ -10,9 +10,7 @@ class StepperExample3 extends StatefulWidget {
 
 class _StepperExample3State extends State<StepperExample3> {
   final StepperController controller = StepperController(
-    stepStates: {
-      1: StepState.failed,
-    },
+    stepStates: {1: StepState.failed},
     currentStep: 1,
   );
 
@@ -27,17 +25,10 @@ class _StepperExample3State extends State<StepperExample3> {
           contentBuilder: (context) {
             return const StepContainer(
               actions: [
-                SecondaryButton(
-                  child: Text('Prev'),
-                ),
-                PrimaryButton(
-                  child: Text('Next'),
-                ),
+                SecondaryButton(child: Text('Prev')),
+                PrimaryButton(child: Text('Next')),
               ],
-              child: NumberedContainer(
-                index: 1,
-                height: 200,
-              ),
+              child: NumberedContainer(index: 1, height: 200),
             );
           },
         ),
@@ -46,17 +37,10 @@ class _StepperExample3State extends State<StepperExample3> {
           contentBuilder: (context) {
             return const StepContainer(
               actions: [
-                SecondaryButton(
-                  child: Text('Prev'),
-                ),
-                PrimaryButton(
-                  child: Text('Next'),
-                ),
+                SecondaryButton(child: Text('Prev')),
+                PrimaryButton(child: Text('Next')),
               ],
-              child: NumberedContainer(
-                index: 2,
-                height: 200,
-              ),
+              child: NumberedContainer(index: 2, height: 200),
             );
           },
         ),
@@ -65,17 +49,10 @@ class _StepperExample3State extends State<StepperExample3> {
           contentBuilder: (context) {
             return const StepContainer(
               actions: [
-                SecondaryButton(
-                  child: Text('Prev'),
-                ),
-                PrimaryButton(
-                  child: Text('Finish'),
-                ),
+                SecondaryButton(child: Text('Prev')),
+                PrimaryButton(child: Text('Finish')),
               ],
-              child: NumberedContainer(
-                index: 3,
-                height: 200,
-              ),
+              child: NumberedContainer(index: 3, height: 200),
             );
           },
         ),

@@ -30,7 +30,7 @@ class ChatTile extends StatelessWidget implements IComponentPage {
             ),
             const ChatBubble(
               color: Colors.blue,
-              alignment: AxisAlignmentDirectional.end,
+              theme: ChatTheme(alignment: AxisAlignmentDirectional.end),
               child: Text('SIX SEVENNN'),
             ),
           ],

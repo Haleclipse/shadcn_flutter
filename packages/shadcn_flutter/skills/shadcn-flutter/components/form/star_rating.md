@@ -92,7 +92,7 @@ class StarRatingTile extends StatelessWidget implements IComponentPage {
             starSize: 64,
             value: 3.5,
           ),
-          Gap(16),
+          SizedBox(height: 16),
           StarRating(
             starSize: 64,
             value: 2.5,

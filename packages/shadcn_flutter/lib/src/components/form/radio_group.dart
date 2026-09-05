@@ -30,8 +30,12 @@ class RadioTheme extends ComponentThemeData {
   /// - [borderColor] (`Color?`, optional): Border color.
   /// - [backgroundColor] (`Color?`, optional): Background color.
   /// - [size] (`double?`, optional): Radio button size.
-  const RadioTheme(
-      {this.activeColor, this.borderColor, this.size, this.backgroundColor});
+  const RadioTheme({
+    this.activeColor,
+    this.borderColor,
+    this.size,
+    this.backgroundColor,
+  });
 
   /// Creates a copy of this theme with the given fields replaced.
   ///
@@ -52,8 +56,9 @@ class RadioTheme extends ComponentThemeData {
       activeColor: activeColor == null ? this.activeColor : activeColor(),
       borderColor: borderColor == null ? this.borderColor : borderColor(),
       size: size == null ? this.size : size(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
     );
   }
 
@@ -96,7 +101,7 @@ class RadioTheme extends ComponentThemeData {
 ///   activeColor: Colors.blue,
 /// );
 /// ```
-class Radio extends StatelessWidget {
+class Radio extends StatelessWidget implements Styleable<RadioTheme> {
   /// Whether this radio button is selected.
   ///
   /// When true, displays the inner selection indicator.
@@ -113,25 +118,33 @@ class Radio extends StatelessWidget {
   ///
   /// Controls both the width and height of the circular radio button.
   /// If null, uses the size from the current [RadioTheme].
+  @Deprecated('Use theme: RadioTheme(size: ...) instead.')
   final double? size;
 
   /// Color of the inner selection indicator when selected.
   ///
   /// Applied to the inner dot that appears when [value] is true.
   /// If null, uses the activeColor from the current [RadioTheme].
+  @Deprecated('Use theme: RadioTheme(activeColor: ...) instead.')
   final Color? activeColor;
 
   /// Color of the outer border circle.
   ///
   /// Applied to the border of the radio button in both selected and
   /// unselected states. If null, uses the borderColor from the current [RadioTheme].
+  @Deprecated('Use theme: RadioTheme(borderColor: ...) instead.')
   final Color? borderColor;
 
   /// Background color of the radio button circle.
   ///
   /// Applied as the fill color behind the border. If null, uses the
   /// backgroundColor from the current [RadioTheme].
+  @Deprecated('Use theme: RadioTheme(backgroundColor: ...) instead.')
   final Color? backgroundColor;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final RadioTheme? theme;
 
   /// Creates a [Radio] with the specified selection state and styling.
   ///
@@ -163,28 +176,33 @@ class Radio extends StatelessWidget {
     this.activeColor,
     this.borderColor,
     this.backgroundColor,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<RadioTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<RadioTheme>(context);
     final size = styleValue<double>(
-        widgetValue: this.size,
-        themeValue: compTheme?.size,
-        defaultValue: 16 * theme.scaling);
+      widgetValue: this.size,
+      themeValue: compTheme?.size,
+      defaultValue: 16 * theme.scaling,
+    );
     final activeColor = styleValue<Color>(
-        widgetValue: this.activeColor,
-        themeValue: compTheme?.activeColor,
-        defaultValue: theme.colorScheme.primary);
+      widgetValue: this.activeColor,
+      themeValue: compTheme?.activeColor,
+      defaultValue: theme.colorScheme.primary,
+    );
     final borderColor = styleValue<Color>(
-        widgetValue: this.borderColor,
-        themeValue: compTheme?.borderColor,
-        defaultValue: theme.colorScheme.input);
+      widgetValue: this.borderColor,
+      themeValue: compTheme?.borderColor,
+      defaultValue: theme.colorScheme.input,
+    );
     final backgroundColor = styleValue<Color>(
-        widgetValue: this.backgroundColor,
-        themeValue: compTheme?.backgroundColor,
-        defaultValue: theme.colorScheme.input.scaleAlpha(0.3));
+      widgetValue: this.backgroundColor,
+      themeValue: compTheme?.backgroundColor,
+      defaultValue: theme.colorScheme.input.scaleAlpha(0.3),
+    );
     final innerSize = value ? (size - (6 + 2) * theme.scaling) : 0.0;
     return FocusOutline(
       focused: focusing,
@@ -196,9 +214,7 @@ class Radio extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: backgroundColor,
-          border: Border.all(
-            color: borderColor,
-          ),
+          border: Border.all(color: borderColor),
         ),
         child: Center(
           child: AnimatedContainer(
@@ -286,8 +302,10 @@ class _RadioItemState<T> extends State<RadioItem<T>> {
     final theme = Theme.of(context);
     final groupData = Data.maybeOf<RadioGroupData<T>>(context);
     final group = Data.maybeOf<RadioGroupState<T>>(context);
-    assert(groupData != null,
-        'RadioItem<$T> must be a descendant of RadioGroup<$T>');
+    assert(
+      groupData != null,
+      'RadioItem<$T> must be a descendant of RadioGroup<$T>',
+    );
     return GestureDetector(
       onTap: widget.enabled && groupData?.enabled == true
           ? () {
@@ -338,9 +356,10 @@ class _RadioItemState<T> extends State<RadioItem<T>> {
                   if (widget.leading != null)
                     SizedBox(width: 8 * theme.scaling),
                   Radio(
-                      value: groupData?.selectedItem == widget.value,
-                      focusing:
-                          _focusing && groupData?.selectedItem == widget.value),
+                    value: groupData?.selectedItem == widget.value,
+                    focusing:
+                        _focusing && groupData?.selectedItem == widget.value,
+                  ),
                   if (widget.trailing != null)
                     SizedBox(width: 8 * theme.scaling),
                   if (widget.trailing != null) widget.trailing!,
@@ -357,7 +376,7 @@ class _RadioItemState<T> extends State<RadioItem<T>> {
 /// A card-style radio button with custom content.
 ///
 /// Provides a larger, card-like selection area within a [RadioGroup].
-class RadioCard<T> extends StatefulWidget {
+class RadioCard<T> extends StatefulWidget implements Styleable<RadioCardTheme> {
   /// The child widget displayed in the card.
   final Widget child;
 
@@ -375,6 +394,10 @@ class RadioCard<T> extends StatefulWidget {
   /// Focus node for keyboard navigation.
   final FocusNode? focusNode;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final RadioCardTheme? theme;
+
   /// Creates a radio card.
   const RadioCard({
     super.key,
@@ -383,6 +406,7 @@ class RadioCard<T> extends StatefulWidget {
     this.enabled = true,
     this.filled = false,
     this.focusNode,
+    this.theme,
   });
 
   @override
@@ -454,10 +478,12 @@ class RadioCardTheme extends ComponentThemeData {
     ValueGetter<Color?>? selectedBorderColor,
   }) {
     return RadioCardTheme(
-      enabledCursor:
-          enabledCursor != null ? enabledCursor() : this.enabledCursor,
-      disabledCursor:
-          disabledCursor != null ? disabledCursor() : this.disabledCursor,
+      enabledCursor: enabledCursor != null
+          ? enabledCursor()
+          : this.enabledCursor,
+      disabledCursor: disabledCursor != null
+          ? disabledCursor()
+          : this.disabledCursor,
       hoverColor: hoverColor != null ? hoverColor() : this.hoverColor,
       color: color != null ? color() : this.color,
       borderWidth: borderWidth != null ? borderWidth() : this.borderWidth,
@@ -492,17 +518,17 @@ class RadioCardTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        enabledCursor,
-        disabledCursor,
-        hoverColor,
-        color,
-        borderWidth,
-        selectedBorderWidth,
-        borderRadius,
-        padding,
-        borderColor,
-        selectedBorderColor,
-      );
+    enabledCursor,
+    disabledCursor,
+    hoverColor,
+    color,
+    borderWidth,
+    selectedBorderWidth,
+    borderRadius,
+    padding,
+    borderColor,
+    selectedBorderColor,
+  );
 }
 
 class _RadioCardState<T> extends State<RadioCard<T>> {
@@ -531,11 +557,14 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * theme.scaling;
-    final componentTheme = ComponentTheme.maybeOf<RadioCardTheme>(context);
+    final componentTheme =
+        widget.theme ?? ComponentTheme.maybeOf<RadioCardTheme>(context);
     final groupData = Data.maybeOf<RadioGroupData<T>>(context);
     final group = Data.maybeOf<RadioGroupState<T>>(context);
-    assert(groupData != null,
-        'RadioCard<$T> must be a descendant of RadioGroup<$T>');
+    assert(
+      groupData != null,
+      'RadioCard<$T> must be a descendant of RadioGroup<$T>',
+    );
     return GestureDetector(
       onTap: widget.enabled && groupData?.enabled == true
           ? () {
@@ -565,10 +594,12 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
         mouseCursor: widget.enabled && groupData?.enabled == true
             ? styleValue(
                 defaultValue: SystemMouseCursors.click,
-                themeValue: componentTheme?.enabledCursor)
+                themeValue: componentTheme?.enabledCursor,
+              )
             : styleValue(
                 defaultValue: SystemMouseCursors.forbidden,
-                themeValue: componentTheme?.disabledCursor),
+                themeValue: componentTheme?.disabledCursor,
+              ),
         onShowFocusHighlight: (value) {
           if (value && widget.enabled && groupData?.enabled == true) {
             group?._setSelected(widget.value);
@@ -589,46 +620,51 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
         child: Data<RadioGroupData<T>>.boundary(
           child: Data<_RadioCardState<T>>.boundary(
             child: Card(
-              borderColor: groupData?.selectedItem == widget.value
-                  ? styleValue(
-                      defaultValue: theme.colorScheme.primary,
-                      themeValue: componentTheme?.selectedBorderColor,
-                    )
-                  : styleValue(
-                      defaultValue: theme.colorScheme.muted,
-                      themeValue: componentTheme?.borderColor,
-                    ),
-              borderWidth: groupData?.selectedItem == widget.value
-                  ? styleValue(
-                      defaultValue: 2 * theme.scaling,
-                      themeValue: componentTheme?.selectedBorderWidth,
-                    )
-                  : styleValue(
-                      defaultValue: 1 * theme.scaling,
-                      themeValue: componentTheme?.borderWidth,
-                    ),
-              filled: true,
-              fillColor: _hovering
-                  ? styleValue(
-                      defaultValue: widget.filled &&
-                              groupData?.selectedItem == widget.value
-                          ? theme.colorScheme.primary.scaleAlpha(0.1)
-                          : Colors.transparent,
-                      themeValue: componentTheme?.hoverColor,
-                    )
-                  : styleValue(
-                      defaultValue: widget.filled &&
-                              groupData?.selectedItem == widget.value
-                          ? theme.colorScheme.primary.scaleAlpha(0.1)
-                          : Colors.transparent,
-                      themeValue: componentTheme?.color,
-                    ),
-              borderRadius: styleValue(
+              theme: CardTheme(
+                borderColor: groupData?.selectedItem == widget.value
+                    ? styleValue(
+                        defaultValue: theme.colorScheme.primary,
+                        themeValue: componentTheme?.selectedBorderColor,
+                      )
+                    : styleValue(
+                        defaultValue: theme.colorScheme.muted,
+                        themeValue: componentTheme?.borderColor,
+                      ),
+                borderWidth: groupData?.selectedItem == widget.value
+                    ? styleValue(
+                        defaultValue: 2 * theme.scaling,
+                        themeValue: componentTheme?.selectedBorderWidth,
+                      )
+                    : styleValue(
+                        defaultValue: 1 * theme.scaling,
+                        themeValue: componentTheme?.borderWidth,
+                      ),
+                filled: true,
+                fillColor: _hovering
+                    ? styleValue(
+                        defaultValue:
+                            widget.filled &&
+                                groupData?.selectedItem == widget.value
+                            ? theme.colorScheme.primary.scaleAlpha(0.1)
+                            : Colors.transparent,
+                        themeValue: componentTheme?.hoverColor,
+                      )
+                    : styleValue(
+                        defaultValue:
+                            widget.filled &&
+                                groupData?.selectedItem == widget.value
+                            ? theme.colorScheme.primary.scaleAlpha(0.1)
+                            : Colors.transparent,
+                        themeValue: componentTheme?.color,
+                      ),
+                borderRadius: styleValue(
                   defaultValue: theme.borderRadiusLg,
-                  themeValue: componentTheme?.borderRadius),
-              padding: EdgeInsets.zero,
-              clipBehavior: Clip.antiAlias,
-              duration: kDefaultDuration,
+                  themeValue: componentTheme?.borderRadius,
+                ),
+                padding: EdgeInsets.zero,
+                clipBehavior: Clip.antiAlias,
+                duration: kDefaultDuration,
+              ),
               child: Container(
                 padding: styleValue(
                   defaultValue: EdgeInsets.all(densityContainerPadding),
@@ -646,7 +682,8 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
                       // to compensate for the border width
                       : styleValue(
                           defaultValue: EdgeInsets.all(densityGap * 0.125),
-                          themeValue: componentTheme?.borderWidth != null &&
+                          themeValue:
+                              componentTheme?.borderWidth != null &&
                                   componentTheme?.selectedBorderWidth != null
                               ? EdgeInsets.all(
                                   componentTheme!.borderWidth! -
@@ -907,9 +944,7 @@ class RadioGroupState<T> extends State<RadioGroup<T>>
         data: this,
         child: Data.inherit(
           data: RadioGroupData<T>(widget.value, enabled),
-          child: FocusTraversalGroup(
-            child: widget.child,
-          ),
+          child: FocusTraversalGroup(child: widget.child),
         ),
       ),
     );

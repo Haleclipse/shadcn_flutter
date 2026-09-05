@@ -35,9 +35,7 @@ class _WindowExample1State extends State<WindowExample1> {
                 content: const RebuildCounter(),
               ),
             ],
-            child: const Center(
-              child: Text('Desktop'),
-            ),
+            child: const Center(child: Text('Desktop')),
           ),
         ),
         PrimaryButton(
@@ -48,12 +46,13 @@ class _WindowExample1State extends State<WindowExample1> {
               Window(
                 bounds: const Rect.fromLTWH(0, 0, 200, 200),
                 title: Text(
-                    'Window ${navigatorKey.currentState!.windows.length + 1}'),
+                  'Window ${navigatorKey.currentState!.windows.length + 1}',
+                ),
                 content: const RebuildCounter(),
               ),
             );
           },
-        )
+        ),
       ],
     );
   }

@@ -189,7 +189,7 @@ class DropdownMenuTile extends StatelessWidget implements IComponentPage {
                   onPressed: () {},
                   child: const Text('Options'),
                 ),
-                const Gap(8),
+                const SizedBox(height: 8),
                 SizedBox(
                   width: 192,
                   child: MenuPopup(children: [

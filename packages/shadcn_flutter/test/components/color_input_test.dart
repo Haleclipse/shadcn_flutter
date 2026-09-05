@@ -28,7 +28,7 @@ void main() {
           child: ColorInput(
             value: ColorDerivative.fromColor(const Color(0xFFF44336)),
             onChanged: (value) {},
-            showLabel: true,
+            theme: ColorInputTheme(showLabel: true),
           ),
         ),
       );

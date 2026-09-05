@@ -45,22 +45,28 @@ abstract class TrackerLevel {
   ///
   /// [color] is set to `Colors.orange`
   /// [name] is set to `"Warning"`
-  static const TrackerLevel warning =
-      _SimpleTrackerLevel(Colors.orange, 'Warning');
+  static const TrackerLevel warning = _SimpleTrackerLevel(
+    Colors.orange,
+    'Warning',
+  );
 
   /// Default values for the critical level.
   ///
   /// [color] is set to `Colors.red`
   /// [name] is set to `"Critical"`
-  static const TrackerLevel critical =
-      _SimpleTrackerLevel(Colors.red, 'Critical');
+  static const TrackerLevel critical = _SimpleTrackerLevel(
+    Colors.red,
+    'Critical',
+  );
 
   /// Default values for the unknown level.
   ///
   /// [color] is set to `Colors.gray`
   /// [name] is set to `"Unknown"`
-  static const TrackerLevel unknown =
-      _SimpleTrackerLevel(Colors.gray, 'Unknown');
+  static const TrackerLevel unknown = _SimpleTrackerLevel(
+    Colors.gray,
+    'Unknown',
+  );
 
   /// Gets the color for the specified [TrackerLevel].
   ///
@@ -145,10 +151,7 @@ class TrackerData {
   ///   level: TrackerLevel.fine,
   /// );
   /// ```
-  const TrackerData({
-    required this.tooltip,
-    required this.level,
-  });
+  const TrackerData({required this.tooltip, required this.level});
 }
 
 /// Theme configuration for [Tracker] components.
@@ -207,11 +210,7 @@ class TrackerTheme extends ComponentThemeData {
   ///   itemHeight: 48.0,
   /// );
   /// ```
-  const TrackerTheme({
-    this.radius,
-    this.gap,
-    this.itemHeight,
-  });
+  const TrackerTheme({this.radius, this.gap, this.itemHeight});
 
   /// Creates a copy of this theme with the given values replaced.
   ///
@@ -249,11 +248,7 @@ class TrackerTheme extends ComponentThemeData {
   }
 
   @override
-  int get hashCode => Object.hash(
-        radius,
-        gap,
-        itemHeight,
-      );
+  int get hashCode => Object.hash(radius, gap, itemHeight);
 
   @override
   String toString() =>
@@ -309,7 +304,7 @@ class TrackerTheme extends ComponentThemeData {
 ///   ],
 /// );
 /// ```
-class Tracker extends StatelessWidget {
+class Tracker extends StatelessWidget implements Styleable<TrackerTheme> {
   /// List of data points to display as tracker segments.
   ///
   /// Type: `List<TrackerData>`. Each data point contains a status level
@@ -317,6 +312,10 @@ class Tracker extends StatelessWidget {
   /// segments are displayed in the order provided, each taking equal
   /// horizontal space.
   final List<TrackerData> data;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TrackerTheme? theme;
 
   /// Creates a [Tracker] widget.
   ///
@@ -341,35 +340,32 @@ class Tracker extends StatelessWidget {
   ///   ],
   /// );
   /// ```
-  const Tracker({
-    super.key,
-    required this.data,
-  });
+  const Tracker({super.key, required this.data, this.theme});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final trackerTheme = ComponentTheme.maybeOf<TrackerTheme>(context);
+    final trackerTheme =
+        this.theme ?? ComponentTheme.maybeOf<TrackerTheme>(context);
     final densityGap = theme.density.baseGap * theme.scaling;
     return ClipRRect(
-      borderRadius:
-          BorderRadius.circular(trackerTheme?.radius ?? theme.radiusMd),
+      borderRadius: BorderRadius.circular(
+        trackerTheme?.radius ?? theme.radiusMd,
+      ),
       child: Row(
         children: [
           for (final data in this.data)
             Expanded(
               child: InstantTooltip(
                 tooltipBuilder: (context) {
-                  return TooltipContainer(
-                    child: data.tooltip,
-                  );
+                  return TooltipContainer(child: data.tooltip);
                 },
                 child: Container(
                   height: trackerTheme?.itemHeight ?? 32,
                   color: data.level.color,
                 ),
               ),
-            )
+            ),
         ],
       ).gap(trackerTheme?.gap ?? densityGap * 0.25),
     );

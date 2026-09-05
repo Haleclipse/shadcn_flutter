@@ -72,15 +72,21 @@ class ResizableDraggerTheme extends ComponentThemeData {
 }
 
 /// A Horizontal dragger that can be used as a divider between resizable panes.
-class HorizontalResizableDragger extends StatelessWidget {
+class HorizontalResizableDragger extends StatelessWidget
+    implements Styleable<ResizableDraggerTheme> {
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ResizableDraggerTheme? theme;
+
   /// Creates a [HorizontalResizableDragger].
-  const HorizontalResizableDragger({super.key});
+  const HorizontalResizableDragger({super.key, this.theme});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<ResizableDraggerTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<ResizableDraggerTheme>(context);
     final color = styleValue(
       widgetValue: null,
       themeValue: compTheme?.color,
@@ -130,15 +136,21 @@ class HorizontalResizableDragger extends StatelessWidget {
 }
 
 /// A Vertical dragger that can be used as a divider between resizable panes.
-class VerticalResizableDragger extends StatelessWidget {
+class VerticalResizableDragger extends StatelessWidget
+    implements Styleable<ResizableDraggerTheme> {
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ResizableDraggerTheme? theme;
+
   /// Creates a [VerticalResizableDragger].
-  const VerticalResizableDragger({super.key});
+  const VerticalResizableDragger({super.key, this.theme});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<ResizableDraggerTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<ResizableDraggerTheme>(context);
     final color = styleValue(
       widgetValue: null,
       themeValue: compTheme?.color,

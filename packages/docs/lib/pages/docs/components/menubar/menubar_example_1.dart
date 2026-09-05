@@ -39,22 +39,13 @@ class _MenubarExample1State extends State<MenubarExample1> {
               ),
               child: Text('New Window'),
             ),
-            MenuButton(
-              enabled: false,
-              child: Text('New Incognito Window'),
-            ),
+            MenuButton(enabled: false, child: Text('New Incognito Window')),
             MenuDivider(),
             MenuButton(
               subMenu: [
-                MenuButton(
-                  child: Text('Email Link'),
-                ),
-                MenuButton(
-                  child: Text('Messages'),
-                ),
-                MenuButton(
-                  child: Text('Notes'),
-                ),
+                MenuButton(child: Text('Email Link')),
+                MenuButton(child: Text('Messages')),
+                MenuButton(child: Text('Notes')),
               ],
               child: Text('Share'),
             ),
@@ -69,12 +60,8 @@ class _MenubarExample1State extends State<MenubarExample1> {
             ),
             MenuButton(
               subMenu: [
-                MenuButton(
-                  child: Text('Save and Exit'),
-                ),
-                MenuButton(
-                  child: Text('Discard and Exit'),
-                ),
+                MenuButton(child: Text('Save and Exit')),
+                MenuButton(child: Text('Discard and Exit')),
               ],
               child: Text('Exit'),
             ),
@@ -105,32 +92,18 @@ class _MenubarExample1State extends State<MenubarExample1> {
             MenuDivider(),
             MenuButton(
               subMenu: [
-                MenuButton(
-                  child: Text('Search the Web'),
-                ),
+                MenuButton(child: Text('Search the Web')),
                 MenuDivider(),
-                MenuButton(
-                  child: Text('Find...'),
-                ),
-                MenuButton(
-                  child: Text('Find Next'),
-                ),
-                MenuButton(
-                  child: Text('Find Previous'),
-                ),
+                MenuButton(child: Text('Find...')),
+                MenuButton(child: Text('Find Next')),
+                MenuButton(child: Text('Find Previous')),
               ],
               child: Text('Find'),
             ),
             MenuDivider(),
-            MenuButton(
-              child: Text('Cut'),
-            ),
-            MenuButton(
-              child: Text('Copy'),
-            ),
-            MenuButton(
-              child: Text('Paste'),
-            ),
+            MenuButton(child: Text('Cut')),
+            MenuButton(child: Text('Copy')),
+            MenuButton(child: Text('Paste')),
           ],
           child: Text('Edit'),
         ),
@@ -180,13 +153,9 @@ class _MenubarExample1State extends State<MenubarExample1> {
               child: Text('Force Reload'),
             ),
             const MenuDivider(),
-            const MenuButton(
-              child: Text('Toggle Full Screen'),
-            ),
+            const MenuButton(child: Text('Toggle Full Screen')),
             const MenuDivider(),
-            const MenuButton(
-              child: Text('Hide Sidebar'),
-            ),
+            const MenuButton(child: Text('Hide Sidebar')),
           ],
           child: const Text('View'),
         ),
@@ -211,21 +180,13 @@ class _MenubarExample1State extends State<MenubarExample1> {
                   autoClose: false,
                   child: Text('Benoit'),
                 ),
-                MenuRadio<int>(
-                  value: 2,
-                  autoClose: false,
-                  child: Text('Luis'),
-                ),
+                MenuRadio<int>(value: 2, autoClose: false, child: Text('Luis')),
               ],
             ),
             const MenuDivider(),
-            const MenuButton(
-              child: Text('Edit...'),
-            ),
+            const MenuButton(child: Text('Edit...')),
             const MenuDivider(),
-            const MenuButton(
-              child: Text('Add Profile...'),
-            ),
+            const MenuButton(child: Text('Add Profile...')),
           ],
           child: const Text('Profiles'),
         ),

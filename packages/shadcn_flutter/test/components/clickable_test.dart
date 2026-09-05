@@ -8,10 +8,7 @@ void main() {
     testWidgets('renders child', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: Clickable(
-            onPressed: () {},
-            child: Text('Click Me'),
-          ),
+          child: Clickable(onPressed: () {}, child: Text('Click Me')),
         ),
       );
 

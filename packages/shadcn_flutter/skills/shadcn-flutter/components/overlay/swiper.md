@@ -79,7 +79,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('Hello!'),
-              const Gap(24),
+              const SizedBox(height: 24),
               OverlayAnchor(
                 anchor: #swiperCloseButton,
                 child: PrimaryButton(
@@ -99,7 +99,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
                             );
                           },
                           separatorBuilder: (context, index) {
-                            return const Gap(8);
+                            return const SizedBox(height: 8);
                           },
                         );
                       },
@@ -124,14 +124,14 @@ class _SwiperExample1State extends State<SwiperExample1> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text('Swipe me!'),
-                const Gap(24),
+                const SizedBox(height: 24),
                 ButtonGroup(children: [
                   _buildSelectPosition(OverlayPosition.left, 'Left'),
                   _buildSelectPosition(OverlayPosition.right, 'Right'),
                   _buildSelectPosition(OverlayPosition.top, 'Top'),
                   _buildSelectPosition(OverlayPosition.bottom, 'Bottom'),
                 ]),
-                const Gap(24),
+                const SizedBox(height: 24),
                 ButtonGroup(children: [
                   Toggle(
                     value: _typeDrawer,
@@ -258,7 +258,7 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                         shape: BoxShape.circle,
                       ),
                     ),
-                    const Gap(4),
+                    const SizedBox(width: 4),
                     Container(
                       width: 8,
                       height: 8,
@@ -268,7 +268,7 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                         shape: BoxShape.circle,
                       ),
                     ),
-                    const Gap(4),
+                    const SizedBox(width: 4),
                     Container(
                       width: 8,
                       height: 8,

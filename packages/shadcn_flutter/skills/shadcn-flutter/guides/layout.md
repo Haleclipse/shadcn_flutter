@@ -24,16 +24,22 @@ ShadcnApp(
 Use the semantic spacing helpers to maintain consistency.
 
 ### Gaps
-The `Gap` widget is the preferred way to add spacing between elements in a `Column` or `Row`.
+Space children of a `Column` or `Row` with a `SizedBox` on the main axis.
+shadcn_flutter used to re-export `Gap` from `package:gap`; it no longer does, so
+name the axis explicitly.
 
-| Token | Size (unscaled) | Usage |
+| Size (unscaled) | In a `Column` | In a `Row` |
 | :--- | :--- | :--- |
-| `Gap(4)` | 4 | `const Gap(4)` |
-| `Gap(8)` | 8 | `const Gap(8)` |
-| `Gap(12)` | 12 | `const Gap(12)` |
-| `Gap(16)` | 16 | `const Gap(16)` |
-| `Gap(24)` | 24 | `const Gap(24)` |
-| `Gap(32)` | 32 | `const Gap(32)` |
+| 4 | `const SizedBox(height: 4)` | `const SizedBox(width: 4)` |
+| 8 | `const SizedBox(height: 8)` | `const SizedBox(width: 8)` |
+| 12 | `const SizedBox(height: 12)` | `const SizedBox(width: 12)` |
+| 16 | `const SizedBox(height: 16)` | `const SizedBox(width: 16)` |
+| 24 | `const SizedBox(height: 24)` | `const SizedBox(width: 24)` |
+| 32 | `const SizedBox(height: 32)` | `const SizedBox(width: 32)` |
+
+To space every child at once, `Column(...).gap(8)` and `Row(...).gap(8)` insert
+the separator for you. `DensityGap(gapLg)` scales with the theme's density and
+takes a `direction` (vertical by default).
 
 ### Padding
 Access theme-aware padding via `Theme.of(context)`:

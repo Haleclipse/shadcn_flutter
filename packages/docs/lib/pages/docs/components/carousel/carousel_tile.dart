@@ -1,5 +1,6 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../carousel/carousel_example_1.dart';
 
 class CarouselTile extends StatelessWidget implements IComponentPage {

@@ -76,6 +76,22 @@ class MaterialLayer extends StatelessWidget {
   /// false if an ancestor already provides one.
   final bool scaffoldMessenger;
 
+  /// Whether to install [kMaterialLocalizationsDelegates] over this subtree.
+  ///
+  /// Material widgets assert on `MaterialLocalizations.of` — an `AppBar`, a
+  /// tooltip, a `SnackBar` or a date picker will throw without it. Installing
+  /// the delegates here means a [MaterialLayer] works on its own, without the
+  /// surrounding app having registered anything.
+  ///
+  /// This only covers the subtree. Routes pushed on the root navigator
+  /// (`showDialog`, `Navigator.push`) build outside it, so an app that opens
+  /// Material routes still needs [kMaterialLocalizationsDelegates] on
+  /// `ShadcnApp.localizationsDelegates` — which is what [MaterialShadcnApp]
+  /// does.
+  ///
+  /// Set to false if an ancestor already provides them.
+  final bool localizations;
+
   /// Creates a Material compatibility layer around [child].
   const MaterialLayer({
     super.key,
@@ -83,6 +99,7 @@ class MaterialLayer extends StatelessWidget {
     this.theme,
     this.background,
     this.scaffoldMessenger = true,
+    this.localizations = true,
   });
 
   @override
@@ -93,6 +110,13 @@ class MaterialLayer extends StatelessWidget {
     );
     if (scaffoldMessenger) {
       result = material.ScaffoldMessenger(child: result);
+    }
+    if (localizations) {
+      result = Localizations.override(
+        context: context,
+        delegates: kMaterialLocalizationsDelegates,
+        child: result,
+      );
     }
     return material.Theme(
       data: theme ?? materialThemeFor(Theme.of(context)),

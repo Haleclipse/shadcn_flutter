@@ -137,7 +137,7 @@ class AutocompleteTile extends StatelessWidget implements IComponentPage {
                 InputFeature.trailing(Icon(LucideIcons.search)),
               ],
             ),
-            const Gap(8),
+            const SizedBox(height: 8),
             OutlinedContainer(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

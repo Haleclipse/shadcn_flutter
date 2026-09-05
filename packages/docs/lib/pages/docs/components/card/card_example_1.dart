@@ -10,7 +10,7 @@ class CardExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      padding: const EdgeInsets.all(24),
+      theme: CardTheme(padding: const EdgeInsets.all(24)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,15 +28,9 @@ class CardExample1 extends StatelessWidget {
           const SizedBox(height: 24),
           Row(
             children: [
-              OutlineButton(
-                child: const Text('Cancel'),
-                onPressed: () {},
-              ),
+              OutlineButton(child: const Text('Cancel'), onPressed: () {}),
               const Spacer(),
-              PrimaryButton(
-                child: const Text('Deploy'),
-                onPressed: () {},
-              ),
+              PrimaryButton(child: const Text('Deploy'), onPressed: () {}),
             ],
           ),
         ],

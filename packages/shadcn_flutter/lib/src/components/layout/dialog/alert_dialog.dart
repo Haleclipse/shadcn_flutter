@@ -143,10 +143,13 @@ class _AlertDialogState extends State<AlertDialog> {
     final densityContainerPadding =
         themeData.density.baseContainerPadding * scaling;
     return ModalBackdrop(
-      borderRadius: themeData.borderRadiusXxl,
-      barrierColor: widget.barrierColor ?? Colors.black.withValues(alpha: 0.8),
-      surfaceClip: ModalBackdrop.shouldClipSurface(
-        widget.surfaceOpacity ?? themeData.surfaceOpacity,
+      theme: ModalBackdropTheme(
+        borderRadius: themeData.borderRadiusXxl,
+        barrierColor:
+            widget.barrierColor ?? Colors.black.withValues(alpha: 0.8),
+        surfaceClip: ModalBackdrop.shouldClipSurface(
+          widget.surfaceOpacity ?? themeData.surfaceOpacity,
+        ),
       ),
       child: ModalContainer(
         fillColor: themeData.colorScheme.popover,

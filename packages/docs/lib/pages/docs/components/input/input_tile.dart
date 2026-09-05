@@ -16,9 +16,7 @@ class InputTile extends StatelessWidget implements IComponentPage {
       example: Card(
         child: const TextField(
           initialValue: 'Hello World',
-          features: [
-            InputFeature.leading(Icon(LucideIcons.pencil)),
-          ],
+          features: [InputFeature.leading(Icon(LucideIcons.pencil))],
         ).sized(width: 250, height: 32),
       ).sized(height: 400),
     );

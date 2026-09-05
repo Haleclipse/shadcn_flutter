@@ -8,10 +8,7 @@ void main() {
     testWidgets('renders with empty children list', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: AvatarGroup(
-            alignment: Alignment.center,
-            children: [],
-          ),
+          child: AvatarGroup(alignment: Alignment.center, children: []),
         ),
       );
 
@@ -193,9 +190,9 @@ void main() {
           child: AvatarGroup(
             alignment: Alignment(0.5, 0),
             children: [
-              Avatar(initials: 'A', size: 30),
-              Avatar(initials: 'B', size: 40),
-              Avatar(initials: 'C', size: 50),
+              Avatar(initials: 'A', theme: AvatarTheme(size: 30)),
+              Avatar(initials: 'B', theme: AvatarTheme(size: 40)),
+              Avatar(initials: 'C', theme: AvatarTheme(size: 50)),
             ],
           ),
         ),
@@ -232,8 +229,8 @@ void main() {
             child: AvatarGroup(
               alignment: Alignment(0.5, 0),
               children: [
-                Avatar(initials: 'A', size: 40),
-                Avatar(initials: 'B', size: 40),
+                Avatar(initials: 'A', theme: AvatarTheme(size: 40)),
+                Avatar(initials: 'B', theme: AvatarTheme(size: 40)),
               ],
             ),
           ),
@@ -244,13 +241,16 @@ void main() {
       expect(avatarGroupFinder, findsOneWidget);
       // The group should be sized to contain both overlapping avatars
       final size = tester.getSize(avatarGroupFinder);
-      expect(size.width,
-          greaterThan(40)); // Should be wider than single avatar due to overlap
+      expect(
+        size.width,
+        greaterThan(40),
+      ); // Should be wider than single avatar due to overlap
       expect(size.height, 40); // Should be same height as avatars
     });
 
-    testWidgets('handles RTL layout with directional alignment',
-        (tester) async {
+    testWidgets('handles RTL layout with directional alignment', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         SimpleApp(
           child: Directionality(

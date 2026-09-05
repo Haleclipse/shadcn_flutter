@@ -28,9 +28,7 @@ class AnimatedValueBuilderTile extends StatelessWidget
                 duration: const Duration(seconds: 1),
                 mode: LoopingMode.pingPong,
                 builder: (context, value, child) {
-                  return Container(
-                    color: value,
-                  );
+                  return Container(color: value);
                 },
               ),
             ),

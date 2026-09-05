@@ -402,7 +402,7 @@ class SelectTile extends StatelessWidget implements IComponentPage {
                 constraints: const BoxConstraints.tightFor(width: 300),
                 popup: const SelectPopup(),
               ),
-              Gap(8 * theme.scaling),
+              SizedBox(height: 8 * theme.scaling),
               const SizedBox(
                 width: 300,
                 child: SelectPopup(

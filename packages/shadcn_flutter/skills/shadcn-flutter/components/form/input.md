@@ -150,7 +150,7 @@ class InputExample3 extends StatelessWidget {
             const InputFeature.paste(),
           ],
         ),
-        const Gap(24),
+        const SizedBox(height: 24),
         const TextField(
           placeholder: Text('Enter your password'),
           features: [

@@ -19,8 +19,9 @@ void main() {
       expect(find.byType(CalendarGrid), findsOneWidget);
     });
 
-    testWidgets('renders calendar with specific month and year',
-        (tester) async {
+    testWidgets('renders calendar with specific month and year', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         SimpleApp(
           child: Calendar(
@@ -47,8 +48,9 @@ void main() {
       expect(find.byType(Calendar), findsOneWidget);
     });
 
-    testWidgets('renders calendar with multiple selection mode',
-        (tester) async {
+    testWidgets('renders calendar with multiple selection mode', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         SimpleApp(
           child: Calendar(
@@ -90,8 +92,9 @@ void main() {
       expect(find.byType(Calendar), findsOneWidget);
     });
 
-    testWidgets('renders calendar with initial multiple values',
-        (tester) async {
+    testWidgets('renders calendar with initial multiple values', (
+      tester,
+    ) async {
       final dates = [
         DateTime(2024, 3, 10),
         DateTime(2024, 3, 15),
@@ -128,8 +131,9 @@ void main() {
       expect(find.byType(Calendar), findsOneWidget);
     });
 
-    testWidgets('calls onChanged when date is selected in single mode',
-        (tester) async {
+    testWidgets('calls onChanged when date is selected in single mode', (
+      tester,
+    ) async {
       CalendarValue? changedValue;
       final testDate = DateTime(2024, 3, 15);
 
@@ -154,31 +158,33 @@ void main() {
     });
 
     testWidgets(
-        'calls onChanged with null when same date is selected in single mode',
-        (tester) async {
-      CalendarValue? changedValue;
-      final testDate = DateTime(2024, 3, 15);
+      'calls onChanged with null when same date is selected in single mode',
+      (tester) async {
+        CalendarValue? changedValue;
+        final testDate = DateTime(2024, 3, 15);
 
-      await tester.pumpWidget(
-        SimpleApp(
-          child: Calendar(
-            view: CalendarView(2024, 3),
-            selectionMode: CalendarSelectionMode.single,
-            value: CalendarValue.single(testDate),
-            onChanged: (value) => changedValue = value,
+        await tester.pumpWidget(
+          SimpleApp(
+            child: Calendar(
+              view: CalendarView(2024, 3),
+              selectionMode: CalendarSelectionMode.single,
+              value: CalendarValue.single(testDate),
+              onChanged: (value) => changedValue = value,
+            ),
           ),
-        ),
-      );
+        );
 
-      // Tap the same date again to deselect
-      await tester.tap(find.text('15'));
-      await tester.pumpAndSettle();
+        // Tap the same date again to deselect
+        await tester.tap(find.text('15'));
+        await tester.pumpAndSettle();
 
-      expect(changedValue, isNull);
-    });
+        expect(changedValue, isNull);
+      },
+    );
 
-    testWidgets('calls onChanged when date is selected in multi mode',
-        (tester) async {
+    testWidgets('calls onChanged when date is selected in multi mode', (
+      tester,
+    ) async {
       CalendarValue? currentValue;
 
       await tester.pumpWidget(
@@ -200,8 +206,10 @@ void main() {
 
       expect(currentValue, isNotNull);
       expect(currentValue, isA<SingleCalendarValue>());
-      expect((currentValue as SingleCalendarValue).date,
-          equals(DateTime(2024, 3, 10)));
+      expect(
+        (currentValue as SingleCalendarValue).date,
+        equals(DateTime(2024, 3, 10)),
+      );
 
       // Select second date
       await tester.tap(find.text('15'));
@@ -348,8 +356,9 @@ void main() {
       expect(view.month, equals(now.month));
     });
 
-    testWidgets('CalendarView constructor creates specific view',
-        (tester) async {
+    testWidgets('CalendarView constructor creates specific view', (
+      tester,
+    ) async {
       final view = CalendarView(2024, 3);
 
       expect(view.year, equals(2024));

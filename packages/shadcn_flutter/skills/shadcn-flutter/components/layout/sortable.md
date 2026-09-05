@@ -619,7 +619,7 @@ class SortableTile extends StatelessWidget implements IComponentPage {
         child: Column(
           children: [
             const Text('Sortable List:').bold(),
-            const Gap(16),
+            const SizedBox(height: 16),
             const Column(
               children: [
                 Card(
@@ -628,33 +628,33 @@ class SortableTile extends StatelessWidget implements IComponentPage {
                     child: Row(
                       children: [
                         Icon(LucideIcons.gripHorizontal),
-                        Gap(8),
+                        SizedBox(width: 8),
                         Text('Item 1'),
                       ],
                     ),
                   ),
                 ),
-                Gap(8),
+                SizedBox(height: 8),
                 Card(
                   child: Padding(
                     padding: EdgeInsets.all(12),
                     child: Row(
                       children: [
                         Icon(LucideIcons.gripHorizontal),
-                        Gap(8),
+                        SizedBox(width: 8),
                         Text('Item 2'),
                       ],
                     ),
                   ),
                 ),
-                Gap(8),
+                SizedBox(height: 8),
                 Card(
                   child: Padding(
                     padding: EdgeInsets.all(12),
                     child: Row(
                       children: [
                         Icon(LucideIcons.gripHorizontal),
-                        Gap(8),
+                        SizedBox(width: 8),
                         Text('Item 3'),
                       ],
                     ),

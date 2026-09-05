@@ -16,8 +16,7 @@ class NavigationBarExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/navigation_bar/navigation_bar_example_1.dart',
+          path: 'lib/pages/docs/components/navigation_bar/navigation_bar_example_1.dart',
           child: NavigationBarExample1(),
         ),
       ],

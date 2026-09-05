@@ -338,8 +338,12 @@ class AnimatedProperty<T> {
   late T _target;
   late AnimationController _controller;
 
-  AnimatedProperty._(this._vsync, this._value, this._lerp,
-      Function(VoidCallback callback) update) {
+  AnimatedProperty._(
+    this._vsync,
+    this._value,
+    this._lerp,
+    Function(VoidCallback callback) update,
+  ) {
     _controller = AnimationController(vsync: _vsync);
     _controller.addListener(() {
       update(_empty);
@@ -572,7 +576,11 @@ class AnimationQueueController extends ChangeNotifier {
       _requests = [request];
     }
     _runner ??= AnimationRunner(
-        _value, request.target, request.duration, request.curve);
+      _value,
+      request.target,
+      request.duration,
+      request.curve,
+    );
     notifyListeners();
   }
 
@@ -647,12 +655,17 @@ class AnimationQueueController extends ChangeNotifier {
     if (_requests.isNotEmpty) {
       final request = _requests.removeAt(0);
       _runner = AnimationRunner(
-          _value, request.target, request.duration, request.curve);
+        _value,
+        request.target,
+        request.duration,
+        request.curve,
+      );
     }
     final runner = _runner;
     if (runner != null) {
       runner._progress += delta.inMilliseconds / runner.duration.inMilliseconds;
-      _value = runner.from +
+      _value =
+          runner.from +
           (runner.to - runner.from) *
               runner.curve.transform(runner._progress.clamp(0, 1));
       if (runner._progress >= 1.0) {
@@ -747,11 +760,7 @@ class AbsoluteKeyframe<T> implements Keyframe<T> {
   /// * [duration] - How long to animate from [from] to [to].
   /// * [from] - The starting value.
   /// * [to] - The ending value.
-  const AbsoluteKeyframe(
-    this.duration,
-    this.from,
-    this.to,
-  );
+  const AbsoluteKeyframe(this.duration, this.from, this.to);
 
   @override
   T compute(TimelineAnimation<T> timeline, int index, double t) {
@@ -797,10 +806,7 @@ class RelativeKeyframe<T> implements Keyframe<T> {
   ///
   /// * [duration] - How long to animate to [target].
   /// * [target] - The ending value for this keyframe.
-  const RelativeKeyframe(
-    this.duration,
-    this.target,
-  );
+  const RelativeKeyframe(this.duration, this.target);
 
   @override
   T compute(TimelineAnimation<T> timeline, int index, double t) {
@@ -808,8 +814,11 @@ class RelativeKeyframe<T> implements Keyframe<T> {
       // act as still keyframe when there is no previous keyframe
       return target;
     }
-    final previous =
-        timeline.keyframes[index - 1].compute(timeline, index - 1, 1.0);
+    final previous = timeline.keyframes[index - 1].compute(
+      timeline,
+      index - 1,
+      1.0,
+    );
     return timeline.lerp(previous!, target!, t)!;
   }
 }
@@ -863,7 +872,9 @@ class StillKeyframe<T> implements Keyframe<T> {
     var value = this.value;
     if (value == null) {
       assert(
-          index > 0, 'Relative still keyframe must have a previous keyframe');
+        index > 0,
+        'Relative still keyframe must have a previous keyframe',
+      );
       value = timeline.keyframes[index - 1].compute(timeline, index - 1, 1.0);
     }
     return value as T;
@@ -1107,7 +1118,8 @@ class TimelineAnimation<T> extends Animatable<T> {
       final keyframe = keyframes[i];
       final next = current + keyframe.duration;
       if (duration < next) {
-        final localT = (duration - current).inMilliseconds /
+        final localT =
+            (duration - current).inMilliseconds /
             keyframe.duration.inMilliseconds;
         return keyframe.compute(this, i, localT);
       }

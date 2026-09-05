@@ -156,7 +156,7 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
                   children: [
                     Icon(LucideIcons.menu,
                         color: theme.colorScheme.primaryForeground),
-                    const Gap(16),
+                    const SizedBox(width: 16),
                     Text(
                       'Scaffold',
                       style: TextStyle(

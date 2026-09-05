@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:country_flags/country_flags.dart';
 import 'package:flutter/services.dart';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -138,7 +137,7 @@ class PhoneInputTheme extends ComponentThemeData {
   final double? countryGap;
 
   /// The shape of the flag.
-  final Shape? flagShape;
+  final ShapeBorder? flagShape;
 
   /// Theme data for [PhoneInput].
   const PhoneInputTheme({
@@ -163,7 +162,7 @@ class PhoneInputTheme extends ComponentThemeData {
     ValueGetter<double?>? flagWidth,
     ValueGetter<double?>? flagGap,
     ValueGetter<double?>? countryGap,
-    ValueGetter<Shape?>? flagShape,
+    ValueGetter<ShapeBorder?>? flagShape,
   }) {
     return PhoneInputTheme(
       padding: padding != null ? padding() : this.padding,
@@ -238,7 +237,7 @@ class PhoneInputTheme extends ComponentThemeData {
 ///   searchPlaceholder: Text('Search countries...'),
 /// );
 /// ```
-class PhoneInput extends StatefulWidget {
+class PhoneInput extends StatefulWidget implements Styleable<PhoneInputTheme> {
   /// The default country to display when no initial value is provided.
   ///
   /// If both [initialCountry] and [initialValue] are null, defaults to
@@ -305,6 +304,10 @@ class PhoneInput extends StatefulWidget {
   /// to guide users on how to search for countries.
   final Widget? searchPlaceholder;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final PhoneInputTheme? theme;
+
   /// Creates a [PhoneInput] widget.
   ///
   /// The widget can be initialized with a specific country or complete phone
@@ -347,6 +350,7 @@ class PhoneInput extends StatefulWidget {
     this.onlyNumber = true,
     this.countries,
     this.searchPlaceholder,
+    this.theme,
   });
 
   @override
@@ -473,7 +477,8 @@ class _PhoneInputState extends State<PhoneInput>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final componentTheme = ComponentTheme.maybeOf<PhoneInputTheme>(context);
+    final componentTheme =
+        widget.theme ?? ComponentTheme.maybeOf<PhoneInputTheme>(context);
     return IntrinsicHeight(
       child: ButtonGroup.horizontal(
         children: [
@@ -505,13 +510,15 @@ class _PhoneInputState extends State<PhoneInput>
                 }
               },
               itemBuilder: (context, item) {
-                return CountryFlag.fromCountryCode(
-                  item.code,
-                  theme: ImageTheme(
-                    shape: styleValue(
-                      defaultValue: RoundedRectangle(theme.radiusSm),
-                      themeValue: componentTheme?.flagShape,
+                return CountryFlag(
+                  item,
+                  shape: styleValue(
+                    defaultValue: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(theme.radiusSmRadius),
                     ),
+                    themeValue: componentTheme?.flagShape,
+                  ),
+                  theme: CountryFlagTheme(
                     height: styleValue(
                       defaultValue: theme.scaling * 18,
                       themeValue: componentTheme?.flagHeight,
@@ -541,15 +548,17 @@ class _PhoneInputState extends State<PhoneInput>
                             value: country,
                             child: Row(
                               children: [
-                                CountryFlag.fromCountryCode(
-                                  country.code,
-                                  theme: ImageTheme(
-                                    shape: styleValue(
-                                      defaultValue: RoundedRectangle(
-                                        theme.radiusSm,
+                                CountryFlag(
+                                  country,
+                                  shape: styleValue(
+                                    defaultValue: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        theme.radiusSmRadius,
                                       ),
-                                      themeValue: componentTheme?.flagShape,
                                     ),
+                                    themeValue: componentTheme?.flagShape,
+                                  ),
+                                  theme: CountryFlagTheme(
                                     height: styleValue(
                                       defaultValue: theme.scaling * 18,
                                       themeValue: componentTheme?.flagHeight,
@@ -560,15 +569,15 @@ class _PhoneInputState extends State<PhoneInput>
                                     ),
                                   ),
                                 ),
-                                Gap(
-                                  styleValue(
+                                SizedBox(
+                                  width: styleValue(
                                     defaultValue: theme.scaling * 8,
                                     themeValue: componentTheme?.flagGap,
                                   ),
                                 ),
                                 Expanded(child: Text(country.name)),
-                                Gap(
-                                  styleValue(
+                                SizedBox(
+                                  width: styleValue(
                                     defaultValue: 16 * theme.scaling,
                                     themeValue: componentTheme?.countryGap,
                                   ),

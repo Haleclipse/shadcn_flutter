@@ -84,8 +84,8 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                       value: alignment,
                       itemBuilder:
                           (BuildContext context, NavigationRailAlignment item) {
-                        return Text(item.name);
-                      },
+                            return Text(item.name);
+                          },
                       overlayConfiguration: const PopoverConfiguration(
                         widthConstraint: PopoverConstraint.anchorFixedSize,
                         alignment: Alignment.topCenter,
@@ -98,23 +98,27 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                         }
                       },
                       popup: SelectPopup(
-                          items: SelectItemList(children: [
-                        for (var value in NavigationRailAlignment.values)
-                          SelectItemButton(
-                            value: value,
-                            child: Text(value.name),
-                          ),
-                      ])),
+                        items: SelectItemList(
+                          children: [
+                            for (var value in NavigationRailAlignment.values)
+                              SelectItemButton(
+                                value: value,
+                                child: Text(value.name),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
                     // Label visibility behavior for each destination.
                     Select<NavigationLabelType>(
                       value: labelType,
                       itemBuilder:
                           (BuildContext context, NavigationLabelType item) {
-                        return Text(item.name);
-                      },
-                      popupConstraints:
-                          BoxConstraints.tight(const Size(200, 200)),
+                            return Text(item.name);
+                          },
+                      popupConstraints: BoxConstraints.tight(
+                        const Size(200, 200),
+                      ),
                       onChanged: (value) {
                         if (value != null) {
                           setState(() {
@@ -139,8 +143,8 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                       value: labelPosition,
                       itemBuilder:
                           (BuildContext context, NavigationLabelPosition item) {
-                        return Text(item.name);
-                      },
+                            return Text(item.name);
+                          },
                       onChanged: (value) {
                         if (value != null) {
                           setState(() {

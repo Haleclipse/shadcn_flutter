@@ -67,48 +67,59 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
             expandedSize: 250,
             expanded: expanded,
             header: [
-              Builder(builder: (context) {
-                return NavigationSlot(
-                  leading: IconContainer(
-                    backgroundColor: Colors.blue,
-                    icon: const Icon(LucideIcons.galleryVerticalEnd).iconMedium,
-                  ),
-                  title: const Text('Acme Inc').medium.small,
-                  subtitle: const Text('Enterprise').xSmall.normal,
-                  trailing: const Icon(LucideIcons.chevronsUpDown).iconSmall,
-                  onPressed: () {
-                    showDropdown(
+              Builder(
+                builder: (context) {
+                  return NavigationSlot(
+                    leading: IconContainer(
+                      icon: const Icon(LucideIcons.galleryVerticalEnd)
+                          .iconMedium,
+                      theme: IconContainerTheme(backgroundColor: Colors.blue),
+                    ),
+                    title: const Text('Acme Inc').medium.small,
+                    subtitle: const Text('Enterprise').xSmall.normal,
+                    trailing: const Icon(LucideIcons.chevronsUpDown).iconSmall,
+                    onPressed: () {
+                      showDropdown(
                         context: context,
                         anchorAlignment: AlignmentDirectional.centerEnd,
                         alignment: AlignmentDirectional.centerStart,
                         offset: const Offset(16, 0),
                         builder: (context) {
-                          return DropdownMenu(children: [
-                            MenuButton(
+                          return DropdownMenu(
+                            children: [
+                              MenuButton(
                                 leading: const Icon(LucideIcons.user),
                                 child: const Text('Profile'),
-                                onPressed: (ctx) {}),
-                            MenuButton(
+                                onPressed: (ctx) {},
+                              ),
+                              MenuButton(
                                 leading: const Icon(LucideIcons.settings),
                                 child: const Text('Settings'),
-                                onPressed: (ctx) {}),
-                            const MenuDivider(),
-                            MenuButton(
+                                onPressed: (ctx) {},
+                              ),
+                              const MenuDivider(),
+                              MenuButton(
                                 leading: const Icon(LucideIcons.logOut),
                                 child: const Text('Logout'),
-                                onPressed: (ctx) {}),
-                          ]);
-                        });
-                  },
-                );
-              }),
+                                onPressed: (ctx) {},
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
             ],
             footer: [
               NavigationSlot(
                 leading: Avatar(
-                  size: 32,
                   initials: 'SU',
-                  backgroundColor: Colors.green.shade800,
+                  theme: AvatarTheme(
+                    size: 32,
+                    backgroundColor: Colors.green.shade800,
+                  ),
                 ),
                 title: const Text('sunarya-thito').medium.small,
                 subtitle: const Text('m@gmail.com').xSmall.normal,

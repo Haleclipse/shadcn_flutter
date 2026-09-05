@@ -66,7 +66,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
             max: 100,
           ),
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         // Simple controls to demonstrate changing progress.
         Row(
           children: [
@@ -79,7 +79,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
               },
               child: const Text('Reset'),
             ),
-            const Gap(16),
+            const SizedBox(width: 16),
             PrimaryButton(
               onPressed: () {
                 // Defensive check so we don't go below 0.
@@ -92,7 +92,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
               },
               child: const Text('Decrease by 10'),
             ),
-            const Gap(16),
+            const SizedBox(width: 16),
             PrimaryButton(
               onPressed: () {
                 // Defensive check so we don't go above 100.

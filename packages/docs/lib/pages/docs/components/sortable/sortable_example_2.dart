@@ -49,7 +49,9 @@ class _SortableExample2State extends State<SortableExample2> {
                   });
                 },
                 child: OutlinedContainer(
-                  padding: const EdgeInsets.all(12),
+                  theme: OutlinedContainerTheme(
+                    padding: const EdgeInsets.all(12),
+                  ),
                   child: Center(child: Text(names[i].data)),
                 ),
               ),

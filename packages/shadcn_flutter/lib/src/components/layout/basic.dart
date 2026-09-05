@@ -128,7 +128,7 @@ class BasicTheme extends ComponentThemeData {
 ///   trailing: Icon(LucideIcons.chevronRight),
 /// )
 /// ```
-class Basic extends StatelessWidget {
+class Basic extends StatelessWidget implements Styleable<BasicTheme> {
   /// Leading widget, typically an icon or avatar.
   final Widget? leading;
 
@@ -145,31 +145,44 @@ class Basic extends StatelessWidget {
   final Widget? trailing;
 
   /// Alignment for the [leading] widget.
+  @Deprecated('Use theme: BasicTheme(leadingAlignment: ...) instead.')
   final AlignmentGeometry? leadingAlignment;
 
   /// Alignment for the [trailing] widget.
+  @Deprecated('Use theme: BasicTheme(trailingAlignment: ...) instead.')
   final AlignmentGeometry? trailingAlignment;
 
   /// Alignment for the [title] widget.
+  @Deprecated('Use theme: BasicTheme(titleAlignment: ...) instead.')
   final AlignmentGeometry? titleAlignment;
 
   /// Alignment for the [subtitle] widget.
+  @Deprecated('Use theme: BasicTheme(subtitleAlignment: ...) instead.')
   final AlignmentGeometry? subtitleAlignment;
 
   /// Alignment for the [content] widget.
+  @Deprecated('Use theme: BasicTheme(contentAlignment: ...) instead.')
   final AlignmentGeometry? contentAlignment;
 
   /// Spacing between content elements (default: 16).
+  @Deprecated('Use theme: BasicTheme(contentSpacing: ...) instead.')
   final double? contentSpacing;
 
   /// Spacing between title and subtitle (default: 4).
+  @Deprecated('Use theme: BasicTheme(titleSpacing: ...) instead.')
   final double? titleSpacing;
 
   /// Main axis alignment for the overall layout.
+  @Deprecated('Use theme: BasicTheme(mainAxisAlignment: ...) instead.')
   final MainAxisAlignment? mainAxisAlignment;
 
   /// Padding around the entire widget.
+  @Deprecated('Use theme: BasicTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final BasicTheme? theme;
 
   /// Creates a [Basic] layout widget.
   const Basic({
@@ -188,6 +201,7 @@ class Basic extends StatelessWidget {
     this.titleSpacing, //4
     this.mainAxisAlignment,
     this.padding,
+    this.theme,
   });
 
   @override
@@ -197,7 +211,7 @@ class Basic extends StatelessWidget {
     final densityGap = theme.density.baseGap * scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * scaling;
-    final compTheme = ComponentTheme.maybeOf<BasicTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<BasicTheme>(context);
     final padding = styleValue(
       widgetValue: this.padding,
       themeValue: compTheme?.padding,
@@ -317,7 +331,7 @@ class Basic extends StatelessWidget {
 ///   subtitle: Text('Custom styled subtitle', style: myStyle),
 /// )
 /// ```
-class BasicLayout extends StatelessWidget {
+class BasicLayout extends StatelessWidget implements Styleable<BasicTheme> {
   /// Leading widget, typically an icon or avatar.
   final Widget? leading;
 
@@ -334,28 +348,39 @@ class BasicLayout extends StatelessWidget {
   final Widget? trailing;
 
   /// Alignment for the [leading] widget.
+  @Deprecated('Use theme: BasicTheme(leadingAlignment: ...) instead.')
   final AlignmentGeometry? leadingAlignment;
 
   /// Alignment for the [trailing] widget.
+  @Deprecated('Use theme: BasicTheme(trailingAlignment: ...) instead.')
   final AlignmentGeometry? trailingAlignment;
 
   /// Alignment for the [title] widget.
+  @Deprecated('Use theme: BasicTheme(titleAlignment: ...) instead.')
   final AlignmentGeometry? titleAlignment;
 
   /// Alignment for the [subtitle] widget.
+  @Deprecated('Use theme: BasicTheme(subtitleAlignment: ...) instead.')
   final AlignmentGeometry? subtitleAlignment;
 
   /// Alignment for the [content] widget.
+  @Deprecated('Use theme: BasicTheme(contentAlignment: ...) instead.')
   final AlignmentGeometry? contentAlignment;
 
   /// Spacing between content elements.
+  @Deprecated('Use theme: BasicTheme(contentSpacing: ...) instead.')
   final double? contentSpacing;
 
   /// Spacing between title and subtitle.
+  @Deprecated('Use theme: BasicTheme(titleSpacing: ...) instead.')
   final double? titleSpacing;
 
   /// Size constraints for the layout.
   final BoxConstraints? constraints;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final BasicTheme? theme;
 
   /// Creates a [BasicLayout] widget.
   const BasicLayout({
@@ -373,13 +398,14 @@ class BasicLayout extends StatelessWidget {
     this.contentSpacing,
     this.titleSpacing,
     this.constraints,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<BasicTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<BasicTheme>(context);
     final contentSpacing = styleValue(
       widgetValue: this.contentSpacing,
       themeValue: compTheme?.contentSpacing,

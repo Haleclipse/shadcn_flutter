@@ -122,7 +122,8 @@ class AutoCompleteTheme extends ComponentThemeData {
 ///   ),
 /// )
 /// ```
-class AutoComplete extends StatefulWidget {
+class AutoComplete extends StatefulWidget
+    implements Styleable<AutoCompleteTheme> {
   /// List of suggestions to display in the autocomplete popover.
   ///
   /// When non-empty, triggers the popover to appear with selectable options.
@@ -141,6 +142,7 @@ class AutoComplete extends StatefulWidget {
   ///
   /// Overrides the theme default. Controls maximum/minimum dimensions of the
   /// suggestion list. When null, uses theme value or framework default.
+  @Deprecated('Use theme: AutoCompleteTheme(popoverConstraints: ...) instead.')
   final BoxConstraints? popoverConstraints;
 
   /// Overrides the [OverlayConfiguration] used to present the suggestion
@@ -152,12 +154,14 @@ class AutoComplete extends StatefulWidget {
   /// Whether the suggestion popover may adapt to a different presentation on
   /// mobile platforms (see [showOverlay]'s `adaptive` parameter). Defaults to
   /// `false` — the suggestion popup should always be a real anchored popover.
+  @Deprecated('Use theme: AutoCompleteTheme(adaptiveOverlay: ...) instead.')
   final bool? adaptiveOverlay;
 
   /// Text replacement strategy when a suggestion is selected.
   ///
   /// Overrides the theme default. Controls how selected suggestions modify
   /// the text field content. When null, uses theme or [AutoCompleteMode.replaceWord].
+  @Deprecated('Use theme: AutoCompleteTheme(mode: ...) instead.')
   final AutoCompleteMode? mode;
 
   /// Function to customize suggestion text before application.
@@ -166,6 +170,10 @@ class AutoComplete extends StatefulWidget {
   /// text inserted into the field. Useful for adding prefixes, suffixes, or
   /// formatting. Defaults to returning the suggestion unchanged.
   final AutoCompleteCompleter completer;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AutoCompleteTheme? theme;
 
   /// Creates an [AutoComplete] widget.
   ///
@@ -200,6 +208,7 @@ class AutoComplete extends StatefulWidget {
     this.adaptiveOverlay,
     this.mode,
     this.completer = _defaultCompleter,
+    this.theme,
   });
 
   @override
@@ -291,7 +300,8 @@ class _AutoCompleteState extends State<AutoComplete> {
   bool _suppressReopen = false;
 
   AutoCompleteMode get _mode {
-    final compTheme = ComponentTheme.maybeOf<AutoCompleteTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AutoCompleteTheme>(context);
     return styleValue(
       widgetValue: widget.mode,
       themeValue: compTheme?.mode,
@@ -334,7 +344,8 @@ class _AutoCompleteState extends State<AutoComplete> {
     if (_popoverController.hasOpenOverlay || !allowOpen) {
       return;
     }
-    final compTheme = ComponentTheme.maybeOf<AutoCompleteTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AutoCompleteTheme>(context);
     _selectedIndex.value = -1;
     final overlayConfiguration =
         widget.overlayConfiguration ??
@@ -355,7 +366,8 @@ class _AutoCompleteState extends State<AutoComplete> {
       builder: (context) {
         final theme = Theme.of(context);
         final densityGap = theme.density.baseGap * theme.scaling;
-        final compTheme = ComponentTheme.maybeOf<AutoCompleteTheme>(context);
+        final compTheme =
+            widget.theme ?? ComponentTheme.maybeOf<AutoCompleteTheme>(context);
         final popoverConstraints = styleValue<BoxConstraints>(
           widgetValue: widget.popoverConstraints,
           themeValue: compTheme?.popoverConstraints,
@@ -365,7 +377,7 @@ class _AutoCompleteState extends State<AutoComplete> {
           child: ConstrainedBox(
             constraints: popoverConstraints,
             child: SurfaceCard(
-              padding: EdgeInsets.all(densityGap * 0.5),
+              theme: CardTheme(padding: EdgeInsets.all(densityGap * 0.5)),
               child: AnimatedBuilder(
                 animation: Listenable.merge([_suggestions, _selectedIndex]),
                 builder: (context, child) {

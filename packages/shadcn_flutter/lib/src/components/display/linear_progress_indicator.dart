@@ -82,13 +82,15 @@ class LinearProgressIndicatorTheme extends ComponentThemeData {
   }) {
     return LinearProgressIndicatorTheme(
       color: color == null ? this.color : color(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       minHeight: minHeight == null ? this.minHeight : minHeight(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       showSparks: showSparks == null ? this.showSparks : showSparks(),
-      disableAnimation:
-          disableAnimation == null ? this.disableAnimation : disableAnimation(),
+      disableAnimation: disableAnimation == null
+          ? this.disableAnimation
+          : disableAnimation(),
     );
   }
 
@@ -106,13 +108,13 @@ class LinearProgressIndicatorTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        color,
-        backgroundColor,
-        minHeight,
-        borderRadius,
-        showSparks,
-        disableAnimation,
-      );
+    color,
+    backgroundColor,
+    minHeight,
+    borderRadius,
+    showSparks,
+    disableAnimation,
+  );
 }
 
 /// Duration constant for indeterminate linear progress animation cycle.
@@ -155,7 +157,8 @@ const int _kIndeterminateLinearDuration = 1800;
 ///   minHeight: 6.0,
 /// );
 /// ```
-class LinearProgressIndicator extends StatelessWidget {
+class LinearProgressIndicator extends StatelessWidget
+    implements Styleable<LinearProgressIndicatorTheme> {
   /// Animation curve constants for indeterminate progress motion.
   ///
   /// These curves define the precise timing and easing for the dual-line
@@ -191,37 +194,57 @@ class LinearProgressIndicator extends StatelessWidget {
   ///
   /// Type: `Color?`. If null, uses theme background color or semi-transparent
   /// version of progress color. Overrides theme configuration.
+  @Deprecated(
+    'Use theme: LinearProgressIndicatorTheme(backgroundColor: ...) instead.',
+  )
   final Color? backgroundColor;
 
   /// The minimum height of the progress indicator.
   ///
   /// Type: `double?`. If null, uses theme minimum height or 2.0 scaled
   /// by theme scaling factor. Overrides theme configuration.
+  @Deprecated(
+    'Use theme: LinearProgressIndicatorTheme(minHeight: ...) instead.',
+  )
   final double? minHeight;
 
   /// The primary color of the progress fill.
   ///
   /// Type: `Color?`. If null, uses theme primary color. Applied to both
   /// progress segments in indeterminate mode. Overrides theme configuration.
+  @Deprecated('Use theme: LinearProgressIndicatorTheme(color: ...) instead.')
   final Color? color;
 
   /// The border radius of the progress container.
   ///
   /// Type: `BorderRadiusGeometry?`. If null, uses BorderRadius.zero.
   /// Applied via [ClipRRect] to both track and progress elements.
+  @Deprecated(
+    'Use theme: LinearProgressIndicatorTheme(borderRadius: ...) instead.',
+  )
   final BorderRadiusGeometry? borderRadius;
 
   /// Whether to display spark effects at the progress head.
   ///
   /// Type: `bool?`. If null, defaults to false. Shows radial gradient
   /// spark effect at the leading edge for enhanced visual feedback.
+  @Deprecated(
+    'Use theme: LinearProgressIndicatorTheme(showSparks: ...) instead.',
+  )
   final bool? showSparks;
 
   /// Whether to disable smooth progress animations.
   ///
   /// Type: `bool?`. If null, defaults to false. When true, disables
   /// [AnimatedValueBuilder] for instant progress changes.
+  @Deprecated(
+    'Use theme: LinearProgressIndicatorTheme(disableAnimation: ...) instead.',
+  )
   final bool? disableAnimation;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final LinearProgressIndicatorTheme? theme;
 
   /// Creates a [LinearProgressIndicator].
   ///
@@ -257,6 +280,7 @@ class LinearProgressIndicator extends StatelessWidget {
     this.borderRadius,
     this.showSparks,
     this.disableAnimation,
+    this.theme,
   });
 
   @override

@@ -185,7 +185,8 @@ class CollapsibleTheme extends ComponentThemeData {
 /// ```
 ///
 /// For more information, visit: https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible
-class Collapsible extends StatefulWidget {
+class Collapsible extends StatefulWidget
+    implements Styleable<CollapsibleTheme> {
   /// The child widgets to display in the collapsible container.
   ///
   /// Typically includes a [CollapsibleTrigger] as the first child, followed by
@@ -205,6 +206,10 @@ class Collapsible extends StatefulWidget {
   /// widget is responsible for managing the expansion state. Called with the
   /// current expansion state when the user triggers a state change.
   final ValueChanged<bool>? onExpansionChanged;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CollapsibleTheme? theme;
 
   /// Creates a [Collapsible] widget with the specified children.
   ///
@@ -250,6 +255,7 @@ class Collapsible extends StatefulWidget {
     required this.children,
     this.isExpanded,
     this.onExpansionChanged,
+    this.theme,
   });
 
   @override
@@ -289,7 +295,8 @@ class CollapsibleState extends State<Collapsible> {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<CollapsibleTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<CollapsibleTheme>(context);
 
     return Data.inherit(
       data: CollapsibleStateData(
@@ -367,13 +374,18 @@ class CollapsibleStateData {
 ///   ),
 /// );
 /// ```
-class CollapsibleTrigger extends StatelessWidget {
+class CollapsibleTrigger extends StatelessWidget
+    implements Styleable<CollapsibleTheme> {
   /// The content widget to display within the trigger.
   ///
   /// Typically contains text, icons, or other UI elements that describe what
   /// will be expanded or collapsed. The child is automatically styled and
   /// positioned alongside the expand/collapse icon.
   final Widget child;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CollapsibleTheme? theme;
 
   /// Creates a [CollapsibleTrigger] with the specified child content.
   ///
@@ -392,7 +404,7 @@ class CollapsibleTrigger extends StatelessWidget {
   ///   child: Text('Click to toggle content'),
   /// );
   /// ```
-  const CollapsibleTrigger({super.key, required this.child});
+  const CollapsibleTrigger({super.key, required this.child, this.theme});
 
   @override
   Widget build(BuildContext context) {
@@ -402,13 +414,14 @@ class CollapsibleTrigger extends StatelessWidget {
     final densityContentPadding = theme.density.baseContentPadding * scaling;
     final state = Data.of<CollapsibleStateData>(context);
 
-    final compTheme = ComponentTheme.maybeOf<CollapsibleTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<CollapsibleTheme>(context);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Expanded(child: child.small().semiBold()),
-        Gap(compTheme?.iconGap ?? densityGap * 2),
+        SizedBox(width: compTheme?.iconGap ?? densityGap * 2),
         GhostButton(
           onPressed: state.handleTap,
           child: Icon(

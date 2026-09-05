@@ -110,7 +110,7 @@ class _SliderExample2State extends State<SliderExample2> {
             });
           },
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         // Display the current ranged values below the slider.
         Text('Value: ${value.start} - ${value.end}'),
       ],
@@ -150,7 +150,7 @@ class _SliderExample3State extends State<SliderExample3> {
             });
           },
         ),
-        const Gap(16),
+        const SizedBox(height: 16),
         // Show the current numeric value.
         Text('Value: ${value.value}'),
       ],

@@ -110,7 +110,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
                 ),
               ],
             ),
-            const Gap(16),
+            const SizedBox(height: 16),
             Calendar(
               value: _value,
               view: _view,
@@ -185,7 +185,7 @@ class _CalendarExample2State extends State<CalendarExample2> {
                 ),
               ],
             ),
-            const Gap(16),
+            const SizedBox(height: 16),
             Calendar(
               value: _value,
               view: _view,
@@ -260,7 +260,7 @@ class _CalendarExample3State extends State<CalendarExample3> {
                 ),
               ],
             ),
-            const Gap(16),
+            const SizedBox(height: 16),
             Calendar(
               value: _value,
               view: _view,
@@ -335,7 +335,7 @@ class _CalendarExample4State extends State<CalendarExample4> {
                 ),
               ],
             ),
-            const Gap(16),
+            const SizedBox(height: 16),
             Calendar(
               value: _value,
               view: _view,

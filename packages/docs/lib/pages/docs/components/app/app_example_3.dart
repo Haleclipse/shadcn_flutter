@@ -10,44 +10,36 @@ class AppExample3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShadcnApp.router(
-      routerConfig: GoRouter(routes: [
-        GoRoute(
-          path: '/',
-          // Home page with AppBar and greeting text.
-          builder: (context, state) => const Scaffold(
-            headers: [
-              AppBar(
-                title: Text('Shadcn App Example with GoRouter'),
+      routerConfig: GoRouter(
+        routes: [
+          GoRoute(
+            path: '/',
+            // Home page with AppBar and greeting text.
+            builder: (context, state) => const Scaffold(
+              headers: [
+                AppBar(title: Text('Shadcn App Example with GoRouter')),
+                Divider(),
+              ],
+              child: Center(
+                child: Text('Hello, Shadcn Flutter with GoRouter!'),
               ),
-              Divider(),
-            ],
-            child: Center(
-              child: Text('Hello, Shadcn Flutter with GoRouter!'),
             ),
           ),
-        ),
-        GoRoute(
-          path: '/about',
-          // About page demonstrates a second route.
-          builder: (context, state) => const Scaffold(
-            headers: [
-              AppBar(
-                title: Text('About Page'),
-              ),
-              Divider(),
-            ],
-            child: Center(
-              child: Text('This is the about page.'),
+          GoRoute(
+            path: '/about',
+            // About page demonstrates a second route.
+            builder: (context, state) => const Scaffold(
+              headers: [
+                AppBar(title: Text('About Page')),
+                Divider(),
+              ],
+              child: Center(child: Text('This is the about page.')),
             ),
           ),
-        ),
-      ]),
-      theme: const ThemeData(
-        colorScheme: ColorSchemes.lightSlate,
+        ],
       ),
-      darkTheme: const ThemeData.dark(
-        colorScheme: ColorSchemes.darkSlate,
-      ),
+      theme: const ThemeData(colorScheme: ColorSchemes.lightSlate),
+      darkTheme: const ThemeData.dark(colorScheme: ColorSchemes.darkSlate),
     );
   }
 }

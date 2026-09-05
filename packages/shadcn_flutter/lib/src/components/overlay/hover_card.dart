@@ -152,29 +152,35 @@ class HoverCardTheme extends ComponentThemeData {
 ///   child: Icon(LucideIcons.circleHelp),
 /// )
 /// ```
-class HoverCard extends StatefulWidget {
+class HoverCard extends StatefulWidget implements Styleable<HoverCardTheme> {
   /// The child widget that triggers the hover card.
   final Widget child;
 
   /// Duration to wait before hiding after mouse exit.
+  @Deprecated('Use theme: HoverCardTheme(debounce: ...) instead.')
   final Duration? debounce;
 
   /// Duration to wait before showing after mouse enter.
+  @Deprecated('Use theme: HoverCardTheme(wait: ...) instead.')
   final Duration? wait;
 
   /// Builder function that creates the hover card content.
   final WidgetBuilder hoverBuilder;
 
   /// Alignment of the popover relative to its anchor.
+  @Deprecated('Use theme: HoverCardTheme(popoverAlignment: ...) instead.')
   final AlignmentGeometry? popoverAlignment;
 
   /// Alignment point on the anchor widget.
+  @Deprecated('Use theme: HoverCardTheme(anchorAlignment: ...) instead.')
   final AlignmentGeometry? anchorAlignment;
 
   /// Offset of the popover from its calculated position.
+  @Deprecated('Use theme: HoverCardTheme(popoverOffset: ...) instead.')
   final Offset? popoverOffset;
 
   /// Hit test behavior for mouse interactions.
+  @Deprecated('Use theme: HoverCardTheme(behavior: ...) instead.')
   final HitTestBehavior? behavior;
 
   /// Controller to programmatically manage the popover.
@@ -185,6 +191,10 @@ class HoverCard extends StatefulWidget {
   /// `false` — see [Tooltip.adaptiveOverlay]; a hover card is presented via
   /// [TooltipConfiguration] just like [Tooltip].
   final bool adaptiveOverlay;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final HoverCardTheme? theme;
 
   /// Creates a [HoverCard].
   ///
@@ -222,6 +232,7 @@ class HoverCard extends StatefulWidget {
     this.behavior,
     this.controller,
     this.adaptiveOverlay = false,
+    this.theme,
   });
 
   @override
@@ -257,7 +268,8 @@ class _HoverCardState extends State<HoverCard> {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<HoverCardTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<HoverCardTheme>(context);
     final debounce = styleValue(
       widgetValue: widget.debounce,
       themeValue: compTheme?.debounce,

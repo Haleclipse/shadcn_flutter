@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormExample2 extends StatefulWidget {
   const FormExample2({super.key});
@@ -27,9 +28,11 @@ class _FormExample2State extends State<FormExample2> {
           String? confirmPassword = _confirmPasswordKey[values];
           CheckboxState? agree = _agreeKey[values];
           // or just encode the whole map to JSON directly
-          String json = jsonEncode(values.map((key, value) {
-            return MapEntry(key.key, value);
-          }));
+          String json = jsonEncode(
+            values.map((key, value) {
+              return MapEntry(key.key, value);
+            }),
+          );
           showOverlay(
             context,
             DialogConfiguration(),
@@ -72,7 +75,7 @@ class _FormExample2State extends State<FormExample2> {
                   // Show validation messages when the value changes and after submit.
                   showErrors: const {
                     FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    FormValidationMode.submitted,
                   },
                   child: const TextField(),
                 ),
@@ -83,45 +86,46 @@ class _FormExample2State extends State<FormExample2> {
                   // Same validation visibility behavior for password.
                   showErrors: const {
                     FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    FormValidationMode.submitted,
                   },
-                  child: const TextField(
-                    obscureText: true,
-                  ),
+                  child: const TextField(obscureText: true),
                 ),
                 FormField(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
-                  validator: CompareWith.equal(_passwordKey,
-                      message: 'Passwords do not match'),
+                  validator: CompareWith.equal(
+                    _passwordKey,
+                    message: 'Passwords do not match',
+                  ),
                   // Mirror validation visibility on confirm.
                   showErrors: const {
                     FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    FormValidationMode.submitted,
                   },
-                  child: const TextField(
-                    obscureText: true,
-                  ),
+                  child: const TextField(obscureText: true),
                 ),
                 FormInline(
                   key: _agreeKey,
                   label: const Text('I agree to the terms and conditions'),
-                  validator: const CompareTo.equal(CheckboxState.checked,
-                      message: 'You must agree to the terms and conditions'),
+                  validator: const CompareTo.equal(
+                    CheckboxState.checked,
+                    message: 'You must agree to the terms and conditions',
+                  ),
                   // Inline field with a trailing checkbox and same visibility behavior.
                   showErrors: const {
                     FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    FormValidationMode.submitted,
                   },
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: Checkbox(
-                        state: state,
-                        onChanged: (value) {
-                          setState(() {
-                            state = value;
-                          });
-                        }),
+                      state: state,
+                      onChanged: (value) {
+                        setState(() {
+                          state = value;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -134,7 +138,7 @@ class _FormExample2State extends State<FormExample2> {
                   child: const Text('Submit'),
                 );
               },
-            )
+            ),
           ],
         ),
       ),

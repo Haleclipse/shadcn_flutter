@@ -14,24 +14,26 @@ class AvatarGroupTile extends StatelessWidget implements IComponentPage {
       title: 'Avatar Group',
       scale: 1.5,
       center: true,
-      example: AvatarGroup.toLeft(children: [
-        Avatar(
-          initials: Avatar.getInitials('sunarya-thito'),
-          backgroundColor: Colors.red,
-        ),
-        Avatar(
-          initials: Avatar.getInitials('sunarya-thito'),
-          backgroundColor: Colors.green,
-        ),
-        Avatar(
-          initials: Avatar.getInitials('sunarya-thito'),
-          backgroundColor: Colors.blue,
-        ),
-        Avatar(
-          initials: Avatar.getInitials('sunarya-thito'),
-          backgroundColor: Colors.yellow,
-        ),
-      ]),
+      example: AvatarGroup.toLeft(
+        children: [
+          Avatar(
+            initials: Avatar.getInitials('sunarya-thito'),
+            theme: AvatarTheme(backgroundColor: Colors.red),
+          ),
+          Avatar(
+            initials: Avatar.getInitials('sunarya-thito'),
+            theme: AvatarTheme(backgroundColor: Colors.green),
+          ),
+          Avatar(
+            initials: Avatar.getInitials('sunarya-thito'),
+            theme: AvatarTheme(backgroundColor: Colors.blue),
+          ),
+          Avatar(
+            initials: Avatar.getInitials('sunarya-thito'),
+            theme: AvatarTheme(backgroundColor: Colors.yellow),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates Table.textDirection. Flip the toggle to see the same table laid
 // out right-to-left: column 0 moves to the right edge, the frozen first column
@@ -31,13 +32,11 @@ class _TableExample4State extends State<TableExample4> {
             strokeAlign: BorderSide.strokeAlignCenter,
           ),
         ),
-        backgroundColor:
-            highlight ? WidgetStatePropertyAll(theme.colorScheme.muted) : null,
+        backgroundColor: highlight
+            ? WidgetStatePropertyAll(theme.colorScheme.muted)
+            : null,
       ),
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Text(text),
-      ),
+      child: Container(padding: const EdgeInsets.all(8), child: Text(text)),
     );
   }
 
@@ -110,7 +109,7 @@ class _TableExample4State extends State<TableExample4> {
                           'Credit Card',
                           '250.00',
                           'Verified',
-                          '2 hours ago'
+                          '2 hours ago',
                         ],
                         [
                           'INV002',
@@ -118,7 +117,7 @@ class _TableExample4State extends State<TableExample4> {
                           'PayPal',
                           '150.00',
                           'Pending',
-                          '1 day ago'
+                          '1 day ago',
                         ],
                         [
                           'INV003',
@@ -126,7 +125,7 @@ class _TableExample4State extends State<TableExample4> {
                           'Bank Transfer',
                           '350.00',
                           'Unverified',
-                          '1 week ago'
+                          '1 week ago',
                         ],
                         [
                           'INV004',
@@ -134,7 +133,7 @@ class _TableExample4State extends State<TableExample4> {
                           'Credit Card',
                           '450.00',
                           'Verified',
-                          '2 weeks ago'
+                          '2 weeks ago',
                         ],
                         [
                           'INV005',
@@ -142,7 +141,7 @@ class _TableExample4State extends State<TableExample4> {
                           'PayPal',
                           '550.00',
                           'Verified',
-                          '3 weeks ago'
+                          '3 weeks ago',
                         ],
                         [
                           'INV006',
@@ -150,7 +149,7 @@ class _TableExample4State extends State<TableExample4> {
                           'Bank Transfer',
                           '200.00',
                           'Pending',
-                          '1 month ago'
+                          '1 month ago',
                         ],
                       ])
                         TableRow(

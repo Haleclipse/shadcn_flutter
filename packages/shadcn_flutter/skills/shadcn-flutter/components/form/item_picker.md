@@ -457,7 +457,7 @@ class ItemPickerTile extends StatelessWidget implements IComponentPage {
         child: Column(
           children: [
             const Text('Select an item:').bold(),
-            const Gap(16),
+            const SizedBox(height: 16),
             Wrap(
               spacing: 8,
               runSpacing: 8,

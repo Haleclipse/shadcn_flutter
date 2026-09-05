@@ -85,41 +85,34 @@ class SkeletonTheme extends ComponentThemeData {
   @override
   int get hashCode =>
       Object.hash(duration, fromColor, toColor, enableSwitchAnimation);
+
+  @override
+  String toString() =>
+      'SkeletonTheme(duration: $duration, fromColor: $fromColor, toColor: $toColor, enableSwitchAnimation: $enableSwitchAnimation)';
 }
 
-/// A configuration layer that provides Skeletonizer setup with theme integration.
+/// Configures Skeletonizer to follow the shadcn theme.
 ///
-/// ShadcnSkeletonizerConfigLayer acts as a bridge between the shadcn theme system
-/// and the underlying Skeletonizer package, ensuring skeleton loading effects
-/// are consistent with the overall design system. This widget wraps content
-/// with properly configured skeleton animation settings.
+/// Bridges the shadcn theme system and the Skeletonizer package so skeleton
+/// loading effects match the rest of the design system. Resolves values from
+/// [SkeletonTheme] and falls back to defaults derived from the ambient
+/// [ThemeData] — the pulse runs between the primary color at 5% and 10% alpha.
 ///
-/// The component automatically resolves theme values from [SkeletonTheme] and
-/// applies appropriate defaults based on the current theme's color scheme and
-/// scaling factors. It creates a [SkeletonizerConfig] with [PulseEffect] for
-/// smooth, accessible loading animations.
+/// `ShadcnApp` does not install this itself; `shadcn_flutter` has no dependency
+/// on Skeletonizer. Wrap the app to make [SkeletonExtension] work everywhere:
 ///
-/// This is typically used internally by skeleton extension methods and should
-/// rarely be instantiated directly by application code.
-///
-/// Example:
 /// ```dart
-/// ShadcnSkeletonizerConfigLayer(
-///   theme: Theme.of(context),
-///   child: YourContentWidget(),
+/// ShadcnApp(
+///   surfaceBuilder: (context, child) => SkeletonizerLayer(child: child),
+///   home: const HomePage(),
 /// );
 /// ```
-class ShadcnSkeletonizerConfigLayer extends StatelessWidget {
-  /// The theme data used for skeleton configuration.
-  ///
-  /// Type: `ThemeData`, required. Provides color scheme, scaling factors,
-  /// and other design system values for skeleton appearance calculation.
-  final ThemeData theme;
-
-  /// The child widget to wrap with skeleton configuration.
-  ///
-  /// Type: `Widget`, required. The content that will have skeleton
-  /// configuration available through the widget tree.
+///
+/// Use `surfaceBuilder` rather than `builder` so the configuration also covers
+/// shadcn overlays — toasts, dialogs and popovers build outside `builder`.
+class SkeletonizerLayer extends StatelessWidget
+    implements Styleable<SkeletonTheme> {
+  /// The subtree that skeleton effects apply to.
   final Widget child;
 
   /// Override duration for the pulse animation cycle.
@@ -146,41 +139,34 @@ class ShadcnSkeletonizerConfigLayer extends StatelessWidget {
   /// behavior when toggling skeleton visibility.
   final bool? enableSwitchAnimation;
 
-  /// Creates a [ShadcnSkeletonizerConfigLayer].
-  ///
-  /// The [theme] and [child] parameters are required for proper skeleton
-  /// configuration and content wrapping. Override parameters allow for
-  /// fine-tuned control of skeleton appearance at the layer level.
-  ///
-  /// Parameters:
-  /// - [theme] (ThemeData, required): Theme for skeleton configuration calculation
-  /// - [child] (Widget, required): Content to wrap with skeleton configuration
-  /// - [duration] (Duration?, optional): Pulse animation duration override
-  /// - [fromColor] (Color?, optional): Pulse start color override
-  /// - [toColor] (Color?, optional): Pulse end color override
-  /// - [enableSwitchAnimation] (bool?, optional): Switch animation behavior override
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final SkeletonTheme? theme;
+
+  /// Creates a [SkeletonizerLayer] around [child].
   ///
   /// Example:
   /// ```dart
-  /// ShadcnSkeletonizerConfigLayer(
-  ///   theme: Theme.of(context),
-  ///   duration: Duration(milliseconds: 1200),
+  /// SkeletonizerLayer(
+  ///   duration: const Duration(milliseconds: 1200),
   ///   child: MyContentWidget(),
   /// );
   /// ```
-  const ShadcnSkeletonizerConfigLayer({
+  const SkeletonizerLayer({
     super.key,
-    required this.theme,
     required this.child,
     this.duration,
     this.fromColor,
     this.toColor,
     this.enableSwitchAnimation,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<SkeletonTheme>(context);
+    final theme = Theme.of(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<SkeletonTheme>(context);
     final durationValue = styleValue(
       widgetValue: duration,
       themeValue: compTheme?.duration,
@@ -229,6 +215,9 @@ class ShadcnSkeletonizerConfigLayer extends StatelessWidget {
 ///
 /// Methods automatically detect certain widget types (Avatar, Image) and apply
 /// appropriate skeleton handling to avoid common rendering issues.
+///
+/// Put a [SkeletonizerLayer] above the widgets these are used on so the pulse
+/// follows the shadcn theme.
 extension SkeletonExtension on Widget {
   /// Converts the widget to a skeleton suitable for sliver layouts.
   ///

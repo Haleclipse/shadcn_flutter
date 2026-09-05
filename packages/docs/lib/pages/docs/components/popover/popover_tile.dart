@@ -1,6 +1,7 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components/calendar/calendar_example_2.dart';
+import 'package:gap/gap.dart';
 
 class PopoverTile extends StatelessWidget implements IComponentPage {
   const PopoverTile({super.key});
@@ -20,7 +21,6 @@ class PopoverTile extends StatelessWidget implements IComponentPage {
           children: [
             DatePicker(
               value: DateTime.now(),
-              mode: PromptMode.popover,
               stateBuilder: (date) {
                 if (date.isAfter(DateTime.now())) {
                   return DateState.disabled;
@@ -28,6 +28,7 @@ class PopoverTile extends StatelessWidget implements IComponentPage {
                 return DateState.enabled;
               },
               onChanged: (value) {},
+              theme: DatePickerTheme(mode: PromptMode.popover),
             ),
             const Gap(4),
             const CalendarExample2(),

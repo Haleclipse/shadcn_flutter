@@ -168,7 +168,7 @@ class PopoverTile extends StatelessWidget implements IComponentPage {
               },
               onChanged: (value) {},
             ),
-            const Gap(4),
+            const SizedBox(height: 4),
             const CalendarExample2(),
           ],
         ),

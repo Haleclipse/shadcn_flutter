@@ -8,7 +8,8 @@ import 'misc.dart';
 /// Provides a labeled header row that toggles visibility of sub-items. Intended
 /// for hierarchical navigation structures, especially in vertical sidebars or
 /// rails.
-class NavigationCollapsible extends StatefulWidget {
+class NavigationCollapsible extends StatefulWidget
+    implements Styleable<TreeTheme> {
   /// Optional leading widget for the group header.
   final Widget? leading;
 
@@ -60,6 +61,10 @@ class NavigationCollapsible extends StatefulWidget {
   /// How to handle label overflow.
   final NavigationOverflow overflow;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TreeTheme? theme;
+
   /// Creates a [NavigationCollapsible].
   const NavigationCollapsible({
     super.key,
@@ -80,6 +85,7 @@ class NavigationCollapsible extends StatefulWidget {
     this.alignment,
     this.enabled,
     this.overflow = NavigationOverflow.marquee,
+    this.theme,
   });
 
   @override
@@ -138,7 +144,8 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
     final depth = [TreeNodeDepth(childIndex, childCount)];
-    final compTheme = ComponentTheme.maybeOf<TreeTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<TreeTheme>(context);
     final branchLine =
         widget.branchLine ?? compTheme?.branchLine ?? BranchLine.line;
     final guideIndex = branchLine is IndentGuideLine ? 1 : 0;
@@ -230,13 +237,13 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final trailing = hasChildren
         ? Hidden(
             hidden: !(data?.expanded ?? true),
-            direction: Axis.horizontal,
             // curve: Curves.easeInOut,
             duration: kDefaultDuration,
+            theme: HiddenTheme(direction: Axis.horizontal),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Gap(densityGap),
+                SizedBox(width: densityGap),
                 AnimatedRotation(
                   turns: _isExpanded ? 0.25 : 0.0,
                   duration: kDefaultDuration,
@@ -386,10 +393,9 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
         ClipRect(
           child: Hidden(
             hidden: !_isExpanded || !parentExpanded,
-            direction: Axis.vertical,
             // curve: Curves.easeInOut,
             duration: kDefaultDuration,
-            reverse: true,
+            theme: HiddenTheme(direction: Axis.vertical, reverse: true),
             child: childList,
           ),
         ),

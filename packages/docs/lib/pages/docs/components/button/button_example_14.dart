@@ -9,10 +9,7 @@ class ButtonExample14 extends StatelessWidget {
       children: [
         ButtonGroupItem(
           // ButtonGroupItem is optional, but allows for paint reordering on focused item
-          child: PrimaryButton(
-            child: const Text('Primary'),
-            onPressed: () {},
-          ),
+          child: PrimaryButton(child: const Text('Primary'), onPressed: () {}),
         ),
         ButtonGroupItem(
           child: SecondaryButton(
@@ -27,16 +24,10 @@ class ButtonExample14 extends StatelessWidget {
           ),
         ),
         ButtonGroupItem(
-          child: OutlineButton(
-            child: const Text('Outlined'),
-            onPressed: () {},
-          ),
+          child: OutlineButton(child: const Text('Outlined'), onPressed: () {}),
         ),
         ButtonGroupItem(
-          child: GhostButton(
-            child: const Text('Ghost'),
-            onPressed: () {},
-          ),
+          child: GhostButton(child: const Text('Ghost'), onPressed: () {}),
         ),
         ButtonGroupItem(
           child: IconButton.primary(

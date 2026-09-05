@@ -37,8 +37,9 @@ class StarRatingTheme extends ComponentThemeData {
   }) {
     return StarRatingTheme(
       activeColor: activeColor == null ? this.activeColor : activeColor(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       starSize: starSize == null ? this.starSize : starSize(),
       starSpacing: starSpacing == null ? this.starSpacing : starSpacing(),
     );
@@ -55,12 +56,8 @@ class StarRatingTheme extends ComponentThemeData {
   }
 
   @override
-  int get hashCode => Object.hash(
-        activeColor,
-        backgroundColor,
-        starSize,
-        starSpacing,
-      );
+  int get hashCode =>
+      Object.hash(activeColor, backgroundColor, starSize, starSpacing);
 }
 
 /// A controller for managing [StarRating] widget values programmatically.
@@ -295,16 +292,18 @@ class ControlledStarRating extends StatelessWidget
           step: step,
           direction: direction,
           max: max,
-          activeColor: activeColor,
-          backgroundColor: backgroundColor,
           starPoints: starPoints,
-          starSize: starSize,
-          starSpacing: starSpacing,
           starPointRounding: starPointRounding,
           starValleyRounding: starValleyRounding,
           starSquash: starSquash,
           starInnerRadiusRatio: starInnerRadiusRatio,
           starRotation: starRotation,
+          theme: StarRatingTheme(
+            activeColor: activeColor,
+            backgroundColor: backgroundColor,
+            starSize: starSize,
+            starSpacing: starSpacing,
+          ),
         );
       },
     );
@@ -351,7 +350,7 @@ class ControlledStarRating extends StatelessWidget
 ///   backgroundColor: Colors.grey[300],
 /// );
 /// ```
-class StarRating extends StatefulWidget {
+class StarRating extends StatefulWidget implements Styleable<StarRatingTheme> {
   /// The current rating value.
   ///
   /// Should be between `0` and [max]. Fractional values are supported.
@@ -381,11 +380,13 @@ class StarRating extends StatefulWidget {
   /// The color of filled star portions.
   ///
   /// If `null`, uses the theme's primary color.
+  @Deprecated('Use theme: StarRatingTheme(activeColor: ...) instead.')
   final Color? activeColor;
 
   /// The color of unfilled star portions.
   ///
   /// If `null`, uses a default background color from the theme.
+  @Deprecated('Use theme: StarRatingTheme(backgroundColor: ...) instead.')
   final Color? backgroundColor;
 
   /// The number of points per star.
@@ -396,11 +397,13 @@ class StarRating extends StatefulWidget {
   /// Override size of each star.
   ///
   /// If `null`, uses the default size from the theme.
+  @Deprecated('Use theme: StarRatingTheme(starSize: ...) instead.')
   final double? starSize;
 
   /// Override spacing between stars.
   ///
   /// If `null`, uses the default spacing from the theme.
+  @Deprecated('Use theme: StarRatingTheme(starSpacing: ...) instead.')
   final double? starSpacing;
 
   /// Rounding radius for star points.
@@ -438,6 +441,10 @@ class StarRating extends StatefulWidget {
   /// [onChanged] is provided.
   final bool? enabled;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final StarRatingTheme? theme;
+
   /// Creates a [StarRating].
   const StarRating({
     super.key,
@@ -457,6 +464,7 @@ class StarRating extends StatefulWidget {
     this.starInnerRadiusRatio,
     this.starRotation,
     this.enabled,
+    this.theme,
   });
 
   @override
@@ -490,15 +498,18 @@ class _StarRatingState extends State<StarRating>
   Widget _buildStar(BuildContext context, [bool focusBorder = false]) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<StarRatingTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<StarRatingTheme>(context);
     var starValleyRounding = widget.starValleyRounding ?? 0.0;
     var starSquash = widget.starSquash ?? 0.0;
     var starInnerRadiusRatio = widget.starInnerRadiusRatio ?? 0.4;
     var starRotation = widget.starRotation ?? 0.0;
-    var starSize = styleValue(
-            widgetValue: widget.starSize,
-            themeValue: compTheme?.starSize,
-            defaultValue: 24.0) *
+    var starSize =
+        styleValue(
+          widgetValue: widget.starSize,
+          themeValue: compTheme?.starSize,
+          defaultValue: 24.0,
+        ) *
         scaling;
     return Container(
       width: starSize,
@@ -516,7 +527,8 @@ class _StarRatingState extends State<StarRating>
               ? BorderSide(
                   color: theme.colorScheme.ring,
                   width: 2.0 * scaling,
-                  strokeAlign: BorderSide.strokeAlignOutside)
+                  strokeAlign: BorderSide.strokeAlignOutside,
+                )
               : BorderSide.none,
         ),
       ),
@@ -535,25 +547,30 @@ class _StarRatingState extends State<StarRating>
       builder: (context, roundedValue, child) {
         final theme = Theme.of(context);
         final scaling = theme.scaling;
-        final compTheme = ComponentTheme.maybeOf<StarRatingTheme>(context);
+        final compTheme =
+            widget.theme ?? ComponentTheme.maybeOf<StarRatingTheme>(context);
         var starSize = styleValue(
-            widgetValue: widget.starSize,
-            themeValue: compTheme?.starSize,
-            defaultValue: 24.0 * scaling);
+          widgetValue: widget.starSize,
+          themeValue: compTheme?.starSize,
+          defaultValue: 24.0 * scaling,
+        );
         var starSpacing = styleValue(
-            widgetValue: widget.starSpacing,
-            themeValue: compTheme?.starSpacing,
-            defaultValue: 5.0 * scaling);
+          widgetValue: widget.starSpacing,
+          themeValue: compTheme?.starSpacing,
+          defaultValue: 5.0 * scaling,
+        );
         var activeColor = styleValue(
-            widgetValue: widget.activeColor,
-            themeValue: compTheme?.activeColor,
-            defaultValue: _enabled
-                ? theme.colorScheme.primary
-                : theme.colorScheme.mutedForeground);
+          widgetValue: widget.activeColor,
+          themeValue: compTheme?.activeColor,
+          defaultValue: _enabled
+              ? theme.colorScheme.primary
+              : theme.colorScheme.mutedForeground,
+        );
         var backgroundColor = styleValue(
-            widgetValue: widget.backgroundColor,
-            themeValue: compTheme?.backgroundColor,
-            defaultValue: theme.colorScheme.muted);
+          widgetValue: widget.backgroundColor,
+          themeValue: compTheme?.backgroundColor,
+          defaultValue: theme.colorScheme.muted,
+        );
         return FocusableActionDetector(
           enabled: _enabled,
           mouseCursor: _enabled
@@ -572,17 +589,20 @@ class _StarRatingState extends State<StarRating>
             }
           },
           shortcuts: {
-            LogicalKeySet(LogicalKeyboardKey.arrowRight):
-                IncreaseStarIntent(widget.step),
-            LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-                DecreaseStarIntent(widget.step),
+            LogicalKeySet(LogicalKeyboardKey.arrowRight): IncreaseStarIntent(
+              widget.step,
+            ),
+            LogicalKeySet(LogicalKeyboardKey.arrowLeft): DecreaseStarIntent(
+              widget.step,
+            ),
           },
           actions: {
             IncreaseStarIntent: CallbackAction<IncreaseStarIntent>(
               onInvoke: (intent) {
                 if (widget.onChanged != null) {
                   widget.onChanged!(
-                      (roundedValue + intent.step).clamp(0.0, widget.max));
+                    (roundedValue + intent.step).clamp(0.0, widget.max),
+                  );
                 }
                 return;
               },
@@ -591,7 +611,8 @@ class _StarRatingState extends State<StarRating>
               onInvoke: (intent) {
                 if (widget.onChanged != null) {
                   widget.onChanged!(
-                      (roundedValue - intent.step).clamp(0.0, widget.max));
+                    (roundedValue - intent.step).clamp(0.0, widget.max),
+                  );
                 }
                 return;
               },
@@ -620,10 +641,12 @@ class _StarRatingState extends State<StarRating>
                 if (widget.onChanged == null) return;
                 double totalStarSize =
                     starSize + (starSpacing * (widget.max.ceil() - 1));
-                double progress =
-                    (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
-                double newValue =
-                    (progress * widget.max).clamp(0.0, widget.max);
+                double progress = (details.localPosition.dx / totalStarSize)
+                    .clamp(0.0, 1.0);
+                double newValue = (progress * widget.max).clamp(
+                  0.0,
+                  widget.max,
+                );
                 widget.onChanged!(newValue);
               },
               onPanUpdate: (details) {
@@ -632,10 +655,12 @@ class _StarRatingState extends State<StarRating>
                 int totalStars = widget.max.ceil();
                 double totalStarSize =
                     starSize * totalStars + (starSpacing * (totalStars - 1));
-                double progress =
-                    (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
-                double newValue =
-                    (progress * widget.max).clamp(0.0, widget.max);
+                double progress = (details.localPosition.dx / totalStarSize)
+                    .clamp(0.0, 1.0);
+                double newValue = (progress * widget.max).clamp(
+                  0.0,
+                  widget.max,
+                );
                 setState(() {
                   _changingValue = newValue;
                 });
@@ -667,10 +692,7 @@ class _StarRatingState extends State<StarRating>
                         ShaderMask(
                           shaderCallback: (bounds) {
                             return LinearGradient(
-                              colors: [
-                                activeColor,
-                                backgroundColor,
-                              ],
+                              colors: [activeColor, backgroundColor],
                               stops: [
                                 (roundedValue - i).clamp(0.0, 1.0),
                                 (roundedValue - i).clamp(0.0, 1.0),
