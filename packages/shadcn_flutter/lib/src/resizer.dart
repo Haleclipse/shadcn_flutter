@@ -546,7 +546,10 @@ class Resizer {
             collapsibleSize != null &&
             !nextItem.newCollapsed) {
           var minSize = nextItem.min;
-          var threshold = (collapsibleSize - minSize) * collapseRatio;
+          // Mirrored for this direction: _couldNotBorrow is positive here, so
+          // the threshold has to be too, or the drag collapses the pane the
+          // moment it reaches its minimum instead of resisting first.
+          var threshold = (minSize - collapsibleSize) * collapseRatio;
           if (_couldNotBorrow > threshold) {
             var toBorrow = minSize - collapsibleSize;
             var borrowed = _borrowSize(index - 1, toBorrow, 0, -1);
@@ -570,8 +573,12 @@ class Resizer {
       int toCheck = index - 1;
       for (; toCheck >= 0; toCheck--) {
         final item = _getItem(toCheck);
-        double? collapsibleSize = item?.collapsedSize;
-        if (item != null && item.newCollapsed && collapsibleSize != null) {
+        // Only a pane next to this divider can be expanded by this drag.
+        // Without this the scan walks past the panes in between and
+        // expands a collapsed pane on the far side of the panel.
+        if (item == null || !item.newCollapsed) break;
+        double? collapsibleSize = item.collapsedSize;
+        if (collapsibleSize != null) {
           double minSize = item.min;
           double threshold = (minSize - collapsibleSize) * expandRatio;
           if (_couldNotBorrow >= threshold) {
@@ -594,8 +601,12 @@ class Resizer {
       int toCheck = index;
       for (; toCheck < items.length; toCheck++) {
         final item = _getItem(toCheck);
-        double? collapsibleSize = item?.collapsedSize;
-        if (item != null && collapsibleSize != null && item.newCollapsed) {
+        // Only a pane next to this divider can be expanded by this drag.
+        // Without this the scan walks past the panes in between and
+        // expands a collapsed pane on the far side of the panel.
+        if (item == null || !item.newCollapsed) break;
+        double? collapsibleSize = item.collapsedSize;
+        if (collapsibleSize != null) {
           double minSize = item.min;
           double threshold = (collapsibleSize - minSize) * expandRatio;
           if (_couldNotBorrow <= threshold) {
