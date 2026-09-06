@@ -19,8 +19,7 @@ class SwitchExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'switch',
-      description:
-          'A switch is a visual toggle between two mutually exclusive states — on and off.',
+      description: 'A switch is a visual toggle between two mutually exclusive states — on and off.',
       displayName: 'Switch',
       children: [
         WidgetUsageExample(
@@ -84,10 +83,7 @@ class SwitchTile extends StatelessWidget implements IComponentPage {
       title: 'Switch',
       scale: 2,
       center: true,
-      example: Switch(
-        value: true,
-        onChanged: (value) {},
-      ),
+      example: Switch(value: true, onChanged: (value) {}),
     );
   }
 }
@@ -116,3 +112,4 @@ class SwitchTile extends StatelessWidget implements IComponentPage {
 | `activeThumbColor` | `Color?` | Color of the thumb (knob) when the switch is active.  If `null`, uses a default thumb color. |
 | `inactiveThumbColor` | `Color?` | Color of the thumb (knob) when the switch is inactive.  If `null`, uses a default thumb color. |
 | `borderRadius` | `BorderRadiusGeometry?` | Border radius for the switch track.  If `null`, uses the default border radius from the theme. |
+| `theme` | `SwitchTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

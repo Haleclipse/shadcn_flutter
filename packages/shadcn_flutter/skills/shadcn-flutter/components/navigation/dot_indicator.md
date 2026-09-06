@@ -19,14 +19,12 @@ class DotIndicatorExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'dot_indicator',
-      description:
-          'A widget that displays a series of dots to indicate the current index in a list of items.',
+      description: 'A widget that displays a series of dots to indicate the current index in a list of items.',
       displayName: 'Dot Indicator',
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/dot_indicator/dot_indicator_example_1.dart',
+          path: 'lib/pages/docs/components/dot_indicator/dot_indicator_example_1.dart',
           child: DotIndicatorExample1(),
         ),
       ],
@@ -54,13 +52,14 @@ class _DotIndicatorExample1State extends State<DotIndicatorExample1> {
     // A simple pager-like dot indicator with 5 steps.
     // Tap/click updates the current index via onChanged.
     return DotIndicator(
-        index: _index,
-        length: 5,
-        onChanged: (index) {
-          setState(() {
-            _index = index;
-          });
+      index: _index,
+      length: 5,
+      onChanged: (index) {
+        setState(() {
+          _index = index;
         });
+      },
+    );
   }
 }
 
@@ -70,6 +69,7 @@ class _DotIndicatorExample1State extends State<DotIndicatorExample1> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DotIndicatorTile extends StatelessWidget implements IComponentPage {
   const DotIndicatorTile({super.key});
@@ -88,7 +88,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
         child: Column(
           children: [
             const Text('Page Indicators:').bold(),
-            const SizedBox(height: 16),
+            const Gap(16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -100,7 +100,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const Gap(8),
                 Container(
                   width: 8,
                   height: 8,
@@ -109,7 +109,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const Gap(8),
                 Container(
                   width: 8,
                   height: 8,
@@ -118,7 +118,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const Gap(8),
                 Container(
                   width: 8,
                   height: 8,
@@ -127,7 +127,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const Gap(8),
                 Container(
                   width: 8,
                   height: 8,
@@ -138,7 +138,7 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const Gap(16),
             const Text('Step 1 of 5').muted(),
           ],
         ).withPadding(all: 16),
@@ -170,3 +170,4 @@ class DotIndicatorTile extends StatelessWidget implements IComponentPage {
 | `direction` | `Axis` | The direction of the dot layout (horizontal or vertical). |
 | `padding` | `EdgeInsetsGeometry?` | Padding around the dots container. |
 | `dotBuilder` | `DotBuilder?` | Custom builder for individual dots. |
+| `theme` | `DotIndicatorTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

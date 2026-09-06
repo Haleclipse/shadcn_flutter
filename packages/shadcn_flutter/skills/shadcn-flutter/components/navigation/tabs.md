@@ -38,6 +38,7 @@ class TabsExample extends StatelessWidget {
 ```dart
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates Tabs as a header paired with an IndexedStack body.
 // Tabs manages the active index; the stack swaps content without unmounting.
@@ -70,21 +71,15 @@ class _TabsExample1State extends State<TabsExample1> {
             });
           },
         ),
-        const SizedBox(height: 8),
+        const Gap(8),
         // The IndexedStack acts as the tab body; it switches content by index
         // without unmounting inactive children.
         IndexedStack(
           index: index,
           children: const [
-            NumberedContainer(
-              index: 1,
-            ),
-            NumberedContainer(
-              index: 2,
-            ),
-            NumberedContainer(
-              index: 3,
-            ),
+            NumberedContainer(index: 1),
+            NumberedContainer(index: 2),
+            NumberedContainer(index: 3),
           ],
         ).sized(height: 300),
       ],
@@ -114,24 +109,36 @@ class TabsTile extends StatelessWidget implements IComponentPage {
       example: Card(
         child: Column(
           children: [
-            Tabs(index: 0, onChanged: (value) {}, children: const [
-              // Text('Tab 1'),
-              // Text('Tab 2'),
-              // Text('Tab 3'),
-              TabItem(child: Text('Tab 1')),
-              TabItem(child: Text('Tab 2')),
-              TabItem(child: Text('Tab 3')),
-            ]),
-            Tabs(index: 1, onChanged: (value) {}, children: const [
-              TabItem(child: Text('Tab 1')),
-              TabItem(child: Text('Tab 2')),
-              TabItem(child: Text('Tab 3')),
-            ]),
-            Tabs(index: 2, onChanged: (value) {}, children: const [
-              TabItem(child: Text('Tab 1')),
-              TabItem(child: Text('Tab 2')),
-              TabItem(child: Text('Tab 3')),
-            ]),
+            Tabs(
+              index: 0,
+              onChanged: (value) {},
+              children: const [
+                // Text('Tab 1'),
+                // Text('Tab 2'),
+                // Text('Tab 3'),
+                TabItem(child: Text('Tab 1')),
+                TabItem(child: Text('Tab 2')),
+                TabItem(child: Text('Tab 3')),
+              ],
+            ),
+            Tabs(
+              index: 1,
+              onChanged: (value) {},
+              children: const [
+                TabItem(child: Text('Tab 1')),
+                TabItem(child: Text('Tab 2')),
+                TabItem(child: Text('Tab 3')),
+              ],
+            ),
+            Tabs(
+              index: 2,
+              onChanged: (value) {},
+              children: const [
+                TabItem(child: Text('Tab 1')),
+                TabItem(child: Text('Tab 2')),
+                TabItem(child: Text('Tab 3')),
+              ],
+            ),
           ],
         ).gap(8),
       ),
@@ -157,3 +164,4 @@ class TabsTile extends StatelessWidget implements IComponentPage {
 | `onChanged` | `ValueChanged<int>` | Callback invoked when the user selects a different tab.  Called with the new tab index when the user taps a tab header. |
 | `children` | `List<TabChild>` | List of tab children defining tab headers and content.  Each [TabChild] contains a tab header widget and the associated content panel widget. The list must not be empty. |
 | `padding` | `EdgeInsetsGeometry?` | Optional padding around individual tabs.  Overrides the theme's tab padding if provided. If `null`, uses the padding from [TabsTheme]. |
+| `theme` | `TabsTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

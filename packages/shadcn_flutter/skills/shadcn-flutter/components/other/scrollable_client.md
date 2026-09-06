@@ -42,3 +42,4 @@ ScrollableClient(
 | `clipBehavior` | `Clip?` | How to clip content. |
 | `hitTestBehavior` | `HitTestBehavior?` | Hit test behavior. |
 | `overscroll` | `bool?` | Whether overscroll effects are enabled. |
+| `theme` | `ScrollableClientTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

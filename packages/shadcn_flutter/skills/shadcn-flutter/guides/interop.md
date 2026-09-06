@@ -125,9 +125,33 @@ shadcn.ShadcnUI(
 | `ShadcnApp.materialTheme` / `.cupertinoTheme` | `MaterialShadcnApp.materialTheme` / `CupertinoShadcnApp.cupertinoTheme` |
 | `ShadcnApp.debugShowMaterialGrid` | `ShadcnApp.debugShowGrid` (core) |
 | `SelectableText.useNativeContextMenu` | Pass `contextMenuBuilder` directly |
+| `asSkeleton()`, `Bone`, `BoneMock` | `shadcn_flutter_skeletonizer` |
+| `Gap`, `SliverGap`, `MaxGap`, `gap()` | `SizedBox`, `Column(...).gap(8)`, `DensityGap`, or `package:gap` directly |
+| `ShadcnLocalizations.localizationsDelegates` including `Global*Localizations` | `kMaterialLocalizationsDelegates` / `kCupertinoLocalizationsDelegates` |
 
 `FlutterLogo` was never Material-only; it still comes from
 `package:flutter/widgets.dart`, which `shadcn_flutter` re-exports.
+
+## Skeletons
+
+Skeleton loading lives in `shadcn_flutter_skeletonizer`, so there is no
+component page for it in this skill. Add the package, then install a
+`SkeletonizerLayer` through `surfaceBuilder` so the pulse follows the theme and
+overlays are covered:
+
+```dart
+import 'package:shadcn_flutter_skeletonizer/shadcn_flutter_skeletonizer.dart';
+
+ShadcnApp(
+  surfaceBuilder: (context, child) => SkeletonizerLayer(child: child),
+  home: const MyHomePage(),
+);
+```
+
+`asSkeleton()`, `asSkeletonSliver()`, `ignoreSkeleton()` and
+`excludeSkeleton()` then work on any widget. `Avatar` and `Image` get leaf
+treatment automatically. Without the layer the methods still work, but the
+pulse uses skeletonizer's defaults rather than the shadcn color scheme.
 
 ## Best Practices
 

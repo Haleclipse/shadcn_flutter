@@ -77,22 +77,13 @@ class _MenubarExample1State extends State<MenubarExample1> {
               ),
               child: Text('New Window'),
             ),
-            MenuButton(
-              enabled: false,
-              child: Text('New Incognito Window'),
-            ),
+            MenuButton(enabled: false, child: Text('New Incognito Window')),
             MenuDivider(),
             MenuButton(
               subMenu: [
-                MenuButton(
-                  child: Text('Email Link'),
-                ),
-                MenuButton(
-                  child: Text('Messages'),
-                ),
-                MenuButton(
-                  child: Text('Notes'),
-                ),
+                MenuButton(child: Text('Email Link')),
+                MenuButton(child: Text('Messages')),
+                MenuButton(child: Text('Notes')),
               ],
               child: Text('Share'),
             ),
@@ -107,12 +98,8 @@ class _MenubarExample1State extends State<MenubarExample1> {
             ),
             MenuButton(
               subMenu: [
-                MenuButton(
-                  child: Text('Save and Exit'),
-                ),
-                MenuButton(
-                  child: Text('Discard and Exit'),
-                ),
+                MenuButton(child: Text('Save and Exit')),
+                MenuButton(child: Text('Discard and Exit')),
               ],
               child: Text('Exit'),
             ),
@@ -143,32 +130,18 @@ class _MenubarExample1State extends State<MenubarExample1> {
             MenuDivider(),
             MenuButton(
               subMenu: [
-                MenuButton(
-                  child: Text('Search the Web'),
-                ),
+                MenuButton(child: Text('Search the Web')),
                 MenuDivider(),
-                MenuButton(
-                  child: Text('Find...'),
-                ),
-                MenuButton(
-                  child: Text('Find Next'),
-                ),
-                MenuButton(
-                  child: Text('Find Previous'),
-                ),
+                MenuButton(child: Text('Find...')),
+                MenuButton(child: Text('Find Next')),
+                MenuButton(child: Text('Find Previous')),
               ],
               child: Text('Find'),
             ),
             MenuDivider(),
-            MenuButton(
-              child: Text('Cut'),
-            ),
-            MenuButton(
-              child: Text('Copy'),
-            ),
-            MenuButton(
-              child: Text('Paste'),
-            ),
+            MenuButton(child: Text('Cut')),
+            MenuButton(child: Text('Copy')),
+            MenuButton(child: Text('Paste')),
           ],
           child: Text('Edit'),
         ),
@@ -218,13 +191,9 @@ class _MenubarExample1State extends State<MenubarExample1> {
               child: Text('Force Reload'),
             ),
             const MenuDivider(),
-            const MenuButton(
-              child: Text('Toggle Full Screen'),
-            ),
+            const MenuButton(child: Text('Toggle Full Screen')),
             const MenuDivider(),
-            const MenuButton(
-              child: Text('Hide Sidebar'),
-            ),
+            const MenuButton(child: Text('Hide Sidebar')),
           ],
           child: const Text('View'),
         ),
@@ -249,21 +218,13 @@ class _MenubarExample1State extends State<MenubarExample1> {
                   autoClose: false,
                   child: Text('Benoit'),
                 ),
-                MenuRadio<int>(
-                  value: 2,
-                  autoClose: false,
-                  child: Text('Luis'),
-                ),
+                MenuRadio<int>(value: 2, autoClose: false, child: Text('Luis')),
               ],
             ),
             const MenuDivider(),
-            const MenuButton(
-              child: Text('Edit...'),
-            ),
+            const MenuButton(child: Text('Edit...')),
             const MenuDivider(),
-            const MenuButton(
-              child: Text('Add Profile...'),
-            ),
+            const MenuButton(child: Text('Add Profile...')),
           ],
           child: const Text('Profiles'),
         ),
@@ -279,6 +240,7 @@ class _MenubarExample1State extends State<MenubarExample1> {
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class MenubarTile extends StatelessWidget implements IComponentPage {
   const MenubarTile({super.key});
@@ -299,9 +261,11 @@ class MenubarTile extends StatelessWidget implements IComponentPage {
           mainAxisSize: MainAxisSize.min,
           children: [
             OutlinedContainer(
-              borderColor: theme.colorScheme.border,
-              backgroundColor: theme.colorScheme.background,
-              borderRadius: theme.borderRadiusMd,
+              theme: OutlinedContainerTheme(
+                borderColor: theme.colorScheme.border,
+                backgroundColor: theme.colorScheme.background,
+                borderRadius: theme.borderRadiusMd,
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: IntrinsicHeight(
@@ -320,8 +284,9 @@ class MenubarTile extends StatelessWidget implements IComponentPage {
                           decoration: (context, states, value) {
                             return (value as BoxDecoration).copyWith(
                               color: theme.colorScheme.accent,
-                              borderRadius:
-                                  BorderRadius.circular(theme.radiusSm),
+                              borderRadius: BorderRadius.circular(
+                                theme.radiusSm,
+                              ),
                             );
                           },
                         ),
@@ -342,64 +307,77 @@ class MenubarTile extends StatelessWidget implements IComponentPage {
                 ),
               ),
             ),
-            const SizedBox(height: 4),
+            const Gap(4),
             Container(
               width: 192,
               margin: const EdgeInsets.only(left: 48),
-              child: MenuPopup(children: [
-                Button(
-                  style: const ButtonStyle.menu(),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyZ, control: true),
+              child: MenuPopup(
+                children: [
+                  Button(
+                    style: const ButtonStyle.menu(),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyZ,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Undo'),
                   ),
-                  child: const Text('Undo'),
-                ),
-                Button(
-                  style: const ButtonStyle.menu().copyWith(
+                  Button(
+                    style: const ButtonStyle.menu().copyWith(
                       decoration: (context, states, value) {
-                    return (value as BoxDecoration).copyWith(
-                      color: theme.colorScheme.accent,
-                      borderRadius: BorderRadius.circular(theme.radiusSm),
-                    );
-                  }),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyY, control: true),
+                        return (value as BoxDecoration).copyWith(
+                          color: theme.colorScheme.accent,
+                          borderRadius: BorderRadius.circular(theme.radiusSm),
+                        );
+                      },
+                    ),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyY,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Redo'),
                   ),
-                  child: const Text('Redo'),
-                ),
-                const MenuDivider(),
-                Button(
-                  style: const ButtonStyle.menu(),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyX, control: true),
+                  const MenuDivider(),
+                  Button(
+                    style: const ButtonStyle.menu(),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyX,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Cut'),
                   ),
-                  child: const Text('Cut'),
-                ),
-                Button(
-                  style: const ButtonStyle.menu(),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyC, control: true),
+                  Button(
+                    style: const ButtonStyle.menu(),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyC,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Copy'),
                   ),
-                  child: const Text('Copy'),
-                ),
-                Button(
-                  style: const ButtonStyle.menu(),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyV, control: true),
+                  Button(
+                    style: const ButtonStyle.menu(),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyV,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Paste'),
                   ),
-                  child: const Text('Paste'),
-                ),
-              ]),
+                ],
+              ),
             ),
           ],
         ),
@@ -424,3 +402,4 @@ class MenubarTile extends StatelessWidget implements IComponentPage {
 | `children` | `List<MenuItem>` | List of menu items to display in the menubar.  Type: `List<MenuItem>`. Each MenuItem represents a top-level menu that can contain nested menu items for dropdown functionality. Items are displayed horizontally in the order provided. |
 | `popoverOffset` | `Offset?` | Positioning offset for submenu popovers when items are opened.  Type: `Offset?`. If null, uses theme defaults or calculated values based on border presence. Controls where dropdown menus appear relative to their parent menu items. |
 | `border` | `bool` | Whether to draw a border around the menubar container.  Type: `bool`, default: `true`. When true, the menubar is wrapped with an outlined container using theme colors and border radius. |
+| `theme` | `MenubarTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

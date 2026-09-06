@@ -24,8 +24,7 @@ class PhoneInputExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/phone_input/phone_input_example_1.dart',
+          path: 'lib/pages/docs/components/phone_input/phone_input_example_1.dart',
           child: PhoneInputExample1(),
         ),
       ],
@@ -38,6 +37,7 @@ class PhoneInputExample extends StatelessWidget {
 ### Phone Input Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class PhoneInputExample1 extends StatefulWidget {
   const PhoneInputExample1({super.key});
@@ -65,10 +65,8 @@ class _PhoneInputExample1State extends State<PhoneInputExample1> {
             },
           ),
         ),
-        const SizedBox(height: 24),
-        Text(
-          _phoneNumber?.value ?? '(No value)',
-        ),
+        const Gap(24),
+        Text(_phoneNumber?.value ?? '(No value)'),
       ],
     );
   }
@@ -128,3 +126,4 @@ class PhoneInputTile extends StatelessWidget implements IComponentPage {
 | `onlyNumber` | `bool` | Whether to allow only numeric characters in the input.  When true, restricts input to numeric characters only, removing any letters, symbols, or formatting characters that users might enter. |
 | `countries` | `List<Country>?` | Optional list of countries to display in the country selector.  When provided, only these countries will be available for selection in the country picker popup. If null, all supported countries are available. |
 | `searchPlaceholder` | `Widget?` | Widget displayed as placeholder in the country search field.  Appears in the search input at the top of the country selector popup to guide users on how to search for countries. |
+| `theme` | `PhoneInputTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

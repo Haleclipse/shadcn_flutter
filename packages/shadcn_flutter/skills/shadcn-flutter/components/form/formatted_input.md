@@ -27,26 +27,22 @@ class FormattedInputExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Formatted Input Example',
-          path:
-              'lib/pages/docs/components/formatted_input/formatted_input_example_1.dart',
+          path: 'lib/pages/docs/components/formatted_input/formatted_input_example_1.dart',
           child: FormattedInputExample1(),
         ),
         WidgetUsageExample(
           title: 'Date Input Example',
-          path:
-              'lib/pages/docs/components/formatted_input/formatted_input_example_2.dart',
+          path: 'lib/pages/docs/components/formatted_input/formatted_input_example_2.dart',
           child: FormattedInputExample2(),
         ),
         WidgetUsageExample(
           title: 'Time Input Example',
-          path:
-              'lib/pages/docs/components/formatted_input/formatted_input_example_3.dart',
+          path: 'lib/pages/docs/components/formatted_input/formatted_input_example_3.dart',
           child: FormattedInputExample3(),
         ),
         WidgetUsageExample(
           title: 'Duration Input Example',
-          path:
-              'lib/pages/docs/components/formatted_input/formatted_input_example_4.dart',
+          path: 'lib/pages/docs/components/formatted_input/formatted_input_example_4.dart',
           child: FormattedInputExample4(),
         ),
       ],
@@ -78,15 +74,23 @@ class FormattedInputExample1 extends StatelessWidget {
         }
       },
       initialValue: FormattedValue([
-        const InputPart.editable(length: 2, width: 40, placeholder: Text('MM'))
-            .withValue('01'),
-        const InputPart.static('/'),
-        const InputPart.editable(length: 2, width: 40, placeholder: Text('DD'))
-            .withValue('02'),
+        const InputPart.editable(
+          length: 2,
+          width: 40,
+          placeholder: Text('MM'),
+        ).withValue('01'),
         const InputPart.static('/'),
         const InputPart.editable(
-                length: 4, width: 60, placeholder: Text('YYYY'))
-            .withValue('2021'),
+          length: 2,
+          width: 40,
+          placeholder: Text('DD'),
+        ).withValue('02'),
+        const InputPart.static('/'),
+        const InputPart.editable(
+          length: 4,
+          width: 60,
+          placeholder: Text('YYYY'),
+        ).withValue('2021'),
       ]),
     );
   }
@@ -97,6 +101,7 @@ class FormattedInputExample1 extends StatelessWidget {
 ### Formatted Input Example 2
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormattedInputExample2 extends StatefulWidget {
   const FormattedInputExample2({super.key});
@@ -111,10 +116,8 @@ class _FormattedInputExample2State extends State<FormattedInputExample2> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DateInput(
-          onChanged: (value) => setState(() => _selectedDate = value),
-        ),
-        const SizedBox(height: 16),
+        DateInput(onChanged: (value) => setState(() => _selectedDate = value)),
+        const Gap(16),
         if (_selectedDate != null) Text('Selected date: $_selectedDate'),
       ],
     );
@@ -126,6 +129,7 @@ class _FormattedInputExample2State extends State<FormattedInputExample2> {
 ### Formatted Input Example 3
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormattedInputExample3 extends StatefulWidget {
   const FormattedInputExample3({super.key});
@@ -144,7 +148,7 @@ class _FormattedInputExample3State extends State<FormattedInputExample3> {
           // Built-in formatted control for time-of-day values.
           onChanged: (value) => setState(() => _selected = value),
         ),
-        const SizedBox(height: 16),
+        const Gap(16),
         if (_selected != null) Text('Selected time: $_selected'),
       ],
     );
@@ -156,6 +160,7 @@ class _FormattedInputExample3State extends State<FormattedInputExample3> {
 ### Formatted Input Example 4
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormattedInputExample4 extends StatefulWidget {
   const FormattedInputExample4({super.key});
@@ -175,7 +180,7 @@ class _FormattedInputExample4State extends State<FormattedInputExample4> {
           onChanged: (value) => setState(() => _selected = value),
           showSeconds: true,
         ),
-        const SizedBox(height: 16),
+        const Gap(16),
         if (_selected != null) Text('Selected duration: $_selected'),
       ],
     );
@@ -188,6 +193,7 @@ class _FormattedInputExample4State extends State<FormattedInputExample4> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormattedInputTile extends StatelessWidget implements IComponentPage {
   const FormattedInputTile({super.key});
@@ -208,12 +214,12 @@ class FormattedInputTile extends StatelessWidget implements IComponentPage {
               placeholder: Text('(123) 456-7890'),
               initialValue: '1234567890',
             ),
-            SizedBox(height: 16),
+            Gap(16),
             TextField(
               placeholder: Text('1234 5678 9012 3456'),
               initialValue: '1234567890123456',
             ),
-            SizedBox(height: 16),
+            Gap(16),
             TextField(
               placeholder: Text('MM/DD/YYYY'),
               initialValue: '12/25/2024',
@@ -245,3 +251,4 @@ class FormattedInputTile extends StatelessWidget implements IComponentPage {
 | `style` | `TextStyle?` | Text style applied to all input segments.  This style affects both static text and editable input fields within the formatted input. Using a monospace font family is recommended for consistent character spacing across segments. |
 | `leading` | `Widget?` | Widget displayed at the beginning of the input.  Commonly used for icons or labels that provide context for the input content, such as a phone icon for phone number inputs. |
 | `trailing` | `Widget?` | Widget displayed at the end of the input.  Can be used for action buttons, status indicators, or additional context related to the input content. |
+| `theme` | `FormattedInputTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

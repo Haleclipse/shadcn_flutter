@@ -25,14 +25,12 @@ class DatePickerExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Date Picker Example',
-          path:
-              'lib/pages/docs/components/date_picker/date_picker_example_1.dart',
+          path: 'lib/pages/docs/components/date_picker/date_picker_example_1.dart',
           child: DatePickerExample1(),
         ),
         WidgetUsageExample(
           title: 'Date Range Picker Example',
-          path:
-              'lib/pages/docs/components/date_picker/date_picker_example_2.dart',
+          path: 'lib/pages/docs/components/date_picker/date_picker_example_2.dart',
           child: DatePickerExample2(),
         ),
       ],
@@ -45,6 +43,7 @@ class DatePickerExample extends StatelessWidget {
 ### Date Picker Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// DatePicker in popover and dialog modes with disabled future dates.
 ///
@@ -66,7 +65,6 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
       children: [
         DatePicker(
           value: _value,
-          mode: PromptMode.popover,
           // Disable selecting dates after "today".
           stateBuilder: (date) {
             if (date.isAfter(DateTime.now())) {
@@ -79,11 +77,11 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
               _value = value;
             });
           },
+          theme: DatePickerTheme(mode: PromptMode.popover),
         ),
-        const SizedBox(height: 16),
+        const Gap(16),
         DatePicker(
           value: _value,
-          mode: PromptMode.dialog,
           // Title shown at the top of the dialog variant.
           dialogTitle: const Text('Select Date'),
           stateBuilder: (date) {
@@ -97,6 +95,7 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
               _value = value;
             });
           },
+          theme: DatePickerTheme(mode: PromptMode.dialog),
         ),
       ],
     );
@@ -108,6 +107,7 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
 ### Date Picker Example 2
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// DateRangePicker in popover and dialog modes.
 ///
@@ -134,7 +134,7 @@ class _DatePickerExample2State extends State<DatePickerExample2> {
             });
           },
         ),
-        const SizedBox(height: 16),
+        const Gap(16),
         DateRangePicker(
           value: _value,
           mode: PromptMode.dialog,
@@ -157,6 +157,7 @@ class _DatePickerExample2State extends State<DatePickerExample2> {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../calendar/calendar_example_2.dart';
 
 class DatePickerTile extends StatelessWidget implements IComponentPage {
@@ -201,3 +202,4 @@ class DatePickerTile extends StatelessWidget implements IComponentPage {
 | `initialViewType` | `CalendarViewType?` | The initial calendar view type (date, month, or year). |
 | `stateBuilder` | `DateStateBuilder?` | Builder function to determine the state of each date. |
 | `enabled` | `bool?` | Whether the date picker is enabled. |
+| `theme` | `DatePickerTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

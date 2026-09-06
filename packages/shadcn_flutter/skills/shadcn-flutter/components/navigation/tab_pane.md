@@ -18,8 +18,7 @@ class TabPaneExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'tab_pane',
-      description:
-          'A chrome-like tab pane that allows you to switch between different tabs.',
+      description: 'A chrome-like tab pane that allows you to switch between different tabs.',
       displayName: 'Tab Pane',
       children: [
         WidgetUsageExample(
@@ -84,10 +83,12 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
         constraints: const BoxConstraints(minWidth: 150),
         child: Label(
           leading: OutlinedContainer(
-            backgroundColor: Colors.white,
             width: 18,
             height: 18,
-            borderRadius: Theme.of(context).borderRadiusMd,
+            theme: OutlinedContainerTheme(
+              backgroundColor: Colors.white,
+              borderRadius: Theme.of(context).borderRadiusMd,
+            ),
             child: Center(
               child: Text(
                 data.count.toString(),
@@ -154,18 +155,19 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
                     ? element.data.count
                     : previousValue;
               });
-              tabs.add(TabPaneData(
-                  MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}')));
+              tabs.add(
+                TabPaneData(
+                  MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}'),
+                ),
+              );
             });
           },
-        )
+        ),
       ],
       // The content area; you can render based on the focused index.
       child: SizedBox(
         height: 400,
-        child: Center(
-          child: Text('Tab ${focused + 1}').xLarge().bold(),
-        ),
+        child: Center(child: Text('Tab ${focused + 1}').xLarge().bold()),
       ),
     );
   }
@@ -177,6 +179,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class TabPaneTile extends StatelessWidget implements IComponentPage {
   const TabPaneTile({super.key});
@@ -216,7 +219,9 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: theme.colorScheme.primary,
                         borderRadius: BorderRadius.circular(4),
@@ -229,19 +234,23 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    const Gap(4),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: const Text(
                         'Tab 2',
                         style: TextStyle(fontSize: 14),
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    const Gap(4),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: const Text(
                         'Tab 3',
                         style: TextStyle(fontSize: 14),
@@ -254,9 +263,7 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Center(
-                    child: Text('Tab 1 Content'),
-                  ),
+                  child: const Center(child: Text('Tab 1 Content')),
                 ),
               ),
             ],
@@ -292,3 +299,4 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
 | `border` | `BorderSide?` | Border styling for the tab pane container.  Type: `BorderSide?`. If null, uses theme defaults for border appearance around the entire tab pane structure. |
 | `child` | `Widget` | The main content widget displayed in the content area.  Type: `Widget`. This widget fills the content area above the tab bar and typically shows content related to the currently focused tab. |
 | `barHeight` | `double?` | Height of the tab bar area in logical pixels.  Type: `double?`. If null, uses 32 logical pixels scaled by theme scaling. Determines the vertical space allocated for tab buttons. |
+| `theme` | `TabPaneTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

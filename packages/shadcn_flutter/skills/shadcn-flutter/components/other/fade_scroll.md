@@ -30,3 +30,4 @@ FadeScroll(
 | `child` | `Widget` | The scrollable child widget. |
 | `controller` | `ScrollController` | The scroll controller to monitor for scroll position. |
 | `gradient` | `List<Color>?` | The gradient colors for the fade effect. |
+| `theme` | `FadeScrollTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

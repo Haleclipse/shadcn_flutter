@@ -19,8 +19,7 @@ class PaginationExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'pagination',
-      description:
-          'A pagination component is used to navigate through a series of pages.',
+      description: 'A pagination component is used to navigate through a series of pages.',
       displayName: 'Pagination',
       children: [
         WidgetUsageExample(
@@ -90,8 +89,9 @@ class PaginationTile extends StatelessWidget implements IComponentPage {
         children: [
           const Card(child: PaginationExample1()),
           Transform.translate(
-              offset: const Offset(250, 0),
-              child: const Card(child: PaginationExample1())),
+            offset: const Offset(250, 0),
+            child: const Card(child: PaginationExample1()),
+          ),
         ],
       ).gap(16),
     );
@@ -121,3 +121,4 @@ class PaginationTile extends StatelessWidget implements IComponentPage {
 | `hideNextOnLastPage` | `bool` | Whether to hide the next button on the last page.  When `true`, hides the "next" button when [page] equals [totalPages]. Defaults to `false`. |
 | `showLabel` | `bool?` | Whether to show text labels on previous/next buttons.  When `true`, shows "Previous" and "Next" text along with icons. When `false`, shows only icons. If `null`, uses theme default. |
 | `gap` | `double?` | Spacing between pagination controls in logical pixels.  If `null`, uses theme default spacing. |
+| `theme` | `PaginationTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

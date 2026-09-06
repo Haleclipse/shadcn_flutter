@@ -18,14 +18,12 @@ class OverflowMarqueeExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'overflow_marquee',
-      description:
-          'A widget that marquee its child when it overflows the available space.',
+      description: 'A widget that marquee its child when it overflows the available space.',
       displayName: 'Overflow Marquee',
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/overflow_marquee/overflow_marquee_example_1.dart',
+          path: 'lib/pages/docs/components/overflow_marquee/overflow_marquee_example_1.dart',
           child: OverflowMarqueeExample1(),
         ),
       ],
@@ -62,6 +60,7 @@ class OverflowMarqueeExample1 extends StatelessWidget {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class OverflowMarqueeTile extends StatelessWidget implements IComponentPage {
   const OverflowMarqueeTile({super.key});
@@ -83,13 +82,13 @@ class OverflowMarqueeTile extends StatelessWidget implements IComponentPage {
           child: Column(
             children: [
               const Text('Scrolling Text:').bold(),
-              const SizedBox(height: 16),
+              const Gap(16),
               const OverflowMarquee(
                 child: Text(
                   'This is a very long text that will scroll horizontally when it overflows the container width',
                 ),
               ),
-              const SizedBox(height: 8),
+              const Gap(8),
               const Text('Auto-scrolling overflow text').muted(),
             ],
           ),
@@ -119,3 +118,4 @@ class OverflowMarqueeTile extends StatelessWidget implements IComponentPage {
 | `delayDuration` | `Duration?` | Pause duration between scroll cycles.  If `null`, uses theme default. |
 | `fadePortion` | `double?` | Portion of edges to apply fade effect (0.0 to 1.0).  For example, 0.15 fades 15% of each edge. If `null`, uses theme default. |
 | `curve` | `Curve?` | Animation curve for scroll motion.  If `null`, uses theme default or [Curves.linear]. |
+| `theme` | `OverflowMarqueeTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

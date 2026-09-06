@@ -19,8 +19,7 @@ class TooltipExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'tooltip',
-      description:
-          'A floating message that appears when a user interacts with a target.',
+      description: 'A floating message that appears when a user interacts with a target.',
       displayName: 'Tooltip',
       children: [
         WidgetUsageExample(
@@ -49,9 +48,7 @@ class TooltipExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       // Tooltip wraps a target widget and shows TooltipContainer on hover/focus.
-      tooltip: const TooltipContainer(
-        child: Text('This is a tooltip.'),
-      ),
+      tooltip: const TooltipContainer(child: Text('This is a tooltip.')),
       child: PrimaryButton(
         onPressed: () {},
         child: const Text('Hover over me'),
@@ -66,6 +63,7 @@ class TooltipExample1 extends StatelessWidget {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // paint a cursor
 class CursorPainter extends CustomPainter {
@@ -123,19 +121,15 @@ class TooltipTile extends StatelessWidget implements IComponentPage {
                 child: const Text('Delete'),
                 onPressed: () {},
               ),
-              const SizedBox(height: 4),
-              const TooltipContainer(
-                child: Text('Click to delete this item'),
-              ),
+              const Gap(4),
+              const TooltipContainer(child: Text('Click to delete this item')),
             ],
           ),
           const Positioned(
             top: 25,
             left: 100,
-            child: CustomPaint(
-              painter: CursorPainter(),
-            ),
-          )
+            child: CustomPaint(painter: CursorPainter()),
+          ),
         ],
       ),
     );

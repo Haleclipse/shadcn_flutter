@@ -65,21 +65,20 @@ class CommandExample1 extends StatelessWidget {
           for (final item in values.value) {
             if (query == null ||
                 item.toLowerCase().contains(query.toLowerCase())) {
-              resultItems.add(CommandItem(
-                title: Text(item),
-                leading: icons[item],
-                onTap: () {},
-              ));
+              resultItems.add(
+                CommandItem(
+                  title: Text(item),
+                  leading: icons[item],
+                  onTap: () {},
+                ),
+              );
             }
           }
           if (resultItems.isNotEmpty) {
             // Simulate latency to showcase incremental results.
             await Future.delayed(const Duration(seconds: 1));
             yield [
-              CommandCategory(
-                title: Text(values.key),
-                children: resultItems,
-              ),
+              CommandCategory(title: Text(values.key), children: resultItems),
             ];
           }
         }

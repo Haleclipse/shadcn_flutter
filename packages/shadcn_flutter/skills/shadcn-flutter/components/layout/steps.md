@@ -54,15 +54,11 @@ class StepsExample1 extends StatelessWidget {
         ),
         StepItem(
           title: Text('Add dependencies'),
-          content: [
-            Text('Add the required dependencies to the project.'),
-          ],
+          content: [Text('Add the required dependencies to the project.')],
         ),
         StepItem(
           title: Text('Run the project'),
-          content: [
-            Text('Run the project in the project manager.'),
-          ],
+          content: [Text('Run the project in the project manager.')],
         ),
       ],
     );
@@ -88,27 +84,25 @@ class StepsTile extends StatelessWidget implements IComponentPage {
       name: 'steps',
       title: 'Steps',
       example: Card(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        child: Steps(children: [
-          StepItem(
-            title: Text('Create a project'),
-            content: [
-              Text('Create a new flutter project'),
-            ],
-          ),
-          StepItem(
-            title: Text('Add dependencies'),
-            content: [
-              Text('Add dependencies to pubspec.yaml'),
-            ],
-          ),
-          StepItem(
-            title: Text('Run the project'),
-            content: [
-              Text('Run the project using flutter run'),
-            ],
-          ),
-        ]),
+        theme: CardTheme(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        ),
+        child: Steps(
+          children: [
+            StepItem(
+              title: Text('Create a project'),
+              content: [Text('Create a new flutter project')],
+            ),
+            StepItem(
+              title: Text('Add dependencies'),
+              content: [Text('Add dependencies to pubspec.yaml')],
+            ),
+            StepItem(
+              title: Text('Run the project'),
+              content: [Text('Run the project using flutter run')],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -130,3 +124,4 @@ class StepsTile extends StatelessWidget implements IComponentPage {
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `children` | `List<Widget>` | List of widgets representing each step in the sequence.  Each widget will be displayed with an automatically numbered circular indicator showing its position in the sequence. |
+| `theme` | `StepsTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

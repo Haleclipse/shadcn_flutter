@@ -56,6 +56,7 @@ class InputOTPExample extends StatelessWidget {
 ### Input Otp Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class InputOTPExample1 extends StatefulWidget {
   const InputOTPExample1({super.key});
@@ -96,7 +97,7 @@ class _InputOTPExample1State extends State<InputOTPExample1> {
             InputOTPChild.character(allowDigit: true),
           ],
         ),
-        gap(16),
+        Gap(16),
         Text('Value: $value'),
         Text('Submitted Value: $submittedValue'),
       ],
@@ -176,43 +177,52 @@ class InputOTPExample4 extends StatelessWidget {
     return InputOTP(
       children: [
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
         InputOTPChild.separator,
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
         InputOTPChild.separator,
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
         InputOTPChild.character(
-            allowLowercaseAlphabet: true,
-            allowUppercaseAlphabet: true,
-            onlyUppercaseAlphabet: true),
+          allowLowercaseAlphabet: true,
+          allowUppercaseAlphabet: true,
+          onlyUppercaseAlphabet: true,
+        ),
       ],
     );
   }
@@ -224,7 +234,10 @@ class InputOTPExample4 extends StatelessWidget {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../input_otp/input_otp_example_2.dart';
+
+import 'package:gap/gap.dart';
 
 class InputOTPTile extends StatelessWidget implements IComponentPage {
   const InputOTPTile({super.key});
@@ -240,10 +253,8 @@ class InputOTPTile extends StatelessWidget implements IComponentPage {
       scale: 1,
       example: Column(
         children: [
-          const Card(
-            child: InputOTPExample2(),
-          ),
-          const SizedBox(height: 24),
+          const Card(child: InputOTPExample2()),
+          const Gap(24),
           Transform.translate(
             offset: const Offset(-150, 0),
             child: Card(
@@ -284,3 +295,4 @@ class InputOTPTile extends StatelessWidget implements IComponentPage {
 | `initialValue` | `OTPCodepointList?` | Initial OTP codepoint values. |
 | `onChanged` | `ValueChanged<OTPCodepointList>?` | Called when the OTP value changes. |
 | `onSubmitted` | `ValueChanged<OTPCodepointList>?` | Called when the user submits the OTP (e.g., presses Enter on last field). |
+| `theme` | `InputOTPTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

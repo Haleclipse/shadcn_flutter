@@ -96,6 +96,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter_cupertino/shadcn_flutter_cupertino.dart';
 import 'package:shadcn_flutter_material/shadcn_flutter_material.dart';
+import 'package:shadcn_flutter_skeletonizer/shadcn_flutter_skeletonizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaml/yaml.dart';
 
@@ -966,9 +967,15 @@ class MyAppState extends State<MyApp> {
         ],
         // Likewise, the Material ancestors have to cover the whole surface so
         // dialog routes can find them.
+        // SkeletonizerLayer is what ties the skeleton pulse to the shadcn
+        // theme. ShadcnApp does not install it, since shadcn_flutter no longer
+        // depends on skeletonizer.
         surfaceBuilder: (context, child) => MaterialLayer(
           localizations: false,
-          child: CupertinoLayer(localizations: false, child: child),
+          child: CupertinoLayer(
+            localizations: false,
+            child: SkeletonizerLayer(child: child),
+          ),
         ),
         // popoverHandler: DialogOverlayHandler(),
         theme: ThemeData(

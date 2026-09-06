@@ -19,8 +19,7 @@ class CardExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'card',
-      description:
-          'Cards are surfaces that display content and actions on a single topic.',
+      description: 'Cards are surfaces that display content and actions on a single topic.',
       displayName: 'Card',
       children: [
         WidgetUsageExample(
@@ -49,7 +48,7 @@ class CardExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      padding: const EdgeInsets.all(24),
+      theme: CardTheme(padding: const EdgeInsets.all(24)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -67,15 +66,9 @@ class CardExample1 extends StatelessWidget {
           const SizedBox(height: 24),
           Row(
             children: [
-              OutlineButton(
-                child: const Text('Cancel'),
-                onPressed: () {},
-              ),
+              OutlineButton(child: const Text('Cancel'), onPressed: () {}),
               const Spacer(),
-              PrimaryButton(
-                child: const Text('Deploy'),
-                onPressed: () {},
-              ),
+              PrimaryButton(child: const Text('Deploy'), onPressed: () {}),
             ],
           ),
         ],
@@ -90,6 +83,7 @@ class CardExample1 extends StatelessWidget {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../card/card_example_1.dart';
 
 class CardTile extends StatelessWidget implements IComponentPage {
@@ -133,3 +127,4 @@ class CardTile extends StatelessWidget implements IComponentPage {
 | `surfaceOpacity` | `double?` | Opacity of the card's surface effect.  Controls the transparency of surface overlays. If `null`, uses theme default. |
 | `surfaceBlur` | `double?` | Blur amount for the card's surface effect.  Creates a frosted glass or blur effect. If `null`, no blur is applied. |
 | `duration` | `Duration?` | Duration for card appearance animations.  Controls how long transitions take when card properties change. If `null`, uses default animation duration. |
+| `theme` | `CardTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |
