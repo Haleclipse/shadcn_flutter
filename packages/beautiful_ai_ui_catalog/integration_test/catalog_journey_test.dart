@@ -231,7 +231,11 @@ Future<void> _runP2Journey(WidgetTester tester) async {
   }
   expect(find.text('Supplier email draft recovered'), findsNWidgets(2));
 
-  final composer = _inside('catalog-chat', find.byType(EditableText));
+  final chatRoot = find.byKey(const Key('catalog-chat'));
+  final composer = find.descendant(
+    of: chatRoot,
+    matching: find.byType(EditableText),
+  );
   await Scrollable.ensureVisible(tester.element(composer), alignment: 0.5);
   await tester.pump();
   await enterCatalogText(
@@ -242,16 +246,12 @@ Future<void> _runP2Journey(WidgetTester tester) async {
         const bool.fromEnvironment('CATALOG_ANDROID_CANDIDATE')
         ? () => awaitAndroidCandidateBeforeSend(
             tester,
-            find.byKey(const Key('catalog-chat')),
+            chatRoot,
             'Check cone inventory',
           )
         : null,
   );
-  await sendCatalogChatOnce(
-    tester,
-    find.byKey(const Key('catalog-chat')),
-    'Check cone inventory',
-  );
+  await sendCatalogChatOnce(tester, chatRoot, 'Check cone inventory');
   expect(
     _inside('catalog-chat', find.text('Check cone inventory')),
     findsOneWidget,
