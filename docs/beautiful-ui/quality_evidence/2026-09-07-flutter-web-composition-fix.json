@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "recorded_at_utc": "2026-09-07T05:21:00Z",
+  "recorded_at_utc": "2026-09-07T06:16:00Z",
   "project_source_before_fix_commit": "546b21a6e41c1765c3b73013081e152ae1defc06",
   "toolchain": {
     "flutter_version": "3.47.0",
@@ -22,16 +22,28 @@
     "browser": "Chrome headless",
     "compiler": "dart2js",
     "active_event_failure": {
-      "expected_composing": [0, 1],
-      "actual_composing": [-1, -1]
+      "expected_composing": [
+        0,
+        1
+      ],
+      "actual_composing": [
+        -1,
+        -1
+      ]
     },
     "teardown_failure": {
       "expected_composing_text": null,
       "actual_composing_text": "active"
     },
     "framework_roundtrip_failure": {
-      "expected_composing": [0, 2],
-      "actual_composing": [-1, -1]
+      "expected_composing": [
+        0,
+        2
+      ],
+      "actual_composing": [
+        -1,
+        -1
+      ]
     },
     "logs": {
       "first_red_sha256": "f41ee46047e1ac70a5cc94863906f901f003292aa481b7c45a548e3434a00b53",
@@ -69,8 +81,14 @@
   "catalog_red_control": {
     "status": "failed",
     "condition": "patched Dart source with unchanged precompiled DDC Web SDK",
-    "expected_composing": [0, 2],
-    "actual_composing": [-1, -1],
+    "expected_composing": [
+      0,
+      2
+    ],
+    "actual_composing": [
+      -1,
+      -1
+    ],
     "interpretation": "The application loaded the unchanged precompiled dart_sdk.js; source editing alone is insufficient."
   },
   "catalog_green": {
@@ -98,5 +116,57 @@
     "screen_reader_accepted": false,
     "framework_composition_delivery": "Flutter-injected TextEditingValue",
     "browser_cjk_delivery": "W3C Unicode insertion"
+  },
+  "current_source_ci": {
+    "source_revision": "ea9e0b0be67f7e41c64a1215be12a504c960d928",
+    "workflow_run_id": 34089350075,
+    "workflow_status": "failed_only_narrator_capability",
+    "browsers": {
+      "chrome": {
+        "version": "152.0.7977.64",
+        "run_id": "8cbdf28917a0460fb827e78130c1c3f2",
+        "sdk_patch": "passed",
+        "framework_scenarios": "5/5 passed",
+        "w3c_browser": "passed",
+        "cleanup": "verified"
+      },
+      "edge": {
+        "version": "152.0.4191.53",
+        "run_id": "626779abb21e4f08b5c26f0c7f35b099",
+        "sdk_patch": "passed",
+        "framework_scenarios": "5/5 passed",
+        "w3c_browser": "passed",
+        "cleanup": "verified"
+      },
+      "firefox": {
+        "version": "154.0.1",
+        "run_id": "b01877152e964c0993b9408c7b19d0a1",
+        "sdk_patch": "passed",
+        "framework_scenarios": "5/5 passed",
+        "w3c_browser": "passed",
+        "cleanup": "verified"
+      },
+      "safari": {
+        "version": "26.6.2",
+        "run_id": "70e109f801044eddb5a18838c3cbd916",
+        "sdk_patch": "passed",
+        "original_journey": "passed",
+        "framework_scenarios": "5/5 passed",
+        "w3c_browser": "passed",
+        "cleanup": "verified"
+      }
+    },
+    "native_input_bridges": {
+      "linux": "passed",
+      "macos": "passed",
+      "windows": "passed"
+    },
+    "assistive_technology_capability": {
+      "orca": "passed",
+      "narrator": {
+        "status": "failed",
+        "reason": "No render audio endpoint and the owned Narrator window did not expose a safe minimize pattern; application acceptance remained not accepted."
+      }
+    }
   }
 }

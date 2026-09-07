@@ -72,8 +72,22 @@ The framework composing value is injected by Flutter, and the W3C CJK text is
 Unicode insertion. These runs do not establish a real operating-system IME
 candidate lifecycle or screen-reader behavior.
 
-The browser CI workflow now rebuilds the exact patched SDK before Chrome, Edge,
-Firefox and Safari framework input. Each browser still runs its independent W3C
-suite, and Safari still runs the original complete journey. Their current-source
-cross-browser result must come from the source-bound workflow run; this local
-Chrome result does not pre-label those remote jobs as passed.
+## Current-source browser CI
+
+The source-bound input workflow
+[34089350075](https://github.com/pawaovo/shadcn_flutter/actions/runs/34089350075)
+validated the final implementation at `ea9e0b0b`. Every browser rebuilt the
+exact patched SDK before execution:
+
+| Browser | Actual version | Framework | W3C browser | Original journey | Cleanup |
+| --- | --- | --- | --- | --- | --- |
+| Chrome | 152.0.7977.64 | 5/5 pass | pass | separate main journey pass | verified |
+| Edge | 152.0.4191.53 | 5/5 pass | pass | separate main journey pass | verified |
+| Firefox | 154.0.1 | 5/5 pass | pass | separate main journey pass | verified |
+| Safari | 26.6.2 | 5/5 pass | pass | pass in the same job | verified |
+
+The workflow's three native input-bridge jobs and Linux Orca capability also
+passed. Its overall conclusion is failure solely because the Windows runner had
+no render audio endpoint and the owned Narrator window did not expose a safe
+minimize pattern. That job kept application acceptance `not_accepted`; it does
+not invalidate the independent browser reports or establish Narrator support.

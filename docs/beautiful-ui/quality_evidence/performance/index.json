@@ -1,5 +1,12 @@
 {
   "schema_version": 1,
+  "latest_repeatability_attempt": {
+    "source_revision": "67515bebf58fc3a5e0c7c6990ccfd094c8429a77",
+    "run_id": "beautiful-native-all-67515beb-repeat-20260907",
+    "capture_status": "complete",
+    "budget_status": "budget_fail",
+    "summary": "2026-09-07-67515beb-repeatability-failure.json"
+  },
   "current_source_revision": "c2bde85dd5da7c33b0f7881234ae312f3be1826c",
   "final_source_profile_status": "capture_complete_budgets_and_other_platforms_pending",
   "final_source_successful_profile": {

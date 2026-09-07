@@ -1,10 +1,11 @@
 # Multi-platform support matrix
 
-Status: original Android P1/P2/P3 journey, Chrome patched-SDK framework/W3C input, prior four-browser W3C input, complete engineering budgets and three repaired-runtime Linux reader tasks pass; current-source cross-browser, device/IME/AT sign-off keeps all six platforms Partial
+Status: current-source main 12/12, four-browser patched-SDK framework/W3C input, original Android three-candidate journey and three repaired-runtime Linux reader tasks pass; performance repeatability, physical device/IME/AT sign-off keep all six platforms Partial
 Baseline: Flutter `>=3.47.0`, Dart `>=3.13.0 <4.0.0`, `shadcn_flutter` `0.0.54`
 
-Current evidence: [September 4 release readiness](./quality_evidence/2026-09-04-release-readiness.md)
-and the [September 7 Web composition fix](./quality_evidence/2026-09-07-flutter-web-composition-fix.md).
+Current evidence: [September 7 automated readiness](./quality_evidence/2026-09-07-ea9e0b0b-current-readiness.md),
+the [Web composition fix](./quality_evidence/2026-09-07-flutter-web-composition-fix.md),
+and the preserved [September 4 release record](./quality_evidence/2026-09-04-release-readiness.md).
 The complete original Android journey **passes at `f149ec29`** with three fixed
 actual LatinIME candidate commits, the original Chat Send, command Enter and
 Prompt Send, all remaining P3 assertions and verified cleanup. Main and the
@@ -23,12 +24,11 @@ observations retain their original source scope. All 27 registry entries remain
 `in_progress`.
 
 The pinned Flutter 3.47 Web semantics composition defect now has an exact source
-patch, engine red/green tests, a verified seven-artifact SDK rebuild and a local
-Chrome 152.0.7977.75 acceptance run. Both the five-scenario framework suite and
-the independent 26-stage W3C suite pass with verified process cleanup. The
-source-bound Chrome/Edge/Firefox/Safari workflow result is still required before
-updating their individual current-source rows; this local result is not OS IME
-or screen-reader evidence.
+patch, engine red/green tests, a verified seven-artifact SDK rebuild and
+source-bound Chrome/Edge/Firefox/Safari CI at `ea9e0b0b`. All four browsers pass
+the five-scenario framework suite and independent W3C suite with verified
+process cleanup; Safari also passes the original journey in the same job. These
+results are not OS IME or screen-reader evidence.
 
 A current-source native macOS all-15 Profile repeat completed every workload and
 kept 318 measured inputs unchanged, but the independent engineering assessment
@@ -68,10 +68,10 @@ Exact minimum OS versions are inherited from the pinned Flutter toolchain and ge
 
 | Browser | Evidence expectation | Current status | Automation/execution |
 |---|---|---|---|
-| Chrome stable | Release-blocking shared Web journey | Partial | Main journey passes at 75594991; patched-SDK framework 5/5 and independent W3C 26/26 pass locally with Chrome 152.0.7977.75; current-source CI pending |
-| Edge stable | Release-candidate compatibility and shared journey | Partial | Original full main journey passes at 75594991 with the explicit preread; prior W3C input passes at 5edbcab7; patched current-source framework/W3C CI pending |
-| Firefox stable | Release-candidate compatibility and shared journey | Partial | Main journey passes at 75594991; prior W3C input passes at 5edbcab7; patched current-source framework/W3C CI pending |
-| Safari stable | Release-candidate compatibility on macOS/iOS | Partial | Complete shared journey and prior W3C input pass at 5edbcab7; patched current-source journey/framework/W3C CI pending; OS/device/AT acceptance remains open |
+| Chrome stable | Release-blocking shared Web journey | Partial | At ea9e0b0b Chrome 152.0.7977.64 passes the main journey plus patched-SDK framework 5/5 and independent W3C input |
+| Edge stable | Release-candidate compatibility and shared journey | Partial | At ea9e0b0b Edge 152.0.4191.53 passes the main journey plus patched-SDK framework 5/5 and independent W3C input with identity/cleanup binding |
+| Firefox stable | Release-candidate compatibility and shared journey | Partial | At ea9e0b0b Firefox 154.0.1 passes the main journey plus patched-SDK framework 5/5 and independent W3C input |
+| Safari stable | Release-candidate compatibility on macOS/iOS | Partial | At ea9e0b0b Safari 26.6.2 passes the original journey, patched-SDK framework 5/5 and independent W3C input; OS/device/AT acceptance remains open |
 
 Embedded WebViews, obsolete browser versions, and browser extensions that alter layout or semantics are out of scope unless a consuming product adds a separate requirement.
 
