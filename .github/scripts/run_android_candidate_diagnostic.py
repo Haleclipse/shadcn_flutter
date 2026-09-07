@@ -410,11 +410,20 @@ class Runner:
                 or candidate.get("expected_text") != text or candidate.get("candidate_text") != label
                 or candidate.get("composing_base") != start or candidate.get("composing_extent") != end
                 or candidate.get("selection_offset") != selection
+                or not isinstance(candidate.get("inspect_started_device_ms"), int)
+                or not isinstance(candidate.get("ticket_issued_device_ms"), int)
+                or not isinstance(candidate.get("inspection_elapsed_ms"), int)
                 or not isinstance(candidate.get("expires_at_device_ms"), int)
                 or not isinstance(candidate.get("device_elapsed_ms"), int)
-                or not 0 < candidate["expires_at_device_ms"] - candidate["device_elapsed_ms"] <= 2000):
+                or candidate["ticket_issued_device_ms"] - candidate["inspect_started_device_ms"]
+                    != candidate["inspection_elapsed_ms"]
+                or not 0 < candidate["expires_at_device_ms"] - candidate["ticket_issued_device_ms"] <= 2000
+                or not candidate["ticket_issued_device_ms"] <= candidate["device_elapsed_ms"]
+                    < candidate["expires_at_device_ms"]):
             raise RuntimeError("Native fixed-stage candidate ticket is incomplete or expired")
-        self.inspection, self.inspected_at = candidate, started
+        received = time.monotonic()
+        record["native_inspection_roundtrip_ms"] = round((received - started) * 1000, 3)
+        self.inspection, self.inspected_at = candidate, received
         return candidate
 
     def click_native(self, body):

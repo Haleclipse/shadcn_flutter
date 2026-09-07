@@ -202,15 +202,18 @@ public final class ProbeInstrumentation extends Instrumentation {
     private JSONObject inspect() throws Exception {
         if (inspected) throw failure("inspect_already_used", "Only one inspection ticket is permitted");
         inspected = true;
-        long started = now();
+        long scanStarted = now();
         Snapshot snapshot = scan();
-        long expires = Math.min(started + TICKET_MS, lifetimeDeadline);
+        long issued = now();
+        long expires = Math.min(issued + TICKET_MS, lifetimeDeadline);
         if (expires - now() < 150) throw failure("inspection_expired", "Inspection exhausted its ticket deadline");
         ticket = new Ticket(randomId(), snapshot, expires, stageSpec, nonce, stageNonce);
         JSONObject response = base("inspect", true);
         copySnapshot(response, snapshot);
         put(response, "candidate_id", ticket.id);
-        put(response, "inspect_started_device_ms", started);
+        put(response, "inspect_started_device_ms", scanStarted);
+        put(response, "ticket_issued_device_ms", issued);
+        put(response, "inspection_elapsed_ms", issued - scanStarted);
         put(response, "expires_at_device_ms", expires);
         return response;
     }
