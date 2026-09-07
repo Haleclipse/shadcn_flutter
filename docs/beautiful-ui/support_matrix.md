@@ -30,6 +30,15 @@ source-bound Chrome/Edge/Firefox/Safari workflow result is still required before
 updating their individual current-source rows; this local result is not OS IME
 or screen-reader evidence.
 
+A current-source native macOS all-15 Profile repeat completed every workload and
+kept 318 measured inputs unchanged, but the independent engineering assessment
+failed two gates: Diff Table's over-interval fraction was 1.2195% and Records
+Table's maximum build duration was 16.858ms. This failed sample is retained next
+to the earlier pass, so repeat-run stability remains unaccepted. An automated
+macOS observer also confirmed that CUA `n`/`i` keys became trusted plain
+`insertText` events without a composition lifecycle; it does not close the real
+Chinese-IME requirement.
+
 ## Status vocabulary
 
 | Status | Meaning |

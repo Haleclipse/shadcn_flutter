@@ -74,6 +74,8 @@ class DartPythonWireTests(unittest.TestCase):
             now = int(time.monotonic() * 1000)
             response.update(candidate_id="fixture-candidate", focused_app_package=APP,
                             ime_package="fixture.ime", ime_component="fixture.ime/.Keyboard",
+                            inspect_started_device_ms=now - 10,
+                            ticket_issued_device_ms=now, inspection_elapsed_ms=10,
                             expires_at_device_ms=now + 2000, device_elapsed_ms=now)
             self.vm_state.update(stage="action_claimed", candidate_id="fixture-candidate",
                                  lease_id="fixture-lease", lease_remaining_ms=4500, can_click=True)
