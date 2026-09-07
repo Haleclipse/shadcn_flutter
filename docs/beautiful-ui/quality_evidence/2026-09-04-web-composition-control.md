@@ -1,5 +1,9 @@
 # Web composition control — 2026-09-04
 
+> Follow-up: the retained framework failure was fixed in the pinned Flutter Web
+> semantics strategy on September 7. The original stock-SDK observation below
+> remains unchanged; see the [red/green patch evidence](2026-09-07-flutter-web-composition-fix.md).
+
 **Stock `EditableText` and `BeautifulPromptBar` behaved alike in the enabled
 semantics host. Neither tested injection path established the expected persistent
 composing range.** The [observation record](2026-09-04-web-composition-control.json)

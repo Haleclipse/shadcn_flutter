@@ -1,0 +1,147 @@
+diff --git a/engine/src/flutter/lib/web_ui/lib/src/engine/semantics/text_field.dart b/engine/src/flutter/lib/web_ui/lib/src/engine/semantics/text_field.dart
+index 7a8a78bb5d3..af2ac2811ff 100644
+--- a/engine/src/flutter/lib/web_ui/lib/src/engine/semantics/text_field.dart
++++ b/engine/src/flutter/lib/web_ui/lib/src/engine/semantics/text_field.dart
+@@ -113,6 +113,9 @@ class SemanticsTextEditingStrategy extends DefaultTextEditingStrategy {
+       subscriptions[i].cancel();
+     }
+     subscriptions.clear();
++    removeCompositionEventHandlers(activeDomElement);
++    composingText = null;
++    composingBase = null;
+     lastEditingState = null;
+     EnginePlatformDispatcher.instance.viewManager.safeBlur(activeDomElement);
+     domElement = null;
+@@ -136,6 +139,7 @@ class SemanticsTextEditingStrategy extends DefaultTextEditingStrategy {
+     subscriptions.add(
+       DomSubscription(domDocument, 'selectionchange', createDomEventListener(handleChange)),
+     );
++    addCompositionEventHandlers(activeDomElement);
+     preventDefaultForMouseEvents();
+   }
+ 
+@@ -150,6 +154,24 @@ class SemanticsTextEditingStrategy extends DefaultTextEditingStrategy {
+     applyConfiguration(inputConfig);
+   }
+ 
++  @override
++  void setEditingState(EditingState? editingState) {
++    if (editingState != null &&
++        editingState.composingBaseOffset >= 0 &&
++        editingState.composingExtentOffset > editingState.composingBaseOffset &&
++        editingState.composingExtentOffset <= editingState.text.length) {
++      composingBase = editingState.composingBaseOffset;
++      composingText = editingState.text.substring(
++        editingState.composingBaseOffset,
++        editingState.composingExtentOffset,
++      );
++    } else {
++      composingBase = null;
++      composingText = null;
++    }
++    super.setEditingState(editingState);
++  }
++
+   @override
+   void placeElement() {
+     // If this text editing element is a part of an autofill group.
+diff --git a/engine/src/flutter/lib/web_ui/test/engine/semantics/text_field_test.dart b/engine/src/flutter/lib/web_ui/test/engine/semantics/text_field_test.dart
+index 20ea90ccad1..318a1f925fb 100644
+--- a/engine/src/flutter/lib/web_ui/test/engine/semantics/text_field_test.dart
++++ b/engine/src/flutter/lib/web_ui/test/engine/semantics/text_field_test.dart
+@@ -311,6 +311,95 @@ void testMain() {
+       strategy.disable();
+     });
+ 
++    test('Reports active IME composition from the semantic text field', () {
++      EditingState? observed;
++      strategy.enable(
++        singlelineConfig,
++        onChange: (EditingState? state, TextEditingDeltaState? _) {
++          observed = state;
++        },
++        onAction: (_) {},
++      );
++      final SemanticsObject textFieldSemantics = createTextFieldSemantics(
++        value: '',
++        isFocused: true,
++      );
++      final textField = textFieldSemantics.semanticRole! as SemanticTextField;
++      final editableElement = textField.editableElement as DomHTMLInputElement;
++
++      editableElement.dispatchEvent(
++        createDomCompositionEvent('compositionstart', <Object?, Object?>{}),
++      );
++      editableElement.value = '你';
++      editableElement.setSelectionRange(1, 1);
++      editableElement.dispatchEvent(
++        createDomCompositionEvent('compositionupdate', <Object?, Object?>{'data': '你'}),
++      );
++      editableElement.dispatchEvent(createDomInputEvent('input'));
++
++      expect(observed, isNotNull);
++      expect(observed!.text, '你');
++      expect(observed!.composingBaseOffset, 0);
++      expect(observed!.composingExtentOffset, 1);
++      strategy.disable();
++    });
++
++    test('Stops observing composition after semantic editing is disabled', () {
++      strategy.enable(singlelineConfig, onChange: (_, _) {}, onAction: (_) {});
++      final SemanticsObject textFieldSemantics = createTextFieldSemantics(
++        value: '',
++        isFocused: true,
++      );
++      final textField = textFieldSemantics.semanticRole! as SemanticTextField;
++      final editableElement = textField.editableElement as DomHTMLInputElement;
++
++      editableElement.dispatchEvent(
++        createDomCompositionEvent('compositionupdate', <Object?, Object?>{'data': 'active'}),
++      );
++      expect(strategy.composingText, 'active');
++      strategy.disable();
++      expect(strategy.composingText, isNull);
++      editableElement.dispatchEvent(
++        createDomCompositionEvent('compositionupdate', <Object?, Object?>{'data': 'stale'}),
++      );
++
++      expect(strategy.composingText, isNull);
++    });
++
++    test('Preserves framework composing range during DOM selection feedback', () {
++      EditingState? observed;
++      strategy.enable(
++        singlelineConfig,
++        onChange: (EditingState? state, TextEditingDeltaState? _) {
++          observed = state;
++        },
++        onAction: (_) {},
++      );
++      final SemanticsObject textFieldSemantics = createTextFieldSemantics(
++        value: '',
++        isFocused: true,
++      );
++      final textField = textFieldSemantics.semanticRole! as SemanticTextField;
++      final editableElement = textField.editableElement as DomHTMLInputElement;
++      final frameworkState = EditingState(
++        text: '中文',
++        baseOffset: 2,
++        extentOffset: 2,
++        composingBaseOffset: 0,
++        composingExtentOffset: 2,
++      );
++
++      strategy.setEditingState(frameworkState);
++      domDocument.dispatchEvent(createDomEvent('Event', 'selectionchange'));
++
++      expect(editableElement.value, '中文');
++      expect(observed, isNull, reason: 'Unchanged DOM feedback must not echo to the framework.');
++      expect(strategy.lastEditingState, isNotNull);
++      expect(strategy.lastEditingState!.composingBaseOffset, 0);
++      expect(strategy.lastEditingState!.composingExtentOffset, 2);
++      strategy.disable();
++    });
++
+     test('Gives up focus after DOM blur', () {
+       expect(owner().semanticsHost.ownerDocument?.activeElement, domDocument.body);
+ 

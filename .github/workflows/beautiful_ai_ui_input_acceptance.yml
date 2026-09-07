@@ -31,6 +31,12 @@ jobs:
           cache: true
       - name: Resolve locked dependencies
         run: flutter pub get --enforce-lockfile
+      - name: Patch the pinned Flutter Web composition strategy and rebuild its SDK
+        run: >-
+          python3 .github/scripts/patch_flutter_web_composition.py
+          --flutter "$(command -v flutter)"
+          --package-config .dart_tool/package_config.json
+          --evidence artifacts/input-${{ matrix.browser }}/sdk-patch
       - name: Verify actual browser input protocol and failure propagation
         run: |
           node --test .github/scripts/test_catalog_browser_bridge.mjs .github/scripts/test_catalog_browser_readiness.mjs
@@ -141,6 +147,12 @@ jobs:
           cache: true
       - name: Resolve locked dependencies
         run: flutter pub get --enforce-lockfile
+      - name: Patch the pinned Flutter Web composition strategy and rebuild its SDK
+        run: >-
+          python3 .github/scripts/patch_flutter_web_composition.py
+          --flutter "$(command -v flutter)"
+          --package-config .dart_tool/package_config.json
+          --evidence artifacts/input-safari/sdk-patch
       - name: Run original full journey and real Safari input
         run: python3 .github/scripts/run_catalog_input_acceptance.py --platform safari --include-journey --artifacts artifacts/input-safari
       - uses: actions/upload-artifact@v4

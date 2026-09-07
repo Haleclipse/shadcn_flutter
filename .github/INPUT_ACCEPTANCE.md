@@ -90,6 +90,15 @@ temporary macOS runner with a bounded command and records Safari/macOS/driver
 versions. It does not change the local user's Safari permissions. Any inability
 to enable automation or execute the session is retained as a failing job.
 
+The pinned Flutter 3.47.0 Web semantics strategy has a source-level composition
+defect. Browser CI applies the exact-revision
+[reviewed patch](../docs/beautiful-ui/diagnostics/flutter-web-composition-sdk/README.md)
+to its disposable SDK and rebuilds every affected DDC, Dart2JS and Dart2Wasm
+artifact before starting a browser. Local callers must use an isolated SDK for
+the same procedure. Chrome callers may pass `--chrome-binary PATH` to bind the
+run to an explicit Chrome executable; `CHROMEWEBDRIVER` continues to identify
+the directory containing its matching driver.
+
 The two Linux Edge CI jobs explicitly read the actual installed Edge ELF once,
 with a 60-second setup deadline before the existing adapter startup deadline.
 This provisional startup condition follows the recorded `153412b3` pair

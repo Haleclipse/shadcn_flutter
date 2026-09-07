@@ -1,9 +1,10 @@
 # Multi-platform support matrix
 
-Status: original Android P1/P2/P3 journey, four-browser W3C input, complete engineering budgets and three repaired-runtime Linux reader tasks pass; device/IME/AT sign-off keeps all six platforms Partial
+Status: original Android P1/P2/P3 journey, Chrome patched-SDK framework/W3C input, prior four-browser W3C input, complete engineering budgets and three repaired-runtime Linux reader tasks pass; current-source cross-browser, device/IME/AT sign-off keeps all six platforms Partial
 Baseline: Flutter `>=3.47.0`, Dart `>=3.13.0 <4.0.0`, `shadcn_flutter` `0.0.54`
 
-Current evidence: [September 4 release readiness](./quality_evidence/2026-09-04-release-readiness.md).
+Current evidence: [September 4 release readiness](./quality_evidence/2026-09-04-release-readiness.md)
+and the [September 7 Web composition fix](./quality_evidence/2026-09-07-flutter-web-composition-fix.md).
 The complete original Android journey **passes at `f149ec29`** with three fixed
 actual LatinIME candidate commits, the original Chat Send, command Enter and
 Prompt Send, all remaining P3 assertions and verified cleanup. Main and the
@@ -20,6 +21,14 @@ pass **3/3** at `79fbcdd1` in its explicitly rebuilt Flutter SDK/AT-SPI runtime;
 stock SDK/release and full human review remain unaccepted. Older CI/performance
 observations retain their original source scope. All 27 registry entries remain
 `in_progress`.
+
+The pinned Flutter 3.47 Web semantics composition defect now has an exact source
+patch, engine red/green tests, a verified seven-artifact SDK rebuild and a local
+Chrome 152.0.7977.75 acceptance run. Both the five-scenario framework suite and
+the independent 26-stage W3C suite pass with verified process cleanup. The
+source-bound Chrome/Edge/Firefox/Safari workflow result is still required before
+updating their individual current-source rows; this local result is not OS IME
+or screen-reader evidence.
 
 ## Status vocabulary
 
@@ -50,10 +59,10 @@ Exact minimum OS versions are inherited from the pinned Flutter toolchain and ge
 
 | Browser | Evidence expectation | Current status | Automation/execution |
 |---|---|---|---|
-| Chrome stable | Release-blocking shared Web journey | Partial | Main journey passes at 75594991; complete independent W3C input passes at 5edbcab7; retained framework composition check fails |
-| Edge stable | Release-candidate compatibility and shared journey | Partial | Original full main journey passes at 75594991 with the explicit preread; complete W3C input passes at 5edbcab7; retained framework composing check fails and each run keeps its actual browser/driver identity |
-| Firefox stable | Release-candidate compatibility and shared journey | Partial | Main journey passes at 75594991; complete independent W3C input passes at 5edbcab7; retained framework composition check fails |
-| Safari stable | Release-candidate compatibility on macOS/iOS | Partial | Complete shared journey and independent W3C input pass at 5edbcab7; retained synthetic resize composition check fails; OS/device/AT acceptance remains open |
+| Chrome stable | Release-blocking shared Web journey | Partial | Main journey passes at 75594991; patched-SDK framework 5/5 and independent W3C 26/26 pass locally with Chrome 152.0.7977.75; current-source CI pending |
+| Edge stable | Release-candidate compatibility and shared journey | Partial | Original full main journey passes at 75594991 with the explicit preread; prior W3C input passes at 5edbcab7; patched current-source framework/W3C CI pending |
+| Firefox stable | Release-candidate compatibility and shared journey | Partial | Main journey passes at 75594991; prior W3C input passes at 5edbcab7; patched current-source framework/W3C CI pending |
+| Safari stable | Release-candidate compatibility on macOS/iOS | Partial | Complete shared journey and prior W3C input pass at 5edbcab7; patched current-source journey/framework/W3C CI pending; OS/device/AT acceptance remains open |
 
 Embedded WebViews, obsolete browser versions, and browser extensions that alter layout or semantics are out of scope unless a consuming product adds a separate requirement.
 

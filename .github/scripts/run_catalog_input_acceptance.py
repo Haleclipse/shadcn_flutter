@@ -168,6 +168,8 @@ def run(args):
                                 "--browser-dimension=1440x900", "--no-pub"]
                     if args.platform == "chrome":
                         command += ["--web-browser-flag=--force-device-scale-factor=1"]
+                        if getattr(args, "chrome_binary", None):
+                            command += [f"--chrome-binary={Path(args.chrome_binary).resolve()}"]
                     if suite == "journey":
                         command += ["--dart-define=CATALOG_TRUSTED_BROWSER_COPY=true"]
                 else:
@@ -260,6 +262,10 @@ def main():
     parser.add_argument("--platform", required=True,
                         choices=(*BROWSERS, "macos", "windows", "linux", "android", "ios"))
     parser.add_argument("--device", help="Explicit connected device/simulator ID for native runs")
+    parser.add_argument(
+        "--chrome-binary", type=Path,
+        help="Explicit Chrome executable for a Chrome run (useful with an exact ChromeDriver pair)",
+    )
     journey = parser.add_mutually_exclusive_group()
     journey.add_argument("--include-journey", action="store_true",
                         help="Run the original complete Catalog journey before the added input suites")
@@ -269,6 +275,10 @@ def main():
     args = parser.parse_args()
     if args.platform in ("android", "ios") and not args.device:
         parser.error("Mobile acceptance requires an explicit connected device or simulator ID")
+    if args.chrome_binary and args.platform != "chrome":
+        parser.error("--chrome-binary is valid only with --platform chrome")
+    if args.chrome_binary and not args.chrome_binary.is_file():
+        parser.error(f"Chrome executable does not exist: {args.chrome_binary}")
     run(args)
 
 

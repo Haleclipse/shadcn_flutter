@@ -34,7 +34,8 @@ class InputAcceptanceRunnerTests(unittest.TestCase):
         self.flutter.write_text(f"#!{sys.executable}\n" + preamble + script, encoding="utf-8")
         self.flutter.chmod(0o755)
         args = argparse.Namespace(platform=platform, device="fixture", include_journey=False,
-                                  journey_only=journey_only, artifacts=self.output)
+                                  journey_only=journey_only, artifacts=self.output,
+                                  chrome_binary=None)
         with patch.object(acceptance, "executable", return_value=str(self.flutter)), \
                 patch.object(acceptance.urllib.request, "urlopen",
                              side_effect=lambda *_a, **_k: io.BytesIO(b'{"value":{"ready":true}}')), \
@@ -76,6 +77,31 @@ class InputAcceptanceRunnerTests(unittest.TestCase):
                          {"status": "failed"})
         self.assertEqual(json.loads((self.output / "browser/browser-input.json").read_text()),
                          {"status": "passed"})
+
+    def test_explicit_chrome_binary_is_forwarded_to_each_chrome_suite(self):
+        chrome = self.directory / "Google Chrome for Testing"
+        chrome.touch()
+        args = argparse.Namespace(platform="chrome", device="fixture", include_journey=False,
+                                  journey_only=False, artifacts=self.output,
+                                  chrome_binary=chrome)
+        with patch.object(acceptance, "executable", return_value=str(self.flutter)), \
+                patch.object(acceptance.urllib.request, "urlopen",
+                             side_effect=lambda *_a, **_k: io.BytesIO(b'{"value":{"ready":true}}')), \
+                patch.dict(os.environ, {"DISPLAY": ":fixture"}):
+            self.flutter.write_text(
+                f"#!{sys.executable}\n" +
+                "import json,os,sys,time\nfrom pathlib import Path\n"
+                "if '--port=4444' in sys.argv: time.sleep(60)\n"
+                "output=Path(os.environ['BEAUTIFUL_INPUT_EVIDENCE'])\n"
+                "name='browser-input.json' if any('catalog_browser_input_test.dart' in a for a in sys.argv) else 'framework-input.json'\n"
+                "output.joinpath(name).write_text('{\"status\":\"passed\"}')\n",
+                encoding="utf-8",
+            )
+            self.flutter.chmod(0o755)
+            acceptance.run(args)
+        summary = json.loads((self.output / "input-acceptance-summary.json").read_text())
+        expected = f"--chrome-binary={chrome.resolve()}"
+        self.assertTrue(all(expected in suite["command"] for suite in summary["suites"]))
 
     def test_each_suite_failure_keeps_its_original_exit_status(self):
         with self.assertRaisesRegex(RuntimeError, "framework input suite failed with 4.*browser input suite failed with 5"):
