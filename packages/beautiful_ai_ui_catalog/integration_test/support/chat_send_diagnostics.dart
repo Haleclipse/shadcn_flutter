@@ -9,17 +9,14 @@ import 'android_candidate_protocol.dart';
 
 /// Observes the original one-tap Chat send, then verifies host acceptance.
 /// Default observations add no edit, focus change, frame, retry, or IME commit.
-/// The explicit Android diagnostic first waits for an external native candidate;
-/// the original tap and host acceptance guards below remain unchanged.
+/// The explicit Android diagnostic settles its external native candidate before
+/// this helper; the original tap and host acceptance guards below remain unchanged.
 Future<void> sendCatalogChatOnce(
   WidgetTester tester,
   Finder chat,
   String expectedText, {
   void Function(Map<String, Object?>)? onDiagnostic,
 }) async {
-  if (const bool.fromEnvironment('CATALOG_ANDROID_CANDIDATE')) {
-    await awaitAndroidCandidateBeforeSend(tester, chat, expectedText);
-  }
   final elapsed = Stopwatch()..start();
   final composer = find.descendant(
     of: chat,

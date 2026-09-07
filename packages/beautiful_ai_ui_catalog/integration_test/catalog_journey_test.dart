@@ -234,7 +234,19 @@ Future<void> _runP2Journey(WidgetTester tester) async {
   final composer = _inside('catalog-chat', find.byType(EditableText));
   await Scrollable.ensureVisible(tester.element(composer), alignment: 0.5);
   await tester.pump();
-  await enterCatalogText(tester, composer, 'Check cone inventory');
+  await enterCatalogText(
+    tester,
+    composer,
+    'Check cone inventory',
+    beforeValueVerification:
+        const bool.fromEnvironment('CATALOG_ANDROID_CANDIDATE')
+        ? () => awaitAndroidCandidateBeforeSend(
+            tester,
+            find.byKey(const Key('catalog-chat')),
+            'Check cone inventory',
+          )
+        : null,
+  );
   await sendCatalogChatOnce(
     tester,
     find.byKey(const Key('catalog-chat')),
@@ -324,12 +336,18 @@ Future<void> _runP3Journey(WidgetTester tester) async {
     await tester.ensureVisible(prompt);
     await tester.pump();
     slashObservation?.sample('before_edit');
-    await enterCatalogText(tester, prompt, '/rest');
+    await enterCatalogText(
+      tester,
+      prompt,
+      '/rest',
+      beforeValueVerification:
+          const bool.fromEnvironment('CATALOG_ANDROID_CANDIDATE')
+          ? () =>
+                awaitAndroidCandidateStage(tester, promptRoot, 'prompt_command')
+          : null,
+    );
     slashObservation?.sample('after_edit');
     await tester.pump();
-    if (const bool.fromEnvironment('CATALOG_ANDROID_CANDIDATE')) {
-      await awaitAndroidCandidateStage(tester, promptRoot, 'prompt_command');
-    }
     slashObservation?.sample('before_enter');
     if (const bool.fromEnvironment('CATALOG_ANDROID_CANDIDATE')) {
       guardAndroidCandidateStage(tester, promptRoot, 'prompt_command');
@@ -369,11 +387,16 @@ Future<void> _runP3Journey(WidgetTester tester) async {
   try {
     await tester.ensureVisible(prompt);
     sendObservation?.sample('before_edit');
-    await enterCatalogText(tester, prompt, 'Prepare the seasonal restock');
+    await enterCatalogText(
+      tester,
+      prompt,
+      'Prepare the seasonal restock',
+      beforeValueVerification:
+          const bool.fromEnvironment('CATALOG_ANDROID_CANDIDATE')
+          ? () => awaitAndroidCandidateStage(tester, promptRoot, 'prompt_send')
+          : null,
+    );
     sendObservation?.sample('after_edit');
-    if (const bool.fromEnvironment('CATALOG_ANDROID_CANDIDATE')) {
-      await awaitAndroidCandidateStage(tester, promptRoot, 'prompt_send');
-    }
     sendObservation?.sample('before_send');
     await tap(
       'catalog-prompt-bar',

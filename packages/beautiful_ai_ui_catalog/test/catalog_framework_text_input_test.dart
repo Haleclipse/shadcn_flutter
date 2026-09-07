@@ -8,6 +8,59 @@ import 'package:flutter_test/flutter_test.dart';
 import '../integration_test/support/interactions.dart';
 
 void main() {
+  testWidgets(
+    'framework edit can await a native composition commit before exact verification',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      final semantics = tester.ensureSemantics();
+      try {
+        await tester.pumpWidget(const CatalogApp());
+        await tester.pump();
+        final composer = find.descendant(
+          of: find.byKey(const Key('catalog-chat')),
+          matching: find.byType(EditableText),
+        );
+        await tester.ensureVisible(composer);
+        const committed = TextEditingValue(
+          text: 'Check cone inventory',
+          selection: TextSelection.collapsed(offset: 20),
+        );
+        final composing = committed.copyWith(
+          composing: const TextRange(start: 11, end: 20),
+        );
+        var observedComposition = false;
+        await enterCatalogText(
+          tester,
+          composer,
+          committed.text,
+          beforeValueVerification: () async {
+            tester.testTextInput.updateEditingValue(composing);
+            await tester.pump();
+            expect(
+              tester.widget<EditableText>(composer).controller.value,
+              composing,
+            );
+            observedComposition = true;
+            tester.testTextInput.updateEditingValue(committed);
+            await tester.pump();
+          },
+        );
+
+        expect(observedComposition, isTrue);
+        expect(
+          tester.widget<EditableText>(composer).controller.value,
+          committed,
+        );
+        expect(tester.takeException(), isNull);
+      } finally {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pump();
+        semantics.dispose();
+        debugDefaultTargetPlatformOverride = null;
+      }
+    },
+  );
+
   testWidgets('framework edit synchronizes the IME before numeric submission', (
     tester,
   ) async {

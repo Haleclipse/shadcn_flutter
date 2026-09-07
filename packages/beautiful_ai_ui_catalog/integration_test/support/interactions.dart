@@ -5,11 +5,14 @@ import 'package:flutter_test/flutter_test.dart';
 /// path. IntegrationTest leaves TestTextInput unregistered, so pretending to
 /// receive an IME update can leave its real native peer with the old value.
 /// This is framework input, not an OS keyboard/IME acceptance claim.
+/// [beforeValueVerification] lets the explicit native-candidate target wait for
+/// its one real candidate commit; the same exact value assertion still follows.
 Future<void> enterCatalogText(
   WidgetTester tester,
   Finder target,
-  String text,
-) async {
+  String text, {
+  Future<void> Function()? beforeValueVerification,
+}) async {
   final editor = tester.state<EditableTextState>(target);
   editor.requestKeyboard();
   await tester.pump();
@@ -24,6 +27,7 @@ Future<void> enterCatalogText(
   );
   editor.userUpdateTextEditingValue(value, SelectionChangedCause.keyboard);
   await tester.pump();
+  await beforeValueVerification?.call();
   expect(editor.textEditingValue, value);
   expect(editor.widget.focusNode.hasPrimaryFocus, isTrue);
 }
