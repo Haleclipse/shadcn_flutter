@@ -143,7 +143,7 @@ class ItemPicker<T> extends StatelessWidget {
         if (mode == PromptMode.dialog) {
           final theme = Theme.of(context);
           return ModalBackdrop(
-            borderRadius: theme.borderRadiusXl,
+            theme: ModalBackdropTheme(borderRadius: theme.borderRadiusXl),
             child: ModalContainer(
               borderRadius: theme.borderRadiusXl,
               padding: EdgeInsets.zero,
@@ -163,7 +163,7 @@ class ItemPicker<T> extends StatelessWidget {
           );
         } else {
           return SurfaceCard(
-            padding: EdgeInsets.zero,
+            theme: CardTheme(padding: EdgeInsets.zero),
             child: _InternalItemPicker<T>(
               items: items,
               builder: builder,
@@ -456,7 +456,7 @@ Future<T?> showItemPicker<T>(
         ),
     builder: (context) {
       return SurfaceCard(
-        padding: EdgeInsets.zero,
+        theme: CardTheme(padding: EdgeInsets.zero),
         child: _InternalItemPicker<T>(
           items: items,
           builder: builder,
@@ -583,7 +583,7 @@ Future<T?> showItemPickerDialog<T>(
     builder: (context) {
       final theme = Theme.of(context);
       return ModalBackdrop(
-        borderRadius: theme.borderRadiusXl,
+        theme: ModalBackdropTheme(borderRadius: theme.borderRadiusXl),
         child: ModalContainer(
           borderRadius: theme.borderRadiusXl,
           padding: EdgeInsets.zero,

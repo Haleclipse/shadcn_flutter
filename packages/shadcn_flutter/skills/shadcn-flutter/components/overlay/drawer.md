@@ -38,6 +38,7 @@ class DrawerExample extends StatelessWidget {
 ### Drawer Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Drawer overlay opened from different screen edges.
 ///
@@ -69,9 +70,11 @@ class _DrawerExample1State extends State<DrawerExample1> {
     showOverlay(
       context,
       DrawerConfiguration(
-        anchor: LinkedAnchor(count == 0
-            ? #outerDrawerButton
-            : Symbol('drawer_anchor_${count - 1}')),
+        anchor: LinkedAnchor(
+          count == 0
+              ? #outerDrawerButton
+              : Symbol('drawer_anchor_${count - 1}'),
+        ),
         expands: true,
         position: positions[count % positions.length],
       ),
@@ -86,7 +89,8 @@ class _DrawerExample1State extends State<DrawerExample1> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                      'Drawer ${count + 1} at ${positions[count % positions.length].name}'),
+                    'Drawer ${count + 1} at ${positions[count % positions.length].name}',
+                  ),
                   const Gap(16),
                   PrimaryButton(
                     onPressed: () {
@@ -132,6 +136,7 @@ class _DrawerExample1State extends State<DrawerExample1> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DrawerTile extends StatelessWidget implements IComponentPage {
   const DrawerTile({super.key});

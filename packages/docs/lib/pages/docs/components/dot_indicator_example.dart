@@ -11,14 +11,12 @@ class DotIndicatorExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'dot_indicator',
-      description:
-          'A widget that displays a series of dots to indicate the current index in a list of items.',
+      description: 'A widget that displays a series of dots to indicate the current index in a list of items.',
       displayName: 'Dot Indicator',
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/dot_indicator/dot_indicator_example_1.dart',
+          path: 'lib/pages/docs/components/dot_indicator/dot_indicator_example_1.dart',
           child: DotIndicatorExample1(),
         ),
       ],

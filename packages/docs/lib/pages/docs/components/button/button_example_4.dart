@@ -8,9 +8,6 @@ class ButtonExample4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GhostButton(
-      onPressed: () {},
-      child: const Text('Ghost'),
-    );
+    return GhostButton(onPressed: () {}, child: const Text('Ghost'));
   }
 }

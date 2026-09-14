@@ -19,18 +19,9 @@ class RadioGroupTile extends StatelessWidget implements IComponentPage {
           child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RadioItem<int>(
-                trailing: Text('Option 1'),
-                value: 0,
-              ),
-              RadioItem<int>(
-                trailing: Text('Option 2'),
-                value: 1,
-              ),
-              RadioItem<int>(
-                trailing: Text('Option 3'),
-                value: 2,
-              ),
+              RadioItem<int>(trailing: Text('Option 1'), value: 0),
+              RadioItem<int>(trailing: Text('Option 2'), value: 1),
+              RadioItem<int>(trailing: Text('Option 3'), value: 2),
             ],
           ).gap(4),
         ).sized(width: 300),

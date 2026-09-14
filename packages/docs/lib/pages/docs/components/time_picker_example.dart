@@ -16,8 +16,7 @@ class TimePickerExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/time_picker/time_picker_example_1.dart',
+          path: 'lib/pages/docs/components/time_picker/time_picker_example_1.dart',
           child: TimePickerExample1(),
         ),
       ],

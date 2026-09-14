@@ -23,7 +23,8 @@ class StepperExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'stepper',
-      description: 'A stepper is a fundamental part of material design '
+      description:
+          'A stepper is a fundamental part of material design '
           'guidelines. Steppers convey progress through numbered steps.',
       displayName: 'Stepper',
       children: [
@@ -91,20 +92,16 @@ class _StepperExample1State extends State<StepperExample1> {
           contentBuilder: (context) {
             return StepContainer(
               actions: [
-                const SecondaryButton(
-                  child: Text('Prev'),
-                ),
+                const SecondaryButton(child: Text('Prev')),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      // Advance to the next step.
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    // Advance to the next step.
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 1,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 1, height: 200),
             );
           },
         ),
@@ -121,15 +118,13 @@ class _StepperExample1State extends State<StepperExample1> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 2,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 2, height: 200),
             );
           },
         ),
@@ -145,15 +140,13 @@ class _StepperExample1State extends State<StepperExample1> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Finish'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Finish'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 3,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 3, height: 200),
             );
           },
         ),
@@ -191,19 +184,15 @@ class _StepperExample2State extends State<StepperExample2> {
           contentBuilder: (context) {
             return StepContainer(
               actions: [
-                const SecondaryButton(
-                  child: Text('Prev'),
-                ),
+                const SecondaryButton(child: Text('Prev')),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 1,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 1, height: 200),
             );
           },
         ),
@@ -219,15 +208,13 @@ class _StepperExample2State extends State<StepperExample2> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 2,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 2, height: 200),
             );
           },
         ),
@@ -243,15 +230,13 @@ class _StepperExample2State extends State<StepperExample2> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Finish'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Finish'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 3,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 3, height: 200),
             );
           },
         ),
@@ -276,9 +261,7 @@ class StepperExample3 extends StatefulWidget {
 
 class _StepperExample3State extends State<StepperExample3> {
   final StepperController controller = StepperController(
-    stepStates: {
-      1: StepState.failed,
-    },
+    stepStates: {1: StepState.failed},
     currentStep: 1,
   );
 
@@ -293,17 +276,10 @@ class _StepperExample3State extends State<StepperExample3> {
           contentBuilder: (context) {
             return const StepContainer(
               actions: [
-                SecondaryButton(
-                  child: Text('Prev'),
-                ),
-                PrimaryButton(
-                  child: Text('Next'),
-                ),
+                SecondaryButton(child: Text('Prev')),
+                PrimaryButton(child: Text('Next')),
               ],
-              child: NumberedContainer(
-                index: 1,
-                height: 200,
-              ),
+              child: NumberedContainer(index: 1, height: 200),
             );
           },
         ),
@@ -312,17 +288,10 @@ class _StepperExample3State extends State<StepperExample3> {
           contentBuilder: (context) {
             return const StepContainer(
               actions: [
-                SecondaryButton(
-                  child: Text('Prev'),
-                ),
-                PrimaryButton(
-                  child: Text('Next'),
-                ),
+                SecondaryButton(child: Text('Prev')),
+                PrimaryButton(child: Text('Next')),
               ],
-              child: NumberedContainer(
-                index: 2,
-                height: 200,
-              ),
+              child: NumberedContainer(index: 2, height: 200),
             );
           },
         ),
@@ -331,17 +300,10 @@ class _StepperExample3State extends State<StepperExample3> {
           contentBuilder: (context) {
             return const StepContainer(
               actions: [
-                SecondaryButton(
-                  child: Text('Prev'),
-                ),
-                PrimaryButton(
-                  child: Text('Finish'),
-                ),
+                SecondaryButton(child: Text('Prev')),
+                PrimaryButton(child: Text('Finish')),
               ],
-              child: NumberedContainer(
-                index: 3,
-                height: 200,
-              ),
+              child: NumberedContainer(index: 3, height: 200),
             );
           },
         ),
@@ -384,19 +346,15 @@ class _StepperExample4State extends State<StepperExample4> {
           contentBuilder: (context) {
             return StepContainer(
               actions: [
-                const SecondaryButton(
-                  child: Text('Prev'),
-                ),
+                const SecondaryButton(child: Text('Prev')),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 1,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 1, height: 200),
             );
           },
         ),
@@ -417,15 +375,13 @@ class _StepperExample4State extends State<StepperExample4> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 2,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 2, height: 200),
             );
           },
         ),
@@ -446,15 +402,13 @@ class _StepperExample4State extends State<StepperExample4> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Finish'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Finish'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 3,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 3, height: 200),
             );
           },
         ),
@@ -495,19 +449,15 @@ class _StepperExample5State extends State<StepperExample5> {
           contentBuilder: (context) {
             return StepContainer(
               actions: [
-                const SecondaryButton(
-                  child: Text('Prev'),
-                ),
+                const SecondaryButton(child: Text('Prev')),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 1,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 1, height: 200),
             );
           },
         ),
@@ -527,15 +477,13 @@ class _StepperExample5State extends State<StepperExample5> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 2,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 2, height: 200),
             );
           },
         ),
@@ -555,15 +503,13 @@ class _StepperExample5State extends State<StepperExample5> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Finish'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Finish'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 3,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 3, height: 200),
             );
           },
         ),
@@ -578,6 +524,7 @@ class _StepperExample5State extends State<StepperExample5> {
 ```dart
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class StepperExample6 extends StatefulWidget {
   const StepperExample6({super.key});
@@ -592,17 +539,9 @@ class _StepperExample6State extends State<StepperExample6> {
     StepVariant.circleAlt,
     StepVariant.line,
   ];
-  static const List<String> _variantNames = [
-    'Circle',
-    'Circle Alt',
-    'Line',
-  ];
+  static const List<String> _variantNames = ['Circle', 'Circle Alt', 'Line'];
   static const List<StepSize> _stepSize = StepSize.values;
-  static const List<String> _stepSizeNames = [
-    'Small',
-    'Medium',
-    'Large',
-  ];
+  static const List<String> _stepSizeNames = ['Small', 'Medium', 'Large'];
   final StepperController controller = StepperController();
   int _currentVariant = 0;
   int _currentStepSize = 0;
@@ -706,19 +645,15 @@ class _StepperExample6State extends State<StepperExample6> {
               contentBuilder: (context) {
                 return StepContainer(
                   actions: [
-                    const SecondaryButton(
-                      child: Text('Prev'),
-                    ),
+                    const SecondaryButton(child: Text('Prev')),
                     PrimaryButton(
-                        child: const Text('Next'),
-                        onPressed: () {
-                          controller.nextStep();
-                        }),
+                      child: const Text('Next'),
+                      onPressed: () {
+                        controller.nextStep();
+                      },
+                    ),
                   ],
-                  child: const NumberedContainer(
-                    index: 1,
-                    height: 200,
-                  ),
+                  child: const NumberedContainer(index: 1, height: 200),
                 );
               },
             ),
@@ -737,15 +672,13 @@ class _StepperExample6State extends State<StepperExample6> {
                       },
                     ),
                     PrimaryButton(
-                        child: const Text('Next'),
-                        onPressed: () {
-                          controller.nextStep();
-                        }),
+                      child: const Text('Next'),
+                      onPressed: () {
+                        controller.nextStep();
+                      },
+                    ),
                   ],
-                  child: const NumberedContainer(
-                    index: 2,
-                    height: 200,
-                  ),
+                  child: const NumberedContainer(index: 2, height: 200),
                 );
               },
             ),
@@ -761,15 +694,13 @@ class _StepperExample6State extends State<StepperExample6> {
                       },
                     ),
                     PrimaryButton(
-                        child: const Text('Finish'),
-                        onPressed: () {
-                          controller.nextStep();
-                        }),
+                      child: const Text('Finish'),
+                      onPressed: () {
+                        controller.nextStep();
+                      },
+                    ),
                   ],
-                  child: const NumberedContainer(
-                    index: 3,
-                    height: 200,
-                  ),
+                  child: const NumberedContainer(index: 3, height: 200),
                 );
               },
             ),
@@ -823,3 +754,4 @@ class StepperTile extends StatelessWidget implements IComponentPage {
 | `direction` | `Axis?` | Layout direction (horizontal or vertical). |
 | `size` | `StepSize?` | Size variant for step indicators. |
 | `variant` | `StepVariant?` | Visual variant for step presentation. |
+| `theme` | `StepperTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

@@ -674,14 +674,16 @@ enum TableCellResizeMode {
 ///   ],
 /// )
 /// ```
-class ResizableTable extends StatefulWidget {
+class ResizableTable extends StatefulWidget
+    implements Styleable<ResizableTableTheme> {
   /// List of table rows to display.
   final List<TableRow>? rows;
 
   /// Controller for managing table resize state.
   final ResizableTableController controller;
 
-  /// Theme for table styling.
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
   final ResizableTableTheme? theme;
 
   /// How content should be clipped at table boundaries.
@@ -1966,7 +1968,7 @@ class _FlattenedTableCell extends _TableCellData {
 ///   },
 /// );
 /// ```
-class Table extends StatefulWidget {
+class Table extends StatefulWidget implements Styleable<TableTheme> {
   /// List of rows to display in the table.
   ///
   /// Type: `List<TableRow>?`. Contains the table data organized as rows.
@@ -2004,10 +2006,8 @@ class Table extends StatefulWidget {
   /// Defaults to [Clip.hardEdge] for clean boundaries.
   final Clip clipBehavior;
 
-  /// Theme configuration for the table appearance.
-  ///
-  /// Type: `TableTheme?`. Controls borders, colors, and overall styling.
-  /// If null, uses the default theme from [ComponentTheme].
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
   final TableTheme? theme;
 
   /// Configuration for frozen cells during scrolling.

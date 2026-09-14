@@ -372,7 +372,7 @@ class SheetSwiperHandler extends SwiperHandler {
 ///   ),
 /// )
 /// ```
-class Swiper extends StatefulWidget {
+class Swiper extends StatefulWidget implements Styleable<SwiperTheme> {
   /// Whether swipe gestures are enabled.
   final bool enabled;
 
@@ -426,6 +426,10 @@ class Swiper extends StatefulWidget {
 
   /// Hit test behavior for gesture detection.
   final HitTestBehavior? behavior;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final SwiperTheme? theme;
 
   /// Creates a [Swiper].
   ///
@@ -484,6 +488,7 @@ class Swiper extends StatefulWidget {
     this.barrierColor,
     this.behavior,
     required this.child,
+    this.theme,
   });
 
   @override
@@ -583,7 +588,8 @@ class _SwiperState extends State<Swiper> {
 
   void _onDragStart(DragStartDetails details) {
     _onDragCancel();
-    final compTheme = ComponentTheme.maybeOf<SwiperTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<SwiperTheme>(context);
     _activeOverlay = widget.handler.openSwiper(
       context: context,
       builder: (context) {
@@ -608,7 +614,8 @@ class _SwiperState extends State<Swiper> {
   }
 
   Widget _buildGesture({required Widget child, required bool draggable}) {
-    final compTheme = ComponentTheme.maybeOf<SwiperTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<SwiperTheme>(context);
     final behavior =
         widget.behavior ?? compTheme?.behavior ?? HitTestBehavior.translucent;
     if (widget.position == OverlayPosition.top ||

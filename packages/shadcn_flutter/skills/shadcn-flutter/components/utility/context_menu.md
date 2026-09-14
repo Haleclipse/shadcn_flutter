@@ -18,14 +18,12 @@ class ContextMenuExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'context_menu',
-      description:
-          'A context menu is a menu in a graphical user interface that appears upon user interaction, such as a right-click mouse operation.',
+      description: 'A context menu is a menu in a graphical user interface that appears upon user interaction, such as a right-click mouse operation.',
       displayName: 'Context Menu',
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/context_menu/context_menu_example_1.dart',
+          path: 'lib/pages/docs/components/context_menu/context_menu_example_1.dart',
           child: ContextMenuExample1(),
         ),
       ],
@@ -63,127 +61,108 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ContextMenu(
-        items: [
-          // Simple command with Ctrl+[ shortcut.
-          const MenuButton(
-            trailing: MenuShortcut(
-              activator: SingleActivator(
-                LogicalKeyboardKey.bracketLeft,
-                control: true,
-              ),
+      items: [
+        // Simple command with Ctrl+[ shortcut.
+        const MenuButton(
+          trailing: MenuShortcut(
+            activator: SingleActivator(
+              LogicalKeyboardKey.bracketLeft,
+              control: true,
             ),
-            child: Text('Back'),
           ),
-          // Disabled command example with Ctrl+] shortcut.
-          const MenuButton(
-            trailing: MenuShortcut(
-              activator: SingleActivator(
-                LogicalKeyboardKey.bracketRight,
-                control: true,
-              ),
+          child: Text('Back'),
+        ),
+        // Disabled command example with Ctrl+] shortcut.
+        const MenuButton(
+          trailing: MenuShortcut(
+            activator: SingleActivator(
+              LogicalKeyboardKey.bracketRight,
+              control: true,
             ),
-            enabled: false,
-            child: Text('Forward'),
           ),
-          // Enabled command with Ctrl+R shortcut.
-          const MenuButton(
-            trailing: MenuShortcut(
-              activator: SingleActivator(
-                LogicalKeyboardKey.keyR,
-                control: true,
-              ),
-            ),
-            child: Text('Reload'),
+          enabled: false,
+          child: Text('Forward'),
+        ),
+        // Enabled command with Ctrl+R shortcut.
+        const MenuButton(
+          trailing: MenuShortcut(
+            activator: SingleActivator(LogicalKeyboardKey.keyR, control: true),
           ),
-          // Submenu with additional tools and a divider.
-          const MenuButton(
-            subMenu: [
-              MenuButton(
-                trailing: MenuShortcut(
-                  activator: SingleActivator(
-                    LogicalKeyboardKey.keyS,
-                    control: true,
-                  ),
+          child: Text('Reload'),
+        ),
+        // Submenu with additional tools and a divider.
+        const MenuButton(
+          subMenu: [
+            MenuButton(
+              trailing: MenuShortcut(
+                activator: SingleActivator(
+                  LogicalKeyboardKey.keyS,
+                  control: true,
                 ),
-                child: Text('Save Page As...'),
               ),
-              MenuButton(
-                child: Text('Create Shortcut...'),
-              ),
-              MenuButton(
-                child: Text('Name Window...'),
-              ),
-              MenuDivider(),
-              MenuButton(
-                child: Text('Developer Tools'),
-              ),
-            ],
-            child: Text('More Tools'),
-          ),
-          const MenuDivider(),
-          // Checkbox item; keep menu open while toggling for quick changes.
-          MenuCheckbox(
-            value: showBookmarksBar,
-            onChanged: (context, value) {
-              setState(() {
-                showBookmarksBar = value;
-              });
-            },
-            autoClose: false,
-            trailing: const MenuShortcut(
-              activator: SingleActivator(
-                LogicalKeyboardKey.keyB,
-                control: true,
-                shift: true,
-              ),
+              child: Text('Save Page As...'),
             ),
-            child: const Text('Show Bookmarks Bar'),
+            MenuButton(child: Text('Create Shortcut...')),
+            MenuButton(child: Text('Name Window...')),
+            MenuDivider(),
+            MenuButton(child: Text('Developer Tools')),
+          ],
+          child: Text('More Tools'),
+        ),
+        const MenuDivider(),
+        // Checkbox item; keep menu open while toggling for quick changes.
+        MenuCheckbox(
+          value: showBookmarksBar,
+          onChanged: (context, value) {
+            setState(() {
+              showBookmarksBar = value;
+            });
+          },
+          autoClose: false,
+          trailing: const MenuShortcut(
+            activator: SingleActivator(
+              LogicalKeyboardKey.keyB,
+              control: true,
+              shift: true,
+            ),
           ),
-          MenuCheckbox(
-            value: showFullUrls,
-            onChanged: (context, value) {
-              setState(() {
-                showFullUrls = value;
-              });
-            },
-            autoClose: false,
-            child: const Text('Show Full URLs'),
-          ),
-          const MenuDivider(),
-          const MenuLabel(child: Text('People')),
-          const MenuDivider(),
-          // Radio group; only one person can be selected at a time.
-          MenuRadioGroup(
-            value: people,
-            onChanged: (context, value) {
-              setState(() {
-                people = value;
-              });
-            },
-            children: const [
-              MenuRadio(
-                value: 0,
-                autoClose: false,
-                child: Text('Pedro Duarte'),
-              ),
-              MenuRadio(
-                value: 1,
-                autoClose: false,
-                child: Text('Colm Tuite'),
-              ),
-            ],
-          ),
-        ],
-        child: DashedContainer(
-          // Right-click target with a dashed border and rounded corners.
-          borderRadius: BorderRadius.circular(theme.radiusMd),
-          strokeWidth: 2,
-          gap: 2,
-          child: const Text('Right click here').center(),
-        ).constrained(
-          maxWidth: 300,
-          maxHeight: 200,
-        ));
+          child: const Text('Show Bookmarks Bar'),
+        ),
+        MenuCheckbox(
+          value: showFullUrls,
+          onChanged: (context, value) {
+            setState(() {
+              showFullUrls = value;
+            });
+          },
+          autoClose: false,
+          child: const Text('Show Full URLs'),
+        ),
+        const MenuDivider(),
+        const MenuLabel(child: Text('People')),
+        const MenuDivider(),
+        // Radio group; only one person can be selected at a time.
+        MenuRadioGroup(
+          value: people,
+          onChanged: (context, value) {
+            setState(() {
+              people = value;
+            });
+          },
+          children: const [
+            MenuRadio(value: 0, autoClose: false, child: Text('Pedro Duarte')),
+            MenuRadio(value: 1, autoClose: false, child: Text('Colm Tuite')),
+          ],
+        ),
+      ],
+      child: DashedContainer(
+        // Right-click target with a dashed border and rounded corners.
+        borderRadius: BorderRadius.circular(theme.radiusMd),
+        strokeWidth: 2,
+        gap: 2,
+        child: const Text('Right click here').center(),
+      ).constrained(maxWidth: 300, maxHeight: 200),
+    );
   }
 }
 
@@ -194,6 +173,7 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // paint a cursor
 class CursorPainter extends CustomPainter {
@@ -244,59 +224,67 @@ class ContextMenuTile extends StatelessWidget implements IComponentPage {
       example: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CustomPaint(
-            painter: CursorPainter(),
-          ),
+          const CustomPaint(painter: CursorPainter()),
           const Gap(24),
           SizedBox(
             width: 192,
-            child: MenuPopup(children: [
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator:
-                      SingleActivator(LogicalKeyboardKey.keyX, control: true),
+            child: MenuPopup(
+              children: [
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyX,
+                      control: true,
+                    ),
+                  ),
+                  child: const Text('Cut'),
                 ),
-                child: const Text('Cut'),
-              ),
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator:
-                      SingleActivator(LogicalKeyboardKey.keyC, control: true),
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyC,
+                      control: true,
+                    ),
+                  ),
+                  child: const Text('Copy'),
                 ),
-                child: const Text('Copy'),
-              ),
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator:
-                      SingleActivator(LogicalKeyboardKey.keyV, control: true),
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyV,
+                      control: true,
+                    ),
+                  ),
+                  child: const Text('Paste'),
                 ),
-                child: const Text('Paste'),
-              ),
-              const MenuDivider(),
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator: SingleActivator(LogicalKeyboardKey.delete),
+                const MenuDivider(),
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(LogicalKeyboardKey.delete),
+                  ),
+                  child: const Text('Delete'),
                 ),
-                child: const Text('Delete'),
-              ),
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator:
-                      SingleActivator(LogicalKeyboardKey.keyA, control: true),
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyA,
+                      control: true,
+                    ),
+                  ),
+                  child: const Text('Select All'),
                 ),
-                child: const Text('Select All'),
-              ),
-            ]),
+              ],
+            ),
           ),
         ],
       ),
@@ -322,3 +310,4 @@ class ContextMenuTile extends StatelessWidget implements IComponentPage {
 | `behavior` | `HitTestBehavior` | How hit testing behaves for the child. |
 | `direction` | `Axis` | Direction to lay out menu items. |
 | `enabled` | `bool` | Whether the context menu is enabled. |
+| `theme` | `ContextMenuTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SidebarSection extends StatelessWidget {
   final Widget header;
@@ -89,12 +90,18 @@ class DocsNavigationButton extends StatefulWidget {
 
 class _DocsNavigationButtonState extends State<DocsNavigationButton> {
   EdgeInsetsGeometry _padding(
-      BuildContext context, Set<WidgetState> states, EdgeInsetsGeometry value) {
+    BuildContext context,
+    Set<WidgetState> states,
+    EdgeInsetsGeometry value,
+  ) {
     return const EdgeInsets.symmetric(vertical: 4, horizontal: 8);
   }
 
   TextStyle _textStyle(
-      BuildContext context, Set<WidgetState> states, TextStyle value) {
+    BuildContext context,
+    Set<WidgetState> states,
+    TextStyle value,
+  ) {
     return value.copyWith(
       fontWeight: widget.selected ? FontWeight.w500 : FontWeight.normal,
     );

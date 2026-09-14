@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ItemPickerTile extends StatelessWidget implements IComponentPage {
   const ItemPickerTile({super.key});
@@ -22,18 +23,9 @@ class ItemPickerTile extends StatelessWidget implements IComponentPage {
               spacing: 8,
               runSpacing: 8,
               children: [
-                Chip(
-                  child: const Text('Option 1'),
-                  onPressed: () {},
-                ),
-                Chip(
-                  child: const Text('Option 2'),
-                  onPressed: () {},
-                ),
-                Chip(
-                  child: const Text('Option 3'),
-                  onPressed: () {},
-                ),
+                Chip(child: const Text('Option 1'), onPressed: () {}),
+                Chip(child: const Text('Option 2'), onPressed: () {}),
+                Chip(child: const Text('Option 3'), onPressed: () {}),
               ],
             ),
           ],

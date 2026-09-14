@@ -14,11 +14,7 @@ class FadeScrollTheme extends ComponentThemeData {
   final List<Color>? gradient;
 
   /// Creates a [FadeScrollTheme].
-  const FadeScrollTheme({
-    this.startOffset,
-    this.endOffset,
-    this.gradient,
-  });
+  const FadeScrollTheme({this.startOffset, this.endOffset, this.gradient});
 
   /// Creates a copy of this theme but with the given fields replaced.
   FadeScrollTheme copyWith({
@@ -50,11 +46,13 @@ class FadeScrollTheme extends ComponentThemeData {
 ///
 /// Adds gradient fade overlays to the start and end of scrollable content,
 /// creating a visual cue that there's more content to scroll.
-class FadeScroll extends StatelessWidget {
+class FadeScroll extends StatelessWidget implements Styleable<FadeScrollTheme> {
   /// The offset from the start where the fade begins.
+  @Deprecated('Use theme: FadeScrollTheme(startOffset: ...) instead.')
   final double? startOffset;
 
   /// The offset from the end where the fade begins.
+  @Deprecated('Use theme: FadeScrollTheme(endOffset: ...) instead.')
   final double? endOffset;
 
   /// The cross-axis offset for the start fade.
@@ -70,7 +68,12 @@ class FadeScroll extends StatelessWidget {
   final ScrollController controller;
 
   /// The gradient colors for the fade effect.
+  @Deprecated('Use theme: FadeScrollTheme(gradient: ...) instead.')
   final List<Color>? gradient;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final FadeScrollTheme? theme;
 
   /// Creates a fade scroll widget.
   const FadeScroll({
@@ -82,23 +85,27 @@ class FadeScroll extends StatelessWidget {
     this.gradient,
     this.startCrossOffset = 0,
     this.endCrossOffset = 0,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<FadeScrollTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<FadeScrollTheme>(context);
     final startOffset = styleValue(
-        widgetValue: this.startOffset,
-        themeValue: compTheme?.startOffset,
-        defaultValue: 0.0);
+      widgetValue: this.startOffset,
+      themeValue: compTheme?.startOffset,
+      defaultValue: 0.0,
+    );
     final endOffset = styleValue(
-        widgetValue: this.endOffset,
-        themeValue: compTheme?.endOffset,
-        defaultValue: 0.0);
+      widgetValue: this.endOffset,
+      themeValue: compTheme?.endOffset,
+      defaultValue: 0.0,
+    );
     final gradient = styleValue(
-        widgetValue: this.gradient,
-        themeValue: compTheme?.gradient,
-        defaultValue: const [Colors.white, Colors.transparent]);
+      widgetValue: this.gradient,
+      themeValue: compTheme?.gradient,
+      defaultValue: const [Colors.white, Colors.transparent],
+    );
     return ListenableBuilder(
       listenable: controller,
       child: child,
@@ -136,31 +143,30 @@ class FadeScroll extends StatelessWidget {
                       relativeEnd + (i / gradient.length) * (1 - relativeEnd),
                   ]
                 : shouldFadeStart
-                    ? [
-                        for (int i = 0; i < gradient.length; i++)
-                          (i / gradient.length) * relativeStart,
-                        relativeStart,
-                        1
-                      ]
-                    : [
-                        0,
-                        relativeEnd,
-                        for (int i = 1; i < gradient.length + 1; i++)
-                          relativeEnd +
-                              (i / gradient.length) * (1 - relativeEnd),
-                      ];
+                ? [
+                    for (int i = 0; i < gradient.length; i++)
+                      (i / gradient.length) * relativeStart,
+                    relativeStart,
+                    1,
+                  ]
+                : [
+                    0,
+                    relativeEnd,
+                    for (int i = 1; i < gradient.length + 1; i++)
+                      relativeEnd + (i / gradient.length) * (1 - relativeEnd),
+                  ];
             return LinearGradient(
-                    colors: [
-                  if (shouldFadeStart) ...gradient,
-                  Colors.white,
-                  Colors.white,
-                  if (shouldFadeEnd) ...gradient.reversed,
-                ],
-                    stops: stops,
-                    begin: start,
-                    end: end,
-                    transform: const _ScaleGradient(Offset(1, 1.5)))
-                .createShader(bounds);
+              colors: [
+                if (shouldFadeStart) ...gradient,
+                Colors.white,
+                Colors.white,
+                if (shouldFadeEnd) ...gradient.reversed,
+              ],
+              stops: stops,
+              begin: start,
+              end: end,
+              transform: const _ScaleGradient(Offset(1, 1.5)),
+            ).createShader(bounds);
           },
           child: child!,
         );

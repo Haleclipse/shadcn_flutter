@@ -21,6 +21,64 @@ widgets in your own code, which you almost always will:
 flutter pub add material_ui
 ```
 
+## Migrating from `package:flutter/material.dart`
+
+**This is the one thing to get right, and it is the most common upgrade
+problem.** Flutter still ships `package:flutter/material.dart`, so an app that
+keeps its old imports goes on compiling after the upgrade — but it will not
+work.
+
+`package:flutter/material.dart` and `package:material_ui/material_ui.dart` are
+two separate libraries that each define their own `Material`, `Theme`,
+`MaterialLocalizations` and so on. They are different Dart types. A `TextField`
+from the SDK copy looks for the SDK's `Material` ancestor and cannot see the one
+`MaterialLayer` installs, so it throws:
+
+```
+No Material widget found.
+TextField widgets require a Material widget ancestor within the closest LookupBoundary.
+```
+
+`debugCheckHasMaterial` is inside an `assert`, so this only surfaces in debug
+builds. Release builds stay silent while still missing the Material defaults.
+
+The fix is to change the import, not to add more layers:
+
+```diff
+- import 'package:flutter/material.dart';
++ import 'package:material_ui/material_ui.dart';
+```
+
+Do this everywhere in your app. Mixing the two libraries in one widget tree does
+not work, and no amount of `MaterialLayer` or `MaterialShadcnApp` nesting will
+make it work.
+
+See [issue #426](https://github.com/sunarya-thito/shadcn_flutter/issues/426).
+
+## Localizations and overlays
+
+`MaterialShadcnApp` handles both of these for you. They are worth knowing about
+if you compose `ShadcnApp` yourself:
+
+- **Localizations have to be registered app-wide.** Material widgets assert on
+  `MaterialLocalizations.of` — an `AppBar`, a tooltip, a `SnackBar` or a date
+  picker throws without it. `MaterialLayer` installs them over its own subtree,
+  but a route pushed by `showDialog` builds outside that subtree, on the root
+  navigator. For those, put `kMaterialLocalizationsDelegates` on
+  `ShadcnApp.localizationsDelegates`.
+- **Use `surfaceBuilder`, not `builder`.** `ShadcnApp.builder` is applied inside
+  shadcn's own overlay layers, so a Material widget shown in a toast would find
+  no `Material` above it. `ShadcnApp.surfaceBuilder` wraps the whole surface
+  instead:
+
+  ```dart
+  ShadcnApp(
+    localizationsDelegates: kMaterialLocalizationsDelegates,
+    surfaceBuilder: (context, child) => MaterialLayer(child: child),
+    home: const HomePage(),
+  );
+  ```
+
 ## Use
 
 `MaterialShadcnApp` is a drop-in replacement for `ShadcnApp`. It takes exactly
@@ -38,7 +96,7 @@ void main() {
     MaterialShadcnApp(
       title: 'My App',
       theme: ThemeData(
-        colorScheme: ColorSchemes.lightZinc(),
+        colorScheme: ColorSchemes.lightZinc,
         radius: 0.5,
       ),
       home: Scaffold(

@@ -404,7 +404,7 @@ class DrawerRawContainer extends StatelessWidget {
           textDirection: TextDirection.ltr,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Gap(max(0.0, extraSize.width + over)),
+            SizedBox(width: max(0.0, extraSize.width + over)),
             Flexible(
               child: _OverscrollScale(
                 overscroll: overscroll,
@@ -413,7 +413,11 @@ class DrawerRawContainer extends StatelessWidget {
                 child: child,
               ),
             ),
-            if (showDragHandle) ...[Gap(gapAfter), ...handle, Gap(gapBefore)],
+            if (showDragHandle) ...[
+              SizedBox(width: gapAfter),
+              ...handle,
+              SizedBox(width: gapBefore),
+            ],
           ],
         );
       case OverlayPosition.right:
@@ -421,7 +425,11 @@ class DrawerRawContainer extends StatelessWidget {
           textDirection: TextDirection.ltr,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (showDragHandle) ...[Gap(gapBefore), ...handle, Gap(gapAfter)],
+            if (showDragHandle) ...[
+              SizedBox(width: gapBefore),
+              ...handle,
+              SizedBox(width: gapAfter),
+            ],
             Flexible(
               child: _OverscrollScale(
                 overscroll: overscroll,
@@ -430,14 +438,14 @@ class DrawerRawContainer extends StatelessWidget {
                 child: child,
               ),
             ),
-            Gap(max(0.0, extraSize.width + over)),
+            SizedBox(width: max(0.0, extraSize.width + over)),
           ],
         );
       case OverlayPosition.top:
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Gap(max(0.0, extraSize.height + over)),
+            SizedBox(height: max(0.0, extraSize.height + over)),
             Flexible(
               child: _OverscrollScale(
                 overscroll: overscroll,
@@ -446,14 +454,22 @@ class DrawerRawContainer extends StatelessWidget {
                 child: child,
               ),
             ),
-            if (showDragHandle) ...[Gap(gapAfter), ...handle, Gap(gapBefore)],
+            if (showDragHandle) ...[
+              SizedBox(height: gapAfter),
+              ...handle,
+              SizedBox(height: gapBefore),
+            ],
           ],
         );
       case OverlayPosition.bottom:
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (showDragHandle) ...[Gap(gapBefore), ...handle, Gap(gapAfter)],
+            if (showDragHandle) ...[
+              SizedBox(height: gapBefore),
+              ...handle,
+              SizedBox(height: gapAfter),
+            ],
             Flexible(
               child: _OverscrollScale(
                 overscroll: overscroll,
@@ -462,7 +478,7 @@ class DrawerRawContainer extends StatelessWidget {
                 child: child,
               ),
             ),
-            Gap(max(0.0, extraSize.height + over)),
+            SizedBox(height: max(0.0, extraSize.height + over)),
           ],
         );
       default:
@@ -526,11 +542,13 @@ class DrawerRawContainer extends StatelessWidget {
         color = color.scaleAlpha(0.75);
       }
       container = ModalBackdrop(
-        surfaceClip: ModalBackdrop.shouldClipSurface(opacity),
-        borderRadius: radius,
-        barrierColor: color,
         fadeAnimation: animation,
-        padding: margin,
+        theme: ModalBackdropTheme(
+          surfaceClip: ModalBackdrop.shouldClipSurface(opacity),
+          borderRadius: radius,
+          barrierColor: color,
+          padding: margin,
+        ),
         child: container,
       );
     }

@@ -84,21 +84,30 @@ class IconContainerTheme extends ComponentThemeData {
 ///   borderRadius: BorderRadius.circular(8),
 /// )
 /// ```
-class IconContainer extends StatelessWidget {
+class IconContainer extends StatelessWidget
+    implements Styleable<IconContainerTheme> {
   /// The icon widget to display.
   final Widget icon;
 
   /// Padding inside the container.
+  @Deprecated('Use theme: IconContainerTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
 
   /// Border radius for the container.
+  @Deprecated('Use theme: IconContainerTheme(borderRadius: ...) instead.')
   final BorderRadius? borderRadius;
 
   /// Background color for the container.
+  @Deprecated('Use theme: IconContainerTheme(backgroundColor: ...) instead.')
   final Color? backgroundColor;
 
   /// Color for the icon.
+  @Deprecated('Use theme: IconContainerTheme(iconColor: ...) instead.')
   final Color? iconColor;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final IconContainerTheme? theme;
 
   /// Creates an [IconContainer].
   ///
@@ -115,12 +124,14 @@ class IconContainer extends StatelessWidget {
     this.borderRadius,
     this.backgroundColor,
     this.iconColor,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<IconContainerTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<IconContainerTheme>(context);
     return Container(
       padding: styleValue(
         defaultValue: EdgeInsetsDensity.all(padXs)

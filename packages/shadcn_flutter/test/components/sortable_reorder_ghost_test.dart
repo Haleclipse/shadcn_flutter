@@ -46,7 +46,10 @@ class _ReorderListState extends State<_ReorderList> {
               data: names[i],
               onAcceptTop: (v) => setState(() => names.swapItem(v, i)),
               onAcceptBottom: (v) => setState(() => names.swapItem(v, i + 1)),
-              child: SizedBox(height: 40, child: Center(child: Text(names[i].data))),
+              child: SizedBox(
+                height: 40,
+                child: Center(child: Text(names[i].data)),
+              ),
             ),
         ],
       ),
@@ -67,13 +70,19 @@ List<String> _ghostTexts(WidgetTester tester) {
   return out;
 }
 
-Future<List<String>> _dragBottomToTop(WidgetTester tester, _KeyMode mode) async {
+Future<List<String>> _dragBottomToTop(
+  WidgetTester tester,
+  _KeyMode mode,
+) async {
   await tester.pumpWidget(SimpleApp(child: _ReorderList(mode)));
   await tester.pumpAndSettle();
 
   final start = tester.getCenter(find.text('E'));
   final top = tester.getCenter(find.text('A'));
-  final gesture = await tester.startGesture(start, kind: PointerDeviceKind.touch);
+  final gesture = await tester.startGesture(
+    start,
+    kind: PointerDeviceKind.touch,
+  );
   await tester.pump(const Duration(milliseconds: 50));
   final delta = top - start;
   for (int i = 0; i < 10; i++) {
@@ -94,7 +103,9 @@ void main() {
   // GlobalKey is claimed twice ("Multiple widgets used the same GlobalKey") and
   // the flying drop ghost shows the wrong item. Identity keys keep each item's
   // state with its data.
-  testWidgets('identity keys: drop ghost stays the dragged item', (tester) async {
+  testWidgets('identity keys: drop ghost stays the dragged item', (
+    tester,
+  ) async {
     final ghost = await _dragBottomToTop(tester, _KeyMode.identity);
     expect(ghost, ['E'], reason: 'flying ghost should be E, was $ghost');
   });

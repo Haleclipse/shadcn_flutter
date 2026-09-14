@@ -13,11 +13,11 @@ void main() {
     CupertinoShadcnApp(
       title: 'Hybrid app',
       theme: ThemeData(
-        colorScheme: ColorSchemes.lightZinc(),
+        colorScheme: ColorSchemes.lightZinc,
         radius: 0.5,
       ),
       darkTheme: ThemeData(
-        colorScheme: ColorSchemes.darkZinc(),
+        colorScheme: ColorSchemes.darkZinc,
         radius: 0.5,
       ),
       home: const HomePage(),
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text('A shadcn Card inside a CupertinoPageScaffold'),
-                const Gap(16),
+                const SizedBox(height: 16),
                 PrimaryButton(
                   onPressed: () {
                     showCupertinoDialog<void>(

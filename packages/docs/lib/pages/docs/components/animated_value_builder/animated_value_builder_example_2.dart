@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// AnimatedValueBuilder example with an initial value and manual rebuild key.
 ///
@@ -17,11 +18,7 @@ class AnimatedValueBuilderExample2 extends StatefulWidget {
 class _AnimatedValueBuilderExample2State
     extends State<AnimatedValueBuilderExample2> {
   // The same color palette as before.
-  List<Color> colors = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
-  ];
+  List<Color> colors = [Colors.red, Colors.green, Colors.blue];
   // Current target index.
   int index = 0;
   // Changing this key forces the AnimatedValueBuilder to rebuild from scratch.
@@ -40,11 +37,7 @@ class _AnimatedValueBuilderExample2State
           duration: const Duration(seconds: 1),
           lerp: Color.lerp,
           builder: (context, value, child) {
-            return Container(
-              width: 100,
-              height: 100,
-              color: value,
-            );
+            return Container(width: 100, height: 100, color: value);
           },
         ),
         const Gap(32),

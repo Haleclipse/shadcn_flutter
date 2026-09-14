@@ -11,8 +11,7 @@ class SwitcherExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'switcher',
-      description:
-          'A Switcher widget allows you to switch between different widgets with a transition effect.',
+      description: 'A Switcher widget allows you to switch between different widgets with a transition effect.',
       displayName: 'Switcher',
       children: [
         WidgetUsageExample(

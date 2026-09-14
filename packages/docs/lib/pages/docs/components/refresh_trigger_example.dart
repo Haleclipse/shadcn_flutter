@@ -18,17 +18,13 @@ class RefreshTriggerExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/refresh_trigger/refresh_trigger_example_1.dart',
+          path: 'lib/pages/docs/components/refresh_trigger/refresh_trigger_example_1.dart',
           child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(dragDevices: {
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.touch,
-            }),
+            behavior: ScrollConfiguration.of(context).copyWith(
+              dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+            ),
             child: OutlinedContainer(
-              child: const RefreshTriggerExample1().sized(
-                height: 400,
-              ),
+              child: const RefreshTriggerExample1().sized(height: 400),
             ),
           ),
         ),

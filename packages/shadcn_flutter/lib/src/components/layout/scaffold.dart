@@ -137,7 +137,7 @@ class ScaffoldTheme extends ComponentThemeData {
 ///   showLoadingSparks: true,
 /// );
 /// ```
-class Scaffold extends StatefulWidget {
+class Scaffold extends StatefulWidget implements Styleable<ScaffoldTheme> {
   /// Header widgets displayed at the top of the scaffold.
   final List<Widget> headers;
 
@@ -174,6 +174,10 @@ class Scaffold extends StatefulWidget {
   /// Whether to resize when keyboard appears.
   final bool? resizeToAvoidBottomInset;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ScaffoldTheme? theme;
+
   /// Creates a [Scaffold].
   const Scaffold({
     super.key,
@@ -189,6 +193,7 @@ class Scaffold extends StatefulWidget {
     this.footerBackgroundColor,
     this.showLoadingSparks,
     this.resizeToAvoidBottomInset,
+    this.theme,
   });
 
   @override
@@ -229,7 +234,8 @@ class ScaffoldState extends State<Scaffold> {
   ///
   /// Returns: Widget tree for the header.
   Widget buildHeader(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ScaffoldTheme>(context);
     return RepaintBoundary(
       child: Container(
         color: widget.headerBackgroundColor ?? compTheme?.headerBackgroundColor,
@@ -253,11 +259,13 @@ class ScaffoldState extends State<Scaffold> {
                           left: 0,
                           right: 0,
                           child: LinearProgressIndicator(
-                            backgroundColor: Colors.transparent,
                             value: widget.loadingProgressIndeterminate
                                 ? null
                                 : widget.loadingProgress,
-                            showSparks: false,
+                            theme: LinearProgressIndicatorTheme(
+                              backgroundColor: Colors.transparent,
+                              showSparks: false,
+                            ),
                           ),
                         ),
                       ],
@@ -293,11 +301,13 @@ class ScaffoldState extends State<Scaffold> {
                       left: 0,
                       right: 0,
                       child: LinearProgressIndicator(
-                        backgroundColor: Colors.transparent,
                         value: widget.loadingProgressIndeterminate
                             ? null
                             : widget.loadingProgress,
-                        showSparks: true,
+                        theme: LinearProgressIndicatorTheme(
+                          backgroundColor: Colors.transparent,
+                          showSparks: true,
+                        ),
                       ),
                     ),
                   ],
@@ -317,7 +327,8 @@ class ScaffoldState extends State<Scaffold> {
   ///
   /// Returns: Widget tree for the footer.
   Widget buildFooter(BuildContext context, EdgeInsets viewInsets) {
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ScaffoldTheme>(context);
     return Offstage(
       offstage: viewInsets.bottom > 0,
       child: RepaintBoundary(
@@ -345,7 +356,8 @@ class ScaffoldState extends State<Scaffold> {
 
   Widget _buildContent(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ScaffoldTheme>(context);
     final viewInsets = MediaQuery.viewInsetsOf(context);
     return DrawerOverlay(
       child: Container(

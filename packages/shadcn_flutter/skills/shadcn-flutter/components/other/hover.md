@@ -37,3 +37,4 @@ Hover(
 | `minDuration` | `Duration?` | Minimum duration to keep hover active once triggered.  Prevents flickering when cursor quickly moves over the widget. Defaults to 0ms. |
 | `showDuration` | `Duration?` | Total duration for hover state before auto-deactivation. |
 | `hitTestBehavior` | `HitTestBehavior?` | Hit test behavior for pointer event handling. |
+| `theme` | `HoverTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

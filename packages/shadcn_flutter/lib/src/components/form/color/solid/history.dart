@@ -127,7 +127,7 @@ class ColorHistoryGrid extends StatelessWidget {
               );
             }
             if (j < crossAxisCount - 1) {
-              tiles.add(Gap(spacing));
+              tiles.add(SizedBox(width: spacing));
             }
           }
           rows.add(
@@ -139,7 +139,7 @@ class ColorHistoryGrid extends StatelessWidget {
             ),
           );
           if (i < storage.capacity - crossAxisCount) {
-            rows.add(Gap(spacing));
+            rows.add(SizedBox(height: spacing));
           }
         }
         return IntrinsicWidth(

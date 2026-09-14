@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class PinnedSheetTile extends StatefulWidget implements IComponentPage {
   const PinnedSheetTile({super.key});
@@ -43,8 +44,10 @@ class _PinnedSheetTileState extends State<PinnedSheetTile> {
             stages: stages,
             initialStage: const SheetStage.peekDragHandle(),
             backdrop: Card(
-              fillColor: theme.colorScheme.muted,
-              filled: true,
+              theme: CardTheme(
+                fillColor: theme.colorScheme.muted,
+                filled: true,
+              ),
               child: Center(child: const Text('Backdrop content').muted()),
             ),
             child: DrawerContainer(

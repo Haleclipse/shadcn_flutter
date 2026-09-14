@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class NavigationBarTile extends StatelessWidget implements IComponentPage {
   const NavigationBarTile({super.key});
@@ -44,10 +45,7 @@ class NavigationBarTile extends StatelessWidget implements IComponentPage {
                 children: [
                   Icon(LucideIcons.search),
                   Gap(4),
-                  Text(
-                    'Search',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  Text('Search', style: TextStyle(fontSize: 12)),
                 ],
               ),
               const Column(
@@ -55,10 +53,7 @@ class NavigationBarTile extends StatelessWidget implements IComponentPage {
                 children: [
                   Icon(LucideIcons.heart),
                   Gap(4),
-                  Text(
-                    'Favorites',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  Text('Favorites', style: TextStyle(fontSize: 12)),
                 ],
               ),
               const Column(
@@ -66,10 +61,7 @@ class NavigationBarTile extends StatelessWidget implements IComponentPage {
                 children: [
                   Icon(LucideIcons.user),
                   Gap(4),
-                  Text(
-                    'Profile',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  Text('Profile', style: TextStyle(fontSize: 12)),
                 ],
               ),
             ],

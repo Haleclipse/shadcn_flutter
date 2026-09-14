@@ -19,28 +19,20 @@ class _MultiSelectExample1State extends State<MultiSelectExample1> {
         return MultiSelectChip(value: item, child: Text(item));
       },
       popup: const SelectPopup(
-          items: SelectItemList(children: [
-        SelectItemButton(
-          value: 'Apple',
-          child: Text('Apple'),
+        items: SelectItemList(
+          children: [
+            SelectItemButton(value: 'Apple', child: Text('Apple')),
+            SelectItemButton(value: 'Banana', child: Text('Banana')),
+            SelectItemButton(value: 'Cherry', child: Text('Cherry')),
+          ],
         ),
-        SelectItemButton(
-          value: 'Banana',
-          child: Text('Banana'),
-        ),
-        SelectItemButton(
-          value: 'Cherry',
-          child: Text('Cherry'),
-        ),
-      ])),
+      ),
       onChanged: (value) {
         setState(() {
           selectedValues = value;
         });
       },
-      constraints: const BoxConstraints(
-        minWidth: 200,
-      ),
+      constraints: const BoxConstraints(minWidth: 200),
       value: selectedValues,
       placeholder: const Text('Select a fruit'),
     );

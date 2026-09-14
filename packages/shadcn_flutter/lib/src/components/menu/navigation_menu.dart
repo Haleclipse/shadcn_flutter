@@ -367,7 +367,7 @@ class NavigationMenuContent extends StatelessWidget {
         content: content?.muted(),
         trailing: trailing,
         leading: leading,
-        mainAxisAlignment: MainAxisAlignment.start,
+        theme: BasicTheme(mainAxisAlignment: MainAxisAlignment.start),
       ),
     ).constrained(maxWidth: 16 * 16 * scaling);
   }
@@ -544,7 +544,8 @@ class NavigationMenuContentList extends StatelessWidget {
 ///   ],
 /// )
 /// ```
-class NavigationMenu extends StatefulWidget {
+class NavigationMenu extends StatefulWidget
+    implements Styleable<NavigationMenuTheme> {
   /// Opacity level for the popover surface background.
   ///
   /// Controls the transparency of the dropdown content's background.
@@ -568,7 +569,12 @@ class NavigationMenu extends StatefulWidget {
 
   /// Whether the popover may adapt to a different presentation on mobile
   /// platforms (see [showOverlay]'s `adaptive` parameter).
+  @Deprecated('Use theme: NavigationMenuTheme(adaptiveOverlay: ...) instead.')
   final bool? adaptiveOverlay;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final NavigationMenuTheme? theme;
 
   /// Creates a [NavigationMenu] with the specified items and appearance.
   ///
@@ -598,6 +604,7 @@ class NavigationMenu extends StatefulWidget {
     this.surfaceBlur,
     required this.children,
     this.adaptiveOverlay,
+    this.theme,
   });
 
   @override
@@ -654,7 +661,8 @@ class NavigationMenuState extends State<NavigationMenu> {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final compTheme = ComponentTheme.maybeOf<NavigationMenuTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<NavigationMenuTheme>(context);
     final adaptiveOverlay = styleValue(
       widgetValue: widget.adaptiveOverlay,
       themeValue: compTheme?.adaptiveOverlay,
@@ -739,7 +747,8 @@ class NavigationMenuState extends State<NavigationMenu> {
   /// Returns: `Widget` — the popover widget
   Widget buildPopover(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<NavigationMenuTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<NavigationMenuTheme>(context);
     final surfaceOpacity =
         widget.surfaceOpacity ??
         compTheme?.surfaceOpacity ??
@@ -801,9 +810,11 @@ class NavigationMenuState extends State<NavigationMenu> {
               }
               return OutlinedContainer(
                 clipBehavior: Clip.antiAlias,
-                borderRadius: theme.borderRadiusMd,
-                surfaceOpacity: surfaceOpacity,
-                surfaceBlur: surfaceBlur,
+                theme: OutlinedContainerTheme(
+                  borderRadius: theme.borderRadiusMd,
+                  surfaceOpacity: surfaceOpacity,
+                  surfaceBlur: surfaceBlur,
+                ),
                 child: Stack(
                   children: [
                     ...children,

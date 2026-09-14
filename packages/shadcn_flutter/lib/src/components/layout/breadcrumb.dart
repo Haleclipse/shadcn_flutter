@@ -102,7 +102,7 @@ class _SlashSeparator extends StatelessWidget {
 ///   ],
 /// );
 /// ```
-class Breadcrumb extends StatelessWidget {
+class Breadcrumb extends StatelessWidget implements Styleable<BreadcrumbTheme> {
   /// Default arrow separator widget (>).
   ///
   /// Can be used as the [separator] parameter for arrow-style navigation.
@@ -127,7 +127,12 @@ class Breadcrumb extends StatelessWidget {
   /// Padding around the entire breadcrumb widget.
   ///
   /// If `null`, uses default padding from the theme.
+  @Deprecated('Use theme: BreadcrumbTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final BreadcrumbTheme? theme;
 
   /// Creates a [Breadcrumb] navigation trail.
   ///
@@ -155,11 +160,12 @@ class Breadcrumb extends StatelessWidget {
     required this.children,
     this.separator,
     this.padding,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BreadcrumbTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<BreadcrumbTheme>(context);
     final sep = separator ?? compTheme?.separator ?? Breadcrumb.arrowSeparator;
     final pad = styleValue(
       widgetValue: padding,

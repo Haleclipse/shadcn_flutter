@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates composing validators with operators.
 ///
@@ -48,7 +49,8 @@ class FormExample5 extends StatelessWidget {
                   key: _passwordKey,
                   label: const Text('Password'),
                   // Compose validators with & (AND): both must pass.
-                  validator: const LengthValidator(min: 8) &
+                  validator:
+                      const LengthValidator(min: 8) &
                       const SafePasswordValidator(
                         requireSpecialChar: false,
                         requireUppercase: false,

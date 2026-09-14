@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormExample3 extends StatefulWidget {
   const FormExample3({super.key});
@@ -10,11 +11,7 @@ class FormExample3 extends StatefulWidget {
 }
 
 class _FormExample3State extends State<FormExample3> {
-  final _dummyData = [
-    'sunarya-thito',
-    'septogeddon',
-    'shadcn',
-  ];
+  final _dummyData = ['sunarya-thito', 'septogeddon', 'shadcn'];
 
   final _usernameKey = const TextFieldKey('username');
   final _passwordKey = const TextFieldKey('password');
@@ -31,11 +28,13 @@ class _FormExample3State extends State<FormExample3> {
             builder: (context) {
               return AlertDialog(
                 title: const Text('Form Values'),
-                content: Text(jsonEncode(values.map(
-                  (key, value) {
-                    return MapEntry(key.key, value);
-                  },
-                ))),
+                content: Text(
+                  jsonEncode(
+                    values.map((key, value) {
+                      return MapEntry(key.key, value);
+                    }),
+                  ),
+                ),
                 actions: [
                   PrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -58,7 +57,8 @@ class _FormExample3State extends State<FormExample3> {
                   hint: const Text('This is your public display name'),
                   // Combine validators: length + async availability check,
                   // but only run the async validator on submit.
-                  validator: const LengthValidator(min: 4) &
+                  validator:
+                      const LengthValidator(min: 4) &
                       ValidationMode(
                         ConditionalValidator((value) async {
                           // simulate a network delay for example purpose
@@ -68,9 +68,7 @@ class _FormExample3State extends State<FormExample3> {
                         // only validate when the form is submitted
                         mode: {FormValidationMode.submitted},
                       ),
-                  child: const TextField(
-                    initialValue: 'sunarya-thito',
-                  ),
+                  child: const TextField(initialValue: 'sunarya-thito'),
                 ),
                 FormField(
                   key: _passwordKey,
@@ -78,24 +76,22 @@ class _FormExample3State extends State<FormExample3> {
                   validator: const LengthValidator(min: 8),
                   showErrors: const {
                     FormValidationMode.submitted,
-                    FormValidationMode.changed
+                    FormValidationMode.changed,
                   },
-                  child: const TextField(
-                    obscureText: true,
-                  ),
+                  child: const TextField(obscureText: true),
                 ),
                 FormField<String>(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
                   showErrors: const {
                     FormValidationMode.submitted,
-                    FormValidationMode.changed
+                    FormValidationMode.changed,
                   },
-                  validator: CompareWith.equal(_passwordKey,
-                      message: 'Passwords do not match'),
-                  child: const TextField(
-                    obscureText: true,
+                  validator: CompareWith.equal(
+                    _passwordKey,
+                    message: 'Passwords do not match',
                   ),
+                  child: const TextField(obscureText: true),
                 ),
               ],
             ),
@@ -103,9 +99,7 @@ class _FormExample3State extends State<FormExample3> {
             const SubmitButton(
               loadingTrailing: AspectRatio(
                 aspectRatio: 1,
-                child: CircularProgressIndicator(
-                  onSurface: true,
-                ),
+                child: CircularProgressIndicator(onSurface: true),
               ),
               child: Text('Register'),
             ),

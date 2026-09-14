@@ -6,12 +6,7 @@ void main() {
     testWidgets('renders and is visible', (tester) async {
       await tester.pumpWidget(
         ShadcnApp(
-          home: Scaffold(
-            headers: [
-              AppBar(),
-            ],
-            child: const SizedBox(),
-          ),
+          home: Scaffold(headers: [AppBar()], child: const SizedBox()),
         ),
       );
 
@@ -22,11 +17,7 @@ void main() {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
-            headers: [
-              AppBar(
-                title: const Text('Test Title'),
-              ),
-            ],
+            headers: [AppBar(title: const Text('Test Title'))],
             child: const SizedBox(),
           ),
         ),
@@ -81,11 +72,7 @@ void main() {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
-            headers: [
-              AppBar(
-                child: const Text('Custom Child'),
-              ),
-            ],
+            headers: [AppBar(child: const Text('Custom Child'))],
             child: const SizedBox(),
           ),
         ),
@@ -98,12 +85,7 @@ void main() {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
-            headers: [
-              AppBar(
-                height: 100,
-                title: const Text('Test'),
-              ),
-            ],
+            headers: [AppBar(height: 100, title: const Text('Test'))],
             child: const SizedBox(),
           ),
         ),
@@ -194,12 +176,7 @@ void main() {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
-            headers: [
-              AppBar(
-                useSafeArea: false,
-                title: const Text('Test'),
-              ),
-            ],
+            headers: [AppBar(useSafeArea: false, title: const Text('Test'))],
             child: const SizedBox(),
           ),
         ),
@@ -253,12 +230,7 @@ void main() {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
-            headers: [
-              AppBar(
-                surfaceBlur: 5.0,
-                title: const Text('Test'),
-              ),
-            ],
+            headers: [AppBar(surfaceBlur: 5.0, title: const Text('Test'))],
             child: const SizedBox(),
           ),
         ),
@@ -272,12 +244,7 @@ void main() {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
-            headers: [
-              AppBar(
-                surfaceOpacity: 0.5,
-                title: const Text('Test'),
-              ),
-            ],
+            headers: [AppBar(surfaceOpacity: 0.5, title: const Text('Test'))],
             child: const SizedBox(),
           ),
         ),
@@ -291,12 +258,7 @@ void main() {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
-            headers: [
-              AppBar(
-                leading: const [],
-                trailing: const [],
-              ),
-            ],
+            headers: [AppBar(leading: const [], trailing: const [])],
             child: const SizedBox(),
           ),
         ),
@@ -305,13 +267,11 @@ void main() {
       expect(find.byType(AppBar), findsOneWidget);
     });
 
-    testWidgets('asserts when both child and title are provided',
-        (tester) async {
+    testWidgets('asserts when both child and title are provided', (
+      tester,
+    ) async {
       expect(
-        () => AppBar(
-          title: const Text('Title'),
-          child: const Text('Child'),
-        ),
+        () => AppBar(title: const Text('Title'), child: const Text('Child')),
         throwsAssertionError,
       );
     });

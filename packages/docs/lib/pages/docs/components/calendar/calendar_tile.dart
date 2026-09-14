@@ -14,7 +14,9 @@ class CalendarTile extends StatelessWidget implements IComponentPage {
       title: 'Calendar',
       scale: 1,
       example: Calendar(
-          view: CalendarView.now(), selectionMode: CalendarSelectionMode.none),
+        view: CalendarView.now(),
+        selectionMode: CalendarSelectionMode.none,
+      ),
     );
   }
 }

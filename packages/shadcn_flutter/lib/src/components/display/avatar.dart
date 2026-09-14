@@ -1,3 +1,8 @@
+// `Avatar.size` and `Avatar.borderRadius` are getters that fall through to
+// `theme`, so the constructors assign private backing fields from
+// same-named public parameters. Initializing formals cannot express that.
+// ignore_for_file: prefer_initializing_formals
+
 import '../../../shadcn_flutter.dart';
 
 /// Theme configuration for [Avatar] and related avatar components.
@@ -190,7 +195,8 @@ abstract class AvatarWidget extends Widget {
 ///   ),
 /// );
 /// ```
-class Avatar extends StatefulWidget implements AvatarWidget {
+class Avatar extends StatefulWidget
+    implements AvatarWidget, Styleable<AvatarTheme> {
   /// Generates initials from a user's full name.
   ///
   /// Creates appropriate initials for avatar display from a given name string.
@@ -247,21 +253,33 @@ class Avatar extends StatefulWidget implements AvatarWidget {
   ///
   /// Type: `Color?`. Used as the container background color when showing
   /// [initials]. If null, defaults to the theme's muted color.
+  @Deprecated('Use theme: AvatarTheme(backgroundColor: ...) instead.')
   final Color? backgroundColor;
+
+  final double? _size;
+
+  final double? _borderRadius;
 
   /// Size of the avatar in logical pixels.
   ///
   /// Type: `double?`. Controls both width and height of the avatar container.
   /// If null, defaults to theme.scaling * 40 pixels.
+  ///
+  /// Falls through to [theme] so that containers laying avatars out — see
+  /// [AvatarGroup] — see the same size the avatar will paint itself at.
   @override
-  final double? size;
+  @Deprecated('Use theme: AvatarTheme(size: ...) instead.')
+  double? get size => _size ?? theme?.size;
 
   /// Border radius for avatar corners in logical pixels.
   ///
   /// Type: `double?`. Creates rounded corners on the avatar container.
   /// If null, defaults to theme.radius * size for proportional rounding.
+  ///
+  /// Falls through to [theme], like [size].
   @override
-  final double? borderRadius;
+  @Deprecated('Use theme: AvatarTheme(borderRadius: ...) instead.')
+  double? get borderRadius => _borderRadius ?? theme?.borderRadius;
 
   /// Optional badge widget to overlay on the avatar.
   ///
@@ -273,12 +291,14 @@ class Avatar extends StatefulWidget implements AvatarWidget {
   ///
   /// Type: `AlignmentGeometry?`. Controls where the [badge] is positioned.
   /// If null, uses a calculated offset based on avatar and badge sizes.
+  @Deprecated('Use theme: AvatarTheme(badgeAlignment: ...) instead.')
   final AlignmentGeometry? badgeAlignment;
 
   /// Spacing between the avatar and badge in logical pixels.
   ///
   /// Type: `double?`. Controls the gap between the avatar edge and badge edge.
   /// If null, defaults to theme.scaling * 4 pixels.
+  @Deprecated('Use theme: AvatarTheme(badgeGap: ...) instead.')
   final double? badgeGap;
 
   /// Image provider for displaying user photos.
@@ -286,6 +306,10 @@ class Avatar extends StatefulWidget implements AvatarWidget {
   /// Type: `ImageProvider?`. Can be any Flutter image provider (NetworkImage,
   /// AssetImage, etc.). If null or loading fails, shows [initials] instead.
   final ImageProvider? provider;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AvatarTheme? theme;
 
   /// Creates an [Avatar] widget with optional image provider.
   ///
@@ -324,13 +348,15 @@ class Avatar extends StatefulWidget implements AvatarWidget {
     super.key,
     required this.initials,
     this.backgroundColor,
-    this.size,
-    this.borderRadius,
+    double? size,
+    double? borderRadius,
     this.badge,
     this.badgeAlignment,
     this.badgeGap,
     this.provider,
-  });
+    this.theme,
+  }) : _size = size,
+       _borderRadius = borderRadius;
 
   /// Creates an [Avatar] with a network image.
   ///
@@ -365,15 +391,18 @@ class Avatar extends StatefulWidget implements AvatarWidget {
     super.key,
     required this.initials,
     this.backgroundColor,
-    this.size,
-    this.borderRadius,
+    double? size,
+    double? borderRadius,
     this.badge,
     this.badgeAlignment,
     this.badgeGap,
     int? cacheWidth,
     int? cacheHeight,
     required String photoUrl,
-  }) : provider = ResizeImage.resizeIfNeeded(
+    this.theme,
+  }) : _size = size,
+       _borderRadius = borderRadius,
+       provider = ResizeImage.resizeIfNeeded(
          cacheWidth,
          cacheHeight,
          NetworkImage(photoUrl),
@@ -386,7 +415,8 @@ class Avatar extends StatefulWidget implements AvatarWidget {
 class _AvatarState extends State<Avatar> {
   Widget _build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<AvatarTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AvatarTheme>(context);
     double size = styleValue(
       widgetValue: widget.size,
       themeValue: compTheme?.size,
@@ -422,7 +452,8 @@ class _AvatarState extends State<Avatar> {
 
   Widget _buildInitials(BuildContext context, double borderRadius) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<AvatarTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AvatarTheme>(context);
     final densityGap = theme.density.baseGap * theme.scaling;
     return Container(
       decoration: BoxDecoration(
@@ -458,7 +489,8 @@ class _AvatarState extends State<Avatar> {
       return _build(context);
     }
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<AvatarTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AvatarTheme>(context);
     double size = styleValue(
       widgetValue: widget.size,
       themeValue: compTheme?.size,

@@ -38,6 +38,7 @@ class TabListExample extends StatelessWidget {
 ```dart
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates TabList (a low-level tab header) with an IndexedStack body.
 // The header controls the index; the content is managed separately.
@@ -65,15 +66,9 @@ class _TabListExample1State extends State<TabListExample1> {
             });
           },
           children: const [
-            TabItem(
-              child: Text('Tab 1'),
-            ),
-            TabItem(
-              child: Text('Tab 2'),
-            ),
-            TabItem(
-              child: Text('Tab 3'),
-            ),
+            TabItem(child: Text('Tab 1')),
+            TabItem(child: Text('Tab 2')),
+            TabItem(child: Text('Tab 3')),
           ],
         ),
         const Gap(16),
@@ -81,15 +76,9 @@ class _TabListExample1State extends State<TabListExample1> {
         IndexedStack(
           index: index,
           children: const [
-            NumberedContainer(
-              index: 1,
-            ),
-            NumberedContainer(
-              index: 2,
-            ),
-            NumberedContainer(
-              index: 3,
-            ),
+            NumberedContainer(index: 1),
+            NumberedContainer(index: 2),
+            NumberedContainer(index: 3),
           ],
         ).sized(height: 300),
       ],
@@ -148,3 +137,4 @@ class TabListTile extends StatelessWidget implements IComponentPage {
 | `children` | `List<TabChild>` | List of tab child widgets to display in the tab list.  Type: `List<TabChild>`. Each TabChild represents one selectable tab with its own label and optional content. The tabs are displayed in the order provided in the list. |
 | `index` | `int` | Index of the currently active/selected tab.  Type: `int`. Zero-based index indicating which tab is currently active. Must be within the bounds of the [children] list. The active tab receives special styling and the indicator line. |
 | `onChanged` | `ValueChanged<int>?` | Callback invoked when a tab is selected.  Type: `ValueChanged<int>?`. Called with the index of the newly selected tab when the user taps on a tab button. If null, tabs are not interactive. |
+| `theme` | `TabListTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

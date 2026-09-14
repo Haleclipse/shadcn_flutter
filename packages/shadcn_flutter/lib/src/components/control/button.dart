@@ -1533,10 +1533,10 @@ class ButtonState<T extends Button> extends State<T> {
                   children: [
                     if (widget.leading != null) widget.leading!,
                     if (widget.leading != null)
-                      Gap(widget.leadingGap ?? densityGap),
+                      SizedBox(width: widget.leadingGap ?? densityGap),
                     Expanded(child: _buildAligned()),
                     if (widget.trailing != null)
-                      Gap(widget.trailingGap ?? densityGap),
+                      SizedBox(width: widget.trailingGap ?? densityGap),
                     if (widget.trailing != null) widget.trailing!,
                   ],
                 ),
@@ -4046,7 +4046,8 @@ IconThemeData _buttonStaticIconTheme(
 /// )
 /// ```
 // Backward compatibility
-class PrimaryButton extends StatelessWidget {
+class PrimaryButton extends StatelessWidget
+    implements Styleable<PrimaryButtonTheme> {
   /// The widget displayed as the button's main content.
   final Widget child;
 
@@ -4134,6 +4135,10 @@ class PrimaryButton extends StatelessWidget {
   /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final PrimaryButtonTheme? theme;
+
   /// Creates a primary button with the specified properties.
   const PrimaryButton({
     super.key,
@@ -4166,6 +4171,7 @@ class PrimaryButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
+    this.theme,
   });
 
   @override
@@ -4206,7 +4212,8 @@ class PrimaryButton extends StatelessWidget {
 ///
 /// A simplified wrapper around [Button.secondary] with the same properties
 /// as [PrimaryButton] but using secondary button styling for supporting actions.
-class SecondaryButton extends StatelessWidget {
+class SecondaryButton extends StatelessWidget
+    implements Styleable<SecondaryButtonTheme> {
   /// The widget to display as the button's content.
   final Widget child;
 
@@ -4294,6 +4301,10 @@ class SecondaryButton extends StatelessWidget {
   /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final SecondaryButtonTheme? theme;
+
   /// Creates a secondary button with the specified properties.
   const SecondaryButton({
     super.key,
@@ -4326,6 +4337,7 @@ class SecondaryButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
+    this.theme,
   });
 
   @override
@@ -4366,7 +4378,8 @@ class SecondaryButton extends StatelessWidget {
 ///
 /// A simplified wrapper around [Button.outline] with the same properties
 /// as [PrimaryButton] but using outline button styling with a visible border.
-class OutlineButton extends StatelessWidget {
+class OutlineButton extends StatelessWidget
+    implements Styleable<OutlineButtonTheme> {
   /// The widget to display as the button's content.
   final Widget child;
 
@@ -4454,6 +4467,10 @@ class OutlineButton extends StatelessWidget {
   /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final OutlineButtonTheme? theme;
+
   /// Creates an outline button with the specified properties.
   const OutlineButton({
     super.key,
@@ -4486,6 +4503,7 @@ class OutlineButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
+    this.theme,
   });
 
   @override
@@ -4526,7 +4544,8 @@ class OutlineButton extends StatelessWidget {
 ///
 /// A simplified wrapper around [Button.ghost] with the same properties
 /// as [PrimaryButton] but using ghost button styling with minimal visual presence.
-class GhostButton extends StatelessWidget {
+class GhostButton extends StatelessWidget
+    implements Styleable<GhostButtonTheme> {
   /// The widget to display as the button's content.
   final Widget child;
 
@@ -4614,6 +4633,10 @@ class GhostButton extends StatelessWidget {
   /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final GhostButtonTheme? theme;
+
   /// Creates a ghost button with the specified properties.
   const GhostButton({
     super.key,
@@ -4646,6 +4669,7 @@ class GhostButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
+    this.theme,
   });
 
   @override
@@ -4686,7 +4710,7 @@ class GhostButton extends StatelessWidget {
 ///
 /// A simplified wrapper around [Button.link] with the same properties
 /// as [PrimaryButton] but using link button styling that resembles a hyperlink.
-class LinkButton extends StatelessWidget {
+class LinkButton extends StatelessWidget implements Styleable<LinkButtonTheme> {
   /// The widget to display as the button's content.
   final Widget child;
 
@@ -4774,6 +4798,10 @@ class LinkButton extends StatelessWidget {
   /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final LinkButtonTheme? theme;
+
   /// Creates a link button with the specified properties.
   const LinkButton({
     super.key,
@@ -4806,6 +4834,7 @@ class LinkButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
+    this.theme,
   });
 
   @override
@@ -4846,7 +4875,7 @@ class LinkButton extends StatelessWidget {
 ///
 /// A simplified wrapper around [Button.text] with the same properties
 /// as [PrimaryButton] but using text button styling with minimal styling.
-class TextButton extends StatelessWidget {
+class TextButton extends StatelessWidget implements Styleable<TextButtonTheme> {
   /// The widget to display as the button's content.
   final Widget child;
 
@@ -4933,6 +4962,10 @@ class TextButton extends StatelessWidget {
 
   /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TextButtonTheme? theme;
 
   /// Creates a text button with the specified properties.
   const TextButton({
@@ -4966,6 +4999,7 @@ class TextButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
+    this.theme,
   });
 
   @override
@@ -4988,7 +5022,8 @@ class TextButton extends StatelessWidget {
 ///
 /// A simplified wrapper around [Button.destructive] with the same properties
 /// as [PrimaryButton] but using destructive button styling for dangerous actions.
-class DestructiveButton extends StatelessWidget {
+class DestructiveButton extends StatelessWidget
+    implements Styleable<DestructiveButtonTheme> {
   /// The widget to display as the button's content.
   final Widget child;
 
@@ -5076,6 +5111,10 @@ class DestructiveButton extends StatelessWidget {
   /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final DestructiveButtonTheme? theme;
+
   /// Creates a destructive button with the specified properties.
   const DestructiveButton({
     super.key,
@@ -5108,6 +5147,7 @@ class DestructiveButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
+    this.theme,
   });
 
   @override
@@ -5339,7 +5379,7 @@ class TabButton extends StatelessWidget {
 ///   ),
 /// )
 /// ```
-class CardButton extends StatelessWidget {
+class CardButton extends StatelessWidget implements Styleable<CardButtonTheme> {
   /// The primary content displayed within the card button.
   ///
   /// Typically contains text, icons, or complex layouts that represent
@@ -5468,6 +5508,10 @@ class CardButton extends StatelessWidget {
   /// Called when tertiary long press completes.
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CardButtonTheme? theme;
+
   /// Creates a [CardButton] with card-styled appearance and comprehensive interaction support.
   ///
   /// The [child] parameter is required and provides the button's main content.
@@ -5526,6 +5570,7 @@ class CardButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
+    this.theme,
   });
 
   @override

@@ -28,8 +28,12 @@ abstract class BackdropTransform {
   /// [isRoot] is true for the bottom-most layer in a stack of sheets (the one
   /// that wraps the actual app content); root layers may additionally clip
   /// their corners as they scale in.
-  Widget wrapBackdrop(BuildContext context, Widget child, double t,
-      {bool isRoot = true});
+  Widget wrapBackdrop(
+    BuildContext context,
+    Widget child,
+    double t, {
+    bool isRoot = true,
+  });
 
   /// The amount of space (per axis) freed by this transform for a backdrop of
   /// [size] at progress [t]. Returns [Size.zero] when nothing is freed.
@@ -42,9 +46,12 @@ class NoBackdropTransform extends BackdropTransform {
   const NoBackdropTransform();
 
   @override
-  Widget wrapBackdrop(BuildContext context, Widget child, double t,
-          {bool isRoot = true}) =>
-      child;
+  Widget wrapBackdrop(
+    BuildContext context,
+    Widget child,
+    double t, {
+    bool isRoot = true,
+  }) => child;
 
   @override
   Size resolveExtraSize(Size size, double t, {bool isRoot = true}) => Size.zero;
@@ -75,8 +82,12 @@ class ScaleBackdropTransform extends BackdropTransform {
   double scaleAt(double t) => 1 - (1 - minScale) * t;
 
   @override
-  Widget wrapBackdrop(BuildContext context, Widget child, double t,
-      {bool isRoot = true}) {
+  Widget wrapBackdrop(
+    BuildContext context,
+    Widget child,
+    double t, {
+    bool isRoot = true,
+  }) {
     final scale = scaleAt(t);
     Widget result = child;
     if (isRoot) {

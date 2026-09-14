@@ -3,8 +3,9 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 void main() {
   group('Table Sizing Strategies', () {
-    testWidgets('FixedTableSize respects exact pixel values',
-        (WidgetTester tester) async {
+    testWidgets('FixedTableSize respects exact pixel values', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
@@ -35,8 +36,9 @@ void main() {
       expect(renderTable.size.width, equals(300.0));
     });
 
-    testWidgets('FlexTableSize distributes space proportionally',
-        (WidgetTester tester) async {
+    testWidgets('FlexTableSize distributes space proportionally', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
@@ -69,8 +71,9 @@ void main() {
       expect(renderTable.size.width, equals(300.0));
     });
 
-    testWidgets('FlexTableSize with tight fit fills space',
-        (WidgetTester tester) async {
+    testWidgets('FlexTableSize with tight fit fills space', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
@@ -86,9 +89,11 @@ void main() {
                     TableRow(
                       cells: [
                         TableCell(
-                            child: SizedBox(height: 50, child: Text('Cell 1'))),
+                          child: SizedBox(height: 50, child: Text('Cell 1')),
+                        ),
                         TableCell(
-                            child: SizedBox(height: 50, child: Text('Cell 2'))),
+                          child: SizedBox(height: 50, child: Text('Cell 2')),
+                        ),
                       ],
                     ),
                   ],
@@ -116,8 +121,9 @@ void main() {
       expect(containerSize2.width, equals(200.0));
     });
 
-    testWidgets('IntrinsicTableSize adapts to content',
-        (WidgetTester tester) async {
+    testWidgets('IntrinsicTableSize adapts to content', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
@@ -148,8 +154,9 @@ void main() {
       expect(renderTable.size.width, greaterThanOrEqualTo(200.0));
     });
 
-    testWidgets('FractionalTableSize takes fraction of available space',
-        (WidgetTester tester) async {
+    testWidgets('FractionalTableSize takes fraction of available space', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         ShadcnApp(
           home: Scaffold(
@@ -184,40 +191,41 @@ void main() {
     });
 
     testWidgets(
-        'IntrinsicTableSize row expands for wrapping text in Fixed column',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        ShadcnApp(
-          home: Scaffold(
-            child: Center(
-              child: Table(
-                columnWidths: const {
-                  0: FixedTableSize(100), // Constrained width
-                },
-                rows: [
-                  TableRow(
-                    cells: [
-                      TableCell(
-                        child: Text(
-                          'This is a long text that should wrap to multiple lines',
-                          style: TextStyle(fontSize: 20), // Ensure it wraps
+      'IntrinsicTableSize row expands for wrapping text in Fixed column',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          ShadcnApp(
+            home: Scaffold(
+              child: Center(
+                child: Table(
+                  columnWidths: const {
+                    0: FixedTableSize(100), // Constrained width
+                  },
+                  rows: [
+                    TableRow(
+                      cells: [
+                        TableCell(
+                          child: Text(
+                            'This is a long text that should wrap to multiple lines',
+                            style: TextStyle(fontSize: 20), // Ensure it wraps
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
-      final rawTableFinder = find.byType(RawTableLayout);
-      final renderTable = tester.renderObject(rawTableFinder) as RenderBox;
+        final rawTableFinder = find.byType(RawTableLayout);
+        final renderTable = tester.renderObject(rawTableFinder) as RenderBox;
 
-      // Height should be significantly larger than a single line (approx 20-24px)
-      expect(renderTable.size.height, greaterThan(40.0));
-    });
+        // Height should be significantly larger than a single line (approx 20-24px)
+        expect(renderTable.size.height, greaterThan(40.0));
+      },
+    );
   });
 
   group('Table Cell Spanning', () {
@@ -270,16 +278,19 @@ void main() {
                   TableRow(
                     cells: [
                       TableCell(
-                          rowSpan: 2,
-                          child: SizedBox(height: 100, child: Text('Spanned'))),
+                        rowSpan: 2,
+                        child: SizedBox(height: 100, child: Text('Spanned')),
+                      ),
                       TableCell(
-                          child: SizedBox(height: 50, child: Text('Cell 1'))),
+                        child: SizedBox(height: 50, child: Text('Cell 1')),
+                      ),
                     ],
                   ),
                   TableRow(
                     cells: [
                       TableCell(
-                          child: SizedBox(height: 50, child: Text('Cell 2'))),
+                        child: SizedBox(height: 50, child: Text('Cell 2')),
+                      ),
                     ],
                   ),
                 ],
@@ -292,10 +303,12 @@ void main() {
       final cell1Text = find.text('Cell 1');
       final cell2Text = find.text('Cell 2');
 
-      final cell1Container =
-          find.ancestor(of: cell1Text, matching: find.byType(Container)).first;
-      final cell2Container =
-          find.ancestor(of: cell2Text, matching: find.byType(Container)).first;
+      final cell1Container = find
+          .ancestor(of: cell1Text, matching: find.byType(Container))
+          .first;
+      final cell2Container = find
+          .ancestor(of: cell2Text, matching: find.byType(Container))
+          .first;
 
       final cell1Size = tester.getSize(cell1Container);
       final cell2Size = tester.getSize(cell2Container);
@@ -372,15 +385,13 @@ void main() {
   });
 
   group('ResizableTable', () {
-    testWidgets('ResizableTable renders and allows resizing',
-        (WidgetTester tester) async {
+    testWidgets('ResizableTable renders and allows resizing', (
+      WidgetTester tester,
+    ) async {
       final controller = ResizableTableController(
         defaultColumnWidth: 100,
         defaultRowHeight: 50,
-        columnWidths: {
-          0: 100,
-          1: 100,
-        },
+        columnWidths: {0: 100, 1: 100},
       );
       await tester.pumpWidget(
         ShadcnApp(
@@ -415,15 +426,9 @@ void main() {
           home: Scaffold(
             child: Center(
               child: Table(
-                theme: TableTheme(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                theme: TableTheme(borderRadius: BorderRadius.circular(10)),
                 rows: [
-                  TableRow(
-                    cells: [
-                      TableCell(child: Text('Themed')),
-                    ],
-                  ),
+                  TableRow(cells: [TableCell(child: Text('Themed'))]),
                 ],
               ),
             ),

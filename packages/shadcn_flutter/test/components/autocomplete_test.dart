@@ -61,10 +61,7 @@ void main() {
     testWidgets('renders child widget', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: AutoComplete(
-            suggestions: [],
-            child: TextField(),
-          ),
+          child: AutoComplete(suggestions: [], child: TextField()),
         ),
       );
 
@@ -89,10 +86,7 @@ void main() {
     testWidgets('handles empty suggestions list', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: AutoComplete(
-            suggestions: [],
-            child: TextField(),
-          ),
+          child: AutoComplete(suggestions: [], child: TextField()),
         ),
       );
 
@@ -105,15 +99,18 @@ void main() {
         SimpleApp(
           child: AutoComplete(
             suggestions: ['Test'],
-            popoverConstraints: BoxConstraints(maxHeight: 200),
+            theme: AutoCompleteTheme(
+              popoverConstraints: BoxConstraints(maxHeight: 200),
+            ),
             child: TextField(),
           ),
         ),
       );
 
-      final autoComplete =
-          tester.widget<AutoComplete>(find.byType(AutoComplete));
-      expect(autoComplete.popoverConstraints, BoxConstraints(maxHeight: 200));
+      final autoComplete = tester.widget<AutoComplete>(
+        find.byType(AutoComplete),
+      );
+      expect(autoComplete.theme?.popoverConstraints, BoxConstraints(maxHeight: 200));
     });
 
     testWidgets('accepts custom overlay configuration', (tester) async {
@@ -132,8 +129,9 @@ void main() {
         ),
       );
 
-      final autoComplete =
-          tester.widget<AutoComplete>(find.byType(AutoComplete));
+      final autoComplete = tester.widget<AutoComplete>(
+        find.byType(AutoComplete),
+      );
       expect(autoComplete.overlayConfiguration, overlayConfiguration);
     });
 
@@ -142,15 +140,16 @@ void main() {
         SimpleApp(
           child: AutoComplete(
             suggestions: ['Test'],
-            mode: AutoCompleteMode.append,
+            theme: AutoCompleteTheme(mode: AutoCompleteMode.append),
             child: TextField(),
           ),
         ),
       );
 
-      final autoComplete =
-          tester.widget<AutoComplete>(find.byType(AutoComplete));
-      expect(autoComplete.mode, AutoCompleteMode.append);
+      final autoComplete = tester.widget<AutoComplete>(
+        find.byType(AutoComplete),
+      );
+      expect(autoComplete.theme?.mode, AutoCompleteMode.append);
     });
 
     testWidgets('accepts custom completer', (tester) async {
@@ -166,23 +165,22 @@ void main() {
         ),
       );
 
-      final autoComplete =
-          tester.widget<AutoComplete>(find.byType(AutoComplete));
+      final autoComplete = tester.widget<AutoComplete>(
+        find.byType(AutoComplete),
+      );
       expect(autoComplete.completer('Test'), 'Test!');
     });
 
     testWidgets('uses default completer when none provided', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: AutoComplete(
-            suggestions: ['Test'],
-            child: TextField(),
-          ),
+          child: AutoComplete(suggestions: ['Test'], child: TextField()),
         ),
       );
 
-      final autoComplete =
-          tester.widget<AutoComplete>(find.byType(AutoComplete));
+      final autoComplete = tester.widget<AutoComplete>(
+        find.byType(AutoComplete),
+      );
       expect(autoComplete.completer('Test'), 'Test');
     });
 
@@ -193,9 +191,7 @@ void main() {
         SimpleApp(
           child: AutoComplete(
             suggestions: ['Apple', 'Banana'],
-            child: TextField(
-              controller: controller,
-            ),
+            child: TextField(controller: controller),
           ),
         ),
       );
@@ -212,15 +208,13 @@ void main() {
 
       await tester.pumpWidget(
         SimpleApp(
-          child: AutoComplete(
-            suggestions: suggestions,
-            child: TextField(),
-          ),
+          child: AutoComplete(suggestions: suggestions, child: TextField()),
         ),
       );
 
-      final autoComplete =
-          tester.widget<AutoComplete>(find.byType(AutoComplete));
+      final autoComplete = tester.widget<AutoComplete>(
+        find.byType(AutoComplete),
+      );
       expect(autoComplete.suggestions.length, 100);
     });
 
@@ -231,9 +225,7 @@ void main() {
         SimpleApp(
           child: AutoComplete(
             suggestions: [],
-            child: TextField(
-              placeholder: Text(hintText),
-            ),
+            child: TextField(placeholder: Text(hintText)),
           ),
         ),
       );
@@ -244,18 +236,16 @@ void main() {
     testWidgets('handles null optional parameters', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: AutoComplete(
-            suggestions: ['Test'],
-            child: TextField(),
-          ),
+          child: AutoComplete(suggestions: ['Test'], child: TextField()),
         ),
       );
 
-      final autoComplete =
-          tester.widget<AutoComplete>(find.byType(AutoComplete));
-      expect(autoComplete.popoverConstraints, null);
+      final autoComplete = tester.widget<AutoComplete>(
+        find.byType(AutoComplete),
+      );
+      expect(autoComplete.theme?.popoverConstraints, null);
       expect(autoComplete.overlayConfiguration, null);
-      expect(autoComplete.mode, null);
+      expect(autoComplete.theme?.mode, null);
     });
 
     testWidgets('renders in RTL', (tester) async {
@@ -263,10 +253,7 @@ void main() {
         Directionality(
           textDirection: TextDirection.rtl,
           child: SimpleApp(
-            child: AutoComplete(
-              suggestions: ['Test'],
-              child: TextField(),
-            ),
+            child: AutoComplete(suggestions: ['Test'], child: TextField()),
           ),
         ),
       );
@@ -275,8 +262,9 @@ void main() {
       expect(find.byType(TextField), findsOneWidget);
     });
 
-    testWidgets('does not reopen the popover after selecting a suggestion',
-        (tester) async {
+    testWidgets('does not reopen the popover after selecting a suggestion', (
+      tester,
+    ) async {
       await tester.pumpWidget(const SimpleApp(child: _FilteredAutoComplete()));
 
       await tester.enterText(find.byType(TextField), 'App');
@@ -288,12 +276,16 @@ void main() {
       await tester.tap(find.text('Pineapple').first);
       await _settle(tester);
 
-      expect(_openSuggestionCount(), 0,
-          reason: 'popover should stay closed after selecting a suggestion');
+      expect(
+        _openSuggestionCount(),
+        0,
+        reason: 'popover should stay closed after selecting a suggestion',
+      );
     });
 
-    testWidgets('reopens the popover when typing after a selection',
-        (tester) async {
+    testWidgets('reopens the popover when typing after a selection', (
+      tester,
+    ) async {
       await tester.pumpWidget(const SimpleApp(child: _FilteredAutoComplete()));
 
       await tester.enterText(find.byType(TextField), 'Ba');
@@ -307,8 +299,11 @@ void main() {
       // Starting a new word must open the popover again.
       await tester.enterText(find.byType(TextField), 'Banana Gr');
       await _settle(tester);
-      expect(_openSuggestionCount(), greaterThan(0),
-          reason: 'typing after a selection should reopen suggestions');
+      expect(
+        _openSuggestionCount(),
+        greaterThan(0),
+        reason: 'typing after a selection should reopen suggestions',
+      );
       expect(find.text('Grape'), findsWidgets);
     });
   });

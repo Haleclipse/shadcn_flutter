@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates NumberTicker animating from its previous value to a new value.
 // The TextField lets you enter a target integer; committing the edit triggers
@@ -28,11 +29,11 @@ class _NumberTickerExample1State extends State<NumberTickerExample1> {
           // The live value to animate toward. When this changes, the ticker
           // interpolates between the previous and the new value.
           number: _number,
-          style: const TextStyle(fontSize: 32),
           formatter: (number) {
             // Optional display formatter: 1200 -> 1.2K, etc.
             return NumberFormat.compact().format(number);
           },
+          theme: NumberTickerTheme(style: const TextStyle(fontSize: 32)),
         ),
         const Gap(24),
         TextField(
@@ -48,7 +49,7 @@ class _NumberTickerExample1State extends State<NumberTickerExample1> {
               });
             }
           },
-        )
+        ),
       ],
     );
   }

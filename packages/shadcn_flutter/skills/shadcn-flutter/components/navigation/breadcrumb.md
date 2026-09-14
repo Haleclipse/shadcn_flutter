@@ -19,8 +19,7 @@ class BreadcrumbExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'breadcrumb',
-      description:
-          'Breadcrumbs are a secondary navigation scheme that reveals the user’s location in a website or web application.',
+      description: 'Breadcrumbs are a secondary navigation scheme that reveals the user’s location in a website or web application.',
       displayName: 'Breadcrumb',
       children: [
         WidgetUsageExample(
@@ -117,3 +116,4 @@ class BreadcrumbTile extends StatelessWidget implements IComponentPage {
 | `children` | `List<Widget>` | The list of breadcrumb navigation items.  Each widget represents a step in the navigation trail, from root to current location. The last item is styled as the current page. |
 | `separator` | `Widget?` | Widget displayed between breadcrumb items.  If `null`, uses the default separator from the theme. |
 | `padding` | `EdgeInsetsGeometry?` | Padding around the entire breadcrumb widget.  If `null`, uses default padding from the theme. |
+| `theme` | `BreadcrumbTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

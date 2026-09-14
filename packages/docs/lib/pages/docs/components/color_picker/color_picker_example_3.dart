@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ColorPickerExample3 extends StatefulWidget {
   const ColorPickerExample3({super.key});
@@ -33,21 +34,22 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
                 ),
                 builder: (context) {
                   return ListenableBuilder(
-                      listenable: selectedColorNotifier,
-                      builder: (context, _) {
-                        return SurfaceCard(
-                          child: ColorPicker(
-                            value: selectedColorNotifier.value,
-                            orientation: Axis.horizontal,
-                            showAlpha: true,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedColorNotifier.value = value;
-                              });
-                            },
-                          ),
-                        );
-                      });
+                    listenable: selectedColorNotifier,
+                    builder: (context, _) {
+                      return SurfaceCard(
+                        child: ColorPicker(
+                          value: selectedColorNotifier.value,
+                          showAlpha: true,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedColorNotifier.value = value;
+                            });
+                          },
+                          theme: ColorPickerTheme(orientation: Axis.horizontal),
+                        ),
+                      );
+                    },
+                  );
                 },
               );
             },
@@ -65,19 +67,20 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
                 return AlertDialog(
                   title: const Text('Select Color'),
                   content: ListenableBuilder(
-                      listenable: selectedColorNotifier,
-                      builder: (context, _) {
-                        return ColorPicker(
-                          value: selectedColorNotifier.value,
-                          orientation: Axis.horizontal,
-                          showAlpha: true,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedColorNotifier.value = value;
-                            });
-                          },
-                        );
-                      }),
+                    listenable: selectedColorNotifier,
+                    builder: (context, _) {
+                      return ColorPicker(
+                        value: selectedColorNotifier.value,
+                        showAlpha: true,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedColorNotifier.value = value;
+                          });
+                        },
+                        theme: ColorPickerTheme(orientation: Axis.horizontal),
+                      );
+                    },
+                  ),
                   actions: [
                     PrimaryButton(
                       onPressed: () {

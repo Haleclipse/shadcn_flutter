@@ -86,9 +86,7 @@ class _FormExampleState extends State<FormExample> {
             'uses typed FormKey objects to identify each field and carry its value type. '
             'This gives you compile-time type safety when reading submitted values.',
           ).p(),
-          const Text(
-            'A typical form setup involves three parts:',
-          ).p(),
+          const Text('A typical form setup involves three parts:').p(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -340,10 +338,7 @@ class _FormExampleState extends State<FormExample> {
 
   TableCell _padded(Widget child) {
     return TableCell(
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: child,
-      ),
+      child: Container(padding: const EdgeInsets.all(8), child: child),
     );
   }
 
@@ -359,17 +354,21 @@ class _FormExampleState extends State<FormExample> {
   Widget _buildKeyReferenceTable(BuildContext context) {
     return Table(
       rows: [
-        TableHeader(cells: [
-          _headerCell('Key Alias'),
-          _headerCell('Value Type'),
-          _headerCell('Widget'),
-        ]),
+        TableHeader(
+          cells: [
+            _headerCell('Key Alias'),
+            _headerCell('Value Type'),
+            _headerCell('Widget'),
+          ],
+        ),
         ..._keyEntries.map(
-          (e) => TableRow(cells: [
-            _padded(Text(e.$1)),
-            _padded(Text(e.$2)),
-            _padded(Text(e.$3)),
-          ]),
+          (e) => TableRow(
+            cells: [
+              _padded(Text(e.$1)),
+              _padded(Text(e.$2)),
+              _padded(Text(e.$3)),
+            ],
+          ),
         ),
       ],
     ).p();
@@ -405,17 +404,21 @@ class _FormExampleState extends State<FormExample> {
   Widget _buildControlledTable(BuildContext context) {
     return Table(
       rows: [
-        TableHeader(cells: [
-          _headerCell('Standard Widget'),
-          _headerCell('Controlled Variant'),
-          _headerCell('Managed State'),
-        ]),
+        TableHeader(
+          cells: [
+            _headerCell('Standard Widget'),
+            _headerCell('Controlled Variant'),
+            _headerCell('Managed State'),
+          ],
+        ),
         ..._controlledEntries.map(
-          (e) => TableRow(cells: [
-            _padded(Text(e.$1)),
-            _padded(Text(e.$2)),
-            _padded(Text(e.$3)),
-          ]),
+          (e) => TableRow(
+            cells: [
+              _padded(Text(e.$1)),
+              _padded(Text(e.$2)),
+              _padded(Text(e.$3)),
+            ],
+          ),
         ),
       ],
     ).p();
@@ -507,11 +510,11 @@ class _FormExampleState extends State<FormExample> {
             child: Text('Validators may return valid for empty strings'),
           ),
           content: const Text(
-                  'Some validators (like EmailValidator, RegexValidator, URLValidator, etc.) '
-                  'will return valid if the string is empty. This means a blank field will pass '
-                  'validation unless you also add NotEmptyValidator. Always combine NotEmptyValidator '
-                  'with these to ensure empty values are rejected. For example: ')
-              .thenInlineCode('NotEmptyValidator() & EmailValidator()'),
+            'Some validators (like EmailValidator, RegexValidator, URLValidator, etc.) '
+            'will return valid if the string is empty. This means a blank field will pass '
+            'validation unless you also add NotEmptyValidator. Always combine NotEmptyValidator '
+            'with these to ensure empty values are rejected. For example: ',
+          ).thenInlineCode('NotEmptyValidator() & EmailValidator()'),
         ),
       ],
     );
@@ -520,15 +523,11 @@ class _FormExampleState extends State<FormExample> {
   Widget _buildValidatorTable(BuildContext context) {
     return Table(
       rows: [
-        TableHeader(cells: [
-          _headerCell('Validator'),
-          _headerCell('Description'),
-        ]),
+        TableHeader(
+          cells: [_headerCell('Validator'), _headerCell('Description')],
+        ),
         ..._validatorEntries.map(
-          (e) => TableRow(cells: [
-            _padded(Text(e.$1)),
-            _padded(Text(e.$2)),
-          ]),
+          (e) => TableRow(cells: [_padded(Text(e.$1)), _padded(Text(e.$2))]),
         ),
       ],
     ).p();
@@ -537,37 +536,37 @@ class _FormExampleState extends State<FormExample> {
   static const _validatorEntries = <(String, String)>[
     (
       'NonNullValidator',
-      'Fails if the value is null. Used to require a value.'
+      'Fails if the value is null. Used to require a value.',
     ),
     ('NotEmptyValidator', 'Fails if the string is null or empty.'),
     (
       'LengthValidator',
-      'Checks if a string\'s length is within min/max bounds.'
+      'Checks if a string\'s length is within min/max bounds.',
     ),
     ('RegexValidator', 'Checks if a string matches a regular expression.'),
     ('EmailValidator', 'Checks if a string is a valid email address.'),
     ('URLValidator', 'Checks if a string is a valid URL.'),
     (
       'SafePasswordValidator',
-      'Checks password for digits, upper/lowercase, special chars.'
+      'Checks password for digits, upper/lowercase, special chars.',
     ),
     (
       'MinValidator',
-      'Checks if a number is greater than (or equal to) a minimum.'
+      'Checks if a number is greater than (or equal to) a minimum.',
     ),
     (
       'MaxValidator',
-      'Checks if a number is less than (or equal to) a maximum.'
+      'Checks if a number is less than (or equal to) a maximum.',
     ),
     ('RangeValidator', 'Checks if a number is within a min/max range.'),
     ('CompareTo', 'Compares a value to a static value (>, <, ==, etc).'),
     (
       'CompareWith',
-      'Compares a value to another field\'s value (cross-field).'
+      'Compares a value to another field\'s value (cross-field).',
     ),
     (
       'ConditionalValidator',
-      'Runs only if a predicate returns true (supports async).'
+      'Runs only if a predicate returns true (supports async).',
     ),
     ('ValidationMode', 'Wraps another validator to control when it runs.'),
     ('CompositeValidator', 'Combines multiple validators (all must pass).'),
@@ -584,6 +583,7 @@ class _FormExampleState extends State<FormExample> {
 import 'dart:convert';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormExample1 extends StatefulWidget {
   const FormExample1({super.key});
@@ -608,9 +608,11 @@ class _FormExample1State extends State<FormExample1> {
           String? password = _passwordKey[values];
           String? confirmPassword = _confirmPasswordKey[values];
           // or just encode the whole map to JSON directly
-          String json = jsonEncode(values.map((key, value) {
-            return MapEntry(key.key, value);
-          }));
+          String json = jsonEncode(
+            values.map((key, value) {
+              return MapEntry(key.key, value);
+            }),
+          );
           showOverlay(
             context,
             DialogConfiguration(),
@@ -648,26 +650,22 @@ class _FormExample1State extends State<FormExample1> {
                   label: const Text('Username'),
                   hint: const Text('This is your public display name'),
                   validator: const LengthValidator(min: 4),
-                  child: const TextField(
-                    initialValue: 'sunarya-thito',
-                  ),
+                  child: const TextField(initialValue: 'sunarya-thito'),
                 ),
                 FormField(
                   key: _passwordKey,
                   label: const Text('Password'),
                   validator: const LengthValidator(min: 8),
-                  child: const TextField(
-                    obscureText: true,
-                  ),
+                  child: const TextField(obscureText: true),
                 ),
                 FormField(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
-                  validator: CompareWith.equal(_passwordKey,
-                      message: 'Passwords do not match'),
-                  child: const TextField(
-                    obscureText: true,
+                  validator: CompareWith.equal(
+                    _passwordKey,
+                    message: 'Passwords do not match',
                   ),
+                  child: const TextField(obscureText: true),
                 ),
               ],
             ),
@@ -680,7 +678,7 @@ class _FormExample1State extends State<FormExample1> {
                   child: const Text('Submit'),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
@@ -695,6 +693,7 @@ class _FormExample1State extends State<FormExample1> {
 import 'dart:convert';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormExample2 extends StatefulWidget {
   const FormExample2({super.key});
@@ -721,9 +720,11 @@ class _FormExample2State extends State<FormExample2> {
           String? confirmPassword = _confirmPasswordKey[values];
           CheckboxState? agree = _agreeKey[values];
           // or just encode the whole map to JSON directly
-          String json = jsonEncode(values.map((key, value) {
-            return MapEntry(key.key, value);
-          }));
+          String json = jsonEncode(
+            values.map((key, value) {
+              return MapEntry(key.key, value);
+            }),
+          );
           showOverlay(
             context,
             DialogConfiguration(),
@@ -766,7 +767,7 @@ class _FormExample2State extends State<FormExample2> {
                   // Show validation messages when the value changes and after submit.
                   showErrors: const {
                     FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    FormValidationMode.submitted,
                   },
                   child: const TextField(),
                 ),
@@ -777,45 +778,46 @@ class _FormExample2State extends State<FormExample2> {
                   // Same validation visibility behavior for password.
                   showErrors: const {
                     FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    FormValidationMode.submitted,
                   },
-                  child: const TextField(
-                    obscureText: true,
-                  ),
+                  child: const TextField(obscureText: true),
                 ),
                 FormField(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
-                  validator: CompareWith.equal(_passwordKey,
-                      message: 'Passwords do not match'),
+                  validator: CompareWith.equal(
+                    _passwordKey,
+                    message: 'Passwords do not match',
+                  ),
                   // Mirror validation visibility on confirm.
                   showErrors: const {
                     FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    FormValidationMode.submitted,
                   },
-                  child: const TextField(
-                    obscureText: true,
-                  ),
+                  child: const TextField(obscureText: true),
                 ),
                 FormInline(
                   key: _agreeKey,
                   label: const Text('I agree to the terms and conditions'),
-                  validator: const CompareTo.equal(CheckboxState.checked,
-                      message: 'You must agree to the terms and conditions'),
+                  validator: const CompareTo.equal(
+                    CheckboxState.checked,
+                    message: 'You must agree to the terms and conditions',
+                  ),
                   // Inline field with a trailing checkbox and same visibility behavior.
                   showErrors: const {
                     FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    FormValidationMode.submitted,
                   },
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: Checkbox(
-                        state: state,
-                        onChanged: (value) {
-                          setState(() {
-                            state = value;
-                          });
-                        }),
+                      state: state,
+                      onChanged: (value) {
+                        setState(() {
+                          state = value;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -828,7 +830,7 @@ class _FormExample2State extends State<FormExample2> {
                   child: const Text('Submit'),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
@@ -843,6 +845,7 @@ class _FormExample2State extends State<FormExample2> {
 import 'dart:convert';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormExample3 extends StatefulWidget {
   const FormExample3({super.key});
@@ -852,11 +855,7 @@ class FormExample3 extends StatefulWidget {
 }
 
 class _FormExample3State extends State<FormExample3> {
-  final _dummyData = [
-    'sunarya-thito',
-    'septogeddon',
-    'shadcn',
-  ];
+  final _dummyData = ['sunarya-thito', 'septogeddon', 'shadcn'];
 
   final _usernameKey = const TextFieldKey('username');
   final _passwordKey = const TextFieldKey('password');
@@ -873,11 +872,13 @@ class _FormExample3State extends State<FormExample3> {
             builder: (context) {
               return AlertDialog(
                 title: const Text('Form Values'),
-                content: Text(jsonEncode(values.map(
-                  (key, value) {
-                    return MapEntry(key.key, value);
-                  },
-                ))),
+                content: Text(
+                  jsonEncode(
+                    values.map((key, value) {
+                      return MapEntry(key.key, value);
+                    }),
+                  ),
+                ),
                 actions: [
                   PrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -900,7 +901,8 @@ class _FormExample3State extends State<FormExample3> {
                   hint: const Text('This is your public display name'),
                   // Combine validators: length + async availability check,
                   // but only run the async validator on submit.
-                  validator: const LengthValidator(min: 4) &
+                  validator:
+                      const LengthValidator(min: 4) &
                       ValidationMode(
                         ConditionalValidator((value) async {
                           // simulate a network delay for example purpose
@@ -910,9 +912,7 @@ class _FormExample3State extends State<FormExample3> {
                         // only validate when the form is submitted
                         mode: {FormValidationMode.submitted},
                       ),
-                  child: const TextField(
-                    initialValue: 'sunarya-thito',
-                  ),
+                  child: const TextField(initialValue: 'sunarya-thito'),
                 ),
                 FormField(
                   key: _passwordKey,
@@ -920,24 +920,22 @@ class _FormExample3State extends State<FormExample3> {
                   validator: const LengthValidator(min: 8),
                   showErrors: const {
                     FormValidationMode.submitted,
-                    FormValidationMode.changed
+                    FormValidationMode.changed,
                   },
-                  child: const TextField(
-                    obscureText: true,
-                  ),
+                  child: const TextField(obscureText: true),
                 ),
                 FormField<String>(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
                   showErrors: const {
                     FormValidationMode.submitted,
-                    FormValidationMode.changed
+                    FormValidationMode.changed,
                   },
-                  validator: CompareWith.equal(_passwordKey,
-                      message: 'Passwords do not match'),
-                  child: const TextField(
-                    obscureText: true,
+                  validator: CompareWith.equal(
+                    _passwordKey,
+                    message: 'Passwords do not match',
                   ),
+                  child: const TextField(obscureText: true),
                 ),
               ],
             ),
@@ -945,9 +943,7 @@ class _FormExample3State extends State<FormExample3> {
             const SubmitButton(
               loadingTrailing: AspectRatio(
                 aspectRatio: 1,
-                child: CircularProgressIndicator(
-                  onSurface: true,
-                ),
+                child: CircularProgressIndicator(onSurface: true),
               ),
               child: Text('Register'),
             ),
@@ -963,6 +959,7 @@ class _FormExample3State extends State<FormExample3> {
 ### Form Example 4
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates using the correct typed FormKey for each widget.
 ///
@@ -989,8 +986,9 @@ class _FormExample4State extends State<FormExample4> {
   final _nameKey = const TextFieldKey('name'); // TextField → String
   final _agreeKey = const CheckboxKey('agree'); // Checkbox → CheckboxState
   final _birthdayKey = const DatePickerKey('birthday'); // DatePicker → DateTime
-  final _genderKey =
-      const SelectKey<Gender>('gender'); // Select → T (Gender in this case)
+  final _genderKey = const SelectKey<Gender>(
+    'gender',
+  ); // Select → T (Gender in this case)
   final _notifyKey = const SwitchKey('notify'); // Switch → bool
 
   CheckboxState _agreeState = CheckboxState.unchecked;
@@ -1046,15 +1044,15 @@ class _FormExample4State extends State<FormExample4> {
                   key: _nameKey,
                   label: const Text('Name'),
                   validator: const LengthValidator(min: 2),
-                  child: const TextField(
-                    initialValue: 'Jane Doe',
-                  ),
+                  child: const TextField(initialValue: 'Jane Doe'),
                 ),
                 FormInline<CheckboxState>(
                   key: _agreeKey,
                   label: const Text('I agree to the terms'),
-                  validator: const CompareTo.equal(CheckboxState.checked,
-                      message: 'You must agree'),
+                  validator: const CompareTo.equal(
+                    CheckboxState.checked,
+                    message: 'You must agree',
+                  ),
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: Checkbox(
@@ -1070,24 +1068,28 @@ class _FormExample4State extends State<FormExample4> {
                 FormField<DateTime>(
                   key: _birthdayKey,
                   label: const Text('Birthday'),
-                  validator:
-                      const NonNullValidator(message: 'Please select a date'),
+                  validator: const NonNullValidator(
+                    message: 'Please select a date',
+                  ),
                   child: const ControlledDatePicker(),
                 ),
                 FormField<Gender>(
                   key: _genderKey,
                   label: const Text('Gender'),
-                  validator:
-                      const NonNullValidator(message: 'Please select a gender'),
+                  validator: const NonNullValidator(
+                    message: 'Please select a gender',
+                  ),
                   child: ControlledSelect<Gender>(
                     popup: SelectPopup(
-                      items: SelectItemList(children: [
-                        for (var gender in Gender.values)
-                          SelectItemButton(
-                            value: gender,
-                            child: Text(gender.displayName),
-                          ),
-                      ]),
+                      items: SelectItemList(
+                        children: [
+                          for (var gender in Gender.values)
+                            SelectItemButton(
+                              value: gender,
+                              child: Text(gender.displayName),
+                            ),
+                        ],
+                      ),
                     ),
                     itemBuilder: (BuildContext context, Gender value) {
                       return Text(value.displayName);
@@ -1132,6 +1134,7 @@ class _FormExample4State extends State<FormExample4> {
 ### Form Example 5
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates composing validators with operators.
 ///
@@ -1181,7 +1184,8 @@ class FormExample5 extends StatelessWidget {
                   key: _passwordKey,
                   label: const Text('Password'),
                   // Compose validators with & (AND): both must pass.
-                  validator: const LengthValidator(min: 8) &
+                  validator:
+                      const LengthValidator(min: 8) &
                       const SafePasswordValidator(
                         requireSpecialChar: false,
                         requireUppercase: false,
@@ -1225,6 +1229,7 @@ class FormExample5 extends StatelessWidget {
 ### Form Example 6
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates the difference between showErrors and ValidationMode.
 ///
@@ -1276,7 +1281,8 @@ class FormExample6 extends StatelessWidget {
                   // Validator composition:
                   //  1. EmailValidator always runs (on initial, change, submit)
                   //  2. "Already taken" check only runs on submit
-                  validator: const EmailValidator() &
+                  validator:
+                      const EmailValidator() &
                       ValidationMode(
                         ConditionalValidator((value) async {
                           await Future.delayed(const Duration(seconds: 1));
@@ -1317,6 +1323,7 @@ class FormExample6 extends StatelessWidget {
 import 'dart:convert';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates IgnoreForm to exclude widgets from form participation.
 ///
@@ -1338,9 +1345,11 @@ class FormExample7 extends StatelessWidget {
       width: 480,
       child: Form(
         onSubmit: (context, values) {
-          String json = jsonEncode(values.map((key, value) {
-            return MapEntry(key.key, value);
-          }));
+          String json = jsonEncode(
+            values.map((key, value) {
+              return MapEntry(key.key, value);
+            }),
+          );
           showOverlay(
             context,
             DialogConfiguration(),
@@ -1371,9 +1380,7 @@ class FormExample7 extends StatelessWidget {
                   // This TextField is wrapped in IgnoreForm, so it does NOT
                   // participate in form validation or submission.
                   child: IgnoreForm(
-                    child: TextField(
-                      placeholder: Text('Type to search...'),
-                    ),
+                    child: TextField(placeholder: Text('Type to search...')),
                   ),
                 ),
                 // These fields participate in the form normally.
@@ -1405,6 +1412,7 @@ class FormExample7 extends StatelessWidget {
 ### Form Example 8
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates the two ways to build a submit button.
 ///
@@ -1433,8 +1441,10 @@ class FormExample8 extends StatelessWidget {
             builder: (context) {
               return AlertDialog(
                 title: const Text('Success'),
-                content: Text('Name: ${_nameKey[values]}\n'
-                    'Email: ${_emailKey[values]}'),
+                content: Text(
+                  'Name: ${_nameKey[values]}\n'
+                  'Email: ${_emailKey[values]}',
+                ),
                 actions: [
                   PrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -1461,7 +1471,8 @@ class FormExample8 extends StatelessWidget {
                   key: _emailKey,
                   label: const Text('Email'),
                   // Async validator only runs on submit
-                  validator: const EmailValidator() &
+                  validator:
+                      const EmailValidator() &
                       ValidationMode(
                         ConditionalValidator((value) async {
                           await Future.delayed(const Duration(seconds: 1));
@@ -1504,6 +1515,7 @@ class FormExample8 extends StatelessWidget {
 ### Form Example 9
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Compares standard vs Controlled component boilerplate.
 ///
@@ -1558,13 +1570,9 @@ class _FormExample9State extends State<FormExample9> {
           // ── Controlled: zero boilerplate ──
           const Text('Controlled (no manual state)').semiBold,
           const Gap(24),
-          const ControlledCheckbox(
-            trailing: Text('Accept terms'),
-          ),
+          const ControlledCheckbox(trailing: Text('Accept terms')),
           const Gap(8),
-          const ControlledSwitch(
-            trailing: Text('Dark mode'),
-          ),
+          const ControlledSwitch(trailing: Text('Dark mode')),
         ],
       ),
     );
@@ -1577,6 +1585,7 @@ class _FormExample9State extends State<FormExample9> {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../form/form_example_1.dart';
 
 class FormTile extends StatelessWidget implements IComponentPage {

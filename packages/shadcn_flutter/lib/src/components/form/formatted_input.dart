@@ -565,7 +565,6 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
               decoration: const BoxDecoration(),
               style: DefaultTextStyle.of(context).style
                   .merge(theme.typography.mono),
-              border: const Border.fromBorderSide(BorderSide.none),
               textAlign: TextAlign.center,
               initialValue: data.initialValue,
               maxLines: 1,
@@ -588,6 +587,9 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
               onDragSelectionEnd: (details) {
                 _selectionCoordinator?.onDragEnd();
               },
+              theme: TextFieldTheme(
+                border: const Border.fromBorderSide(BorderSide.none),
+              ),
             ),
           ),
         ),
@@ -1017,7 +1019,8 @@ class FormattedInputController extends ValueNotifier<FormattedValue>
 /// );
 /// ```
 class FormattedInput extends StatefulWidget
-    with ControlledComponent<FormattedValue> {
+    with ControlledComponent<FormattedValue>
+    implements Styleable<FormattedInputTheme> {
   @override
   final FormattedValue? initialValue;
   @override
@@ -1045,6 +1048,10 @@ class FormattedInput extends StatefulWidget
   /// Can be used for action buttons, status indicators, or additional
   /// context related to the input content.
   final Widget? trailing;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final FormattedInputTheme? theme;
 
   /// Creates a [FormattedInput].
   ///
@@ -1081,6 +1088,7 @@ class FormattedInput extends StatefulWidget
     this.trailing,
     this.enabled = true,
     this.controller,
+    this.theme,
   });
 
   @override
@@ -1206,7 +1214,8 @@ class _FormattedInputState extends State<FormattedInput> {
         }
       }
     }
-    final compTheme = ComponentTheme.maybeOf<FormattedInputTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<FormattedInputTheme>(context);
     return SizedBox(
       height: (compTheme?.height ?? kTextFieldHeight) * theme.scaling, // 32 + 2
       child: TextFieldTapRegion(
@@ -1218,14 +1227,16 @@ class _FormattedInputState extends State<FormattedInput> {
           },
           child: FocusOutline(
             focused: _hasFocus,
-            borderRadius: theme.borderRadiusMd,
+            theme: FocusOutlineTheme(borderRadius: theme.borderRadiusMd),
             child: OutlinedContainer(
-              borderRadius: theme.borderRadiusMd,
-              borderColor: theme.colorScheme.border,
-              backgroundColor: theme.colorScheme.input.scaleAlpha(0.3),
-              padding:
-                  compTheme?.padding ??
-                  EdgeInsets.symmetric(horizontal: 6 * theme.scaling),
+              theme: OutlinedContainerTheme(
+                borderRadius: theme.borderRadiusMd,
+                borderColor: theme.colorScheme.border,
+                backgroundColor: theme.colorScheme.input.scaleAlpha(0.3),
+                padding:
+                    compTheme?.padding ??
+                    EdgeInsets.symmetric(horizontal: 6 * theme.scaling),
+              ),
               child: Form(
                 controller: _controller,
                 child: Actions(
@@ -1360,7 +1371,8 @@ typedef FormattedInputPopupBuilder<T> = Widget Function(
 /// )
 /// ```
 class FormattedObjectInput<T> extends StatefulWidget
-    with ControlledComponent<T?> {
+    with ControlledComponent<T?>
+    implements Styleable<FormattedInputTheme> {
   @override
   /// The initial value of the input.
   final T? initialValue;
@@ -1396,10 +1408,15 @@ class FormattedObjectInput<T> extends StatefulWidget
 
   /// Whether the popup may adapt to a different presentation on mobile
   /// platforms (see [showOverlay]'s `adaptive` parameter).
+  @Deprecated('Use theme: FormattedInputTheme(adaptiveOverlay: ...) instead.')
   final bool? adaptiveOverlay;
 
   /// Icon displayed in the popover trigger.
   final Widget? popoverIcon;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final FormattedInputTheme? theme;
 
   /// Creates a [FormattedObjectInput].
   const FormattedObjectInput({
@@ -1415,6 +1432,7 @@ class FormattedObjectInput<T> extends StatefulWidget
     this.adaptiveOverlay,
     this.popoverIcon,
     this.onPartsChanged,
+    this.theme,
   });
 
   @override
@@ -1562,7 +1580,8 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
       return;
     }
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<FormattedInputTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<FormattedInputTheme>(context);
     final overlayConfiguration =
         widget.overlayConfiguration ??
         compTheme?.overlayConfiguration ??

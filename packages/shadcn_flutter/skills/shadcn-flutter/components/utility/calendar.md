@@ -55,6 +55,7 @@ class CalendarExample extends StatelessWidget {
 ### Calendar Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Calendar with range selection mode.
 ///
@@ -134,6 +135,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
 ### Calendar Example 2
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Calendar with single-date selection and a "today" marker.
 ///
@@ -210,6 +212,7 @@ class _CalendarExample2State extends State<CalendarExample2> {
 ### Calendar Example 3
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Calendar with multi-date selection.
 ///
@@ -284,6 +287,7 @@ class _CalendarExample3State extends State<CalendarExample3> {
 ### Calendar Example 4
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Calendar in read-only mode (no selection).
 ///
@@ -375,7 +379,9 @@ class CalendarTile extends StatelessWidget implements IComponentPage {
       title: 'Calendar',
       scale: 1,
       example: Calendar(
-          view: CalendarView.now(), selectionMode: CalendarSelectionMode.none),
+        view: CalendarView.now(),
+        selectionMode: CalendarSelectionMode.none,
+      ),
     );
   }
 }

@@ -99,7 +99,6 @@ Shadcn Flutter features over 100+ high-quality components. Below are the core ca
 | **Alert** | [components/feedback/alert.md](./components/feedback/alert.md) |
 | **Alert Dialog** | [components/feedback/alert_dialog.md](./components/feedback/alert_dialog.md) |
 | **Progress** | [components/feedback/progress.md](./components/feedback/progress.md) |
-| **Skeleton** | [components/feedback/skeleton.md](./components/feedback/skeleton.md) |
 | **Toast** | [components/feedback/toast.md](./components/feedback/toast.md) |
 
 ### Form

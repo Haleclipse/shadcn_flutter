@@ -240,7 +240,7 @@ class TimelineData {
 ///   ],
 /// );
 /// ```
-class Timeline extends StatelessWidget {
+class Timeline extends StatelessWidget implements Styleable<TimelineTheme> {
   /// List of timeline entries to display.
   ///
   /// Each [TimelineData] object represents one row in the timeline with
@@ -254,6 +254,10 @@ class Timeline extends StatelessWidget {
   /// for this specific timeline instance. Controls how much space is allocated
   /// for displaying time information. If null, uses theme or default constraints.
   final BoxConstraints? timeConstraints;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TimelineTheme? theme;
 
   /// Creates a [Timeline] widget with the specified data entries.
   ///
@@ -292,13 +296,15 @@ class Timeline extends StatelessWidget {
     //   maxWidth: 120,
     // ),
     this.timeConstraints,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<TimelineTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<TimelineTheme>(context);
     final timeConstraints =
         this.timeConstraints ??
         compTheme?.timeConstraints ??
@@ -324,7 +330,7 @@ class Timeline extends StatelessWidget {
                   child: data.time.medium().small(),
                 ),
               ),
-              Gap(spacing),
+              SizedBox(width: spacing),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -349,7 +355,7 @@ class Timeline extends StatelessWidget {
                     ),
                 ],
               ),
-              Gap(spacing),
+              SizedBox(width: spacing),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -360,7 +366,7 @@ class Timeline extends StatelessWidget {
                         .secondaryForeground()
                         .base()
                         .withPadding(left: densityGap * 0.5),
-                    if (data.content != null) Gap(densityGap),
+                    if (data.content != null) SizedBox(height: densityGap),
                     if (data.content != null)
                       Expanded(child: data.content!.muted().small()),
                   ],

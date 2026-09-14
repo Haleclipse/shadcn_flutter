@@ -16,24 +16,36 @@ class TabsTile extends StatelessWidget implements IComponentPage {
       example: Card(
         child: Column(
           children: [
-            Tabs(index: 0, onChanged: (value) {}, children: const [
-              // Text('Tab 1'),
-              // Text('Tab 2'),
-              // Text('Tab 3'),
-              TabItem(child: Text('Tab 1')),
-              TabItem(child: Text('Tab 2')),
-              TabItem(child: Text('Tab 3')),
-            ]),
-            Tabs(index: 1, onChanged: (value) {}, children: const [
-              TabItem(child: Text('Tab 1')),
-              TabItem(child: Text('Tab 2')),
-              TabItem(child: Text('Tab 3')),
-            ]),
-            Tabs(index: 2, onChanged: (value) {}, children: const [
-              TabItem(child: Text('Tab 1')),
-              TabItem(child: Text('Tab 2')),
-              TabItem(child: Text('Tab 3')),
-            ]),
+            Tabs(
+              index: 0,
+              onChanged: (value) {},
+              children: const [
+                // Text('Tab 1'),
+                // Text('Tab 2'),
+                // Text('Tab 3'),
+                TabItem(child: Text('Tab 1')),
+                TabItem(child: Text('Tab 2')),
+                TabItem(child: Text('Tab 3')),
+              ],
+            ),
+            Tabs(
+              index: 1,
+              onChanged: (value) {},
+              children: const [
+                TabItem(child: Text('Tab 1')),
+                TabItem(child: Text('Tab 2')),
+                TabItem(child: Text('Tab 3')),
+              ],
+            ),
+            Tabs(
+              index: 2,
+              onChanged: (value) {},
+              children: const [
+                TabItem(child: Text('Tab 1')),
+                TabItem(child: Text('Tab 2')),
+                TabItem(child: Text('Tab 3')),
+              ],
+            ),
           ],
         ).gap(8),
       ),

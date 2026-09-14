@@ -3,9 +3,6 @@ library;
 // Preview is now stable for 3.47.0
 export 'src/previewer/previewer.dart';
 
-// bundle from https://pub.dev/packages/country_flags
-export 'package:country_flags/country_flags.dart' show CountryFlag;
-
 // bundle from data_widget
 export 'package:data_widget/data_widget.dart';
 export 'package:data_widget/extension.dart';
@@ -32,12 +29,9 @@ export 'package:flutter/widgets.dart'
         TableCell,
         FormField,
         RadioGroup;
-// bundle from gap
-export 'package:gap/gap.dart';
-// bundle from https://pub.dev/packages/phonecodes
-export 'package:phonecodes/phonecodes.dart' show Countries, Country;
-// bundle from skeletonizer https://pub.dev/packages/skeletonizer
-export 'package:skeletonizer/skeletonizer.dart' show Bone, BoneMock;
+
+// bundled from https://pub.dev/packages/phonecodes, see the LICENSE next to it
+export 'src/vendor/phonecodes/phonecodes.dart';
 
 // patched flex with paint order
 export 'src/components/layout/flex.dart';
@@ -59,13 +53,13 @@ export 'src/components/display/carousel.dart';
 export 'src/components/display/chip.dart';
 export 'src/components/display/circular_progress_indicator.dart';
 export 'src/components/display/code_snippet.dart';
+export 'src/components/display/country_flag.dart';
 export 'src/components/display/divider.dart';
 export 'src/components/display/dot_indicator.dart';
 export 'src/components/display/keyboard_shortcut.dart';
 export 'src/components/display/linear_progress_indicator.dart';
 export 'src/components/display/number_ticker.dart';
 export 'src/components/display/progress.dart';
-export 'src/components/display/skeleton.dart';
 export 'src/components/form/autocomplete.dart';
 export 'src/components/form/checkbox.dart';
 export 'src/components/form/chip_input.dart';

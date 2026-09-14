@@ -233,12 +233,14 @@ class ControlledSwitch extends StatelessWidget with ControlledComponent<bool> {
           enabled: data.enabled,
           leading: leading,
           trailing: trailing,
-          gap: gap,
-          activeColor: activeColor,
-          inactiveColor: inactiveColor,
-          activeThumbColor: activeThumbColor,
-          inactiveThumbColor: inactiveThumbColor,
-          borderRadius: borderRadius,
+          theme: SwitchTheme(
+            gap: gap,
+            activeColor: activeColor,
+            inactiveColor: inactiveColor,
+            activeThumbColor: activeThumbColor,
+            inactiveThumbColor: inactiveThumbColor,
+            borderRadius: borderRadius,
+          ),
         );
       },
     );
@@ -261,7 +263,7 @@ class ControlledSwitch extends StatelessWidget with ControlledComponent<bool> {
 ///   leading: Text('Enable feature'),
 /// )
 /// ```
-class Switch extends StatefulWidget {
+class Switch extends StatefulWidget implements Styleable<SwitchTheme> {
   /// The current state of the switch.
   final bool value;
 
@@ -288,32 +290,42 @@ class Switch extends StatefulWidget {
   /// Spacing between the switch and [leading]/[trailing] widgets.
   ///
   /// If `null`, uses the default gap from the theme.
+  @Deprecated('Use theme: SwitchTheme(gap: ...) instead.')
   final double? gap;
 
   /// Color of the switch when in the active (on) state.
   ///
   /// If `null`, uses the theme's primary color.
+  @Deprecated('Use theme: SwitchTheme(activeColor: ...) instead.')
   final Color? activeColor;
 
   /// Color of the switch when in the inactive (off) state.
   ///
   /// If `null`, uses a default inactive color from the theme.
+  @Deprecated('Use theme: SwitchTheme(inactiveColor: ...) instead.')
   final Color? inactiveColor;
 
   /// Color of the thumb (knob) when the switch is active.
   ///
   /// If `null`, uses a default thumb color.
+  @Deprecated('Use theme: SwitchTheme(activeThumbColor: ...) instead.')
   final Color? activeThumbColor;
 
   /// Color of the thumb (knob) when the switch is inactive.
   ///
   /// If `null`, uses a default thumb color.
+  @Deprecated('Use theme: SwitchTheme(inactiveThumbColor: ...) instead.')
   final Color? inactiveThumbColor;
 
   /// Border radius for the switch track.
   ///
   /// If `null`, uses the default border radius from the theme.
+  @Deprecated('Use theme: SwitchTheme(borderRadius: ...) instead.')
   final BorderRadiusGeometry? borderRadius;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final SwitchTheme? theme;
 
   /// Creates a [Switch].
   const Switch({
@@ -329,6 +341,7 @@ class Switch extends StatefulWidget {
     this.activeThumbColor,
     this.inactiveThumbColor,
     this.borderRadius,
+    this.theme,
   });
 
   @override
@@ -364,7 +377,8 @@ class _SwitchState extends State<Switch> with FormValueSupplier<bool, Switch> {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final compTheme = ComponentTheme.maybeOf<SwitchTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<SwitchTheme>(context);
     final gap = styleValue(
       widgetValue: widget.gap,
       themeValue: compTheme?.gap,
@@ -397,9 +411,11 @@ class _SwitchState extends State<Switch> with FormValueSupplier<bool, Switch> {
     );
     return FocusOutline(
       focused: _focusing && _enabled,
-      borderRadius:
-          optionallyResolveBorderRadius(context, borderRadius) ??
-          BorderRadius.circular(theme.radiusXl),
+      theme: FocusOutlineTheme(
+        borderRadius:
+            optionallyResolveBorderRadius(context, borderRadius) ??
+            BorderRadius.circular(theme.radiusXl),
+      ),
       child: GestureDetector(
         onTap: _enabled
             ? () {

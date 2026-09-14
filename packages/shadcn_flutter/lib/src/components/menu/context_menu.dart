@@ -548,7 +548,8 @@ Widget buildEditableTextContextMenu(
 ///   child: Container(child: Text('Right-click me')),
 /// )
 /// ```
-class ContextMenu extends StatefulWidget {
+class ContextMenu extends StatefulWidget
+    implements Styleable<ContextMenuTheme> {
   /// The child widget that triggers the context menu.
   final Widget child;
 
@@ -563,6 +564,10 @@ class ContextMenu extends StatefulWidget {
 
   /// Whether the context menu is enabled.
   final bool enabled;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ContextMenuTheme? theme;
 
   /// Creates a [ContextMenu].
   ///
@@ -579,6 +584,7 @@ class ContextMenu extends StatefulWidget {
     this.behavior = HitTestBehavior.translucent,
     this.direction = Axis.vertical,
     this.enabled = true,
+    this.theme,
   });
 
   @override
@@ -692,8 +698,10 @@ Future<void> _showContextMenu(
                   context,
                 );
                 return MenuPopup(
-                  surfaceOpacity: compTheme?.surfaceOpacity,
-                  surfaceBlur: compTheme?.surfaceBlur,
+                  theme: MenuPopupTheme(
+                    surfaceOpacity: compTheme?.surfaceOpacity,
+                    surfaceBlur: compTheme?.surfaceBlur,
+                  ),
                   children: children,
                 );
               },
@@ -710,7 +718,8 @@ Future<void> _showContextMenu(
 ///
 /// Displays the actual menu content in an overlay with positioning and theming.
 /// Typically used internally by [ContextMenu].
-class ContextMenuPopup extends StatelessWidget {
+class ContextMenuPopup extends StatelessWidget
+    implements Styleable<ContextMenuTheme> {
   /// Build context for anchoring the popup.
   final BuildContext anchorContext;
 
@@ -732,6 +741,10 @@ class ContextMenuPopup extends StatelessWidget {
   /// Size of the anchor widget.
   final Size? anchorSize;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ContextMenuTheme? theme;
+
   /// Creates a [ContextMenuPopup].
   ///
   /// Parameters:
@@ -751,6 +764,7 @@ class ContextMenuPopup extends StatelessWidget {
     this.direction = Axis.vertical,
     this.onTickFollow,
     this.anchorSize,
+    this.theme,
   });
 
   @override
@@ -788,8 +802,10 @@ class ContextMenuPopup extends StatelessWidget {
                     context,
                   );
                   return MenuPopup(
-                    surfaceOpacity: compTheme?.surfaceOpacity,
-                    surfaceBlur: compTheme?.surfaceBlur,
+                    theme: MenuPopupTheme(
+                      surfaceOpacity: compTheme?.surfaceOpacity,
+                      surfaceBlur: compTheme?.surfaceBlur,
+                    ),
                     children: children,
                   );
                 },

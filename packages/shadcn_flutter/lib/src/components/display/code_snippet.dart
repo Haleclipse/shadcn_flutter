@@ -179,7 +179,8 @@ class CodeSnippetTheme extends ComponentThemeData {
 ///   ],
 /// );
 /// ```
-class CodeSnippet extends StatefulWidget {
+class CodeSnippet extends StatefulWidget
+    implements Styleable<CodeSnippetTheme> {
   /// Optional constraints for the code display area.
   ///
   /// Type: `BoxConstraints?`. Controls the maximum/minimum size of the
@@ -194,6 +195,10 @@ class CodeSnippet extends StatefulWidget {
   /// Type: `List<Widget>`. Custom action buttons shown alongside the
   /// default copy button. Useful for share, edit, or other operations.
   final List<Widget> actions;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CodeSnippetTheme? theme;
 
   /// Creates a [CodeSnippet] widget.
   ///
@@ -219,6 +224,7 @@ class CodeSnippet extends StatefulWidget {
     this.constraints,
     this.actions = const [],
     required this.code,
+    this.theme,
   });
 
   @override
@@ -292,7 +298,8 @@ class _CodeSnippetState extends State<CodeSnippet> {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContentPadding =
         theme.density.baseContentPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<CodeSnippetTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<CodeSnippetTheme>(context);
     final backgroundColor = styleValue(
       themeValue: compTheme?.backgroundColor,
       defaultValue: theme.colorScheme.card,

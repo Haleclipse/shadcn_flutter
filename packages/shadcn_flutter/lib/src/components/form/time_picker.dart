@@ -272,7 +272,7 @@ class ControlledTimePicker extends StatelessWidget
 ///
 /// Provides time selection interface with hours, minutes, and optional
 /// seconds in either popover or dialog mode.
-class TimePicker extends StatelessWidget {
+class TimePicker extends StatelessWidget implements Styleable<TimePickerTheme> {
   /// The currently selected time value.
   final TimeOfDay? value;
 
@@ -306,6 +306,10 @@ class TimePicker extends StatelessWidget {
   /// Whether the time picker is enabled.
   final bool? enabled;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TimePickerTheme? theme;
+
   /// Creates a time picker.
   const TimePicker({
     super.key,
@@ -320,12 +324,13 @@ class TimePicker extends StatelessWidget {
     this.showSeconds = false,
     this.dialogTitle,
     this.enabled,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
-    final compTheme = ComponentTheme.maybeOf<TimePickerTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<TimePickerTheme>(context);
     bool use24HourFormat =
         this.use24HourFormat ??
         compTheme?.use24HourFormat ??
@@ -547,7 +552,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
                 ),
               ],
               if (!widget.use24HourFormat) ...[
-                Gap(densityGap),
+                SizedBox(width: densityGap),
                 IntrinsicWidth(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

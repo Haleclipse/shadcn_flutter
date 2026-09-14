@@ -327,7 +327,7 @@ class ChatTheme extends ComponentThemeData {
 ///   ],
 /// )
 /// ```
-class ChatGroup extends StatelessWidget {
+class ChatGroup extends StatelessWidget implements Styleable<ChatGroupTheme> {
   /// The widget to display before the chat bubbles (e.g., an avatar).
   final Widget? avatarPrefix;
 
@@ -356,13 +356,20 @@ class ChatGroup extends StatelessWidget {
   final BorderSide? border;
 
   /// The spacing between chat bubbles.
+  @Deprecated('Use theme: ChatGroupTheme(spacing: ...) instead.')
   final double? spacing;
 
   /// The alignment of the avatar.
+  @Deprecated('Use theme: ChatGroupTheme(avatarAlignment: ...) instead.')
   final AxisAlignmentGeometry? avatarAlignment;
 
   /// The spacing between the avatar and the chat bubbles.
+  @Deprecated('Use theme: ChatGroupTheme(avatarSpacing: ...) instead.')
   final double? avatarSpacing;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ChatGroupTheme? theme;
 
   /// Creates a [ChatGroup].
   ///
@@ -393,6 +400,7 @@ class ChatGroup extends StatelessWidget {
     this.avatarSuffix,
     this.avatarAlignment,
     this.avatarSpacing,
+    this.theme,
   });
 
   @override
@@ -409,7 +417,8 @@ class ChatGroup extends StatelessWidget {
       themeValue: compTheme?.type,
       defaultValue: ChatBubbleType.tail,
     );
-    final groupTheme = ComponentTheme.maybeOf<ChatGroupTheme>(context);
+    final groupTheme =
+        this.theme ?? ComponentTheme.maybeOf<ChatGroupTheme>(context);
     final avatarAlignment =
         styleValue(
               widgetValue: this.avatarAlignment,
@@ -1261,17 +1270,19 @@ class ChatBubbleData {
 ///   color: Colors.blue,
 /// )
 /// ```
-class ChatBubble extends StatelessWidget {
+class ChatBubble extends StatelessWidget implements Styleable<ChatTheme> {
   /// The content of the chat bubble.
   final Widget child;
 
   /// The type of the chat bubble.
+  @Deprecated('Use theme: ChatTheme(type: ...) instead.')
   final ChatBubbleType? type;
 
   /// The background color of the chat bubble.
   final Color? color;
 
   /// The alignment of the chat bubble.
+  @Deprecated('Use theme: ChatTheme(alignment: ...) instead.')
   final AxisAlignmentGeometry? alignment;
 
   /// The border of the chat bubble.
@@ -1284,7 +1295,12 @@ class ChatBubble extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
 
   /// The width factor of the chat bubble.
+  @Deprecated('Use theme: ChatTheme(widthFactor: ...) instead.')
   final double? widthFactor;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ChatTheme? theme;
 
   /// Creates a [ChatBubble].
   ///
@@ -1307,11 +1323,12 @@ class ChatBubble extends StatelessWidget {
     this.padding,
     this.borderRadius,
     this.widthFactor,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final chatTheme = ComponentTheme.maybeOf<ChatTheme>(context);
+    final chatTheme = theme ?? ComponentTheme.maybeOf<ChatTheme>(context);
     final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
     final alignment = styleValue(
       widgetValue: this.alignment,
@@ -1384,7 +1401,8 @@ class ChatBubble extends StatelessWidget {
 ///  * [ChatReactionContainer], the default pill the reaction sits in.
 ///  * [ChatReactionTheme], which supplies the defaults for [corner] and
 ///    [extraWidth].
-class ChatReaction extends StatelessWidget {
+class ChatReaction extends StatelessWidget
+    implements Styleable<ChatReactionTheme> {
   /// The chat bubble the reaction is attached to.
   final Widget child;
 
@@ -1403,6 +1421,10 @@ class ChatReaction extends StatelessWidget {
   /// reaction is wider than the bubble.
   final double? extraWidth;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ChatReactionTheme? theme;
+
   /// Creates a chat bubble with an overlapping reaction badge.
   const ChatReaction({
     super.key,
@@ -1410,11 +1432,13 @@ class ChatReaction extends StatelessWidget {
     this.extraWidth,
     required this.reaction,
     required this.child,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = ComponentTheme.maybeOf<ChatReactionTheme>(context);
+    final theme =
+        this.theme ?? ComponentTheme.maybeOf<ChatReactionTheme>(context);
     final chatTheme = ComponentTheme.maybeOf<ChatTheme>(context);
     final t = Theme.of(context);
     final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
@@ -1602,17 +1626,23 @@ class ChatReactionTheme extends ComponentThemeData {
 ///
 /// Override the look through [ChatReactionTheme.decoration] and
 /// [ChatReactionTheme.containerPadding].
-class ChatReactionContainer extends StatelessWidget {
+class ChatReactionContainer extends StatelessWidget
+    implements Styleable<ChatReactionTheme> {
   /// The reaction content, typically an emoji and a count.
   final Widget child;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ChatReactionTheme? theme;
+
   /// Creates a reaction pill around [child].
-  const ChatReactionContainer({super.key, required this.child});
+  const ChatReactionContainer({super.key, required this.child, this.theme});
 
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context);
-    final theme = ComponentTheme.maybeOf<ChatReactionTheme>(context);
+    final theme =
+        this.theme ?? ComponentTheme.maybeOf<ChatReactionTheme>(context);
     return Container(
       decoration:
           theme?.decoration ??

@@ -13,26 +13,22 @@ class RepeatedAnimationBuilderExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'repeated_animation_builder',
-      description:
-          'RepeatedAnimationBuilder is a component that allows you to animate a value repeatedly.',
+      description: 'RepeatedAnimationBuilder is a component that allows you to animate a value repeatedly.',
       displayName: 'RepeatedAnimationBuilder',
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/repeated_animation_builder/repeated_animation_builder_example_1.dart',
+          path: 'lib/pages/docs/components/repeated_animation_builder/repeated_animation_builder_example_1.dart',
           child: RepeatedAnimationBuilderExample1(),
         ),
         WidgetUsageExample(
           title: 'Reverse Example',
-          path:
-              'lib/pages/docs/components/repeated_animation_builder/repeated_animation_builder_example_2.dart',
+          path: 'lib/pages/docs/components/repeated_animation_builder/repeated_animation_builder_example_2.dart',
           child: RepeatedAnimationBuilderExample2(),
         ),
         WidgetUsageExample(
           title: 'Ping-pong Example',
-          path:
-              'lib/pages/docs/components/repeated_animation_builder/repeated_animation_builder_example_3.dart',
+          path: 'lib/pages/docs/components/repeated_animation_builder/repeated_animation_builder_example_3.dart',
           child: RepeatedAnimationBuilderExample3(),
         ),
       ],

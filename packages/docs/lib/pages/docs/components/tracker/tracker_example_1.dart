@@ -16,10 +16,12 @@ class _TrackerExample1State extends State<TrackerExample1> {
     // Build a simple sequence of tracker cells with different severity levels.
     List<TrackerData> data = [];
     for (int i = 0; i < 80; i++) {
-      data.add(const TrackerData(
-        tooltip: Text('Tracker Fine'),
-        level: TrackerLevel.fine,
-      ));
+      data.add(
+        const TrackerData(
+          tooltip: Text('Tracker Fine'),
+          level: TrackerLevel.fine,
+        ),
+      );
     }
     // Mark some indices as warnings.
     data[40] = data[35] = const TrackerData(

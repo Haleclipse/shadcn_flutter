@@ -10,9 +10,7 @@ class TooltipExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       // Tooltip wraps a target widget and shows TooltipContainer on hover/focus.
-      tooltip: const TooltipContainer(
-        child: Text('This is a tooltip.'),
-      ),
+      tooltip: const TooltipContainer(child: Text('This is a tooltip.')),
       child: PrimaryButton(
         onPressed: () {},
         child: const Text('Hover over me'),

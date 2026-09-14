@@ -16,13 +16,16 @@ class _ChatExample2State extends State<ChatExample2> {
         // ChatGroup example
         ChatGroup(
           color: Colors.blue,
-          type:
-              ChatBubbleType.tail.copyWith(position: () => AxisDirectional.end),
+          type: ChatBubbleType.tail.copyWith(
+            position: () => AxisDirectional.end,
+          ),
           alignment: AxisAlignmentDirectional.end,
           children: const [
             ChatBubble(
-                child: Text(
-                    'John, did you remember what time you took the call with Mrs. Smith?')),
+              child: Text(
+                'John, did you remember what time you took the call with Mrs. Smith?',
+              ),
+            ),
             ChatBubble(child: Text('Reply ASAP')),
           ],
         ),
@@ -31,8 +34,9 @@ class _ChatExample2State extends State<ChatExample2> {
           avatarPrefix: const Avatar(initials: 'JO'),
           alignment: AxisAlignmentDirectional.start,
           type: ChatBubbleType.tail.copyWith(
-              position: () => AxisDirectional.start,
-              tailAlignment: () => AxisAlignmentDirectional.end),
+            position: () => AxisDirectional.start,
+            tailAlignment: () => AxisAlignmentDirectional.end,
+          ),
           children: const [
             ChatBubble(child: Text('Around 6 or 7?')),
             ChatBubble(child: Text('New phone who dis?')),
@@ -40,9 +44,12 @@ class _ChatExample2State extends State<ChatExample2> {
         ),
         ChatBubble(
           color: Colors.blue,
-          alignment: AxisAlignmentDirectional.end,
-          type:
-              ChatBubbleType.tail.copyWith(position: () => AxisDirectional.end),
+          theme: ChatTheme(
+            alignment: AxisAlignmentDirectional.end,
+            type: ChatBubbleType.tail.copyWith(
+              position: () => AxisDirectional.end,
+            ),
+          ),
           child: const Text('SIX SEVENNN 🤤🤪'),
         ),
         ChatGroup(
@@ -50,8 +57,9 @@ class _ChatExample2State extends State<ChatExample2> {
           avatarPrefix: const Avatar(initials: 'JO'),
           alignment: AxisAlignmentDirectional.start,
           type: ChatBubbleType.tail.copyWith(
-              position: () => AxisDirectional.start,
-              tailAlignment: () => AxisAlignmentDirectional.end),
+            position: () => AxisDirectional.start,
+            tailAlignment: () => AxisAlignmentDirectional.end,
+          ),
           children: const [
             ChatBubble(child: Text('?')),
             ChatBubble(child: Text('Seriously who is this')),
@@ -63,8 +71,4 @@ class _ChatExample2State extends State<ChatExample2> {
   }
 }
 
-enum ChatType {
-  plain,
-  tail,
-  sharpCorner,
-}
+enum ChatType { plain, tail, sharpCorner }

@@ -102,7 +102,7 @@ void main() {
           child: Basic(
             leading: Icon(LucideIcons.star),
             title: Text('Title'),
-            contentSpacing: 24,
+            theme: BasicTheme(contentSpacing: 24),
           ),
         ),
       );
@@ -118,7 +118,7 @@ void main() {
           child: Basic(
             title: Text('Title'),
             subtitle: Text('Subtitle'),
-            titleSpacing: 8,
+            theme: BasicTheme(titleSpacing: 8),
           ),
         ),
       );
@@ -131,7 +131,10 @@ void main() {
     testWidgets('respects custom padding', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: Basic(title: Text('Title'), padding: EdgeInsets.all(16)),
+          child: Basic(
+            title: Text('Title'),
+            theme: BasicTheme(padding: EdgeInsets.all(16)),
+          ),
         ),
       );
 
@@ -146,7 +149,9 @@ void main() {
             leading: Icon(LucideIcons.star),
             title: Text('Title'),
             trailing: Icon(LucideIcons.arrowRight),
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            theme: BasicTheme(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
           ),
         ),
       );
@@ -163,7 +168,7 @@ void main() {
           child: Basic(
             leading: Icon(LucideIcons.star),
             title: Text('Title'),
-            leadingAlignment: Alignment.center,
+            theme: BasicTheme(leadingAlignment: Alignment.center),
           ),
         ),
       );
@@ -179,7 +184,7 @@ void main() {
           child: Basic(
             title: Text('Title'),
             trailing: Icon(LucideIcons.arrowRight),
-            trailingAlignment: Alignment.center,
+            theme: BasicTheme(trailingAlignment: Alignment.center),
           ),
         ),
       );
@@ -192,7 +197,10 @@ void main() {
     testWidgets('respects title alignment', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: Basic(title: Text('Title'), titleAlignment: Alignment.center),
+          child: Basic(
+            title: Text('Title'),
+            theme: BasicTheme(titleAlignment: Alignment.center),
+          ),
         ),
       );
 
@@ -206,7 +214,7 @@ void main() {
           child: Basic(
             title: Text('Title'),
             subtitle: Text('Subtitle'),
-            subtitleAlignment: Alignment.center,
+            theme: BasicTheme(subtitleAlignment: Alignment.center),
           ),
         ),
       );
@@ -222,7 +230,7 @@ void main() {
           child: Basic(
             title: Text('Title'),
             content: Text('Content'),
-            contentAlignment: Alignment.center,
+            theme: BasicTheme(contentAlignment: Alignment.center),
           ),
         ),
       );

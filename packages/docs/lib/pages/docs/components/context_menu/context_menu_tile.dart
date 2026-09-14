@@ -1,6 +1,7 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // paint a cursor
 class CursorPainter extends CustomPainter {
@@ -51,59 +52,67 @@ class ContextMenuTile extends StatelessWidget implements IComponentPage {
       example: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CustomPaint(
-            painter: CursorPainter(),
-          ),
+          const CustomPaint(painter: CursorPainter()),
           const Gap(24),
           SizedBox(
             width: 192,
-            child: MenuPopup(children: [
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator:
-                      SingleActivator(LogicalKeyboardKey.keyX, control: true),
+            child: MenuPopup(
+              children: [
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyX,
+                      control: true,
+                    ),
+                  ),
+                  child: const Text('Cut'),
                 ),
-                child: const Text('Cut'),
-              ),
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator:
-                      SingleActivator(LogicalKeyboardKey.keyC, control: true),
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyC,
+                      control: true,
+                    ),
+                  ),
+                  child: const Text('Copy'),
                 ),
-                child: const Text('Copy'),
-              ),
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator:
-                      SingleActivator(LogicalKeyboardKey.keyV, control: true),
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyV,
+                      control: true,
+                    ),
+                  ),
+                  child: const Text('Paste'),
                 ),
-                child: const Text('Paste'),
-              ),
-              const MenuDivider(),
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator: SingleActivator(LogicalKeyboardKey.delete),
+                const MenuDivider(),
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(LogicalKeyboardKey.delete),
+                  ),
+                  child: const Text('Delete'),
                 ),
-                child: const Text('Delete'),
-              ),
-              Button(
-                style: const ButtonStyle.menu(),
-                onPressed: () {},
-                trailing: const MenuShortcut(
-                  activator:
-                      SingleActivator(LogicalKeyboardKey.keyA, control: true),
+                Button(
+                  style: const ButtonStyle.menu(),
+                  onPressed: () {},
+                  trailing: const MenuShortcut(
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyA,
+                      control: true,
+                    ),
+                  ),
+                  child: const Text('Select All'),
                 ),
-                child: const Text('Select All'),
-              ),
-            ]),
+              ],
+            ),
           ),
         ],
       ),

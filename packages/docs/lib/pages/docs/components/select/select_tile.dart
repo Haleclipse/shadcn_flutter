@@ -1,5 +1,6 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+import 'package:gap/gap.dart';
 
 class SelectTile extends StatelessWidget implements IComponentPage {
   const SelectTile({super.key});
@@ -35,28 +36,18 @@ class SelectTile extends StatelessWidget implements IComponentPage {
               const SizedBox(
                 width: 300,
                 child: SelectPopup(
-                  items: SelectItemList(children: [
-                    SelectItemButton(
-                      value: 'Apple',
-                      child: Text('Apple'),
-                    ),
-                    SelectItemButton(
-                      value: 'Banana',
-                      child: Text('Banana'),
-                    ),
-                    SelectItemButton(
-                      value: 'Lemon',
-                      child: Text('Lemon'),
-                    ),
-                    SelectItemButton(
-                      value: 'Tomato',
-                      child: Text('Tomato'),
-                    ),
-                    SelectItemButton(
-                      value: 'Cucumber',
-                      child: Text('Cucumber'),
-                    ),
-                  ]),
+                  items: SelectItemList(
+                    children: [
+                      SelectItemButton(value: 'Apple', child: Text('Apple')),
+                      SelectItemButton(value: 'Banana', child: Text('Banana')),
+                      SelectItemButton(value: 'Lemon', child: Text('Lemon')),
+                      SelectItemButton(value: 'Tomato', child: Text('Tomato')),
+                      SelectItemButton(
+                        value: 'Cucumber',
+                        child: Text('Cucumber'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

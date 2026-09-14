@@ -78,9 +78,7 @@ class _FormExampleState extends State<FormExample> {
             'uses typed FormKey objects to identify each field and carry its value type. '
             'This gives you compile-time type safety when reading submitted values.',
           ).p(),
-          const Text(
-            'A typical form setup involves three parts:',
-          ).p(),
+          const Text('A typical form setup involves three parts:').p(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -332,10 +330,7 @@ class _FormExampleState extends State<FormExample> {
 
   TableCell _padded(Widget child) {
     return TableCell(
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: child,
-      ),
+      child: Container(padding: const EdgeInsets.all(8), child: child),
     );
   }
 
@@ -351,17 +346,21 @@ class _FormExampleState extends State<FormExample> {
   Widget _buildKeyReferenceTable(BuildContext context) {
     return Table(
       rows: [
-        TableHeader(cells: [
-          _headerCell('Key Alias'),
-          _headerCell('Value Type'),
-          _headerCell('Widget'),
-        ]),
+        TableHeader(
+          cells: [
+            _headerCell('Key Alias'),
+            _headerCell('Value Type'),
+            _headerCell('Widget'),
+          ],
+        ),
         ..._keyEntries.map(
-          (e) => TableRow(cells: [
-            _padded(Text(e.$1)),
-            _padded(Text(e.$2)),
-            _padded(Text(e.$3)),
-          ]),
+          (e) => TableRow(
+            cells: [
+              _padded(Text(e.$1)),
+              _padded(Text(e.$2)),
+              _padded(Text(e.$3)),
+            ],
+          ),
         ),
       ],
     ).p();
@@ -397,17 +396,21 @@ class _FormExampleState extends State<FormExample> {
   Widget _buildControlledTable(BuildContext context) {
     return Table(
       rows: [
-        TableHeader(cells: [
-          _headerCell('Standard Widget'),
-          _headerCell('Controlled Variant'),
-          _headerCell('Managed State'),
-        ]),
+        TableHeader(
+          cells: [
+            _headerCell('Standard Widget'),
+            _headerCell('Controlled Variant'),
+            _headerCell('Managed State'),
+          ],
+        ),
         ..._controlledEntries.map(
-          (e) => TableRow(cells: [
-            _padded(Text(e.$1)),
-            _padded(Text(e.$2)),
-            _padded(Text(e.$3)),
-          ]),
+          (e) => TableRow(
+            cells: [
+              _padded(Text(e.$1)),
+              _padded(Text(e.$2)),
+              _padded(Text(e.$3)),
+            ],
+          ),
         ),
       ],
     ).p();
@@ -499,11 +502,11 @@ class _FormExampleState extends State<FormExample> {
             child: Text('Validators may return valid for empty strings'),
           ),
           content: const Text(
-                  'Some validators (like EmailValidator, RegexValidator, URLValidator, etc.) '
-                  'will return valid if the string is empty. This means a blank field will pass '
-                  'validation unless you also add NotEmptyValidator. Always combine NotEmptyValidator '
-                  'with these to ensure empty values are rejected. For example: ')
-              .thenInlineCode('NotEmptyValidator() & EmailValidator()'),
+            'Some validators (like EmailValidator, RegexValidator, URLValidator, etc.) '
+            'will return valid if the string is empty. This means a blank field will pass '
+            'validation unless you also add NotEmptyValidator. Always combine NotEmptyValidator '
+            'with these to ensure empty values are rejected. For example: ',
+          ).thenInlineCode('NotEmptyValidator() & EmailValidator()'),
         ),
       ],
     );
@@ -512,15 +515,11 @@ class _FormExampleState extends State<FormExample> {
   Widget _buildValidatorTable(BuildContext context) {
     return Table(
       rows: [
-        TableHeader(cells: [
-          _headerCell('Validator'),
-          _headerCell('Description'),
-        ]),
+        TableHeader(
+          cells: [_headerCell('Validator'), _headerCell('Description')],
+        ),
         ..._validatorEntries.map(
-          (e) => TableRow(cells: [
-            _padded(Text(e.$1)),
-            _padded(Text(e.$2)),
-          ]),
+          (e) => TableRow(cells: [_padded(Text(e.$1)), _padded(Text(e.$2))]),
         ),
       ],
     ).p();
@@ -529,37 +528,37 @@ class _FormExampleState extends State<FormExample> {
   static const _validatorEntries = <(String, String)>[
     (
       'NonNullValidator',
-      'Fails if the value is null. Used to require a value.'
+      'Fails if the value is null. Used to require a value.',
     ),
     ('NotEmptyValidator', 'Fails if the string is null or empty.'),
     (
       'LengthValidator',
-      'Checks if a string\'s length is within min/max bounds.'
+      'Checks if a string\'s length is within min/max bounds.',
     ),
     ('RegexValidator', 'Checks if a string matches a regular expression.'),
     ('EmailValidator', 'Checks if a string is a valid email address.'),
     ('URLValidator', 'Checks if a string is a valid URL.'),
     (
       'SafePasswordValidator',
-      'Checks password for digits, upper/lowercase, special chars.'
+      'Checks password for digits, upper/lowercase, special chars.',
     ),
     (
       'MinValidator',
-      'Checks if a number is greater than (or equal to) a minimum.'
+      'Checks if a number is greater than (or equal to) a minimum.',
     ),
     (
       'MaxValidator',
-      'Checks if a number is less than (or equal to) a maximum.'
+      'Checks if a number is less than (or equal to) a maximum.',
     ),
     ('RangeValidator', 'Checks if a number is within a min/max range.'),
     ('CompareTo', 'Compares a value to a static value (>, <, ==, etc).'),
     (
       'CompareWith',
-      'Compares a value to another field\'s value (cross-field).'
+      'Compares a value to another field\'s value (cross-field).',
     ),
     (
       'ConditionalValidator',
-      'Runs only if a predicate returns true (supports async).'
+      'Runs only if a predicate returns true (supports async).',
     ),
     ('ValidationMode', 'Wraps another validator to control when it runs.'),
     ('CompositeValidator', 'Combines multiple validators (all must pass).'),

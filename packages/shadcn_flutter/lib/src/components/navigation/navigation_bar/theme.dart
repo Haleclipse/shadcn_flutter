@@ -77,14 +77,16 @@ class NavigationBarTheme extends ComponentThemeData {
     ValueGetter<EdgeInsetsGeometry?>? padding,
   }) {
     return NavigationBarTheme(
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       alignment: alignment == null ? this.alignment : alignment(),
       direction: direction == null ? this.direction : direction(),
       spacing: spacing == null ? this.spacing : spacing(),
       labelType: labelType == null ? this.labelType : labelType(),
-      labelPosition:
-          labelPosition == null ? this.labelPosition : labelPosition(),
+      labelPosition: labelPosition == null
+          ? this.labelPosition
+          : labelPosition(),
       labelSize: labelSize == null ? this.labelSize : labelSize(),
       padding: padding == null ? this.padding : padding(),
     );
@@ -105,13 +107,13 @@ class NavigationBarTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        backgroundColor,
-        alignment,
-        direction,
-        spacing,
-        labelType,
-        labelPosition,
-        labelSize,
-        padding,
-      );
+    backgroundColor,
+    alignment,
+    direction,
+    spacing,
+    labelType,
+    labelPosition,
+    labelSize,
+    padding,
+  );
 }

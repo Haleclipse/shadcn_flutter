@@ -14,10 +14,7 @@ class CardImageExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
-        dragDevices: {
-          PointerDeviceKind.touch,
-          PointerDeviceKind.mouse,
-        },
+        dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -50,9 +47,7 @@ class CardImageExample1 extends StatelessWidget {
                     );
                   },
                   // Network image; replace with your own provider as needed.
-                  image: Image.network(
-                    'https://picsum.photos/200/300',
-                  ),
+                  image: Image.network('https://picsum.photos/200/300'),
                   // Title and subtitle appear over the image.
                   title: Text('Card Number ${i + 1}'),
                   subtitle: const Text('Lorem ipsum dolor sit amet'),

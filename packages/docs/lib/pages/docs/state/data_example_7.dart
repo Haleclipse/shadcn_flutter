@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DataExample7 extends StatefulWidget {
   const DataExample7({super.key});
@@ -25,10 +26,7 @@ class DataExample7State extends State<DataExample7> {
       children: [
         Text('Current Value: $counter - Rebuild Count: $rebuildCount'),
         const Gap(24),
-        Data.inherit(
-          data: this,
-          child: const InnerWidget(),
-        )
+        Data.inherit(data: this, child: const InnerWidget()),
       ],
     );
   }
@@ -59,7 +57,7 @@ class _InnerWidgetState extends State<InnerWidget> {
               data.incrementCounter();
             },
             child: const Text('Increment Counter'),
-          )
+          ),
         ],
       ),
     );

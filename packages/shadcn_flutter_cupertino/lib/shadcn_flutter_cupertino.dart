@@ -17,7 +17,7 @@
 /// void main() {
 ///   runApp(
 ///     CupertinoShadcnApp(
-///       theme: ThemeData(colorScheme: ColorSchemes.lightZinc(), radius: 0.5),
+///       theme: ThemeData(colorScheme: ColorSchemes.lightZinc, radius: 0.5),
 ///       home: CupertinoPageScaffold(
 ///         navigationBar: const CupertinoNavigationBar(
 ///           middle: Text('Hybrid app'),

@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class NavigationMenuTile extends StatelessWidget implements IComponentPage {
   const NavigationMenuTile({super.key});
@@ -31,10 +32,7 @@ class NavigationMenuTile extends StatelessWidget implements IComponentPage {
                       );
                     },
                   ),
-                  trailing: const Icon(
-                    RadixIcons.chevronUp,
-                    size: 12,
-                  ),
+                  trailing: const Icon(RadixIcons.chevronUp, size: 12),
                   child: const Text('Getting Started'),
                 ),
                 const NavigationMenuItem(
@@ -45,7 +43,7 @@ class NavigationMenuTile extends StatelessWidget implements IComponentPage {
             ),
             const Gap(8),
             OutlinedContainer(
-              borderRadius: theme.borderRadiusMd,
+              theme: OutlinedContainerTheme(borderRadius: theme.borderRadiusMd),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: NavigationMenuContentList(
@@ -66,10 +64,12 @@ class NavigationMenuTile extends StatelessWidget implements IComponentPage {
                       alignment: Alignment.topLeft,
                       child: Basic(
                         title: const Text('Installation').medium(),
-                        content:
-                            const Text('How to install Shadcn/UI for Flutter')
-                                .muted(),
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        content: const Text(
+                          'How to install Shadcn/UI for Flutter',
+                        ).muted(),
+                        theme: BasicTheme(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                        ),
                       ),
                     ).constrained(maxWidth: 16 * 16),
                   ],

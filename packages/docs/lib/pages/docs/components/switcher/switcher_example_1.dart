@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SwitcherExample1 extends StatefulWidget {
   const SwitcherExample1({super.key});
@@ -15,10 +16,7 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
     AxisDirection.left,
     AxisDirection.right,
   ];
-  List<Size> sizes = const [
-    Size(200, 300),
-    Size(300, 200),
-  ];
+  List<Size> sizes = const [Size(200, 300), Size(300, 200)];
   int directionIndex = 0;
   int index = 0;
 
@@ -28,22 +26,25 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
       mainAxisSize: MainAxisSize.min,
       children: [
         PrimaryButton(
-            child: Text(
-                'Switch Direction (${directions[directionIndex % directions.length]})'),
-            onPressed: () {
-              setState(() {
-                directionIndex++;
-              });
-            }),
-        gap(8),
+          child: Text(
+            'Switch Direction (${directions[directionIndex % directions.length]})',
+          ),
+          onPressed: () {
+            setState(() {
+              directionIndex++;
+            });
+          },
+        ),
+        Gap(8),
         PrimaryButton(
-            child: const Text('Next Item'),
-            onPressed: () {
-              setState(() {
-                index++;
-              });
-            }),
-        gap(24),
+          child: const Text('Next Item'),
+          onPressed: () {
+            setState(() {
+              index++;
+            });
+          },
+        ),
+        Gap(24),
         ClipRect(
           child: Switcher(
             // The index selects which child is visible; transitions are directional.
@@ -61,7 +62,7 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
                   // Demonstrate different sizes to show animated size transitions.
                   width: sizes[i % sizes.length].width,
                   height: sizes[i % sizes.length].height,
-                )
+                ),
             ],
           ),
         ),

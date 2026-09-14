@@ -22,38 +22,32 @@ class ItemPickerExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'item_picker',
-      description:
-          'Item picker is a widget that allows you to pick an item from a list of items.',
+      description: 'Item picker is a widget that allows you to pick an item from a list of items.',
       displayName: 'Item Picker',
       children: [
         WidgetUsageExample(
           title: 'Item Picker Example',
-          path:
-              'lib/pages/docs/components/item_picker/item_picker_example_1.dart',
+          path: 'lib/pages/docs/components/item_picker/item_picker_example_1.dart',
           child: ItemPickerExample1(),
         ),
         WidgetUsageExample(
           title: 'Dialog Example',
-          path:
-              'lib/pages/docs/components/item_picker/item_picker_example_2.dart',
+          path: 'lib/pages/docs/components/item_picker/item_picker_example_2.dart',
           child: ItemPickerExample2(),
         ),
         WidgetUsageExample(
           title: 'Fixed List Item Example',
-          path:
-              'lib/pages/docs/components/item_picker/item_picker_example_3.dart',
+          path: 'lib/pages/docs/components/item_picker/item_picker_example_3.dart',
           child: ItemPickerExample3(),
         ),
         WidgetUsageExample(
           title: 'List Layout Example',
-          path:
-              'lib/pages/docs/components/item_picker/item_picker_example_4.dart',
+          path: 'lib/pages/docs/components/item_picker/item_picker_example_4.dart',
           child: ItemPickerExample4(),
         ),
         WidgetUsageExample(
           title: 'Form Example',
-          path:
-              'lib/pages/docs/components/item_picker/item_picker_example_5.dart',
+          path: 'lib/pages/docs/components/item_picker/item_picker_example_5.dart',
           child: ItemPickerExample5(),
         ),
       ],
@@ -86,32 +80,28 @@ class ItemPickerExample1 extends StatelessWidget {
           ),
           builder: (context, item) {
             return ItemPickerOption(
-                value: item, child: Text(item.toString()).large);
+              value: item,
+              child: Text(item.toString()).large,
+            );
           },
-        ).then(
-          (value) {
-            if (value != null && context.mounted) {
-              // Feedback via toast when a selection is made.
-              showToast(
-                context: context,
-                builder: (context, overlay) {
-                  return SurfaceCard(
-                    child: Text('You picked $value!'),
-                  );
-                },
-              );
-            } else if (context.mounted) {
-              showToast(
-                context: context,
-                builder: (context, overlay) {
-                  return const SurfaceCard(
-                    child: Text('You picked nothing!'),
-                  );
-                },
-              );
-            }
-          },
-        );
+        ).then((value) {
+          if (value != null && context.mounted) {
+            // Feedback via toast when a selection is made.
+            showToast(
+              context: context,
+              builder: (context, overlay) {
+                return SurfaceCard(child: Text('You picked $value!'));
+              },
+            );
+          } else if (context.mounted) {
+            showToast(
+              context: context,
+              builder: (context, overlay) {
+                return const SurfaceCard(child: Text('You picked nothing!'));
+              },
+            );
+          }
+        });
       },
       child: const Text('Show Item Picker'),
     );
@@ -142,31 +132,27 @@ class ItemPickerExample2 extends StatelessWidget {
           ),
           builder: (context, item) {
             return ItemPickerOption(
-                value: item, child: Text(item.toString()).large);
+              value: item,
+              child: Text(item.toString()).large,
+            );
           },
-        ).then(
-          (value) {
-            if (value != null && context.mounted) {
-              showToast(
-                context: context,
-                builder: (context, overlay) {
-                  return SurfaceCard(
-                    child: Text('You picked $value!'),
-                  );
-                },
-              );
-            } else if (context.mounted) {
-              showToast(
-                context: context,
-                builder: (context, overlay) {
-                  return const SurfaceCard(
-                    child: Text('You picked nothing!'),
-                  );
-                },
-              );
-            }
-          },
-        );
+        ).then((value) {
+          if (value != null && context.mounted) {
+            showToast(
+              context: context,
+              builder: (context, overlay) {
+                return SurfaceCard(child: Text('You picked $value!'));
+              },
+            );
+          } else if (context.mounted) {
+            showToast(
+              context: context,
+              builder: (context, overlay) {
+                return const SurfaceCard(child: Text('You picked nothing!'));
+              },
+            );
+          }
+        });
       },
       child: const Text('Show Item Picker'),
     );
@@ -222,46 +208,40 @@ class _ItemPickerExample3State extends State<ItemPickerExample3> {
               selectedStyle: const ButtonStyle.primary(
                 shape: ButtonShape.circle,
               ),
-              style: const ButtonStyle.ghost(
-                shape: ButtonShape.circle,
-              ),
+              style: const ButtonStyle.ghost(shape: ButtonShape.circle),
               label: Text(item.name),
               child: Container(
                 padding: const EdgeInsets.all(8),
                 width: 100,
                 height: 100,
                 alignment: Alignment.center,
-                decoration:
-                    BoxDecoration(color: item.color, shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                  color: item.color,
+                  shape: BoxShape.circle,
+                ),
               ),
             );
           },
-        ).then(
-          (value) {
-            if (value != null) {
-              selectedColor = colors.indexOf(value);
-              if (context.mounted) {
-                showToast(
-                  context: context,
-                  builder: (context, overlay) {
-                    return SurfaceCard(
-                      child: Text('You picked ${value.name}!'),
-                    );
-                  },
-                );
-              }
-            } else if (context.mounted) {
+        ).then((value) {
+          if (value != null) {
+            selectedColor = colors.indexOf(value);
+            if (context.mounted) {
               showToast(
                 context: context,
                 builder: (context, overlay) {
-                  return const SurfaceCard(
-                    child: Text('You picked nothing!'),
-                  );
+                  return SurfaceCard(child: Text('You picked ${value.name}!'));
                 },
               );
             }
-          },
-        );
+          } else if (context.mounted) {
+            showToast(
+              context: context,
+              builder: (context, overlay) {
+                return const SurfaceCard(child: Text('You picked nothing!'));
+              },
+            );
+          }
+        });
       },
       child: const Text('Show Item Picker'),
     );
@@ -315,43 +295,38 @@ class _ItemPickerExample4State extends State<ItemPickerExample4> {
           title: const Text('Pick a color'),
           builder: (context, item) {
             return ItemPickerOption(
-                value: item,
-                label: Text(item.name),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: item.color,
-                    shape: BoxShape.circle,
-                  ),
-                ));
+              value: item,
+              label: Text(item.name),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: item.color,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            );
           },
-        ).then(
-          (value) {
-            if (value != null) {
-              selectedColor = colors.indexOf(value);
-              if (context.mounted) {
-                showToast(
-                  context: context,
-                  builder: (context, overlay) {
-                    return SurfaceCard(
-                      child: Text('You picked ${value.name}!'),
-                    );
-                  },
-                );
-              }
-            } else if (context.mounted) {
+        ).then((value) {
+          if (value != null) {
+            selectedColor = colors.indexOf(value);
+            if (context.mounted) {
               showToast(
                 context: context,
                 builder: (context, overlay) {
-                  return const SurfaceCard(
-                    child: Text('You picked nothing!'),
-                  );
+                  return SurfaceCard(child: Text('You picked ${value.name}!'));
                 },
               );
             }
-          },
-        );
+          } else if (context.mounted) {
+            showToast(
+              context: context,
+              builder: (context, overlay) {
+                return const SurfaceCard(child: Text('You picked nothing!'));
+              },
+            );
+          }
+        });
       },
       child: const Text('Show Item Picker'),
     );
@@ -403,12 +378,8 @@ class _ItemPickerExample5State extends State<ItemPickerExample5> {
         return ItemPickerOption(
           value: item,
           label: Text(item.name),
-          style: const ButtonStyle.ghostIcon(
-            shape: ButtonShape.circle,
-          ),
-          selectedStyle: const ButtonStyle.primary(
-            shape: ButtonShape.circle,
-          ),
+          style: const ButtonStyle.ghostIcon(shape: ButtonShape.circle),
+          selectedStyle: const ButtonStyle.primary(shape: ButtonShape.circle),
           child: Container(
             constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
             decoration: BoxDecoration(
@@ -440,6 +411,7 @@ class _ItemPickerExample5State extends State<ItemPickerExample5> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ItemPickerTile extends StatelessWidget implements IComponentPage {
   const ItemPickerTile({super.key});
@@ -462,18 +434,9 @@ class ItemPickerTile extends StatelessWidget implements IComponentPage {
               spacing: 8,
               runSpacing: 8,
               children: [
-                Chip(
-                  child: const Text('Option 1'),
-                  onPressed: () {},
-                ),
-                Chip(
-                  child: const Text('Option 2'),
-                  onPressed: () {},
-                ),
-                Chip(
-                  child: const Text('Option 3'),
-                  onPressed: () {},
-                ),
+                Chip(child: const Text('Option 1'), onPressed: () {}),
+                Chip(child: const Text('Option 2'), onPressed: () {}),
+                Chip(child: const Text('Option 3'), onPressed: () {}),
               ],
             ),
           ],

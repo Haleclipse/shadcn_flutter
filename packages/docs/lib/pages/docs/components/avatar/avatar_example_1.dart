@@ -10,11 +10,12 @@ class AvatarExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Avatar(
-      backgroundColor: Colors.red,
       // Helper to derive initials from a username or full name.
       initials: Avatar.getInitials('sunarya-thito'),
       provider: const NetworkImage(
-          'https://avatars.githubusercontent.com/u/64018564?v=4'),
+        'https://avatars.githubusercontent.com/u/64018564?v=4',
+      ),
+      theme: AvatarTheme(backgroundColor: Colors.red),
     );
   }
 }

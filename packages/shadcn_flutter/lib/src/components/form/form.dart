@@ -1,10 +1,19 @@
 import 'dart:async';
 
-import 'package:email_validator/email_validator.dart' as email_validator;
+import '../../vendor/email_validator/email_validator.dart' as email_validator;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart' as widgets;
 
 import '../../../shadcn_flutter.dart';
+
+/// Renders a value for a validation message.
+///
+/// Numbers go through [formatDecimal] so a bound of `5` reads `5` rather than
+/// `5.0`, and `1234.5` reads `1,234.5`. Anything else — a `DateTime`, a
+/// `String` — falls back to `toString`.
+String _describeValue(Object? value) =>
+    value is num ? formatDecimal(value) : '$value';
 
 /// Abstract base class for implementing form field validation logic.
 ///
@@ -483,7 +492,7 @@ class NotValidator<T> extends Validator<T> {
     T? value,
     FormValidationMode state,
   ) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = ShadcnLocalizations.of(context);
     var result = validator.validate(context, value, state);
     if (result is Future<ValidationResult?>) {
       return result.then((value) {
@@ -619,7 +628,7 @@ class NonNullValidator<T> extends Validator<T> {
     FormValidationMode state,
   ) {
     if (value == null) {
-      var localizations = Localizations.of(context, ShadcnLocalizations);
+      var localizations = ShadcnLocalizations.of(context);
       return InvalidResult(message ?? localizations.formNotEmpty, state: state);
     }
     return null;
@@ -656,7 +665,7 @@ class NotEmptyValidator extends NonNullValidator<String> {
     FormValidationMode state,
   ) {
     if (value == null || value.isEmpty) {
-      var localizations = Localizations.of(context, ShadcnLocalizations);
+      var localizations = ShadcnLocalizations.of(context);
       return InvalidResult(message ?? localizations.formNotEmpty, state: state);
     }
     return null;
@@ -832,7 +841,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
     T? value,
     FormValidationMode state,
   ) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = ShadcnLocalizations.of(context);
     var otherValue = context.getFormValue(key);
     if (otherValue == null) {
       return InvalidResult(message ?? localizations.invalidValue, state: state);
@@ -842,7 +851,8 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
       case CompareType.greater:
         if (compare <= 0) {
           return InvalidResult(
-            message ?? localizations.formGreaterThan(otherValue),
+            message ??
+                localizations.formGreaterThan(_describeValue(otherValue)),
             state: state,
           );
         }
@@ -850,7 +860,10 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
       case CompareType.greaterOrEqual:
         if (compare < 0) {
           return InvalidResult(
-            message ?? localizations.formGreaterThanOrEqualTo(otherValue),
+            message ??
+                localizations.formGreaterThanOrEqualTo(
+                  _describeValue(otherValue),
+                ),
             state: state,
           );
         }
@@ -858,7 +871,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
       case CompareType.less:
         if (compare >= 0) {
           return InvalidResult(
-            message ?? localizations.formLessThan(otherValue),
+            message ?? localizations.formLessThan(_describeValue(otherValue)),
             state: state,
           );
         }
@@ -866,7 +879,8 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
       case CompareType.lessOrEqual:
         if (compare > 0) {
           return InvalidResult(
-            message ?? localizations.formLessThanOrEqualTo(otherValue),
+            message ??
+                localizations.formLessThanOrEqualTo(_describeValue(otherValue)),
             state: state,
           );
         }
@@ -874,7 +888,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
       case CompareType.equal:
         if (compare != 0) {
           return InvalidResult(
-            message ?? localizations.formEqualTo(otherValue),
+            message ?? localizations.formEqualTo(_describeValue(otherValue)),
             state: state,
           );
         }
@@ -953,8 +967,7 @@ class SafePasswordValidator extends Validator<String> {
     }
     if (requireDigit && !RegExp(r'\d').hasMatch(value)) {
       return InvalidResult(
-        message ??
-            Localizations.of(context, ShadcnLocalizations).formPasswordDigits,
+        message ?? ShadcnLocalizations.of(context).formPasswordDigits,
         state: state,
       );
     }
@@ -980,8 +993,7 @@ class SafePasswordValidator extends Validator<String> {
     }
     if (requireSpecialChar && !RegExp(r'[\W_]').hasMatch(value)) {
       return InvalidResult(
-        message ??
-            Localizations.of(context, ShadcnLocalizations).formPasswordSpecial,
+        message ?? ShadcnLocalizations.of(context).formPasswordSpecial,
         state: state,
       );
     }
@@ -1051,7 +1063,7 @@ class MinValidator<T extends num> extends Validator<T> {
               Localizations.of(
                 context,
                 ShadcnLocalizations,
-              ).formGreaterThanOrEqualTo(min),
+              ).formGreaterThanOrEqualTo(_describeValue(min)),
           state: state,
         );
       }
@@ -1062,7 +1074,7 @@ class MinValidator<T extends num> extends Validator<T> {
               Localizations.of(
                 context,
                 ShadcnLocalizations,
-              ).formGreaterThan(min),
+              ).formGreaterThan(_describeValue(min)),
           state: state,
         );
       }
@@ -1125,7 +1137,7 @@ class MaxValidator<T extends num> extends Validator<T> {
               Localizations.of(
                 context,
                 ShadcnLocalizations,
-              ).formLessThanOrEqualTo(max),
+              ).formLessThanOrEqualTo(_describeValue(max)),
           state: state,
         );
       }
@@ -1133,7 +1145,7 @@ class MaxValidator<T extends num> extends Validator<T> {
       if (value >= max) {
         return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations).formLessThan(max),
+              ShadcnLocalizations.of(context).formLessThan(_describeValue(max)),
           state: state,
         );
       }
@@ -1205,7 +1217,10 @@ class RangeValidator<T extends num> extends Validator<T> {
               Localizations.of(
                 context,
                 ShadcnLocalizations,
-              ).formBetweenInclusively(min, max),
+              ).formBetweenInclusively(
+                _describeValue(min),
+                _describeValue(max),
+              ),
           state: state,
         );
       }
@@ -1216,7 +1231,10 @@ class RangeValidator<T extends num> extends Validator<T> {
               Localizations.of(
                 context,
                 ShadcnLocalizations,
-              ).formBetweenExclusively(min, max),
+              ).formBetweenExclusively(
+                _describeValue(min),
+                _describeValue(max),
+              ),
           state: state,
         );
       }
@@ -1271,7 +1289,7 @@ class RegexValidator extends Validator<String> {
     }
     if (!pattern.hasMatch(value)) {
       return InvalidResult(
-        message ?? Localizations.of(context, ShadcnLocalizations).invalidValue,
+        message ?? ShadcnLocalizations.of(context).invalidValue,
         state: state,
       );
     }
@@ -1319,7 +1337,7 @@ class EmailValidator extends Validator<String> {
     }
     if (!email_validator.EmailValidator.validate(value)) {
       return InvalidResult(
-        message ?? Localizations.of(context, ShadcnLocalizations).invalidEmail,
+        message ?? ShadcnLocalizations.of(context).invalidEmail,
         state: state,
       );
     }
@@ -1367,7 +1385,7 @@ class URLValidator extends Validator<String> {
       Uri.parse(value);
     } on FormatException {
       return InvalidResult(
-        message ?? Localizations.of(context, ShadcnLocalizations).invalidURL,
+        message ?? ShadcnLocalizations.of(context).invalidURL,
         state: state,
       );
     }
@@ -1447,13 +1465,14 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
     T? value,
     FormValidationMode state,
   ) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = ShadcnLocalizations.of(context);
     var compare = _compare(value, this.value);
     switch (type) {
       case CompareType.greater:
         if (compare <= 0) {
           return InvalidResult(
-            message ?? localizations.formGreaterThan(this.value),
+            message ??
+                localizations.formGreaterThan(_describeValue(this.value)),
             state: state,
           );
         }
@@ -1461,7 +1480,10 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
       case CompareType.greaterOrEqual:
         if (compare < 0) {
           return InvalidResult(
-            message ?? localizations.formGreaterThanOrEqualTo(this.value),
+            message ??
+                localizations.formGreaterThanOrEqualTo(
+                  _describeValue(this.value),
+                ),
             state: state,
           );
         }
@@ -1469,7 +1491,7 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
       case CompareType.less:
         if (compare >= 0) {
           return InvalidResult(
-            message ?? localizations.formLessThan(this.value),
+            message ?? localizations.formLessThan(_describeValue(this.value)),
             state: state,
           );
         }
@@ -1477,7 +1499,8 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
       case CompareType.lessOrEqual:
         if (compare > 0) {
           return InvalidResult(
-            message ?? localizations.formLessThanOrEqualTo(this.value),
+            message ??
+                localizations.formLessThanOrEqualTo(_describeValue(this.value)),
             state: state,
           );
         }
@@ -1485,7 +1508,7 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
       case CompareType.equal:
         if (compare != 0) {
           return InvalidResult(
-            message ?? localizations.formEqualTo(this.value),
+            message ?? localizations.formEqualTo(_describeValue(this.value)),
             state: state,
           );
         }
@@ -3074,7 +3097,7 @@ class FormField<T> extends StatelessWidget {
                           if (leadingLabel != null)
                             leadingLabel!.textSmall().muted(),
                           if (leadingLabel != null)
-                            Gap(leadingGap ?? densityGap),
+                            SizedBox(width: leadingGap ?? densityGap),
                           Expanded(
                             child: DefaultTextStyle.merge(
                               style: error != null
@@ -3086,20 +3109,20 @@ class FormField<T> extends StatelessWidget {
                             ),
                           ),
                           if (trailingLabel != null)
-                            Gap(trailingGap ?? densityGap),
+                            SizedBox(width: trailingGap ?? densityGap),
                           if (trailingLabel != null)
                             trailingLabel!.textSmall().muted(),
                         ],
                       ),
                     ),
-                    Gap(densityGap),
+                    SizedBox(height: densityGap),
                     child!,
                     if (hint != null) ...[
-                      Gap(densityGap),
+                      SizedBox(height: densityGap),
                       hint!.xSmall().muted(),
                     ],
                     if (error is InvalidResult) ...[
-                      Gap(densityGap),
+                      SizedBox(height: densityGap),
                       DefaultTextStyle.merge(
                         style: TextStyle(color: theme.colorScheme.destructive),
                         child: Text(error.message).xSmall().medium(),
@@ -3174,14 +3197,17 @@ class FormInline<T> extends StatelessWidget {
                             : null,
                         child: label.textSmall(),
                       ),
-                      Gap(densityGap),
+                      SizedBox(width: densityGap),
                       Expanded(child: child!),
                     ],
                   ),
                 ),
-                if (hint != null) ...[Gap(densityGap), hint!.xSmall().muted()],
+                if (hint != null) ...[
+                  SizedBox(height: densityGap),
+                  hint!.xSmall().muted(),
+                ],
                 if (error is InvalidResult) ...[
-                  Gap(densityGap),
+                  SizedBox(height: densityGap),
                   DefaultTextStyle.merge(
                     style: TextStyle(color: theme.colorScheme.destructive),
                     child: Text(error.message).xSmall().medium(),
@@ -3267,11 +3293,11 @@ class FormTableLayout extends StatelessWidget {
                               children: [
                                 child!,
                                 if (rows[i].hint != null) ...[
-                                  Gap(densityGap),
+                                  SizedBox(height: densityGap),
                                   rows[i].hint!.xSmall().muted(),
                                 ],
                                 if (error is InvalidResult) ...[
-                                  Gap(densityGap),
+                                  SizedBox(height: densityGap),
                                   DefaultTextStyle.merge(
                                     style: TextStyle(
                                       color: Theme.of(context)

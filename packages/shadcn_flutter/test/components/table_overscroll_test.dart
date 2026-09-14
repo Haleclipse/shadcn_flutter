@@ -29,53 +29,101 @@ Widget buildApp({bool overscroll = false}) {
                   TableRow(
                     cells: [
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R0 C0'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R0 C0'),
+                        ),
+                      ),
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R0 C1'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R0 C1'),
+                        ),
+                      ),
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R0 C2'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R0 C2'),
+                        ),
+                      ),
                     ],
                   ),
                   TableRow(
                     cells: [
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R1 C0'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R1 C0'),
+                        ),
+                      ),
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R1 C1'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R1 C1'),
+                        ),
+                      ),
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R1 C2'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R1 C2'),
+                        ),
+                      ),
                     ],
                   ),
                   TableRow(
                     cells: [
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R2 C0'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R2 C0'),
+                        ),
+                      ),
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R2 C1'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R2 C1'),
+                        ),
+                      ),
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R2 C2'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R2 C2'),
+                        ),
+                      ),
                     ],
                   ),
                   TableRow(
                     cells: [
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R3 C0'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R3 C0'),
+                        ),
+                      ),
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R3 C1'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R3 C1'),
+                        ),
+                      ),
                       TableCell(
-                          child: SizedBox(
-                              width: 100, height: 100, child: Text('R3 C2'))),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Text('R3 C2'),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -125,8 +173,9 @@ void main() {
     expect(r0c0Pos, equals(scrollablePos));
   });
 
-  testWidgets('Table overscroll - Start Overscroll',
-      (WidgetTester tester) async {
+  testWidgets('Table overscroll - Start Overscroll', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(buildApp());
     final scrollableFinder = find.byType(ScrollableClient);
     final r0c0Finder = find.text('R0 C0');
@@ -142,8 +191,9 @@ void main() {
     expect(r0c0Pos, equals(scrollablePos));
   });
 
-  testWidgets('Table overscroll disabled - Start Overscroll',
-      (WidgetTester tester) async {
+  testWidgets('Table overscroll disabled - Start Overscroll', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(buildApp(overscroll: false));
     final scrollableFinder = find.byType(ScrollableClient);
     final r0c0Finder = find.text('R0 C0');

@@ -23,38 +23,32 @@ class PinnedSheetExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'pinned_sheet',
-      description:
-          'A controller-driven, gesture-driven sheet that snaps between stages.',
+      description: 'A controller-driven, gesture-driven sheet that snaps between stages.',
       displayName: 'Pinned Sheet',
       children: [
         WidgetUsageExample(
           title: 'Backdrop transform',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_1.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_1.dart',
           child: PinnedSheetExample1(),
         ),
         WidgetUsageExample(
           title: 'Peek drag handle',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_2.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_2.dart',
           child: PinnedSheetExample2(),
         ),
         WidgetUsageExample(
           title: 'Sheet container',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_3.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_3.dart',
           child: PinnedSheetExample3(),
         ),
         WidgetUsageExample(
           title: 'Nested sheets',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_4.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_4.dart',
           child: PinnedSheetExample4(),
         ),
         WidgetUsageExample(
           title: 'Expands',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_5.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_5.dart',
           child: PinnedSheetExample5(),
         ),
       ],
@@ -67,6 +61,7 @@ class PinnedSheetExample extends StatelessWidget {
 ### Pinned Sheet Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// A controller-driven [PinnedSheet] with three snap stages.
 ///
@@ -103,6 +98,7 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
       height: 420,
       child: OutlinedContainer(
         clipBehavior: Clip.antiAlias,
+        theme: OutlinedContainerTheme(padding: const EdgeInsets.all(24)),
         child: PinnedSheet(
           controller: controller,
           position: OverlayPosition.bottom,
@@ -113,10 +109,7 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
           backdrop: ListenableBuilder(
             listenable: controller,
             builder: (context, child) {
-              return Opacity(
-                opacity: 1.0 - controller.fraction,
-                child: child,
-              );
+              return Opacity(opacity: 1.0 - controller.fraction, child: child);
             },
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
@@ -126,8 +119,10 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
                 }
               },
               child: Card(
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.muted,
+                theme: CardTheme(
+                  filled: true,
+                  fillColor: Theme.of(context).colorScheme.muted,
+                ),
                 child: Center(
                   child: IntrinsicWidth(
                     child: Column(
@@ -184,7 +179,6 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
           child: DrawerContainer(
             child: Container(
               height: 320,
-              padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,6 +204,7 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
 ### Pinned Sheet Example 2
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// A [PinnedSheet] with no backdrop transform, using [SheetStage.peekDragHandle]
 /// so the closed-ish resting stage shows only the drag handle.
@@ -251,11 +246,10 @@ class _PinnedSheetExample2State extends State<PinnedSheetExample2> {
           initialStage: const SheetStage.peekDragHandle(),
           // No backdropTransform: the backdrop is not scaled.
           backdrop: Card(
-            fillColor: theme.colorScheme.muted,
-            filled: true,
+            theme: CardTheme(fillColor: theme.colorScheme.muted, filled: true),
             child: Center(
-                child:
-                    const Text('Drag the handle to expand the sheet').muted()),
+              child: const Text('Drag the handle to expand the sheet').muted(),
+            ),
           ),
           child: DrawerContainer(
             child: SizedBox(
@@ -288,6 +282,7 @@ class _PinnedSheetExample2State extends State<PinnedSheetExample2> {
 ### Pinned Sheet Example 3
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// A [PinnedSheet] using a [SheetContainer] that does not stretch edge-to-edge:
 /// it is sized to 70% of the width and centered ([SheetContainer.alignCenter]
@@ -306,12 +301,9 @@ class _PinnedSheetExample3State extends State<PinnedSheetExample3> {
   // Expanded, but 40px short of fully covering, with a gentler backdrop scale.
   static final SheetStage expanded =
       const SheetStage.expanded(backdropTransform: 0.4) -
-          const SheetStage.fixed(40);
+      const SheetStage.fixed(40);
 
-  late final List<SheetStage> stages = [
-    const SheetStage.closed(),
-    expanded,
-  ];
+  late final List<SheetStage> stages = [const SheetStage.closed(), expanded];
 
   @override
   void dispose() {
@@ -381,6 +373,7 @@ class _PinnedSheetExample3State extends State<PinnedSheetExample3> {
 ### Pinned Sheet Example 4
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Nested [PinnedSheet]s. The outer sheet's [PinnedSheet.backdrop] contains a
 /// second [PinnedSheet]; when the outer sheet scales its backdrop, the inner
@@ -458,8 +451,8 @@ class _PinnedSheetExample4State extends State<PinnedSheetExample4> {
                   const Text('Nested pinned sheets. ').large().medium(),
                   const Gap(8),
                   const Text(
-                          'You can press the button or drag this container to open it.')
-                      .muted(),
+                    'You can press the button or drag this container to open it.',
+                  ).muted(),
                   const Gap(16),
                   PrimaryButton(
                     onPressed: () => inner.stage = const SheetStage.expanded(),
@@ -493,6 +486,7 @@ class _PinnedSheetExample4State extends State<PinnedSheetExample4> {
 ### Pinned Sheet Example 5
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates `PinnedSheet(contentExpands: true)`: the sheet content is
 /// sized to the visible extent (0 when closed → the backdrop size when fully
@@ -599,6 +593,7 @@ class _PinnedSheetExample5State extends State<PinnedSheetExample5> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class PinnedSheetTile extends StatefulWidget implements IComponentPage {
   const PinnedSheetTile({super.key});
@@ -642,8 +637,10 @@ class _PinnedSheetTileState extends State<PinnedSheetTile> {
             stages: stages,
             initialStage: const SheetStage.peekDragHandle(),
             backdrop: Card(
-              fillColor: theme.colorScheme.muted,
-              filled: true,
+              theme: CardTheme(
+                fillColor: theme.colorScheme.muted,
+                filled: true,
+              ),
               child: Center(child: const Text('Backdrop content').muted()),
             ),
             child: DrawerContainer(

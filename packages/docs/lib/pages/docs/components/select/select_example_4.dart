@@ -15,10 +15,7 @@ class _SelectExample4State extends State<SelectExample4> {
       itemBuilder: (context, item) {
         return Text(item);
       },
-      popupConstraints: const BoxConstraints(
-        maxHeight: 300,
-        maxWidth: 200,
-      ),
+      popupConstraints: const BoxConstraints(maxHeight: 300, maxWidth: 200),
       onChanged: (value) {
         setState(() {
           selectedValue = value;
@@ -35,18 +32,9 @@ class _SelectExample4State extends State<SelectExample4> {
       popup: const SelectPopup.noVirtualization(
         items: SelectItemList(
           children: [
-            SelectItemButton(
-              value: 'Apple',
-              child: Text('Apple'),
-            ),
-            SelectItemButton(
-              value: 'Banana',
-              child: Text('Banana'),
-            ),
-            SelectItemButton(
-              value: 'Cherry',
-              child: Text('Cherry'),
-            ),
+            SelectItemButton(value: 'Apple', child: Text('Apple')),
+            SelectItemButton(value: 'Banana', child: Text('Banana')),
+            SelectItemButton(value: 'Cherry', child: Text('Cherry')),
           ],
         ),
       ),

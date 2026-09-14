@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class AppBarTile extends StatelessWidget implements IComponentPage {
   const AppBarTile({super.key});

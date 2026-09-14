@@ -24,8 +24,7 @@ class AutoCompleteExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/autocomplete/autocomplete_example_1.dart',
+          path: 'lib/pages/docs/components/autocomplete/autocomplete_example_1.dart',
           child: AutoCompleteExample1(),
         ),
       ],
@@ -86,8 +85,10 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
     }
     setState(() {
       _currentSuggestions = suggestions
-          .where((element) =>
-              element.toLowerCase().contains(currentWord.toLowerCase()))
+          .where(
+            (element) =>
+                element.toLowerCase().contains(currentWord.toLowerCase()),
+          )
           .toList();
     });
   }
@@ -101,9 +102,7 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
         controller: _controller,
         // Each keystroke recalculates the suggestions.
         onChanged: _updateSuggestions,
-        features: const [
-          InputFeature.clear(),
-        ],
+        features: const [InputFeature.clear()],
       ),
     );
   }
@@ -115,6 +114,7 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class AutocompleteTile extends StatelessWidget implements IComponentPage {
   const AutocompleteTile({super.key});
@@ -133,9 +133,7 @@ class AutocompleteTile extends StatelessWidget implements IComponentPage {
           children: [
             const TextField(
               placeholder: Text('Search fruits...'),
-              features: [
-                InputFeature.trailing(Icon(LucideIcons.search)),
-              ],
+              features: [InputFeature.trailing(Icon(LucideIcons.search))],
             ),
             const Gap(8),
             OutlinedContainer(
@@ -189,3 +187,4 @@ class AutocompleteTile extends StatelessWidget implements IComponentPage {
 | `adaptiveOverlay` | `bool?` | Whether the suggestion popover may adapt to a different presentation on mobile platforms (see [showOverlay]'s `adaptive` parameter). Defaults to `false` — the suggestion popup should always be a real anchored popover. |
 | `mode` | `AutoCompleteMode?` | Text replacement strategy when a suggestion is selected.  Overrides the theme default. Controls how selected suggestions modify the text field content. When null, uses theme or [AutoCompleteMode.replaceWord]. |
 | `completer` | `AutoCompleteCompleter` | Function to customize suggestion text before application.  Called when a suggestion is selected, allowing modification of the final text inserted into the field. Useful for adding prefixes, suffixes, or formatting. Defaults to returning the suggestion unchanged. |
+| `theme` | `AutoCompleteTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

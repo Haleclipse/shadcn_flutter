@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SwiperExample1 extends StatefulWidget {
   const SwiperExample1({super.key});
@@ -32,10 +33,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
     return Swiper(
       builder: (context) {
         return Container(
-          constraints: const BoxConstraints(
-            minWidth: 320,
-            minHeight: 320,
-          ),
+          constraints: const BoxConstraints(minWidth: 320, minHeight: 320),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -56,9 +54,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
                         return ListView.separated(
                           itemCount: 1000,
                           itemBuilder: (context, index) {
-                            return Card(
-                              child: Text('Item $index'),
-                            );
+                            return Card(child: Text('Item $index'));
                           },
                           separatorBuilder: (context, index) {
                             return const Gap(8);
@@ -87,33 +83,37 @@ class _SwiperExample1State extends State<SwiperExample1> {
               children: [
                 const Text('Swipe me!'),
                 const Gap(24),
-                ButtonGroup(children: [
-                  _buildSelectPosition(OverlayPosition.left, 'Left'),
-                  _buildSelectPosition(OverlayPosition.right, 'Right'),
-                  _buildSelectPosition(OverlayPosition.top, 'Top'),
-                  _buildSelectPosition(OverlayPosition.bottom, 'Bottom'),
-                ]),
+                ButtonGroup(
+                  children: [
+                    _buildSelectPosition(OverlayPosition.left, 'Left'),
+                    _buildSelectPosition(OverlayPosition.right, 'Right'),
+                    _buildSelectPosition(OverlayPosition.top, 'Top'),
+                    _buildSelectPosition(OverlayPosition.bottom, 'Bottom'),
+                  ],
+                ),
                 const Gap(24),
-                ButtonGroup(children: [
-                  Toggle(
-                    value: _typeDrawer,
-                    onChanged: (value) {
-                      setState(() {
-                        _typeDrawer = value;
-                      });
-                    },
-                    child: const Text('Drawer'),
-                  ),
-                  Toggle(
-                    value: !_typeDrawer,
-                    onChanged: (value) {
-                      setState(() {
-                        _typeDrawer = !value;
-                      });
-                    },
-                    child: const Text('Sheet'),
-                  ),
-                ]),
+                ButtonGroup(
+                  children: [
+                    Toggle(
+                      value: _typeDrawer,
+                      onChanged: (value) {
+                        setState(() {
+                          _typeDrawer = value;
+                        });
+                      },
+                      child: const Text('Drawer'),
+                    ),
+                    Toggle(
+                      value: !_typeDrawer,
+                      onChanged: (value) {
+                        setState(() {
+                          _typeDrawer = !value;
+                        });
+                      },
+                      child: const Text('Sheet'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

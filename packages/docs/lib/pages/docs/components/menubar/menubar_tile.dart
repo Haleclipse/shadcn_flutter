@@ -1,6 +1,7 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class MenubarTile extends StatelessWidget implements IComponentPage {
   const MenubarTile({super.key});
@@ -21,9 +22,11 @@ class MenubarTile extends StatelessWidget implements IComponentPage {
           mainAxisSize: MainAxisSize.min,
           children: [
             OutlinedContainer(
-              borderColor: theme.colorScheme.border,
-              backgroundColor: theme.colorScheme.background,
-              borderRadius: theme.borderRadiusMd,
+              theme: OutlinedContainerTheme(
+                borderColor: theme.colorScheme.border,
+                backgroundColor: theme.colorScheme.background,
+                borderRadius: theme.borderRadiusMd,
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: IntrinsicHeight(
@@ -42,8 +45,9 @@ class MenubarTile extends StatelessWidget implements IComponentPage {
                           decoration: (context, states, value) {
                             return (value as BoxDecoration).copyWith(
                               color: theme.colorScheme.accent,
-                              borderRadius:
-                                  BorderRadius.circular(theme.radiusSm),
+                              borderRadius: BorderRadius.circular(
+                                theme.radiusSm,
+                              ),
                             );
                           },
                         ),
@@ -68,60 +72,73 @@ class MenubarTile extends StatelessWidget implements IComponentPage {
             Container(
               width: 192,
               margin: const EdgeInsets.only(left: 48),
-              child: MenuPopup(children: [
-                Button(
-                  style: const ButtonStyle.menu(),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyZ, control: true),
+              child: MenuPopup(
+                children: [
+                  Button(
+                    style: const ButtonStyle.menu(),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyZ,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Undo'),
                   ),
-                  child: const Text('Undo'),
-                ),
-                Button(
-                  style: const ButtonStyle.menu().copyWith(
+                  Button(
+                    style: const ButtonStyle.menu().copyWith(
                       decoration: (context, states, value) {
-                    return (value as BoxDecoration).copyWith(
-                      color: theme.colorScheme.accent,
-                      borderRadius: BorderRadius.circular(theme.radiusSm),
-                    );
-                  }),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyY, control: true),
+                        return (value as BoxDecoration).copyWith(
+                          color: theme.colorScheme.accent,
+                          borderRadius: BorderRadius.circular(theme.radiusSm),
+                        );
+                      },
+                    ),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyY,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Redo'),
                   ),
-                  child: const Text('Redo'),
-                ),
-                const MenuDivider(),
-                Button(
-                  style: const ButtonStyle.menu(),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyX, control: true),
+                  const MenuDivider(),
+                  Button(
+                    style: const ButtonStyle.menu(),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyX,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Cut'),
                   ),
-                  child: const Text('Cut'),
-                ),
-                Button(
-                  style: const ButtonStyle.menu(),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyC, control: true),
+                  Button(
+                    style: const ButtonStyle.menu(),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyC,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Copy'),
                   ),
-                  child: const Text('Copy'),
-                ),
-                Button(
-                  style: const ButtonStyle.menu(),
-                  onPressed: () {},
-                  trailing: const MenuShortcut(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyV, control: true),
+                  Button(
+                    style: const ButtonStyle.menu(),
+                    onPressed: () {},
+                    trailing: const MenuShortcut(
+                      activator: SingleActivator(
+                        LogicalKeyboardKey.keyV,
+                        control: true,
+                      ),
+                    ),
+                    child: const Text('Paste'),
                   ),
-                  child: const Text('Paste'),
-                ),
-              ]),
+                ],
+              ),
             ),
           ],
         ),

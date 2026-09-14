@@ -1,6 +1,7 @@
 import 'package:docs/code_highlighter.dart';
 import 'package:docs/pages/docs_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ColorsPage extends StatefulWidget {
   const ColorsPage({super.key});
@@ -98,8 +99,12 @@ class ColorsPageState extends State<ColorsPage> {
     );
   }
 
-  Widget buildColorRow(BuildContext context, String name, ColorShades swatch,
-      [bool clickable = true]) {
+  Widget buildColorRow(
+    BuildContext context,
+    String name,
+    ColorShades swatch, [
+    bool clickable = true,
+  ]) {
     final theme = Theme.of(context);
     List<Widget> children = [];
     for (int shade in ColorShades.shadeValues) {
@@ -112,8 +117,9 @@ class ColorsPageState extends State<ColorsPage> {
                 aspectRatio: 16 / 19,
                 child: Clickable(
                   enabled: clickable,
-                  mouseCursor:
-                      const WidgetStatePropertyAll(SystemMouseCursors.click),
+                  mouseCursor: const WidgetStatePropertyAll(
+                    SystemMouseCursors.click,
+                  ),
                   onPressed: () {
                     _onTap(name, swatch, shade);
                   },
@@ -125,7 +131,8 @@ class ColorsPageState extends State<ColorsPage> {
                           ? Border.all(
                               width: 3,
                               color: theme.colorScheme.foreground,
-                              strokeAlign: BorderSide.strokeAlignOutside)
+                              strokeAlign: BorderSide.strokeAlignOutside,
+                            )
                           : null,
                     ),
                   ),
@@ -148,7 +155,10 @@ class ColorsPageState extends State<ColorsPage> {
   }
 
   Widget buildEditableColorRow(
-      BuildContext context, String name, ColorShades swatch) {
+    BuildContext context,
+    String name,
+    ColorShades swatch,
+  ) {
     final theme = Theme.of(context);
     List<Widget> children = [];
     var shadeValues = ColorShades.shadeValues;
@@ -165,8 +175,9 @@ class ColorsPageState extends State<ColorsPage> {
                 child: OverlayAnchor(
                   anchor: anchorKey,
                   child: Clickable(
-                    mouseCursor:
-                        const WidgetStatePropertyAll(SystemMouseCursors.click),
+                    mouseCursor: const WidgetStatePropertyAll(
+                      SystemMouseCursors.click,
+                    ),
                     onPressed: () {
                       showOverlay(
                         context,
@@ -217,7 +228,8 @@ class ColorsPageState extends State<ColorsPage> {
                             ? Border.all(
                                 width: 3,
                                 color: theme.colorScheme.foreground,
-                                strokeAlign: BorderSide.strokeAlignOutside)
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                              )
                             : null,
                       ),
                       alignment: Alignment.center,
@@ -251,14 +263,16 @@ class ColorsPageState extends State<ColorsPage> {
 
   Widget buildCode() {
     return CodeBlock(
-      code: generateCode(ColorShades.fromAccentHSL(
-        _customColor,
-        hueShift: _hueShift,
-        lightnessStepDown: _lightnessStepDown,
-        lightnessStepUp: _lightnessStepUp,
-        saturationStepDown: _saturationStepDown,
-        saturationStepUp: _saturationStepUp,
-      )),
+      code: generateCode(
+        ColorShades.fromAccentHSL(
+          _customColor,
+          hueShift: _hueShift,
+          lightnessStepDown: _lightnessStepDown,
+          lightnessStepUp: _lightnessStepUp,
+          saturationStepDown: _saturationStepDown,
+          saturationStepUp: _saturationStepUp,
+        ),
+      ),
       mode: 'dart',
     );
   }
@@ -281,7 +295,8 @@ class ColorsPageState extends State<ColorsPage> {
       named['lightnessStepDown'] = 'lightnessStepDown: $_lightnessStepDown';
     }
     String baseColorHex = swatch[500].toHex();
-    String code = 'ColorShades.fromAccent(\n'
+    String code =
+        'ColorShades.fromAccent(\n'
         '  Color(0x$baseColorHex),\n';
     if (named.isNotEmpty) {
       code += '  ${named.values.join(',\n  ')}\n';
@@ -306,7 +321,7 @@ class ColorsPageState extends State<ColorsPage> {
           const Text('Predefined Colors').h2().anchored(_predefinedColorsKey),
           for (final color in shadeMap.entries)
             Card(
-              padding: const EdgeInsets.all(8),
+              theme: CardTheme(padding: const EdgeInsets.all(8)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -318,10 +333,11 @@ class ColorsPageState extends State<ColorsPage> {
                           setState(() {
                             _customColor = color.value[500].toHSL();
                             Scrollable.ensureVisible(
-                                _customColorKey.currentContext!,
-                                duration: kDefaultDuration,
-                                alignmentPolicy:
-                                    ScrollPositionAlignmentPolicy.explicit);
+                              _customColorKey.currentContext!,
+                              duration: kDefaultDuration,
+                              alignmentPolicy:
+                                  ScrollPositionAlignmentPolicy.explicit,
+                            );
                           });
                         },
                         size: ButtonSize.xSmall,
@@ -334,9 +350,7 @@ class ColorsPageState extends State<ColorsPage> {
                   buildColorRow(context, color.key, color.value),
                 ],
               ),
-            ).withPadding(
-              top: 32,
-            ),
+            ).withPadding(top: 32),
           const Text('Generate Color').h2().anchored(_customColorKey),
           const Gap(32),
           TabList(
@@ -364,10 +378,7 @@ class ColorsPageState extends State<ColorsPage> {
               ],
             ),
           ),
-          Offstage(
-            offstage: _tabIndex != 1,
-            child: buildCode(),
-          ),
+          Offstage(offstage: _tabIndex != 1, child: buildCode()),
         ],
       ),
     );
@@ -380,16 +391,17 @@ class ColorsPageState extends State<ColorsPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           buildEditableColorRow(
-              context,
-              'custom',
-              ColorShades.fromAccentHSL(
-                _customColor,
-                hueShift: _hueShift,
-                lightnessStepUp: _lightnessStepDown,
-                lightnessStepDown: _lightnessStepUp,
-                saturationStepDown: _saturationStepDown,
-                saturationStepUp: _saturationStepUp,
-              )),
+            context,
+            'custom',
+            ColorShades.fromAccentHSL(
+              _customColor,
+              hueShift: _hueShift,
+              lightnessStepUp: _lightnessStepDown,
+              lightnessStepDown: _lightnessStepUp,
+              saturationStepDown: _saturationStepDown,
+              saturationStepUp: _saturationStepUp,
+            ),
+          ),
         ],
       ),
     );
@@ -490,14 +502,14 @@ class ColorsPageState extends State<ColorsPage> {
                         return AlertDialog(
                           title: const Text('Reset Options'),
                           content: const Text(
-                              'Are you sure you want to reset the options?'),
+                            'Are you sure you want to reset the options?',
+                          ),
                           actions: [
                             PrimaryButton(
                               onPressed: () {
                                 setState(() {
                                   _hueShift = _defaultHueShift;
-                                  _saturationStepUp =
-                                      _defaultSaturationStepUp;
+                                  _saturationStepUp = _defaultSaturationStepUp;
                                   _saturationStepDown =
                                       _defaultSaturationStepDown;
                                   _lightnessStepUp = _defaultLightnessStepUp;
@@ -523,7 +535,7 @@ class ColorsPageState extends State<ColorsPage> {
                   child: const Text('Reset'),
                 ),
               ],
-            )
+            ),
           ],
         ).gap(8),
       ),

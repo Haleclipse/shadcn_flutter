@@ -994,7 +994,9 @@ class SelectExpandIcon extends StatelessWidget {
 ///   ),
 /// );
 /// ```
-class Select<T> extends StatefulWidget with SelectBase<T> {
+class Select<T> extends StatefulWidget
+    with SelectBase<T>
+    implements Styleable<SelectTheme> {
   /// Default maximum height for select popups in logical pixels.
   static const kDefaultSelectMaxHeight = 240.0;
   @override
@@ -1008,26 +1010,34 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   @override
   final BoxConstraints? constraints;
   @override
+  @Deprecated('Use theme: SelectTheme(popupConstraints: ...) instead.')
   final BoxConstraints? popupConstraints;
   @override
   final OverlayConfiguration? overlayConfiguration;
   @override
+  @Deprecated('Use theme: SelectTheme(adaptiveOverlay: ...) instead.')
   final bool? adaptiveOverlay;
 
   /// The currently selected value.
   final T? value;
 
   @override
+  @Deprecated('Use theme: SelectTheme(borderRadius: ...) instead.')
   final BorderRadiusGeometry? borderRadius;
   @override
+  @Deprecated('Use theme: SelectTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
   @override
+  @Deprecated('Use theme: SelectTheme(decoration: ...) instead.')
   final WidgetStatePropertyDelegate<Decoration>? decoration;
   @override
+  @Deprecated('Use theme: SelectTheme(disableHoverEffect: ...) instead.')
   final bool disableHoverEffect;
   @override
+  @Deprecated('Use theme: SelectTheme(canUnselect: ...) instead.')
   final bool canUnselect;
   @override
+  @Deprecated('Use theme: SelectTheme(autoClosePopover: ...) instead.')
   final bool? autoClosePopover;
 
   /// Whether the select is enabled for user interaction.
@@ -1044,6 +1054,10 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   final Predicate<T>? showValuePredicate;
   @override
   final Widget? expandIcon;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final SelectTheme? theme;
 
   /// Creates a single-selection dropdown widget.
   ///
@@ -1098,6 +1112,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
     required this.popup,
     required this.itemBuilder,
     this.adaptiveOverlay,
+    this.theme,
   });
 
   @override
@@ -1130,7 +1145,7 @@ class SelectState<T> extends State<Select<T>>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _theme = ComponentTheme.maybeOf<SelectTheme>(context);
+    _theme = widget.theme ?? ComponentTheme.maybeOf<SelectTheme>(context);
   }
 
   BoxConstraints? get _popupConstraints => styleValue(
@@ -2050,9 +2065,6 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                           ),
                           child: TextField(
                             controller: _searchController,
-                            border: const Border.fromBorderSide(
-                              BorderSide.none,
-                            ),
                             borderRadius: BorderRadius.zero,
                             features: [
                               InputFeature.leading(
@@ -2069,6 +2081,11 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                   horizontal: 12,
                                 ) *
                                 scaling,
+                            theme: TextFieldTheme(
+                              border: const Border.fromBorderSide(
+                                BorderSide.none,
+                              ),
+                            ),
                           ),
                         ),
                       Flexible(
@@ -2209,14 +2226,6 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                                             left: 0,
                                                             right: 0,
                                                             child: HoverActivity(
-                                                              hitTestBehavior:
-                                                                  HitTestBehavior
-                                                                      .translucent,
-                                                              debounceDuration:
-                                                                  const Duration(
-                                                                    milliseconds:
-                                                                        16,
-                                                                  ),
                                                               onHover: () {
                                                                 // decrease scroll offset
                                                                 var value =
@@ -2234,6 +2243,16 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                                                       value,
                                                                     );
                                                               },
+                                                              theme: HoverTheme(
+                                                                hitTestBehavior:
+                                                                    HitTestBehavior
+                                                                        .translucent,
+                                                                debounceDuration:
+                                                                    const Duration(
+                                                                      milliseconds:
+                                                                          16,
+                                                                    ),
+                                                              ),
                                                               child: Container(
                                                                 padding:
                                                                     const EdgeInsets.symmetric(
@@ -2272,14 +2291,6 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                                             left: 0,
                                                             right: 0,
                                                             child: HoverActivity(
-                                                              hitTestBehavior:
-                                                                  HitTestBehavior
-                                                                      .translucent,
-                                                              debounceDuration:
-                                                                  const Duration(
-                                                                    milliseconds:
-                                                                        16,
-                                                                  ),
                                                               onHover: () {
                                                                 // increase scroll offset
                                                                 var value =
@@ -2297,6 +2308,16 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                                                                       value,
                                                                     );
                                                               },
+                                                              theme: HoverTheme(
+                                                                hitTestBehavior:
+                                                                    HitTestBehavior
+                                                                        .translucent,
+                                                                debounceDuration:
+                                                                    const Duration(
+                                                                      milliseconds:
+                                                                          16,
+                                                                    ),
+                                                              ),
                                                               child: Container(
                                                                 padding:
                                                                     const EdgeInsets.symmetric(

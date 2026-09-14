@@ -131,16 +131,18 @@ class OutlinedContainerTheme extends ComponentThemeData {
     ValueGetter<double?>? surfaceBlur,
   }) {
     return OutlinedContainerTheme(
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       borderColor: borderColor == null ? this.borderColor : borderColor(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       borderStyle: borderStyle == null ? this.borderStyle : borderStyle(),
       borderWidth: borderWidth == null ? this.borderWidth : borderWidth(),
       boxShadow: boxShadow == null ? this.boxShadow : boxShadow(),
       padding: padding == null ? this.padding : padding(),
-      surfaceOpacity:
-          surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
+      surfaceOpacity: surfaceOpacity == null
+          ? this.surfaceOpacity
+          : surfaceOpacity(),
       surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
     );
   }
@@ -162,16 +164,16 @@ class OutlinedContainerTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        backgroundColor,
-        borderColor,
-        borderRadius,
-        borderStyle,
-        borderWidth,
-        boxShadow,
-        padding,
-        surfaceOpacity,
-        surfaceBlur,
-      );
+    backgroundColor,
+    borderColor,
+    borderRadius,
+    borderStyle,
+    borderWidth,
+    boxShadow,
+    padding,
+    surfaceOpacity,
+    surfaceBlur,
+  );
 }
 
 /// A container widget with customizable border and surface effects.
@@ -189,18 +191,23 @@ class OutlinedContainerTheme extends ComponentThemeData {
 ///   child: Text('Outlined content'),
 /// )
 /// ```
-class OutlinedContainer extends StatefulWidget {
+class OutlinedContainer extends StatefulWidget
+    implements Styleable<OutlinedContainerTheme> {
   /// The child widget to display inside the container.
   final Widget child;
 
   /// Background color of the container.
   ///
   /// If `null`, uses theme default.
+  @Deprecated(
+    'Use theme: OutlinedContainerTheme(backgroundColor: ...) instead.',
+  )
   final Color? backgroundColor;
 
   /// Color of the container's border.
   ///
   /// If `null`, uses theme default.
+  @Deprecated('Use theme: OutlinedContainerTheme(borderColor: ...) instead.')
   final Color? borderColor;
 
   /// How to clip the container's content.
@@ -211,36 +218,43 @@ class OutlinedContainer extends StatefulWidget {
   /// Border radius for rounded corners.
   ///
   /// If `null`, uses theme default.
+  @Deprecated('Use theme: OutlinedContainerTheme(borderRadius: ...) instead.')
   final BorderRadiusGeometry? borderRadius;
 
   /// Style of the border.
   ///
   /// If `null`, uses [BorderStyle.solid].
+  @Deprecated('Use theme: OutlinedContainerTheme(borderStyle: ...) instead.')
   final BorderStyle? borderStyle;
 
   /// Width of the border in logical pixels.
   ///
   /// If `null`, uses theme default.
+  @Deprecated('Use theme: OutlinedContainerTheme(borderWidth: ...) instead.')
   final double? borderWidth;
 
   /// Box shadows for elevation effects.
   ///
   /// If `null`, no shadows are applied.
+  @Deprecated('Use theme: OutlinedContainerTheme(boxShadow: ...) instead.')
   final List<BoxShadow>? boxShadow;
 
   /// Padding inside the container.
   ///
   /// If `null`, uses theme default.
+  @Deprecated('Use theme: OutlinedContainerTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
 
   /// Opacity for surface overlay effects.
   ///
   /// If provided, modulates the background color's alpha.
+  @Deprecated('Use theme: OutlinedContainerTheme(surfaceOpacity: ...) instead.')
   final double? surfaceOpacity;
 
   /// Blur amount for surface backdrop effects.
   ///
   /// If `null` or `<= 0`, no blur is applied.
+  @Deprecated('Use theme: OutlinedContainerTheme(surfaceBlur: ...) instead.')
   final double? surfaceBlur;
 
   /// Explicit width of the container.
@@ -257,6 +271,10 @@ class OutlinedContainer extends StatefulWidget {
   ///
   /// If `null`, changes are applied immediately without animation.
   final Duration? duration;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final OutlinedContainerTheme? theme;
 
   /// Creates an [OutlinedContainer].
   const OutlinedContainer({
@@ -275,6 +293,7 @@ class OutlinedContainer extends StatefulWidget {
     this.width,
     this.height,
     this.duration,
+    this.theme,
   });
 
   @override
@@ -287,7 +306,8 @@ class _OutlinedContainerState extends State<OutlinedContainer> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<OutlinedContainerTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<OutlinedContainerTheme>(context);
     var borderRadius = styleValue(
       defaultValue: theme.borderRadiusXl,
       themeValue: compTheme?.borderRadius,

@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ProgressExample1 extends StatefulWidget {
   const ProgressExample1({super.key});
@@ -68,7 +69,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
               child: const Text('Increase by 10'),
             ),
           ],
-        )
+        ),
       ],
     );
   }

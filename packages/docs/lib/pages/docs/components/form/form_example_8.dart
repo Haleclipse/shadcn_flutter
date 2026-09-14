@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates the two ways to build a submit button.
 ///
@@ -27,8 +28,10 @@ class FormExample8 extends StatelessWidget {
             builder: (context) {
               return AlertDialog(
                 title: const Text('Success'),
-                content: Text('Name: ${_nameKey[values]}\n'
-                    'Email: ${_emailKey[values]}'),
+                content: Text(
+                  'Name: ${_nameKey[values]}\n'
+                  'Email: ${_emailKey[values]}',
+                ),
                 actions: [
                   PrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -55,7 +58,8 @@ class FormExample8 extends StatelessWidget {
                   key: _emailKey,
                   label: const Text('Email'),
                   // Async validator only runs on submit
-                  validator: const EmailValidator() &
+                  validator:
+                      const EmailValidator() &
                       ValidationMode(
                         ConditionalValidator((value) async {
                           await Future.delayed(const Duration(seconds: 1));

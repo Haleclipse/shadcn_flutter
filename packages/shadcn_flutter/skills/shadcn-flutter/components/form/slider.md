@@ -22,8 +22,7 @@ class SliderExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'slider',
-      description:
-          'A slider is a control for selecting a single value from a range of values.',
+      description: 'A slider is a control for selecting a single value from a range of values.',
       displayName: 'Slider',
       children: [
         WidgetUsageExample(
@@ -86,6 +85,7 @@ class _SliderExample1State extends State<SliderExample1> {
 ### Slider Example 2
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SliderExample2 extends StatefulWidget {
   const SliderExample2({super.key});
@@ -123,6 +123,7 @@ class _SliderExample2State extends State<SliderExample2> {
 ### Slider Example 3
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SliderExample3 extends StatefulWidget {
   const SliderExample3({super.key});
@@ -244,3 +245,4 @@ class SliderTile extends StatelessWidget implements IComponentPage {
 | `decreaseStep` | `double?` | The step size for keyboard decrement actions.  Used when the user triggers decrease actions via keyboard. If `null`, a default step is calculated based on the slider range. |
 | `enabled` | `bool?` | Whether the slider is interactive.  When `false` or `null` with no [onChanged] callback, the slider is displayed in a disabled state and does not respond to user input. |
 | `valueIndicatorBuilder` | `SliderValueIndicatorBuilder?` | Optional builder for a bubble shown above a thumb while it's being dragged or is keyboard-focused, displaying the thumb's current value.  If both this and [SliderTheme.valueIndicatorBuilder] are `null` (the default), no indicator is shown. Pass [SliderValueIndicator] for the default bubble styling, e.g.: `valueIndicatorBuilder: (context, value) => SliderValueIndicator(value: value)`. |
+| `theme` | `SliderTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

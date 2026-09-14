@@ -508,10 +508,12 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
                 builder: (context, child) {
                   return FocusOutline(
                     focused: widget.data.focusNode!.hasFocus,
-                    borderRadius: getBorderRadiusByRelativeIndex(
-                      theme,
-                      widget.data.relativeIndex,
-                      widget.data.groupLength,
+                    theme: FocusOutlineTheme(
+                      borderRadius: getBorderRadiusByRelativeIndex(
+                        theme,
+                        widget.data.relativeIndex,
+                        widget.data.groupLength,
+                      ),
                     ),
                     child: child!,
                   );
@@ -547,7 +549,6 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
                     border: Border.fromBorderSide(BorderSide.none),
                   ),
                   child: TextField(
-                    border: const Border.fromBorderSide(BorderSide.none),
                     decoration: const BoxDecoration(),
                     expands: false,
                     maxLines: null,
@@ -558,6 +559,9 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
                     focusNode: widget.data.focusNode,
                     controller: _controller,
                     padding: EdgeInsets.zero,
+                    theme: TextFieldTheme(
+                      border: const Border.fromBorderSide(BorderSide.none),
+                    ),
                   ),
                 ),
               ),
@@ -813,7 +817,7 @@ extension OTPCodepointListExtension on OTPCodepointList {
 ///   onSubmitted: (code) => _verifyOTP(code),
 /// );
 /// ```
-class InputOTP extends StatefulWidget {
+class InputOTP extends StatefulWidget implements Styleable<InputOTPTheme> {
   /// The list of children defining input fields, separators, and spaces.
   final List<InputOTPChild> children;
 
@@ -825,6 +829,10 @@ class InputOTP extends StatefulWidget {
 
   /// Called when the user submits the OTP (e.g., presses Enter on last field).
   final ValueChanged<OTPCodepointList>? onSubmitted;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final InputOTPTheme? theme;
 
   /// Creates an [InputOTP] widget.
   ///
@@ -839,6 +847,7 @@ class InputOTP extends StatefulWidget {
     this.initialValue,
     this.onChanged,
     this.onSubmitted,
+    this.theme,
   });
 
   @override
@@ -1000,7 +1009,8 @@ class _InputOTPState extends State<InputOTP>
         );
       }
     }
-    final compTheme = ComponentTheme.maybeOf<InputOTPTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<InputOTPTheme>(context);
     return SizedBox(
       height: compTheme?.height ?? theme.scaling * 36,
       child: IntrinsicWidth(

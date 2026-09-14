@@ -105,7 +105,8 @@ enum CalendarSelectionMode {
 ///   onChanged: (value) => print('Selected: $value'),
 /// )
 /// ```
-class DatePickerDialog extends StatefulWidget {
+class DatePickerDialog extends StatefulWidget
+    implements Styleable<CalendarTheme> {
   /// The initial view type to display (date, month, or year grid).
   final CalendarViewType initialViewType;
 
@@ -126,6 +127,10 @@ class DatePickerDialog extends StatefulWidget {
 
   /// Builder function to determine the state of each date.
   final DateStateBuilder? stateBuilder;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CalendarTheme? theme;
 
   /// Creates a [DatePickerDialog] with comprehensive date selection options.
   ///
@@ -161,6 +166,7 @@ class DatePickerDialog extends StatefulWidget {
     this.initialValue,
     this.onChanged,
     this.stateBuilder,
+    this.theme,
   });
 
   @override
@@ -237,7 +243,8 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
   Widget build(BuildContext context) {
     ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<CalendarTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<CalendarTheme>(context);
     final arrowColor = styleValue(
       themeValue: compTheme?.arrowIconColor,
       defaultValue: null,
@@ -340,7 +347,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                 ),
                 if (_viewType == CalendarViewType.date &&
                     viewMode == CalendarSelectionMode.range)
-                  Gap(theme.density.baseGap * theme.scaling * 2),
+                  SizedBox(width: theme.density.baseGap * theme.scaling * 2),
                 if (_viewType == CalendarViewType.date &&
                     viewMode == CalendarSelectionMode.range)
                   Expanded(
@@ -406,7 +413,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                   ),
               ],
             ),
-            Gap(theme.density.baseGap * theme.scaling * 2),
+            SizedBox(height: theme.density.baseGap * theme.scaling * 2),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: viewMode == CalendarSelectionMode.range
@@ -443,7 +450,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                 ),
                 if (_viewType == CalendarViewType.date &&
                     viewMode == CalendarSelectionMode.range)
-                  Gap(theme.density.baseGap * theme.scaling * 2),
+                  SizedBox(width: theme.density.baseGap * theme.scaling * 2),
                 if (_viewType == CalendarViewType.date &&
                     viewMode == CalendarSelectionMode.range)
                   buildView(
@@ -543,7 +550,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
               ),
             ],
           ),
-          Gap(theme.density.baseGap * theme.scaling * 2),
+          SizedBox(height: theme.density.baseGap * theme.scaling * 2),
           buildView(
             context,
             _yearSelectStart,
@@ -1409,7 +1416,7 @@ class MonthCalendar extends StatelessWidget {
       );
     }
     for (int i = 0; i < months.length; i += 4) {
-      rows.add(Gap(theme.density.baseGap * theme.scaling));
+      rows.add(SizedBox(height: theme.density.baseGap * theme.scaling));
       rows.add(Row(children: months.sublist(i, i + 4)));
     }
     return Column(mainAxisSize: MainAxisSize.min, children: rows);
@@ -1502,7 +1509,7 @@ class YearCalendar extends StatelessWidget {
       );
     }
     for (int i = 0; i < years.length; i += 4) {
-      rows.add(Gap(theme.density.baseGap * theme.scaling));
+      rows.add(SizedBox(height: theme.density.baseGap * theme.scaling));
       rows.add(Row(children: years.sublist(i, i + 4)));
     }
     return Column(mainAxisSize: MainAxisSize.min, children: rows);

@@ -126,13 +126,9 @@ class DividerExample3 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Item 1'),
-          Divider(
-            child: Text('Divider'),
-          ),
+          Divider(child: Text('Divider')),
           Text('Item 2'),
-          Divider(
-            child: Text('Divider'),
-          ),
+          Divider(child: Text('Divider')),
           Text('Item 3'),
         ],
       ),
@@ -183,11 +179,7 @@ class DividerExample4 extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              color: Colors.black,
-            ),
-          ),
+          Expanded(child: Container(color: Colors.black)),
         ],
       ),
     );
@@ -200,6 +192,7 @@ class DividerExample4 extends StatelessWidget {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../divider/divider_example_3.dart';
 
 class DividerTile extends StatelessWidget implements IComponentPage {
@@ -240,3 +233,4 @@ class DividerTile extends StatelessWidget implements IComponentPage {
 | `child` | `Widget?` | Optional child widget to display alongside the divider (e.g., text label). |
 | `padding` | `EdgeInsetsGeometry?` | Padding around the divider content. |
 | `childAlignment` | `AxisAlignmentGeometry?` | Alignment of the [child] along the divider axis. |
+| `theme` | `DividerTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

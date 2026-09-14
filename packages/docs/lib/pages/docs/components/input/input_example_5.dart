@@ -12,33 +12,35 @@ class InputExample5 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 16,
       children: [
-        ButtonGroup(children: [
-          // Its important to set width constraints on the TextFields
-          ButtonGroupItem(
-            child: SizedBox(
-              width: 75,
-              child: TextField(placeholder: Text('Red')),
+        ButtonGroup(
+          children: [
+            // Its important to set width constraints on the TextFields
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 75,
+                child: TextField(placeholder: Text('Red')),
+              ),
             ),
-          ),
-          ButtonGroupItem(
-            child: SizedBox(
-              width: 75,
-              child: TextField(placeholder: Text('Green')),
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 75,
+                child: TextField(placeholder: Text('Green')),
+              ),
             ),
-          ),
-          ButtonGroupItem(
-            child: SizedBox(
-              width: 75,
-              child: TextField(placeholder: Text('Blue')),
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 75,
+                child: TextField(placeholder: Text('Blue')),
+              ),
             ),
-          ),
-          ButtonGroupItem(
-            child: SizedBox(
-              width: 75,
-              child: TextField(placeholder: Text('Alpha')),
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 75,
+                child: TextField(placeholder: Text('Alpha')),
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
         ButtonGroup.vertical(
           children: [
             // Its important to set width constraints on the TextFields
@@ -63,7 +65,7 @@ class InputExample5 extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ],

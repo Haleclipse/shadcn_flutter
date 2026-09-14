@@ -181,30 +181,42 @@ class DividerTheme extends ComponentThemeData {
 ///   ],
 /// );
 /// ```
-class Divider extends StatelessWidget implements PreferredSizeWidget {
+class Divider extends StatelessWidget
+    implements PreferredSizeWidget, Styleable<DividerTheme> {
   /// The color of the divider line.
+  @Deprecated('Use theme: DividerTheme(color: ...) instead.')
   final Color? color;
 
   /// The total height of the divider (including padding).
+  @Deprecated('Use theme: DividerTheme(height: ...) instead.')
   final double? height;
 
   /// The thickness of the divider line.
+  @Deprecated('Use theme: DividerTheme(thickness: ...) instead.')
   final double? thickness;
 
   /// The amount of empty space before the divider line starts.
+  @Deprecated('Use theme: DividerTheme(indent: ...) instead.')
   final double? indent;
 
   /// The amount of empty space after the divider line ends.
+  @Deprecated('Use theme: DividerTheme(endIndent: ...) instead.')
   final double? endIndent;
 
   /// Optional child widget to display alongside the divider (e.g., text label).
   final Widget? child;
 
   /// Padding around the divider content.
+  @Deprecated('Use theme: DividerTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
 
   /// Alignment of the [child] along the divider axis.
+  @Deprecated('Use theme: DividerTheme(childAlignment: ...) instead.')
   final AxisAlignmentGeometry? childAlignment;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final DividerTheme? theme;
 
   /// Creates a horizontal divider.
   const Divider({
@@ -217,6 +229,7 @@ class Divider extends StatelessWidget implements PreferredSizeWidget {
     this.child,
     this.padding,
     this.childAlignment,
+    this.theme,
   });
 
   @override
@@ -225,7 +238,8 @@ class Divider extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<DividerTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<DividerTheme>(context);
     final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
     final color = styleValue(
       widgetValue: this.color,

@@ -18,19 +18,19 @@ class _AvatarGroupExample1State extends State<AvatarGroupExample1> {
     return [
       Avatar(
         initials: Avatar.getInitials('sunarya-thito'),
-        backgroundColor: Colors.red,
+        theme: AvatarTheme(backgroundColor: Colors.red),
       ),
       Avatar(
         initials: Avatar.getInitials('sunarya-thito'),
-        backgroundColor: Colors.green,
+        theme: AvatarTheme(backgroundColor: Colors.green),
       ),
       Avatar(
         initials: Avatar.getInitials('sunarya-thito'),
-        backgroundColor: Colors.blue,
+        theme: AvatarTheme(backgroundColor: Colors.blue),
       ),
       Avatar(
         initials: Avatar.getInitials('sunarya-thito'),
-        backgroundColor: Colors.yellow,
+        theme: AvatarTheme(backgroundColor: Colors.yellow),
       ),
     ];
   }

@@ -447,7 +447,7 @@ enum ExpandMode {
 ///   child: MyAppContent(),
 /// );
 /// ```
-class ToastLayer extends StatefulWidget {
+class ToastLayer extends StatefulWidget implements Styleable<ToastTheme> {
   /// The child widget to wrap with toast functionality.
   ///
   /// Type: `Widget`, required. The main application content that will have
@@ -520,6 +520,10 @@ class ToastLayer extends StatefulWidget {
   /// size and theme scaling. Defines maximum and minimum toast dimensions.
   final BoxConstraints? toastConstraints;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ToastTheme? theme;
+
   /// Creates a [ToastLayer].
   ///
   /// The [child] parameter is required as the content to wrap with toast
@@ -563,6 +567,7 @@ class ToastLayer extends StatefulWidget {
     this.entryOpacity = 0.0,
     this.spacing = 8,
     this.toastConstraints,
+    this.theme,
   });
 
   @override
@@ -620,7 +625,8 @@ class _ToastLayerState extends State<ToastLayer> {
     final scaling = theme.scaling;
     final baseGap = theme.density.baseGap;
     final baseContainerPadding = theme.density.baseContainerPadding;
-    final compTheme = ComponentTheme.maybeOf<ToastTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ToastTheme>(context);
     final maxStackedEntries =
         compTheme?.maxStackedEntries ?? widget.maxStackedEntries;
     final expandMode = compTheme?.expandMode ?? widget.expandMode;

@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class NumberInputExample3 extends StatefulWidget {
   const NumberInputExample3({super.key});
@@ -25,7 +26,8 @@ class _NumberInputExample3State extends State<NumberInputExample3> {
             features: const [
               // Increment button on the left, decrement button on the right.
               InputFeature.incrementButton(
-                  position: InputFeaturePosition.leading),
+                position: InputFeaturePosition.leading,
+              ),
               InputFeature.decrementButton(),
             ],
             submitFormatters: [
@@ -34,7 +36,7 @@ class _NumberInputExample3State extends State<NumberInputExample3> {
             ],
           ),
         ),
-        gap(8),
+        Gap(8),
         Text('Value: $value'),
       ],
     );

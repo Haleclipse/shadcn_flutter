@@ -118,7 +118,8 @@ class CircularProgressIndicatorTheme extends ComponentThemeData {
 ///   color: Colors.blue,
 /// );
 /// ```
-class CircularProgressIndicator extends StatelessWidget {
+class CircularProgressIndicator extends StatelessWidget
+    implements Styleable<CircularProgressIndicatorTheme> {
   /// The progress completion value between 0.0 and 1.0.
   ///
   /// Type: `double?`. If null, displays indeterminate spinning animation.
@@ -129,24 +130,32 @@ class CircularProgressIndicator extends StatelessWidget {
   ///
   /// Type: `double?`. If null, derives size from current icon theme size
   /// minus theme scaling padding. Overrides theme and automatic sizing.
+  @Deprecated('Use theme: CircularProgressIndicatorTheme(size: ...) instead.')
   final double? size;
 
   /// The primary color of the progress arc.
   ///
   /// Type: `Color?`. If null, uses theme color or background color when
   /// [onSurface] is true. Overrides theme configuration.
+  @Deprecated('Use theme: CircularProgressIndicatorTheme(color: ...) instead.')
   final Color? color;
 
   /// The background color of the progress track.
   ///
   /// Type: `Color?`. If null, uses a semi-transparent version of the
   /// primary color. Overrides theme configuration.
+  @Deprecated(
+    'Use theme: CircularProgressIndicatorTheme(backgroundColor: ...) instead.',
+  )
   final Color? backgroundColor;
 
   /// The width of the progress stroke line.
   ///
   /// Type: `double?`. If null, calculates proportionally as size/12.
   /// Controls the thickness of both progress and background arcs.
+  @Deprecated(
+    'Use theme: CircularProgressIndicatorTheme(strokeWidth: ...) instead.',
+  )
   final double? strokeWidth;
 
   /// The duration for smooth progress value transitions.
@@ -166,6 +175,10 @@ class CircularProgressIndicator extends StatelessWidget {
   /// Type: `bool`, default: `false`. When true, uses background color instead
   /// of primary color for better visibility on colored backgrounds.
   final bool onSurface;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CircularProgressIndicatorTheme? theme;
 
   /// Creates a [CircularProgressIndicator].
   ///
@@ -202,6 +215,7 @@ class CircularProgressIndicator extends StatelessWidget {
     this.duration = kDefaultDuration,
     this.animated = true,
     this.onSurface = false,
+    this.theme,
   });
 
   @override

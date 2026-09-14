@@ -41,43 +41,38 @@ class _ItemPickerExample4State extends State<ItemPickerExample4> {
           title: const Text('Pick a color'),
           builder: (context, item) {
             return ItemPickerOption(
-                value: item,
-                label: Text(item.name),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: item.color,
-                    shape: BoxShape.circle,
-                  ),
-                ));
+              value: item,
+              label: Text(item.name),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: item.color,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            );
           },
-        ).then(
-          (value) {
-            if (value != null) {
-              selectedColor = colors.indexOf(value);
-              if (context.mounted) {
-                showToast(
-                  context: context,
-                  builder: (context, overlay) {
-                    return SurfaceCard(
-                      child: Text('You picked ${value.name}!'),
-                    );
-                  },
-                );
-              }
-            } else if (context.mounted) {
+        ).then((value) {
+          if (value != null) {
+            selectedColor = colors.indexOf(value);
+            if (context.mounted) {
               showToast(
                 context: context,
                 builder: (context, overlay) {
-                  return const SurfaceCard(
-                    child: Text('You picked nothing!'),
-                  );
+                  return SurfaceCard(child: Text('You picked ${value.name}!'));
                 },
               );
             }
-          },
-        );
+          } else if (context.mounted) {
+            showToast(
+              context: context,
+              builder: (context, overlay) {
+                return const SurfaceCard(child: Text('You picked nothing!'));
+              },
+            );
+          }
+        });
       },
       child: const Text('Show Item Picker'),
     );

@@ -19,14 +19,12 @@ class DropdownMenuExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'dropdown_menu',
-      description:
-          'Dropdown menu is a menu that appears when you click a button or other control.',
+      description: 'Dropdown menu is a menu that appears when you click a button or other control.',
       displayName: 'Dropdown Menu',
       children: [
         WidgetUsageExample(
           title: 'Dropdown Menu Example',
-          path:
-              'lib/pages/docs/components/dropdown_menu/dropdown_menu_example_1.dart',
+          path: 'lib/pages/docs/components/dropdown_menu/dropdown_menu_example_1.dart',
           child: DropdownMenuExample1(),
         ),
       ],
@@ -60,55 +58,28 @@ class DropdownMenuExample1 extends StatelessWidget {
               children: [
                 MenuLabel(child: Text('My Account')),
                 MenuDivider(),
-                MenuButton(
-                  child: Text('Profile'),
-                ),
-                MenuButton(
-                  child: Text('Billing'),
-                ),
-                MenuButton(
-                  child: Text('Settings'),
-                ),
-                MenuButton(
-                  child: Text('Keyboard shortcuts'),
-                ),
+                MenuButton(child: Text('Profile')),
+                MenuButton(child: Text('Billing')),
+                MenuButton(child: Text('Settings')),
+                MenuButton(child: Text('Keyboard shortcuts')),
                 MenuDivider(),
-                MenuButton(
-                  child: Text('Team'),
-                ),
+                MenuButton(child: Text('Team')),
                 MenuButton(
                   // Demonstrates a nested submenu.
                   subMenu: [
-                    MenuButton(
-                      child: Text('Email'),
-                    ),
-                    MenuButton(
-                      child: Text('Message'),
-                    ),
+                    MenuButton(child: Text('Email')),
+                    MenuButton(child: Text('Message')),
                     MenuDivider(),
-                    MenuButton(
-                      child: Text('More...'),
-                    ),
+                    MenuButton(child: Text('More...')),
                   ],
                   child: Text('Invite users'),
                 ),
-                MenuButton(
-                  child: Text('New Team'),
-                ),
+                MenuButton(child: Text('New Team')),
                 MenuDivider(),
-                MenuButton(
-                  child: Text('GitHub'),
-                ),
-                MenuButton(
-                  child: Text('Support'),
-                ),
-                MenuButton(
-                  enabled: false,
-                  child: Text('API'),
-                ),
-                MenuButton(
-                  child: Text('Log out'),
-                ),
+                MenuButton(child: Text('GitHub')),
+                MenuButton(child: Text('Support')),
+                MenuButton(enabled: false, child: Text('API')),
+                MenuButton(child: Text('Log out')),
               ],
             );
           },
@@ -131,6 +102,7 @@ class DropdownMenuExample1 extends StatelessWidget {
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // paint a cursor
 class CursorPainter extends CustomPainter {
@@ -185,55 +157,61 @@ class DropdownMenuTile extends StatelessWidget implements IComponentPage {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                OutlineButton(
-                  onPressed: () {},
-                  child: const Text('Options'),
-                ),
+                OutlineButton(onPressed: () {}, child: const Text('Options')),
                 const Gap(8),
                 SizedBox(
                   width: 192,
-                  child: MenuPopup(children: [
-                    Button(
-                      style: const ButtonStyle.menu(),
-                      onPressed: () {},
-                      child: const Text('Profile'),
-                    ),
-                    Button(
-                      style: const ButtonStyle.menu().copyWith(
+                  child: MenuPopup(
+                    children: [
+                      Button(
+                        style: const ButtonStyle.menu(),
+                        onPressed: () {},
+                        child: const Text('Profile'),
+                      ),
+                      Button(
+                        style: const ButtonStyle.menu().copyWith(
                           decoration: (context, states, value) {
-                        return (value as BoxDecoration).copyWith(
-                          color: theme.colorScheme.accent,
-                          borderRadius: BorderRadius.circular(theme.radiusSm),
-                        );
-                      }),
-                      onPressed: () {},
-                      child: const Text('Billing'),
-                    ),
-                    const MenuDivider(),
-                    Button(
-                      style: const ButtonStyle.menu(),
-                      onPressed: () {},
-                      child: const Text('Settings'),
-                    ),
-                    Button(
-                      style: const ButtonStyle.menu(),
-                      onPressed: () {},
-                      trailing: const MenuShortcut(
-                        activator: SingleActivator(LogicalKeyboardKey.keyC,
-                            control: true),
+                            return (value as BoxDecoration).copyWith(
+                              color: theme.colorScheme.accent,
+                              borderRadius: BorderRadius.circular(
+                                theme.radiusSm,
+                              ),
+                            );
+                          },
+                        ),
+                        onPressed: () {},
+                        child: const Text('Billing'),
                       ),
-                      child: const Text('Copy'),
-                    ),
-                    Button(
-                      style: const ButtonStyle.menu(),
-                      onPressed: () {},
-                      trailing: const MenuShortcut(
-                        activator: SingleActivator(LogicalKeyboardKey.keyV,
-                            control: true),
+                      const MenuDivider(),
+                      Button(
+                        style: const ButtonStyle.menu(),
+                        onPressed: () {},
+                        child: const Text('Settings'),
                       ),
-                      child: const Text('Paste'),
-                    ),
-                  ]),
+                      Button(
+                        style: const ButtonStyle.menu(),
+                        onPressed: () {},
+                        trailing: const MenuShortcut(
+                          activator: SingleActivator(
+                            LogicalKeyboardKey.keyC,
+                            control: true,
+                          ),
+                        ),
+                        child: const Text('Copy'),
+                      ),
+                      Button(
+                        style: const ButtonStyle.menu(),
+                        onPressed: () {},
+                        trailing: const MenuShortcut(
+                          activator: SingleActivator(
+                            LogicalKeyboardKey.keyV,
+                            control: true,
+                          ),
+                        ),
+                        child: const Text('Paste'),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -241,10 +219,8 @@ class DropdownMenuTile extends StatelessWidget implements IComponentPage {
           const Positioned(
             top: 105,
             left: 170,
-            child: CustomPaint(
-              painter: CursorPainter(),
-            ),
-          )
+            child: CustomPaint(painter: CursorPainter()),
+          ),
         ],
       ),
     );
@@ -267,3 +243,4 @@ class DropdownMenuTile extends StatelessWidget implements IComponentPage {
 | `surfaceOpacity` | `double?` | Opacity of the surface blur effect.  If `null`, uses theme default. |
 | `surfaceBlur` | `double?` | Amount of blur to apply to the surface.  If `null`, uses theme default. |
 | `children` | `List<MenuItem>` | Menu items to display in the dropdown.  Each item should be a [MenuItem] or similar menu component. |
+| `theme` | `DropdownMenuTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

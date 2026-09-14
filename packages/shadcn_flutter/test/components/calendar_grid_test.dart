@@ -23,9 +23,12 @@ void main() {
       expect(find.byType(CalendarGrid), findsOneWidget);
       // CalendarGrid contains a Column
       expect(
-          find.descendant(
-              of: find.byType(CalendarGrid), matching: find.byType(Column)),
-          findsOneWidget);
+        find.descendant(
+          of: find.byType(CalendarGrid),
+          matching: find.byType(Column),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders weekday headers', (tester) async {
@@ -121,8 +124,10 @@ void main() {
 
     testWidgets('handles leap year February', (tester) async {
       // Test February in leap year
-      final leapFebData =
-          CalendarGridData(month: 2, year: 2024); // 2024 is leap year
+      final leapFebData = CalendarGridData(
+        month: 2,
+        year: 2024,
+      ); // 2024 is leap year
 
       await tester.pumpWidget(
         SimpleApp(
@@ -157,25 +162,31 @@ void main() {
       expect(find.byType(CalendarGrid), findsOneWidget);
     });
 
-    testWidgets('CalendarGridData creates correct data for March 2024',
-        (tester) async {
+    testWidgets('CalendarGridData creates correct data for March 2024', (
+      tester,
+    ) async {
       final data = CalendarGridData(month: 3, year: 2024);
 
       expect(data.month, equals(3));
       expect(data.year, equals(2024));
-      expect(data.items.length,
-          greaterThan(28)); // Should include adjacent month days
+      expect(
+        data.items.length,
+        greaterThan(28),
+      ); // Should include adjacent month days
       expect(data.items.length % 7, equals(0)); // Should be complete weeks
     });
 
-    testWidgets('CalendarGridData creates correct data for February 2024',
-        (tester) async {
+    testWidgets('CalendarGridData creates correct data for February 2024', (
+      tester,
+    ) async {
       final data = CalendarGridData(month: 2, year: 2024);
 
       expect(data.month, equals(2));
       expect(data.year, equals(2024));
-      expect(data.items.length,
-          greaterThan(28)); // Should include adjacent month days
+      expect(
+        data.items.length,
+        greaterThan(28),
+      ); // Should include adjacent month days
       expect(data.items.length % 7, equals(0)); // Should be complete weeks
     });
 
@@ -248,8 +259,9 @@ void main() {
     testWidgets('current month dates are not fromAnotherMonth', (tester) async {
       final data = CalendarGridData(month: 3, year: 2024);
 
-      final currentMonthItems =
-          data.items.where((item) => item.date.month == 3);
+      final currentMonthItems = data.items.where(
+        (item) => item.date.month == 3,
+      );
       for (final item in currentMonthItems) {
         expect(item.fromAnotherMonth, isFalse);
       }

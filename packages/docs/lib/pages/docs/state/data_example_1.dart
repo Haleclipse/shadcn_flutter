@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DataExample1 extends StatefulWidget {
   const DataExample1({super.key});
@@ -29,7 +30,7 @@ class DataExample1State extends State<DataExample1> {
               },
               density: ButtonDensity.icon,
               child: const Icon(LucideIcons.plus),
-            )
+            ),
           ],
         ),
         const Gap(24),
@@ -38,10 +39,8 @@ class DataExample1State extends State<DataExample1> {
         // "counter" variable without causing unnecessary rebuilds.
         Data.inherit(
           data: counter,
-          child: const InnerWidget(
-            child: MostInnerWidget(),
-          ),
-        )
+          child: const InnerWidget(child: MostInnerWidget()),
+        ),
       ],
     );
   }
@@ -67,7 +66,7 @@ class _InnerWidgetState extends State<InnerWidget> {
         children: [
           Text('InnerWidget Rebuild Count: $innerRebuildCount'),
           const Gap(12),
-          widget.child
+          widget.child,
         ],
       ),
     );
@@ -89,7 +88,8 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
     mostInnerRebuildCount++;
     return Card(
       child: Text(
-          'MostInnerWidget Data: $parentCounter - Rebuild Count: $mostInnerRebuildCount'),
+        'MostInnerWidget Data: $parentCounter - Rebuild Count: $mostInnerRebuildCount',
+      ),
     );
   }
 }

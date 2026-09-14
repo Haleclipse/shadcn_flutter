@@ -1,13 +1,16 @@
-// ignore: unused_import
-import 'package:intl/intl.dart' as intl;
-
-import 'shadcn_localizations.dart';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+//
+// Generated from lib/l10n/*.arb by `dart run gen:l10n_generator`.
+// Edit the .arb files and rerun the generator instead.
 
 // ignore_for_file: type=lint
 
+import 'shadcn_localizations.dart';
+
 /// The translations for English (`en`).
 class ShadcnLocalizationsEn extends ShadcnLocalizations {
-  ShadcnLocalizationsEn([String locale = 'en']) : super(locale);
+  /// Creates the English localizations.
+  ShadcnLocalizationsEn([super.locale = 'en']);
 
   @override
   String get formNotEmpty => 'This field cannot be empty';
@@ -22,30 +25,18 @@ class ShadcnLocalizationsEn extends ShadcnLocalizations {
   String get invalidURL => 'Invalid URL';
 
   @override
-  String formLessThan(double value) {
-    final intl.NumberFormat valueNumberFormat =
-        intl.NumberFormat.decimalPattern(localeName);
-    final String valueString = valueNumberFormat.format(value);
-
-    return 'Must be less than $valueString';
+  String formLessThan(String value) {
+    return 'Must be less than ${value}';
   }
 
   @override
-  String formGreaterThan(double value) {
-    final intl.NumberFormat valueNumberFormat =
-        intl.NumberFormat.decimalPattern(localeName);
-    final String valueString = valueNumberFormat.format(value);
-
-    return 'Must be greater than $valueString';
+  String formGreaterThan(String value) {
+    return 'Must be greater than ${value}';
   }
 
   @override
-  String formLessThanOrEqualTo(double value) {
-    final intl.NumberFormat valueNumberFormat =
-        intl.NumberFormat.decimalPattern(localeName);
-    final String valueString = valueNumberFormat.format(value);
-
-    return 'Must be less than or equal to $valueString';
+  String formLessThanOrEqualTo(String value) {
+    return 'Must be less than or equal to ${value}';
   }
 
   @override
@@ -55,66 +46,46 @@ class ShadcnLocalizationsEn extends ShadcnLocalizations {
   String get formPhoneNumberEmpty => 'Phone number is required';
 
   @override
-  String formGreaterThanOrEqualTo(double value) {
-    final intl.NumberFormat valueNumberFormat =
-        intl.NumberFormat.decimalPattern(localeName);
-    final String valueString = valueNumberFormat.format(value);
-
-    return 'Must be greater than or equal to $valueString';
+  String formGreaterThanOrEqualTo(String value) {
+    return 'Must be greater than or equal to ${value}';
   }
 
   @override
-  String formBetweenInclusively(double min, double max) {
-    final intl.NumberFormat minNumberFormat = intl.NumberFormat.decimalPattern(
-      localeName,
-    );
-    final String minString = minNumberFormat.format(min);
-    final intl.NumberFormat maxNumberFormat = intl.NumberFormat.decimalPattern(
-      localeName,
-    );
-    final String maxString = maxNumberFormat.format(max);
-
-    return 'Must be between $minString and $maxString (inclusive)';
+  String formBetweenInclusively(String min, String max) {
+    return 'Must be between ${min} and ${max} (inclusive)';
   }
 
   @override
-  String formBetweenExclusively(double min, double max) {
-    final intl.NumberFormat minNumberFormat = intl.NumberFormat.decimalPattern(
-      localeName,
-    );
-    final String minString = minNumberFormat.format(min);
-    final intl.NumberFormat maxNumberFormat = intl.NumberFormat.decimalPattern(
-      localeName,
-    );
-    final String maxString = maxNumberFormat.format(max);
+  String formEqualTo(String value) {
+    return 'Must be equal to ${value}';
+  }
 
-    return 'Must be between $minString and $maxString (exclusive)';
+  @override
+  String formBetweenExclusively(String min, String max) {
+    return 'Must be between ${min} and ${max} (exclusive)';
   }
 
   @override
   String formLengthLessThan(int value) {
-    return 'Must be at least $value characters';
+    return 'Must be at least ${value} characters';
   }
 
   @override
   String formLengthGreaterThan(int value) {
-    return 'Must be at most $value characters';
+    return 'Must be at most ${value} characters';
   }
 
   @override
   String get formPasswordDigits => 'Must contain at least one digit';
 
   @override
-  String get formPasswordLowercase =>
-      'Must contain at least one lowercase letter';
+  String get formPasswordLowercase => 'Must contain at least one lowercase letter';
 
   @override
-  String get formPasswordUppercase =>
-      'Must contain at least one uppercase letter';
+  String get formPasswordUppercase => 'Must contain at least one uppercase letter';
 
   @override
-  String get formPasswordSpecial =>
-      'Must contain at least one special character';
+  String get formPasswordSpecial => 'Must contain at least one special character';
 
   @override
   String get commandSearch => 'Type a command or search...';
@@ -349,7 +320,7 @@ class ShadcnLocalizationsEn extends ShadcnLocalizations {
 
   @override
   String dataTableSelectedRows(int count, int total) {
-    return '$count of $total row(s) selected.';
+    return '${count} of ${total} row(s) selected.';
   }
 
   @override

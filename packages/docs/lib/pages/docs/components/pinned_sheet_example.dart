@@ -15,38 +15,32 @@ class PinnedSheetExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'pinned_sheet',
-      description:
-          'A controller-driven, gesture-driven sheet that snaps between stages.',
+      description: 'A controller-driven, gesture-driven sheet that snaps between stages.',
       displayName: 'Pinned Sheet',
       children: [
         WidgetUsageExample(
           title: 'Backdrop transform',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_1.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_1.dart',
           child: PinnedSheetExample1(),
         ),
         WidgetUsageExample(
           title: 'Peek drag handle',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_2.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_2.dart',
           child: PinnedSheetExample2(),
         ),
         WidgetUsageExample(
           title: 'Sheet container',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_3.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_3.dart',
           child: PinnedSheetExample3(),
         ),
         WidgetUsageExample(
           title: 'Nested sheets',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_4.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_4.dart',
           child: PinnedSheetExample4(),
         ),
         WidgetUsageExample(
           title: 'Expands',
-          path:
-              'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_5.dart',
+          path: 'lib/pages/docs/components/pinned_sheet/pinned_sheet_example_5.dart',
           child: PinnedSheetExample5(),
         ),
       ],

@@ -17,7 +17,8 @@ class HoverCardExample1 extends StatelessWidget {
             leading: FlutterLogo(),
             title: Text('@flutter'),
             content: Text(
-                'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.'),
+              'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.',
+            ),
           ),
         ).sized(width: 300);
       },

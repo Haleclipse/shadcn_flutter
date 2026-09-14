@@ -282,11 +282,13 @@ class MenuDivider extends StatelessWidget implements MenuItem {
           scaling,
       child: menuGroupData == null || menuGroupData.direction == Axis.vertical
           ? Divider(
-              height: 1 * scaling,
-              thickness: 1 * scaling,
-              indent: -4 * scaling,
-              endIndent: -4 * scaling,
-              color: theme.colorScheme.border,
+              theme: DividerTheme(
+                height: 1 * scaling,
+                thickness: 1 * scaling,
+                indent: -4 * scaling,
+                endIndent: -4 * scaling,
+                color: theme.colorScheme.border,
+              ),
             )
           : VerticalDivider(
               width: 1 * scaling,
@@ -321,7 +323,11 @@ class MenuGap extends StatelessWidget implements MenuItem {
 
   @override
   Widget build(BuildContext context) {
-    return Gap(size);
+    final menuGroupData = Data.maybeOf<MenuGroupData>(context);
+    // A menu with no group data around it is laid out vertically.
+    return menuGroupData?.direction == Axis.horizontal
+        ? SizedBox(width: size)
+        : SizedBox(height: size);
   }
 
   @override
@@ -345,7 +351,8 @@ class MenuGap extends StatelessWidget implements MenuItem {
 ///   child: Text('Cut'),
 /// )
 /// ```
-class MenuButton extends StatefulWidget implements MenuItem {
+class MenuButton extends StatefulWidget
+    implements MenuItem, Styleable<MenuTheme> {
   /// Content widget displayed in the button.
   final Widget child;
 
@@ -373,6 +380,10 @@ class MenuButton extends StatefulWidget implements MenuItem {
   @override
   final OverlayController? overlayController;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final MenuTheme? theme;
+
   /// Creates a menu button.
   ///
   /// Parameters:
@@ -396,6 +407,7 @@ class MenuButton extends StatefulWidget implements MenuItem {
     this.focusNode,
     this.autoClose = true,
     this.overlayController,
+    this.theme,
   });
 
   @override
@@ -463,7 +475,6 @@ class MenuLabel extends StatelessWidget implements MenuItem {
           ) +
           menuGroupData!.itemPadding,
       child: Basic(
-        contentSpacing: densityGap,
         leading: leading == null && menuGroupData.hasLeading
             ? SizedBox(width: densityGap * 2)
             : leading == null
@@ -475,11 +486,14 @@ class MenuLabel extends StatelessWidget implements MenuItem {
               ),
         trailing: trailing,
         content: child.semiBold(),
-        trailingAlignment: Alignment.center,
-        leadingAlignment: Alignment.center,
-        contentAlignment: menuGroupData.direction == Axis.vertical
-            ? AlignmentDirectional.centerStart
-            : Alignment.center,
+        theme: BasicTheme(
+          contentSpacing: densityGap,
+          trailingAlignment: Alignment.center,
+          leadingAlignment: Alignment.center,
+          contentAlignment: menuGroupData.direction == Axis.vertical
+              ? AlignmentDirectional.centerStart
+              : Alignment.center,
+        ),
       ),
     );
   }
@@ -592,7 +606,8 @@ class _MenuButtonState extends State<MenuButton> {
     assert(menuGroupData != null, 'MenuButton must be a child of MenuGroup');
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<MenuTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<MenuTheme>(context);
     final isSheetOverlay =
         OverlayConfiguration.maybeOf(context) is SheetConfiguration;
     final isDialogOverlay =
@@ -960,7 +975,7 @@ class MenuData {
 ///   ],
 /// )
 /// ```
-class MenuGroup extends StatefulWidget {
+class MenuGroup extends StatefulWidget implements Styleable<MenuTheme> {
   /// List of menu item widgets.
   final List<MenuItem> children;
 
@@ -994,6 +1009,10 @@ class MenuGroup extends StatefulWidget {
   /// Optional focus node for keyboard navigation.
   final FocusNode? focusNode;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final MenuTheme? theme;
+
   /// Creates a menu group.
   ///
   /// Parameters:
@@ -1021,6 +1040,7 @@ class MenuGroup extends StatefulWidget {
     this.itemPadding,
     this.autofocus = true,
     this.focusNode,
+    this.theme,
   });
 
   @override
@@ -1092,7 +1112,8 @@ class _MenuGroupState extends State<MenuGroup> {
   Widget build(BuildContext context) {
     final parentGroupData = Data.maybeOf<MenuGroupData>(context);
     final menubarData = Data.maybeOf<MenubarState>(context);
-    final compTheme = ComponentTheme.maybeOf<MenuTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<MenuTheme>(context);
     final itemPadding =
         widget.itemPadding ?? compTheme?.itemPadding ?? EdgeInsets.zero;
     final subMenuOffset = widget.subMenuOffset ?? compTheme?.subMenuOffset;

@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class InputExample3 extends StatelessWidget {
   const InputExample3({super.key});
@@ -15,7 +16,8 @@ class InputExample3 extends StatelessWidget {
             InputFeature.hint(
               popupBuilder: (context) {
                 return const TooltipContainer(
-                    child: Text('This is for your username'));
+                  child: Text('This is for your username'),
+                );
               },
             ),
             // Convenience actions for copying/pasting directly from the text field UI.
@@ -27,9 +29,7 @@ class InputExample3 extends StatelessWidget {
         const TextField(
           placeholder: Text('Enter your password'),
           features: [
-            InputFeature.clear(
-              visibility: InputFeatureVisibility.textNotEmpty,
-            ),
+            InputFeature.clear(visibility: InputFeatureVisibility.textNotEmpty),
             // Password toggle configured with `hold` mode: press-and-hold to peek,
             // release to hide again.
             InputFeature.passwordToggle(mode: PasswordPeekMode.hold),

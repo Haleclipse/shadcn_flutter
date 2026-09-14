@@ -51,16 +51,24 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
               buildButton('Home', BootstrapIcons.house, const ValueKey(0)),
               buildButton('Explore', BootstrapIcons.compass, const ValueKey(1)),
               buildButton(
-                  'Library', BootstrapIcons.musicNoteList, const ValueKey(2)),
+                'Library',
+                BootstrapIcons.musicNoteList,
+                const ValueKey(2),
+              ),
               buildButton('Profile', BootstrapIcons.person, const ValueKey(3)),
               buildButton(
-                  'App', BootstrapIcons.appIndicator, const ValueKey(4)),
+                'App',
+                BootstrapIcons.appIndicator,
+                const ValueKey(4),
+              ),
             ],
           ),
         ],
         child: Container(
-          color: Colors.primaries[
-              Colors.primaries.length - (selected as ValueKey<int>).value - 1],
+          color:
+              Colors.primaries[Colors.primaries.length -
+                  (selected as ValueKey<int>).value -
+                  1],
           padding: const EdgeInsets.all(24),
           child: Card(
             child: Wrap(
@@ -75,8 +83,8 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                   value: alignment,
                   itemBuilder:
                       (BuildContext context, NavigationBarAlignment item) {
-                    return Text(item.name);
-                  },
+                        return Text(item.name);
+                      },
                   overlayConfiguration: const PopoverConfiguration(
                     widthConstraint: PopoverConstraint.anchorFixedSize,
                     alignment: Alignment.topCenter,
@@ -89,21 +97,24 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                     }
                   },
                   popup: SelectPopup(
-                      items: SelectItemList(children: [
-                    for (var value in NavigationBarAlignment.values)
-                      SelectItemButton(
-                        value: value,
-                        child: Text(value.name),
-                      ),
-                  ])),
+                    items: SelectItemList(
+                      children: [
+                        for (var value in NavigationBarAlignment.values)
+                          SelectItemButton(
+                            value: value,
+                            child: Text(value.name),
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
                 // Control how labels are shown for each navigation item.
                 Select<NavigationLabelType>(
                   value: labelType,
                   itemBuilder:
                       (BuildContext context, NavigationLabelType item) {
-                    return Text(item.name);
-                  },
+                        return Text(item.name);
+                      },
                   overlayConfiguration: const PopoverConfiguration(
                     widthConstraint: PopoverConstraint.anchorFixedSize,
                     alignment: Alignment.topCenter,
@@ -116,13 +127,16 @@ class _NavigationBarExample1State extends State<NavigationBarExample1> {
                     }
                   },
                   popup: SelectPopup(
-                      items: SelectItemList(children: [
-                    for (var value in NavigationLabelType.values)
-                      SelectItemButton(
-                        value: value,
-                        child: Text(value.name),
-                      ),
-                  ])),
+                    items: SelectItemList(
+                      children: [
+                        for (var value in NavigationLabelType.values)
+                          SelectItemButton(
+                            value: value,
+                            child: Text(value.name),
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
                 // Use custom button styles for normal vs selected states.
                 Checkbox(

@@ -37,11 +37,7 @@ class DividerExample4 extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              color: Colors.black,
-            ),
-          ),
+          Expanded(child: Container(color: Colors.black)),
         ],
       ),
     );

@@ -104,12 +104,16 @@ class StepsTheme extends ComponentThemeData {
 ///   ],
 /// );
 /// ```
-class Steps extends StatelessWidget {
+class Steps extends StatelessWidget implements Styleable<StepsTheme> {
   /// List of widgets representing each step in the sequence.
   ///
   /// Each widget will be displayed with an automatically numbered
   /// circular indicator showing its position in the sequence.
   final List<Widget> children;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final StepsTheme? theme;
 
   /// Creates a [Steps] widget.
   ///
@@ -129,7 +133,7 @@ class Steps extends StatelessWidget {
   ///   ],
   /// )
   /// ```
-  const Steps({super.key, required this.children});
+  const Steps({super.key, required this.children, this.theme});
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +142,7 @@ class Steps extends StatelessWidget {
     final densityGap = theme.density.baseGap * scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * scaling;
-    final compTheme = ComponentTheme.maybeOf<StepsTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<StepsTheme>(context);
     final indicatorSize = compTheme?.indicatorSize ?? 28 * scaling;
     final spacing = compTheme?.spacing ?? densityGap * 2.25;
     final indicatorColor = compTheme?.indicatorColor ?? theme.colorScheme.muted;
@@ -165,17 +169,17 @@ class Steps extends StatelessWidget {
                       child: Text((i + 1).toString()).mono().bold(),
                     ),
                   ),
-                  Gap(densityGap * 0.5),
+                  SizedBox(height: densityGap * 0.5),
                   Expanded(
                     child: VerticalDivider(
                       thickness: connectorThickness,
                       color: indicatorColor,
                     ),
                   ),
-                  Gap(densityGap * 0.5),
+                  SizedBox(height: densityGap * 0.5),
                 ],
               ),
-              Gap(spacing),
+              SizedBox(width: spacing),
               Expanded(
                 child: children[i].withPadding(
                   bottom: densityContainerPadding * 2,

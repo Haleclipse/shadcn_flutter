@@ -42,8 +42,9 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                     FormValidationMode.submitted,
                   },
                   child: TextField(
-                    initialValue:
-                        _loginController.getValue(const TextFieldKey(#email)),
+                    initialValue: _loginController.getValue(
+                      const TextFieldKey(#email),
+                    ),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
                     enableSuggestions: false,
@@ -59,17 +60,16 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                   },
                   child: TextField(obscureText: true),
                 ),
-                const SubmitButton(
-                  child: Text('Login'),
-                ),
+                const SubmitButton(child: Text('Login')),
                 const Text('Don\'t have an account? ').thenButton(
-                    onPressed: () {
-                      setState(() {
-                        // Switch to the register form.
-                        _isRegister = true;
-                      });
-                    },
-                    child: const Text('Sign Up!')),
+                  onPressed: () {
+                    setState(() {
+                      // Switch to the register form.
+                      _isRegister = true;
+                    });
+                  },
+                  child: const Text('Sign Up!'),
+                ),
               ],
             ),
           ),
@@ -93,8 +93,9 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                     FormValidationMode.submitted,
                   },
                   child: TextField(
-                    initialValue: _registerController
-                        .getValue(const TextFieldKey(#email)),
+                    initialValue: _registerController.getValue(
+                      const TextFieldKey(#email),
+                    ),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
                     enableSuggestions: false,
@@ -104,8 +105,9 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                   key: TextFieldKey(#password),
                   label: Text('Password'),
                   validator: LengthValidator(
-                      min: 6,
-                      message: 'Password must be at least 6 characters'),
+                    min: 6,
+                    message: 'Password must be at least 6 characters',
+                  ),
                   showErrors: {
                     FormValidationMode.changed,
                     FormValidationMode.submitted,
@@ -115,25 +117,26 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                 const FormField(
                   key: TextFieldKey(#confirmPassword),
                   label: Text('Confirm Password'),
-                  validator: CompareWith.equal(TextFieldKey(#password),
-                      message: 'Passwords do not match'),
+                  validator: CompareWith.equal(
+                    TextFieldKey(#password),
+                    message: 'Passwords do not match',
+                  ),
                   showErrors: {
                     FormValidationMode.changed,
                     FormValidationMode.submitted,
                   },
                   child: TextField(obscureText: true),
                 ),
-                const SubmitButton(
-                  child: Text('Register'),
-                ),
+                const SubmitButton(child: Text('Register')),
                 const Text('Already have an account? ').thenButton(
-                    onPressed: () {
-                      setState(() {
-                        // Switch back to the login form.
-                        _isRegister = false;
-                      });
-                    },
-                    child: const Text('Login!')),
+                  onPressed: () {
+                    setState(() {
+                      // Switch back to the login form.
+                      _isRegister = false;
+                    });
+                  },
+                  child: const Text('Login!'),
+                ),
               ],
             ),
           ),

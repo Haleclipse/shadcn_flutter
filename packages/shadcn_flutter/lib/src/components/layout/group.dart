@@ -21,10 +21,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// ```
 class GroupWidget extends MultiChildRenderObjectWidget {
   /// Creates a [GroupWidget].
-  const GroupWidget({
-    super.key,
-    super.children,
-  });
+  const GroupWidget({super.key, super.children});
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -70,9 +67,7 @@ class RenderGroup extends RenderBox
   ///
   /// Parameters:
   /// - [children] (`List<RenderBox>?`, optional): Initial list of child render objects.
-  RenderGroup({
-    List<RenderBox>? children,
-  }) {
+  RenderGroup({List<RenderBox>? children}) {
     addAll(children);
   }
 
@@ -134,8 +129,9 @@ class RenderGroup extends RenderBox
         }
       }
       child.layout(
-          BoxConstraints.tightFor(width: childWidth, height: childHeight),
-          parentUsesSize: true);
+        BoxConstraints.tightFor(width: childWidth, height: childHeight),
+        parentUsesSize: true,
+      );
       if (top == null && bottom != null) {
         offsetY -= child.size.height;
       }
@@ -244,12 +240,12 @@ class GroupPositioned extends ParentDataWidget<GroupParentData> {
     super.key,
     required Rect rect,
     required super.child,
-  })  : left = rect.left,
-        top = rect.top,
-        width = rect.width,
-        height = rect.height,
-        right = null,
-        bottom = null;
+  }) : left = rect.left,
+       top = rect.top,
+       width = rect.width,
+       height = rect.height,
+       right = null,
+       bottom = null;
 
   /// Distance from the top edge of the group.
   final double? top;

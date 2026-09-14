@@ -73,9 +73,7 @@ class _WindowExample1State extends State<WindowExample1> {
                 content: const RebuildCounter(),
               ),
             ],
-            child: const Center(
-              child: Text('Desktop'),
-            ),
+            child: const Center(child: Text('Desktop')),
           ),
         ),
         PrimaryButton(
@@ -86,12 +84,13 @@ class _WindowExample1State extends State<WindowExample1> {
               Window(
                 bounds: const Rect.fromLTWH(0, 0, 200, 200),
                 title: Text(
-                    'Window ${navigatorKey.currentState!.windows.length + 1}'),
+                  'Window ${navigatorKey.currentState!.windows.length + 1}',
+                ),
                 content: const RebuildCounter(),
               ),
             );
           },
-        )
+        ),
       ],
     );
   }
@@ -118,11 +117,7 @@ class WindowTile extends StatelessWidget implements IComponentPage {
       name: 'window',
       title: 'Window',
       fit: true,
-      example: SizedBox(
-        width: 420,
-        height: 660,
-        child: WindowExample1(),
-      ),
+      example: SizedBox(width: 420, height: 660, child: WindowExample1()),
     );
   }
 }
@@ -155,5 +150,6 @@ class WindowTile extends StatelessWidget implements IComponentPage {
 | `maximizable` | `bool?` | Whether the window can be maximized. |
 | `minimizable` | `bool?` | Whether the window can be minimized. |
 | `constraints` | `BoxConstraints?` | Size constraints for the window (min/max width and height). |
+| `theme` | `WindowTheme?` | Styling for this window alone.  Overrides any [WindowTheme] the surrounding [WindowNavigator] or an ancestor [ComponentTheme] provides. Leave null to inherit. |
 | `_key` | `GlobalKey<_WindowWidgetState>` |  |
 | `closed` | `ValueNotifier<bool>` | Notifier that indicates whether the window has been closed.  External code can listen to this notifier to react to window close events. |

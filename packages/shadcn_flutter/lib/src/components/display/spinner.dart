@@ -56,7 +56,8 @@ abstract class SpinnerElement {
 /// [Spinner] provides common functionality for loading indicators including
 /// color and size resolution from theme. Concrete implementations include
 /// [CircularSpinner], [DotsSpinner], and others.
-abstract class Spinner extends StatelessWidget {
+abstract class Spinner extends StatelessWidget
+    implements Styleable<SpinnerTheme> {
   /// Optional color override for the spinner.
   ///
   /// If `null`, uses theme's spinner color or default foreground color.
@@ -67,22 +68,30 @@ abstract class Spinner extends StatelessWidget {
   /// If `null`, uses theme's spinner size or a default size.
   final double? size;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final SpinnerTheme? theme;
+
   /// Creates a [Spinner] with optional color and size overrides.
-  const Spinner({super.key, this.color, this.size});
+  const Spinner({super.key, this.color, this.size, this.theme});
 
   /// Resolve spinner color considering theme overrides.
   Color? resolveColor(BuildContext context) {
     final compTheme = ComponentTheme.maybeOf<SpinnerTheme>(context);
     return styleValue(
-        widgetValue: color, themeValue: compTheme?.color, defaultValue: null);
+      widgetValue: color,
+      themeValue: compTheme?.color,
+      defaultValue: null,
+    );
   }
 
   /// Resolve spinner size considering theme overrides and a default value.
   double resolveSize(BuildContext context, double defaultValue) {
     final compTheme = ComponentTheme.maybeOf<SpinnerTheme>(context);
     return styleValue(
-        widgetValue: size,
-        themeValue: compTheme?.size,
-        defaultValue: defaultValue);
+      widgetValue: size,
+      themeValue: compTheme?.size,
+      defaultValue: defaultValue,
+    );
   }
 }

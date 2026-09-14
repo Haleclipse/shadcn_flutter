@@ -111,7 +111,7 @@ class AlertTheme extends ComponentThemeData {
 ///   ),
 /// );
 /// ```
-class Alert extends StatelessWidget {
+class Alert extends StatelessWidget implements Styleable<AlertTheme> {
   /// Optional leading widget, typically an icon.
   ///
   /// Type: `Widget?`. Displayed at the start of the alert layout.
@@ -142,6 +142,10 @@ class Alert extends StatelessWidget {
   /// scheme to text and icons for error or warning messages.
   final bool destructive;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AlertTheme? theme;
+
   /// Creates an [Alert] with standard styling.
   ///
   /// All content parameters are optional, allowing for flexible layouts
@@ -168,6 +172,7 @@ class Alert extends StatelessWidget {
     this.content,
     this.trailing,
     this.destructive = false,
+    this.theme,
   });
 
   /// Creates an [Alert] with destructive styling pre-configured.
@@ -195,6 +200,7 @@ class Alert extends StatelessWidget {
     this.title,
     this.content,
     this.trailing,
+    this.theme,
   }) : destructive = true;
 
   @override
@@ -214,7 +220,7 @@ class Alert extends StatelessWidget {
 
   Widget _build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<AlertTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<AlertTheme>(context);
     final scaling = theme.scaling;
     final densityContentPadding = theme.density.baseContentPadding * scaling;
     var scheme = theme.colorScheme;
@@ -231,7 +237,7 @@ class Alert extends StatelessWidget {
     );
 
     return OutlinedContainer(
-      backgroundColor: backgroundColor,
+      theme: OutlinedContainerTheme(backgroundColor: backgroundColor),
       child: Container(
         padding: padding,
         child: Basic(

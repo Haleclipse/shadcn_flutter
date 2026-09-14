@@ -68,7 +68,9 @@ class _SortableExample4State extends State<SortableExample4> {
                     });
                   },
                   child: OutlinedContainer(
-                    padding: const EdgeInsets.all(12),
+                    theme: OutlinedContainerTheme(
+                      padding: const EdgeInsets.all(12),
+                    ),
                     child: Center(child: Text(names[i].data)),
                   ),
                 );

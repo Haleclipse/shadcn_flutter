@@ -55,9 +55,7 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
           children: <Widget>[
             // The .p() extension adds default padding around the widget.
             const Text('You have pushed the button this many times:').p(),
-            Text(
-              '$_counter',
-            ).h1(),
+            Text('$_counter').h1(),
             PrimaryButton(
               onPressed: _incrementCounter,
               density: ButtonDensity.icon,

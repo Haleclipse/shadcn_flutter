@@ -29,8 +29,9 @@ class _ToggleState extends State<_Toggle> {
 }
 
 void main() {
-  testWidgets('Sortable ghost preserves child state while dragging',
-      (tester) async {
+  testWidgets('Sortable ghost preserves child state while dragging', (
+    tester,
+  ) async {
     bool dragStarted = false;
     await tester.pumpWidget(
       SimpleApp(
@@ -44,7 +45,10 @@ void main() {
                 onDragStart: () => dragStarted = true,
                 child: const _Toggle(),
               ),
-              const SizedBox(height: 200, child: ColoredBox(color: Colors.gray)),
+              const SizedBox(
+                height: 200,
+                child: ColoredBox(color: Colors.gray),
+              ),
             ],
           ),
         ),

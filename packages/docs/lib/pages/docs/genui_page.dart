@@ -39,36 +39,40 @@ class _GenUIPageState extends State<GenUIPage> {
         children: [
           const SelectableText('GenUI').h1(),
           const SelectableText(
-                  'Render AI-generated interfaces with shadcn_flutter widgets.')
-              .lead(),
+            'Render AI-generated interfaces with shadcn_flutter widgets.',
+          ).lead(),
           Alert.destructive(
             leading: const Icon(LucideIcons.badgeCheck),
             title: const SelectableText('Experimental'),
             content: const SelectableText(
-                'This package is in early development. The API may change, and some widgets may be missing or incomplete.'),
+              'This package is in early development. The API may change, and some widgets may be missing or incomplete.',
+            ),
           ).p(),
           const SelectableText('')
               .thenInlineCode('shadcn_flutter_genui')
               .thenText(' is a ')
               .thenInlineCode('genui')
               .thenText(
-                  ' Catalog that renders AI-generated interfaces with shadcn_flutter widgets '
-                  'instead of Material ones. Everything genui already gives you — ')
+                ' Catalog that renders AI-generated interfaces with shadcn_flutter widgets '
+                'instead of Material ones. Everything genui already gives you — ',
+              )
               .thenInlineCode('Conversation')
               .thenText(', ')
               .thenInlineCode('SurfaceController')
               .thenText(', ')
               .thenInlineCode('Surface')
               .thenText(
-                  ', the data model, event handling — works exactly the same; this package just '
-                  'supplies the catalog of widgets the AI is allowed to build with.')
+                ', the data model, event handling — works exactly the same; this package just '
+                'supplies the catalog of widgets the AI is allowed to build with.',
+              )
               .p(),
           const Alert(
             leading: Icon(LucideIcons.info),
             title: SelectableText('New to genui?'),
             content: SelectableText(
-                'Read the genui package README first. The concepts below (Conversation, '
-                'SurfaceController, Surface, DataModel) are genui\'s, not this package\'s.'),
+              'Read the genui package README first. The concepts below (Conversation, '
+              'SurfaceController, Surface, DataModel) are genui\'s, not this package\'s.',
+            ),
           ).p(),
           const SelectableText('Getting Started')
               .h2()
@@ -87,7 +91,8 @@ class _GenUIPageState extends State<GenUIPage> {
               .thenText(' as the catalog:')
               .p(),
           const CodeBlock(
-            code: "import 'package:genui/genui.dart';\n"
+            code:
+                "import 'package:genui/genui.dart';\n"
                 "import 'package:shadcn_flutter/shadcn_flutter.dart';\n"
                 "import 'package:shadcn_flutter_genui/shadcn_flutter_genui.dart';\n"
                 '\n'
@@ -135,14 +140,16 @@ class _GenUIPageState extends State<GenUIPage> {
           ).p(),
           const SelectableText('From here, everything is standard genui: ')
               .thenInlineCode(
-                  'conversation.sendRequest(ChatMessage.user(text))')
+                'conversation.sendRequest(ChatMessage.user(text))',
+              )
               .thenText(' to talk to the model, ')
               .thenInlineCode('conversation.events')
               .thenText(' to track surfaces being added or removed, and a ')
               .thenInlineCode('Surface')
               .thenText(
-                  ' widget per surface id to render them. The AI now builds with shadcn_flutter widgets, '
-                  'styled by whatever theme your ShadcnApp sets up.')
+                ' widget per surface id to render them. The AI now builds with shadcn_flutter widgets, '
+                'styled by whatever theme your ShadcnApp sets up.',
+              )
               .p(),
           const SelectableText('Trying It Without an LLM')
               .h2()
@@ -150,27 +157,27 @@ class _GenUIPageState extends State<GenUIPage> {
           const SelectableText('genui ships ')
               .thenInlineCode('DebugCatalogView')
               .thenText(
-                  ', which renders a catalog\'s built-in example data directly — no model, no network:')
+                ', which renders a catalog\'s built-in example data directly — no model, no network:',
+              )
               .p(),
           const CodeBlock(
-            code:
-                'runApp(ShadcnApp(home: DebugCatalogView(catalog: GenCatalog.asCatalog())));',
+            code: 'runApp(ShadcnApp(home: DebugCatalogView(catalog: GenCatalog.asCatalog())));',
             mode: 'dart',
           ).p(),
           const SelectableText(
-                  'Useful for sanity-checking that the catalog itself (and any widgets you\'ve added to it) '
-                  'renders correctly before wiring up a real conversation.')
-              .p(),
+            'Useful for sanity-checking that the catalog itself (and any widgets you\'ve added to it) '
+            'renders correctly before wiring up a real conversation.',
+          ).p(),
           const SelectableText('Widgets in the Catalog')
               .h2()
               .anchored(keyWidgets),
           const SelectableText(
-                  'The catalog ships these shadcn_flutter widgets:')
-              .p(),
+            'The catalog ships these shadcn_flutter widgets:',
+          ).p(),
           const SelectableText(
-                  'TextField, TextArea, CheckBox, Switch, Select, RadioGroup, Slider, DatePicker, Button, '
-                  'Card, Alert, Badge, Avatar, Progress, Accordion, Tabs, Form, FormFieldError.')
-              .p(),
+            'TextField, TextArea, CheckBox, Switch, Select, RadioGroup, Slider, DatePicker, Button, '
+            'Card, Alert, Badge, Avatar, Progress, Accordion, Tabs, Form, FormFieldError.',
+          ).p(),
           const SelectableText('')
               .thenInlineCode('GenCatalog.asCatalog()')
               .thenText(' merges these with genui\'s own basics (')
@@ -183,16 +190,17 @@ class _GenUIPageState extends State<GenUIPage> {
               .p(),
           const SelectableText('Forms and Values').h2().anchored(keyForms),
           const SelectableText(
-                  'Value-bearing widgets (TextField, Checkbox, Select, ...) participate in a real '
-                  'shadcn_flutter Form when one is present — either one the AI composes with the Form widget, '
-                  'or one your app wraps around a whole Surface.')
-              .p(),
+            'Value-bearing widgets (TextField, Checkbox, Select, ...) participate in a real '
+            'shadcn_flutter Form when one is present — either one the AI composes with the Form widget, '
+            'or one your app wraps around a whole Surface.',
+          ).p(),
           const SelectableText('')
               .thenInlineCode('Form')
               .thenText('\'s ')
               .thenInlineCode('onSubmit')
               .thenText(
-                  ' only fires once every field passes validation; a nested Button reaches it via a ')
+                ' only fires once every field passes validation; a nested Button reaches it via a ',
+              )
               .thenInlineCode('submitForm')
               .thenText(' action.')
               .p(),
@@ -200,11 +208,12 @@ class _GenUIPageState extends State<GenUIPage> {
               .h2()
               .anchored(keyCustomCapabilities),
           const SelectableText(
-                  'Beyond widgets, you can register your own non-UI operations the AI can call directly '
-                  '(or a widget can trigger from an action):')
-              .p(),
+            'Beyond widgets, you can register your own non-UI operations the AI can call directly '
+            '(or a widget can trigger from an action):',
+          ).p(),
           const CodeBlock(
-            code: 'class SetVolumeFunction extends GenSystemFunction {\n'
+            code:
+                'class SetVolumeFunction extends GenSystemFunction {\n'
                 '  late GenDataField<double> level;\n'
                 '\n'
                 '  @override\n'
@@ -230,7 +239,8 @@ class _GenUIPageState extends State<GenUIPage> {
           const SelectableText('')
               .thenInlineCode('GenFunctions')
               .thenText(
-                  ' also ships a small built-in library of arithmetic, string, and boolean helpers (')
+                ' also ships a small built-in library of arithmetic, string, and boolean helpers (',
+              )
               .thenInlineCode('add')
               .thenText(', ')
               .thenInlineCode('round')
@@ -241,14 +251,16 @@ class _GenUIPageState extends State<GenUIPage> {
               .thenText(', ')
               .thenInlineCode('xor')
               .thenText(
-                  ', ...), always available to the AI alongside anything you register.')
+                ', ...), always available to the AI alongside anything you register.',
+              )
               .p(),
           const SelectableText('Extending the Catalog')
               .h2()
               .anchored(keyExtending),
           const SelectableText(
-                  'To add a widget of your own to the catalog — styled with shadcn_flutter, following the same '
-                  'conventions as the ones this package ships — declare a ')
+                'To add a widget of your own to the catalog — styled with shadcn_flutter, following the same '
+                'conventions as the ones this package ships — declare a ',
+              )
               .thenInlineCode('GenSchema')
               .thenText('. It declares its AI-fillable fields once in ')
               .thenInlineCode('describeFields')
@@ -257,7 +269,8 @@ class _GenUIPageState extends State<GenUIPage> {
               .thenText('.')
               .p(),
           const CodeBlock(
-            code: 'class GenButtonSchema extends GenSchema {\n'
+            code:
+                'class GenButtonSchema extends GenSchema {\n'
                 '  late final GenField<Widget> child;\n'
                 '  late final GenField<GenActionDispatcher?> onPressed;\n'
                 '\n'
@@ -295,8 +308,9 @@ class _GenUIPageState extends State<GenUIPage> {
           const SelectableText('Every field gets an ')
               .thenInlineCode('example:')
               .thenText(
-                  ' — there\'s no hand-typed JSON exampleData anywhere in this DSL. Each widget\'s example '
-                  'is generated entirely from its fields\' own declarations.')
+                ' — there\'s no hand-typed JSON exampleData anywhere in this DSL. Each widget\'s example '
+                'is generated entirely from its fields\' own declarations.',
+              )
               .p(),
           const SelectableText('Field Types').h2().anchored(keyFieldTypes),
           const SelectableText('')
@@ -306,45 +320,50 @@ class _GenUIPageState extends State<GenUIPage> {
               .thenText(') covers:')
               .p(),
           const SelectableText(
-                  'string / optionalString — String; boolean / optionalBoolean — bool; '
-                  'integer / optionalInteger — int; decimal / optionalDecimal — double; '
-                  'enumerated<T> / optionalEnumerated<T> — a Dart enum.')
-              .li(),
+            'string / optionalString — String; boolean / optionalBoolean — bool; '
+            'integer / optionalInteger — int; decimal / optionalDecimal — double; '
+            'enumerated<T> / optionalEnumerated<T> — a Dart enum.',
+          ).li(),
           const SelectableText(
-                  'list / optionalList, set / optionalSet, map / optionalMap — collections of another field.')
-              .li(),
+            'list / optionalList, set / optionalSet, map / optionalMap — collections of another field.',
+          ).li(),
           const SelectableText(
-                  'widget / optionalWidget — a single child component, by id; widgetList — a list of child components, by id.')
-              .li(),
+            'widget / optionalWidget — a single child component, by id; widgetList — a list of child components, by id.',
+          ).li(),
           const SelectableText(
-                  'object<T extends GenObject> — a nested, reusable data shape.')
-              .li(),
+            'object<T extends GenObject> — a nested, reusable data shape.',
+          ).li(),
           const SelectableText(
-                  'action / optionalAction — fully AI-controlled interaction; valueAction / optionalValueAction — '
-                  'an action with exactly one typed parameter; validators<T> — AI-selectable validation rules.')
-              .li(),
+            'action / optionalAction — fully AI-controlled interaction; valueAction / optionalValueAction — '
+            'an action with exactly one typed parameter; validators<T> — AI-selectable validation rules.',
+          ).li(),
           const SelectableText('')
               .thenInlineCode('GenObject')
               .thenText(
-                  ' lets you declare a reusable nested shape (e.g. {title, body}) whose own fields are described via ')
+                ' lets you declare a reusable nested shape (e.g. {title, body}) whose own fields are described via ',
+              )
               .thenInlineCode('GenDataFieldDescriptor')
               .thenText(
-                  ' — the same field-kind vocabulary, minus action/widget, since a GenObject has no BuildContext of its own.')
+                ' — the same field-kind vocabulary, minus action/widget, since a GenObject has no BuildContext of its own.',
+              )
               .p(),
           const SelectableText('Actions').h2().anchored(keyActions),
           const SelectableText(
-                  'There\'s no schema-author-hardcoded "default" behavior for interactions. A field declared via ')
+                'There\'s no schema-author-hardcoded "default" behavior for interactions. A field declared via ',
+              )
               .thenInlineCode('action')
               .thenText('/')
               .thenInlineCode('optionalAction')
               .thenText(
-                  ' resolves, at runtime, to whatever the AI\'s JSON configured: doing nothing, notifying the AI '
-                  '(event), calling a registered GenSystemFunction (functionCall), writing to the data model (setValue), '
-                  'storing a temporary variable (setVar), composing several steps (sequence), branching (conditional), '
-                  'catching errors (try), firing-and-forgetting (async), or submitting the ambient Form (submitForm).')
+                ' resolves, at runtime, to whatever the AI\'s JSON configured: doing nothing, notifying the AI '
+                '(event), calling a registered GenSystemFunction (functionCall), writing to the data model (setValue), '
+                'storing a temporary variable (setVar), composing several steps (sequence), branching (conditional), '
+                'catching errors (try), firing-and-forgetting (async), or submitting the ambient Form (submitForm).',
+              )
               .p(),
           const SelectableText(
-                  'For the common case — a callback that hands the AI exactly one new value (onChanged, onSubmitted, ...) — use ')
+                'For the common case — a callback that hands the AI exactly one new value (onChanged, onSubmitted, ...) — use ',
+              )
               .thenInlineCode('valueAction')
               .thenText('/')
               .thenInlineCode('optionalValueAction')
@@ -376,26 +395,32 @@ class _GenUIPageState extends State<GenUIPage> {
               .thenText(', ...) and is itself extensible. Use ')
               .thenInlineCode('.map<N>(...)')
               .thenText(
-                  ' when a widget\'s native callback value (e.g. SliderValue, CheckboxState) needs projecting to '
-                  'the parameter\'s own type first.')
+                ' when a widget\'s native callback value (e.g. SliderValue, CheckboxState) needs projecting to '
+                'the parameter\'s own type first.',
+              )
               .p(),
           const SelectableText('Validation').h2().anchored(keyValidation),
           const SelectableText(
-                  'A field never renders its own error text — that\'s not an individual widget\'s concern. Instead, ')
+                'A field never renders its own error text — that\'s not an individual widget\'s concern. Instead, ',
+              )
               .thenInlineCode(
-                  'descriptor.validators<T>(fieldName, available: [...])')
+                'descriptor.validators<T>(fieldName, available: [...])',
+              )
               .thenText(
-                  ' lets the AI attach a JSON-selectable list of GenValidator<T> kinds (GenNotEmptyValidator, '
-                  'GenLengthValidator, GenRegexValidator, GenEmailValidator, GenUrlValidator, GenRangeValidator<T>, '
-                  'GenNonNullValidator<T>), each backed by a real shadcn_flutter Validator and composed with AND semantics.')
+                ' lets the AI attach a JSON-selectable list of GenValidator<T> kinds (GenNotEmptyValidator, '
+                'GenLengthValidator, GenRegexValidator, GenEmailValidator, GenUrlValidator, GenRangeValidator<T>, '
+                'GenNonNullValidator<T>), each backed by a real shadcn_flutter Validator and composed with AND semantics.',
+              )
               .p(),
           const SelectableText('')
               .thenInlineCode('wrapFormEntry')
               .thenText(
-                  ' registers the field with whatever ambient Form exists. ')
+                ' registers the field with whatever ambient Form exists. ',
+              )
               .thenInlineCode('FormFieldError')
               .thenText(
-                  ' is a separate, AI-placed catalog item that shows another field\'s live error by id.')
+                ' is a separate, AI-placed catalog item that shows another field\'s live error by id.',
+              )
               .p(),
         ],
       ),

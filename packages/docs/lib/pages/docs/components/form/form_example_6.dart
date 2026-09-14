@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates the difference between showErrors and ValidationMode.
 ///
@@ -50,7 +51,8 @@ class FormExample6 extends StatelessWidget {
                   // Validator composition:
                   //  1. EmailValidator always runs (on initial, change, submit)
                   //  2. "Already taken" check only runs on submit
-                  validator: const EmailValidator() &
+                  validator:
+                      const EmailValidator() &
                       ValidationMode(
                         ConditionalValidator((value) async {
                           await Future.delayed(const Duration(seconds: 1));

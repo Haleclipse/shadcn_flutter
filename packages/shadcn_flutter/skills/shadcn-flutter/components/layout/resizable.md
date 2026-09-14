@@ -93,43 +93,23 @@ class _ResizableExample1State extends State<ResizableExample1> {
           ResizablePane(
             // Initial width in logical pixels for this pane.
             initialSize: 80,
-            child: NumberedContainer(
-              index: 0,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 0, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 1,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 1, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 120,
-            child: NumberedContainer(
-              index: 2,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 2, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 3,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 3, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 4,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 4, height: 200, fill: false),
           ),
         ],
       ),
@@ -162,27 +142,15 @@ class _ResizableExample2State extends State<ResizableExample2> {
           ResizablePane(
             // Initial height in logical pixels for this row.
             initialSize: 80,
-            child: NumberedContainer(
-              index: 0,
-              width: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 0, width: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 120,
-            child: NumberedContainer(
-              index: 1,
-              width: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 1, width: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 2,
-              width: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 2, width: 200, fill: false),
           ),
         ],
       ),
@@ -217,43 +185,23 @@ class _ResizableExample3State extends State<ResizableExample3> {
         children: const [
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 0,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 0, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 1,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 1, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 120,
-            child: NumberedContainer(
-              index: 2,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 2, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 3,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 3, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 4,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 4, height: 200, fill: false),
           ),
         ],
       ),
@@ -267,6 +215,7 @@ class _ResizableExample3State extends State<ResizableExample3> {
 ```dart
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ResizableExample4 extends StatefulWidget {
   const ResizableExample4({super.key});
@@ -416,7 +365,7 @@ class _ResizableExample4State extends State<ResizableExample4> {
               child: const Text('Expand Panel 4'),
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -436,10 +385,12 @@ class ResizableExample5 extends StatefulWidget {
 }
 
 class _ResizableExample5State extends State<ResizableExample5> {
-  final ResizablePaneController controller =
-      AbsoluteResizablePaneController(120);
-  final ResizablePaneController controller2 =
-      AbsoluteResizablePaneController(120);
+  final ResizablePaneController controller = AbsoluteResizablePaneController(
+    120,
+  );
+  final ResizablePaneController controller2 = AbsoluteResizablePaneController(
+    120,
+  );
   @override
   Widget build(BuildContext context) {
     return OutlinedContainer(
@@ -538,11 +489,7 @@ class _ResizableExample6State extends State<ResizableExample6> {
           ResizablePane(
             initialSize: 100,
             minSize: 40,
-            child: NumberedContainer(
-              index: 0,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 0, height: 200, fill: false),
           ),
           ResizablePane(
             minSize: 100,
@@ -553,10 +500,7 @@ class _ResizableExample6State extends State<ResizableExample6> {
                 ResizablePane(
                   initialSize: 80,
                   minSize: 40,
-                  child: NumberedContainer(
-                    index: 1,
-                    fill: false,
-                  ),
+                  child: NumberedContainer(index: 1, fill: false),
                 ),
                 ResizablePane(
                   minSize: 40,
@@ -566,22 +510,13 @@ class _ResizableExample6State extends State<ResizableExample6> {
                     children: [
                       // Flex panes share remaining space proportionally.
                       ResizablePane.flex(
-                        child: NumberedContainer(
-                          index: 2,
-                          fill: false,
-                        ),
+                        child: NumberedContainer(index: 2, fill: false),
                       ),
                       ResizablePane.flex(
-                        child: NumberedContainer(
-                          index: 3,
-                          fill: false,
-                        ),
+                        child: NumberedContainer(index: 3, fill: false),
                       ),
                       ResizablePane.flex(
-                        child: NumberedContainer(
-                          index: 4,
-                          fill: false,
-                        ),
+                        child: NumberedContainer(index: 4, fill: false),
                       ),
                     ],
                   ),
@@ -592,11 +527,7 @@ class _ResizableExample6State extends State<ResizableExample6> {
           ResizablePane(
             initialSize: 100,
             minSize: 40,
-            child: NumberedContainer(
-              index: 5,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 5, height: 200, fill: false),
           ),
         ],
       ),
@@ -710,6 +641,7 @@ class _ResizableExample7State extends State<ResizableExample7> {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import 'resizable_example_3.dart';
 
 class ResizableTile extends StatelessWidget implements IComponentPage {

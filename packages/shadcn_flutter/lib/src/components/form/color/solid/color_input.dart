@@ -99,17 +99,20 @@ class ColorInputTheme extends ComponentThemeData {
   }) {
     return ColorInputTheme(
       showAlpha: showAlpha == null ? this.showAlpha : showAlpha(),
-      popoverAlignment:
-          popoverAlignment == null ? this.popoverAlignment : popoverAlignment(),
+      popoverAlignment: popoverAlignment == null
+          ? this.popoverAlignment
+          : popoverAlignment(),
       popoverAnchorAlignment: popoverAnchorAlignment == null
           ? this.popoverAnchorAlignment
           : popoverAnchorAlignment(),
-      popoverPadding:
-          popoverPadding == null ? this.popoverPadding : popoverPadding(),
+      popoverPadding: popoverPadding == null
+          ? this.popoverPadding
+          : popoverPadding(),
       mode: mode == null ? this.mode : mode(),
       pickerMode: pickerMode == null ? this.pickerMode : pickerMode(),
-      enableEyeDropper:
-          enableEyeDropper == null ? this.enableEyeDropper : enableEyeDropper(),
+      enableEyeDropper: enableEyeDropper == null
+          ? this.enableEyeDropper
+          : enableEyeDropper(),
       orientation: orientation == null ? this.orientation : orientation(),
       showLabel: showLabel == null ? this.showLabel : showLabel(),
       showHistory: showHistory == null ? this.showHistory : showHistory(),
@@ -134,16 +137,17 @@ class ColorInputTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-      showAlpha,
-      popoverAlignment,
-      popoverAnchorAlignment,
-      popoverPadding,
-      mode,
-      pickerMode,
-      enableEyeDropper,
-      orientation,
-      showHistory,
-      showLabel);
+    showAlpha,
+    popoverAlignment,
+    popoverAnchorAlignment,
+    popoverPadding,
+    mode,
+    pickerMode,
+    enableEyeDropper,
+    orientation,
+    showHistory,
+    showLabel,
+  );
 }
 
 /// A color input widget that allows users to select and edit colors.
@@ -170,7 +174,7 @@ class ColorInputTheme extends ComponentThemeData {
 ///   enableEyeDropper: true,
 /// )
 /// ```
-class ColorInput extends StatefulWidget {
+class ColorInput extends StatefulWidget implements Styleable<ColorInputTheme> {
   /// The current color value.
   final ColorDerivative value;
 
@@ -181,21 +185,28 @@ class ColorInput extends StatefulWidget {
   final ValueChanged<ColorDerivative>? onChanged;
 
   /// Whether to show alpha (opacity) controls.
+  @Deprecated('Use theme: ColorInputTheme(showAlpha: ...) instead.')
   final bool? showAlpha;
 
   /// The initial color picker mode (HSV, HSL, etc.).
   final ColorPickerMode? initialMode;
 
   /// Whether to enable the eye dropper (screen color sampling) feature.
+  @Deprecated('Use theme: ColorInputTheme(enableEyeDropper: ...) instead.')
   final bool? enableEyeDropper;
 
   /// The alignment of the popover relative to the anchor.
+  @Deprecated('Use theme: ColorInputTheme(popoverAlignment: ...) instead.')
   final AlignmentGeometry? popoverAlignment;
 
   /// The alignment point on the anchor widget for popover positioning.
+  @Deprecated(
+    'Use theme: ColorInputTheme(popoverAnchorAlignment: ...) instead.',
+  )
   final AlignmentGeometry? popoverAnchorAlignment;
 
   /// Internal padding for the popover content.
+  @Deprecated('Use theme: ColorInputTheme(popoverPadding: ...) instead.')
   final EdgeInsetsGeometry? popoverPadding;
 
   /// Widget displayed when no color is selected.
@@ -208,16 +219,23 @@ class ColorInput extends StatefulWidget {
   final Widget? dialogTitle;
 
   /// Whether to show color value labels.
+  @Deprecated('Use theme: ColorInputTheme(showLabel: ...) instead.')
   final bool? showLabel;
 
   /// Whether the color input is enabled.
   final bool? enabled;
 
   /// The layout orientation of the color input.
+  @Deprecated('Use theme: ColorInputTheme(orientation: ...) instead.')
   final Axis? orientation;
 
   /// Whether to show the color history button.
+  @Deprecated('Use theme: ColorInputTheme(showHistory: ...) instead.')
   final bool showHistory;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ColorInputTheme? theme;
 
   /// Creates a [ColorInput] widget.
   const ColorInput({
@@ -238,6 +256,7 @@ class ColorInput extends StatefulWidget {
     this.orientation,
     this.enabled,
     this.showHistory = true,
+    this.theme,
   });
 
   @override
@@ -269,47 +288,58 @@ class _ColorInputState extends State<ColorInput>
     final locale = ShadcnLocalizations.of(context);
     final theme = Theme.of(context);
     final densityGap = theme.density.baseGap * theme.scaling;
-    final componentTheme = ComponentTheme.maybeOf<ColorInputTheme>(context);
+    final componentTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ColorInputTheme>(context);
     final showAlpha = styleValue(
-        defaultValue: true,
-        themeValue: componentTheme?.showAlpha,
-        widgetValue: widget.showAlpha);
+      defaultValue: true,
+      themeValue: componentTheme?.showAlpha,
+      widgetValue: widget.showAlpha,
+    );
     final showLabel = styleValue(
-        defaultValue: false,
-        themeValue: componentTheme?.showLabel,
-        widgetValue: widget.showLabel);
+      defaultValue: false,
+      themeValue: componentTheme?.showLabel,
+      widgetValue: widget.showLabel,
+    );
     final popoverAlignment = styleValue(
-        themeValue: componentTheme?.popoverAlignment,
-        widgetValue: widget.popoverAlignment,
-        defaultValue: Alignment.topCenter);
+      themeValue: componentTheme?.popoverAlignment,
+      widgetValue: widget.popoverAlignment,
+      defaultValue: Alignment.topCenter,
+    );
     final popoverAnchorAlignment = styleValue(
-        themeValue: componentTheme?.popoverAnchorAlignment,
-        widgetValue: widget.popoverAnchorAlignment,
-        defaultValue: Alignment.bottomCenter);
+      themeValue: componentTheme?.popoverAnchorAlignment,
+      widgetValue: widget.popoverAnchorAlignment,
+      defaultValue: Alignment.bottomCenter,
+    );
     final popoverPadding = styleValue(
-        themeValue: componentTheme?.popoverPadding,
-        widgetValue: widget.popoverPadding,
-        defaultValue: null);
+      themeValue: componentTheme?.popoverPadding,
+      widgetValue: widget.popoverPadding,
+      defaultValue: null,
+    );
     final promptMode = styleValue(
-        themeValue: componentTheme?.mode,
-        widgetValue: widget.promptMode,
-        defaultValue: PromptMode.popover);
+      themeValue: componentTheme?.mode,
+      widgetValue: widget.promptMode,
+      defaultValue: PromptMode.popover,
+    );
     final enableEyeDropper = styleValue(
-        defaultValue: true,
-        themeValue: componentTheme?.enableEyeDropper,
-        widgetValue: widget.enableEyeDropper);
+      defaultValue: true,
+      themeValue: componentTheme?.enableEyeDropper,
+      widgetValue: widget.enableEyeDropper,
+    );
     final initialMode = styleValue(
-        themeValue: componentTheme?.pickerMode,
-        widgetValue: widget.initialMode,
-        defaultValue: ColorPickerMode.rgb);
+      themeValue: componentTheme?.pickerMode,
+      widgetValue: widget.initialMode,
+      defaultValue: ColorPickerMode.rgb,
+    );
     final orientation = styleValue(
-        defaultValue: null,
-        themeValue: componentTheme?.orientation,
-        widgetValue: widget.orientation);
+      defaultValue: null,
+      themeValue: componentTheme?.orientation,
+      widgetValue: widget.orientation,
+    );
     final showHistory = styleValue(
-        defaultValue: true,
-        themeValue: componentTheme?.showHistory,
-        widgetValue: widget.showHistory);
+      defaultValue: true,
+      themeValue: componentTheme?.showHistory,
+      widgetValue: widget.showHistory,
+    );
     return ObjectFormField(
       value: widget.value,
       placeholder: widget.placeholder ?? Text(locale.placeholderColorPicker),
@@ -328,8 +358,9 @@ class _ColorInputState extends State<ColorInput>
       popoverAnchorAlignment: popoverAnchorAlignment,
       popoverPadding: popoverPadding,
       mode: promptMode,
-      density:
-          promptMode == PromptMode.popover ? ButtonDensity.iconDense : null,
+      density: promptMode == PromptMode.popover
+          ? ButtonDensity.iconDense
+          : null,
       enabled: widget.enabled,
       builder: (context, value) {
         if (!showLabel) {
@@ -354,7 +385,7 @@ class _ColorInputState extends State<ColorInput>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Flexible(child: Text(colorToHex(value.toColor(), showAlpha))),
-              Gap(densityGap),
+              SizedBox(width: densityGap),
               AspectRatio(
                 aspectRatio: 1,
                 child: Container(
@@ -382,68 +413,72 @@ class _ColorInputState extends State<ColorInput>
                   ColorHistoryStorage.of(context).addHistory(result);
                 }
                 handler.prompt(
-                    result != null ? ColorDerivative.fromColor(result) : null);
+                  result != null ? ColorDerivative.fromColor(result) : null,
+                );
               },
             ),
           if (showHistory)
             ListenableBuilder(
-                listenable: _showHistoryNotifier,
-                builder: (context, _) {
-                  return IconButton(
-                    variance: _showHistoryNotifier.value
-                        ? ButtonVariance.primary
-                        : ButtonVariance.outline,
-                    icon: Icon(LucideIcons.history, size: 16 * theme.scaling),
-                    onPressed: () {
-                      _showHistoryNotifier.value = !_showHistoryNotifier.value;
-                    },
-                  );
-                }),
+              listenable: _showHistoryNotifier,
+              builder: (context, _) {
+                return IconButton(
+                  variance: _showHistoryNotifier.value
+                      ? ButtonVariance.primary
+                      : ButtonVariance.outline,
+                  icon: Icon(LucideIcons.history, size: 16 * theme.scaling),
+                  onPressed: () {
+                    _showHistoryNotifier.value = !_showHistoryNotifier.value;
+                  },
+                );
+              },
+            ),
         ];
       },
       editorBuilder: (context, handler) {
         return ListenableBuilder(
-            listenable: _showHistoryNotifier,
-            builder: (context, _) {
-              return AnimatedSize(
-                duration: kDefaultDuration,
-                curve: Curves.easeInOut,
-                child: ColorPicker(
-                  // force rebuild when showHistory changes
-                  key: ValueKey(_showHistoryNotifier.value),
-                  value: handler.value ??
-                      ColorDerivative.fromColor(Color(0x00000000)),
-                  initialShowHistory: _showHistoryNotifier.value,
-                  enableEyeDropper:
-                      promptMode == PromptMode.popover && enableEyeDropper,
-                  showHistoryButton:
-                      showHistory && promptMode == PromptMode.popover,
-                  onChanging: (color) {
-                    widget.onChanging?.call(color);
-                    setState(() {
-                      _changingValue = color;
-                    });
-                  },
-                  onChanged: (color) {
-                    handler.value = color;
-                  },
-                  initialMode: initialMode,
-                  onEyeDropperRequested: () async {
-                    await handler.close();
-                    if (!context.mounted) return;
-                    final result = await pickColorFromScreen(context);
-                    if (result != null && context.mounted) {
-                      ColorHistoryStorage.of(context).addHistory(result);
-                    }
-                    handler.prompt(result != null
-                        ? ColorDerivative.fromColor(result)
-                        : null);
-                  },
-                  orientation: orientation,
-                  showAlpha: showAlpha,
-                ),
-              );
-            });
+          listenable: _showHistoryNotifier,
+          builder: (context, _) {
+            return AnimatedSize(
+              duration: kDefaultDuration,
+              curve: Curves.easeInOut,
+              child: ColorPicker(
+                // force rebuild when showHistory changes
+                key: ValueKey(_showHistoryNotifier.value),
+                value:
+                    handler.value ??
+                    ColorDerivative.fromColor(Color(0x00000000)),
+                initialShowHistory: _showHistoryNotifier.value,
+                enableEyeDropper:
+                    promptMode == PromptMode.popover && enableEyeDropper,
+                showHistoryButton:
+                    showHistory && promptMode == PromptMode.popover,
+                onChanging: (color) {
+                  widget.onChanging?.call(color);
+                  setState(() {
+                    _changingValue = color;
+                  });
+                },
+                onChanged: (color) {
+                  handler.value = color;
+                },
+                initialMode: initialMode,
+                onEyeDropperRequested: () async {
+                  await handler.close();
+                  if (!context.mounted) return;
+                  final result = await pickColorFromScreen(context);
+                  if (result != null && context.mounted) {
+                    ColorHistoryStorage.of(context).addHistory(result);
+                  }
+                  handler.prompt(
+                    result != null ? ColorDerivative.fromColor(result) : null,
+                  );
+                },
+                showAlpha: showAlpha,
+                theme: ColorPickerTheme(orientation: orientation),
+              ),
+            );
+          },
+        );
       },
     );
   }
@@ -614,19 +649,21 @@ class ControlledColorInput extends StatelessWidget
         return ColorInput(
           value: data.value,
           onChanged: data.onChanged,
-          enableEyeDropper: enableEyeDropper,
           initialMode: initialMode,
           onChanging: onChanging,
-          showAlpha: showAlpha,
-          popoverAlignment: popoverAlignment,
-          popoverAnchorAlignment: popoverAnchorAlignment,
-          popoverPadding: popoverPadding,
           placeholder: placeholder,
           promptMode: promptMode,
           dialogTitle: dialogTitle,
-          showLabel: showLabel,
-          orientation: orientation,
           enabled: data.enabled,
+          theme: ColorInputTheme(
+            enableEyeDropper: enableEyeDropper,
+            showAlpha: showAlpha,
+            popoverAlignment: popoverAlignment,
+            popoverAnchorAlignment: popoverAnchorAlignment,
+            popoverPadding: popoverPadding,
+            showLabel: showLabel,
+            orientation: orientation,
+          ),
         );
       },
     );

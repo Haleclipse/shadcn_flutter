@@ -842,8 +842,8 @@ class _ClickableState extends State<Clickable> {
           widget.focusOutline &&
           widgetStates.contains(WidgetState.focused) &&
           !widget.disableFocusOutline,
-      borderRadius: borderRadius,
       shape: shape,
+      theme: FocusOutlineTheme(borderRadius: borderRadius),
       child: GestureDetector(
         behavior: widget.behavior,
         onTap: widget.onPressed != null ? _onPressed : null,

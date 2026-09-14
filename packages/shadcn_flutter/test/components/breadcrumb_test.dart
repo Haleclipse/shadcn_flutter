@@ -80,7 +80,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Breadcrumb(
-            padding: EdgeInsets.all(16),
+            theme: BreadcrumbTheme(padding: EdgeInsets.all(16)),
             children: [Text('Home')],
           ),
         ),

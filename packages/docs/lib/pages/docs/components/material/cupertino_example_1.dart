@@ -1,7 +1,5 @@
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcnui;
-import 'package:shadcn_flutter_cupertino/shadcn_flutter_cupertino.dart'
-    show CupertinoLayer;
 
 class CupertinoExample1 extends StatefulWidget {
   const CupertinoExample1({super.key});
@@ -15,42 +13,42 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
 
   @override
   Widget build(BuildContext context) {
-    // CupertinoLayer supplies the CupertinoTheme ancestor that Cupertino
-    // widgets read from. At the root of a real app you would reach for
-    // CupertinoShadcnApp instead, which does this once for everything.
-    return CupertinoLayer(
-      child: CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
-          middle: Text('My Cupertino App'),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-                style: CupertinoTheme.of(context).textTheme.textStyle,
-              ),
-              Text(
-                '$_counter',
-                style: CupertinoTheme.of(context).textTheme.navTitleTextStyle,
-              ),
-              const shadcnui.Gap(16),
-              CupertinoButton.filled(
-                onPressed: () => setState(() => _counter++),
-                child: const Icon(CupertinoIcons.add),
-              ),
-              const shadcnui.Gap(64),
-              // shadcn_flutter widgets can also be used in a Cupertino app.
-              // This card mirrors the Material example but uses Cupertino dialogs.
-              shadcnui.ShadcnUI(
-                  child: shadcnui.Card(
+    // The CupertinoTheme and the Cupertino localizations come from the app
+    // root — this docs site installs them with CupertinoLayer, and your own app
+    // would normally use CupertinoShadcnApp, which does the same in one widget.
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('My Cupertino App'),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+              style: CupertinoTheme.of(context).textTheme.textStyle,
+            ),
+            Text(
+              '$_counter',
+              style: CupertinoTheme.of(context).textTheme.navTitleTextStyle,
+            ),
+            const SizedBox(height: 16),
+            CupertinoButton.filled(
+              onPressed: () => setState(() => _counter++),
+              child: const Icon(CupertinoIcons.add),
+            ),
+            const SizedBox(height: 64),
+            // shadcn_flutter widgets can also be used in a Cupertino app.
+            // This card mirrors the Material example but uses Cupertino dialogs.
+            shadcnui.ShadcnUI(
+              child: shadcnui.Card(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                        'You can also use shadcn_flutter widgets inside Cupertino widgets'),
-                    const shadcnui.Gap(16),
+                      'You can also use shadcn_flutter widgets inside Cupertino widgets',
+                    ),
+                    const SizedBox(height: 16),
                     shadcnui.PrimaryButton(
                       onPressed: () {
                         // Show a native Cupertino dialog
@@ -74,7 +72,7 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                       },
                       child: const Text('Open Cupertino Dialog'),
                     ),
-                    const shadcnui.Gap(8),
+                    const SizedBox(height: 8),
                     shadcnui.SecondaryButton(
                       onPressed: () {
                         // Show a shadcn_flutter dialog as a comparison
@@ -84,8 +82,9 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                           builder: (context) {
                             return shadcnui.AlertDialog(
                               title: const Text('Hello'),
-                              content:
-                                  const Text('This is shadcn_flutter dialog'),
+                              content: const Text(
+                                'This is shadcn_flutter dialog',
+                              ),
                               actions: [
                                 shadcnui.PrimaryButton(
                                   onPressed: () {
@@ -102,9 +101,9 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                     ),
                   ],
                 ),
-              )),
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );

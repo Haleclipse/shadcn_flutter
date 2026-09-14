@@ -10,14 +10,12 @@ class ContextMenuExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'context_menu',
-      description:
-          'A context menu is a menu in a graphical user interface that appears upon user interaction, such as a right-click mouse operation.',
+      description: 'A context menu is a menu in a graphical user interface that appears upon user interaction, such as a right-click mouse operation.',
       displayName: 'Context Menu',
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/context_menu/context_menu_example_1.dart',
+          path: 'lib/pages/docs/components/context_menu/context_menu_example_1.dart',
           child: ContextMenuExample1(),
         ),
       ],

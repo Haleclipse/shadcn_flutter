@@ -957,7 +957,8 @@ typedef ChipSubmissionCallback<T> = T? Function(String chipText);
 ///
 /// Allows users to create chip tokens within a text field, useful for
 /// tags, email recipients, or any multi-item input scenario.
-class ChipInput<T> extends TextInputStatefulWidget {
+class ChipInput<T> extends TextInputStatefulWidget
+    implements Styleable<ChipInputTheme> {
   /// Checks if a code unit represents a chip character.
   static bool isChipUnicode(int codeUnit) {
     return codeUnit >= ChipEditingController._chipStart &&
@@ -981,6 +982,7 @@ class ChipInput<T> extends TextInputStatefulWidget {
   final ValueChanged<List<T>>? onChipsChanged;
 
   /// Whether to display items as visual chips (defaults to theme setting).
+  @Deprecated('Use theme: ChipInputTheme(useChips: ...) instead.')
   final bool? useChips;
 
   /// Initial chips to display in the input.
@@ -994,6 +996,10 @@ class ChipInput<T> extends TextInputStatefulWidget {
   /// Defaults to a [DefaultChipClipboardHandler] that copies each chip using
   /// its [Object.toString] and pastes clipboard text as plain text.
   final ClipboardHandler<T>? clipboardHandler;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ChipInputTheme? theme;
 
   /// Creates a chip input widget.
   const ChipInput({
@@ -1076,6 +1082,7 @@ class ChipInput<T> extends TextInputStatefulWidget {
     this.useChips,
     this.initialChips,
     this.clipboardHandler,
+    this.theme,
   });
 
   @override
@@ -1100,7 +1107,8 @@ class ChipInputState<T> extends State<ChipInput<T>>
   }
 
   bool get _useChips {
-    final compTheme = ComponentTheme.maybeOf<ChipInputTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ChipInputTheme>(context);
     return styleValue<bool>(
       widgetValue: widget.useChips,
       themeValue: compTheme?.useChips,

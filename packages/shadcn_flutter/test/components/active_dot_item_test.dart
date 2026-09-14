@@ -23,7 +23,9 @@ void main() {
     });
 
     testWidgets('renders with custom size', (tester) async {
-      await tester.pumpWidget(SimpleApp(child: ActiveDotItem(size: 20)));
+      await tester.pumpWidget(
+        SimpleApp(child: ActiveDotItem(theme: DotIndicatorTheme(size: 20))),
+      );
 
       final container = tester.widget<Container>(
         find.descendant(
@@ -51,7 +53,11 @@ void main() {
     });
 
     testWidgets('renders with custom border radius', (tester) async {
-      await tester.pumpWidget(SimpleApp(child: ActiveDotItem(borderRadius: 8)));
+      await tester.pumpWidget(
+        SimpleApp(
+          child: ActiveDotItem(theme: DotIndicatorTheme(borderRadius: 8)),
+        ),
+      );
 
       final container = tester.widget<Container>(
         find.descendant(
@@ -138,7 +144,10 @@ void main() {
         SimpleApp(
           child: ComponentTheme<DotIndicatorTheme>(
             data: DotIndicatorTheme(size: 16, activeColor: Colors.green),
-            child: ActiveDotItem(size: 24, color: Colors.red),
+            child: ActiveDotItem(
+              color: Colors.red,
+              theme: DotIndicatorTheme(size: 24),
+            ),
           ),
         ),
       );

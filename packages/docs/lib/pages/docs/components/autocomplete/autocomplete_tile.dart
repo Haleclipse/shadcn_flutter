@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class AutocompleteTile extends StatelessWidget implements IComponentPage {
   const AutocompleteTile({super.key});
@@ -18,9 +19,7 @@ class AutocompleteTile extends StatelessWidget implements IComponentPage {
           children: [
             const TextField(
               placeholder: Text('Search fruits...'),
-              features: [
-                InputFeature.trailing(Icon(LucideIcons.search)),
-              ],
+              features: [InputFeature.trailing(Icon(LucideIcons.search))],
             ),
             const Gap(8),
             OutlinedContainer(

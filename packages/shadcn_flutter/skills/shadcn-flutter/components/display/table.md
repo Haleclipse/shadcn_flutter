@@ -9,6 +9,7 @@ A flexible table widget with support for spanning, scrolling, and interactive fe
 import 'package:docs/pages/docs/components/table/table_example_1.dart';
 import 'package:docs/pages/docs/components/table/table_example_2.dart';
 import 'package:docs/pages/docs/components/table/table_example_3.dart';
+import 'package:docs/pages/docs/components/table/table_example_4.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import '../../widget_usage_example.dart';
@@ -38,6 +39,11 @@ class TableExample extends StatelessWidget {
           title: 'Scrollable Example',
           path: 'lib/pages/docs/components/table/table_example_3.dart',
           child: TableExample3(),
+        ),
+        WidgetUsageExample(
+          title: 'Right-to-left Example',
+          path: 'lib/pages/docs/components/table/table_example_4.dart',
+          child: TableExample4(),
         ),
       ],
     );
@@ -384,186 +390,361 @@ class _TableExample3State extends State<TableExample3> {
         height: 400,
         child: OutlinedContainer(
           child: ScrollableClient(
-              // Allow simultaneous horizontal and vertical drags for panning.
-              diagonalDragBehavior: DiagonalDragBehavior.free,
-              builder: (context, offset, viewportSize, child) {
-                return Table(
-                  // Hook the table's scroll offsets to the ScrollableClient.
-                  horizontalOffset: offset.dx,
-                  verticalOffset: offset.dy,
-                  // The viewport tells the table how much content area is visible.
-                  viewportSize: viewportSize,
-                  // Fixed sizes for consistent cell dimensions.
-                  defaultColumnWidth: const FixedTableSize(150),
-                  defaultRowHeight: const FixedTableSize(40),
-                  // Freeze the first and fourth rows, and the first and third columns.
-                  // These rows/columns stay pinned while the rest scrolls.
-                  frozenCells: const FrozenTableData(
-                    frozenRows: [
-                      TableRef(0),
-                      TableRef(3),
-                    ],
-                    frozenColumns: [
-                      TableRef(0),
-                      TableRef(2),
+            // Allow simultaneous horizontal and vertical drags for panning.
+            diagonalDragBehavior: DiagonalDragBehavior.free,
+            builder: (context, offset, viewportSize, child) {
+              return Table(
+                // Hook the table's scroll offsets to the ScrollableClient.
+                horizontalOffset: offset.dx,
+                verticalOffset: offset.dy,
+                // The viewport tells the table how much content area is visible.
+                viewportSize: viewportSize,
+                // Fixed sizes for consistent cell dimensions.
+                defaultColumnWidth: const FixedTableSize(150),
+                defaultRowHeight: const FixedTableSize(40),
+                // Freeze the first and fourth rows, and the first and third columns.
+                // These rows/columns stay pinned while the rest scrolls.
+                frozenCells: const FrozenTableData(
+                  frozenRows: [TableRef(0), TableRef(3)],
+                  frozenColumns: [TableRef(0), TableRef(2)],
+                ),
+                rows: [
+                  TableHeader(
+                    cells: [
+                      buildCell('Invoice'),
+                      buildCell('Status'),
+                      buildCell('Method'),
+                      buildCell('Amount', true),
+                      buildCell('Verification'),
+                      buildCell('Last Updated'),
                     ],
                   ),
-                  rows: [
-                    TableHeader(
-                      cells: [
-                        buildCell('Invoice'),
-                        buildCell('Status'),
-                        buildCell('Method'),
-                        buildCell('Amount', true),
-                        buildCell('Verification'),
-                        buildCell('Last Updated'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV001'),
-                        buildCell('Paid'),
-                        buildCell('Credit Card'),
-                        buildCell('\$250.00', true),
-                        buildCell('Verified'),
-                        buildCell('2 hours ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV002'),
-                        buildCell('Pending'),
-                        buildCell('PayPal'),
-                        buildCell('\$150.00', true),
-                        buildCell('Pending'),
-                        buildCell('1 day ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV003'),
-                        buildCell('Unpaid'),
-                        buildCell('Bank Transfer'),
-                        buildCell('\$350.00', true),
-                        buildCell('Unverified'),
-                        buildCell('1 week ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV004'),
-                        buildCell('Paid'),
-                        buildCell('Credit Card'),
-                        buildCell('\$450.00', true),
-                        buildCell('Verified'),
-                        buildCell('2 weeks ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV005'),
-                        buildCell('Paid'),
-                        buildCell('PayPal'),
-                        buildCell('\$550.00', true),
-                        buildCell('Verified'),
-                        buildCell('3 weeks ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV006'),
-                        buildCell('Pending'),
-                        buildCell('Bank Transfer'),
-                        buildCell('\$200.00', true),
-                        buildCell('Pending'),
-                        buildCell('1 month ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV007'),
-                        buildCell('Unpaid'),
-                        buildCell('Credit Card'),
-                        buildCell('\$300.00', true),
-                        buildCell('Unverified'),
-                        buildCell('1 year ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV008'),
-                        buildCell('Paid'),
-                        buildCell('Credit Card'),
-                        buildCell('\$250.00', true),
-                        buildCell('Verified'),
-                        buildCell('2 hours ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV009'),
-                        buildCell('Pending'),
-                        buildCell('PayPal'),
-                        buildCell('\$150.00', true),
-                        buildCell('Pending'),
-                        buildCell('1 day ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV010'),
-                        buildCell('Unpaid'),
-                        buildCell('Bank Transfer'),
-                        buildCell('\$350.00', true),
-                        buildCell('Unverified'),
-                        buildCell('1 week ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV011'),
-                        buildCell('Paid'),
-                        buildCell('Credit Card'),
-                        buildCell('\$450.00', true),
-                        buildCell('Verified'),
-                        buildCell('2 weeks ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV012'),
-                        buildCell('Paid'),
-                        buildCell('PayPal'),
-                        buildCell('\$550.00', true),
-                        buildCell('Verified'),
-                        buildCell('3 weeks ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV013'),
-                        buildCell('Pending'),
-                        buildCell('Bank Transfer'),
-                        buildCell('\$200.00', true),
-                        buildCell('Pending'),
-                        buildCell('1 month ago'),
-                      ],
-                    ),
-                    TableRow(
-                      cells: [
-                        buildCell('INV014'),
-                        buildCell('Unpaid'),
-                        buildCell('Credit Card'),
-                        buildCell('\$300.00', true),
-                        buildCell('Unverified'),
-                        buildCell('1 year ago'),
-                      ],
-                    ),
-                  ],
-                );
-              }),
+                  TableRow(
+                    cells: [
+                      buildCell('INV001'),
+                      buildCell('Paid'),
+                      buildCell('Credit Card'),
+                      buildCell('\$250.00', true),
+                      buildCell('Verified'),
+                      buildCell('2 hours ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV002'),
+                      buildCell('Pending'),
+                      buildCell('PayPal'),
+                      buildCell('\$150.00', true),
+                      buildCell('Pending'),
+                      buildCell('1 day ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV003'),
+                      buildCell('Unpaid'),
+                      buildCell('Bank Transfer'),
+                      buildCell('\$350.00', true),
+                      buildCell('Unverified'),
+                      buildCell('1 week ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV004'),
+                      buildCell('Paid'),
+                      buildCell('Credit Card'),
+                      buildCell('\$450.00', true),
+                      buildCell('Verified'),
+                      buildCell('2 weeks ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV005'),
+                      buildCell('Paid'),
+                      buildCell('PayPal'),
+                      buildCell('\$550.00', true),
+                      buildCell('Verified'),
+                      buildCell('3 weeks ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV006'),
+                      buildCell('Pending'),
+                      buildCell('Bank Transfer'),
+                      buildCell('\$200.00', true),
+                      buildCell('Pending'),
+                      buildCell('1 month ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV007'),
+                      buildCell('Unpaid'),
+                      buildCell('Credit Card'),
+                      buildCell('\$300.00', true),
+                      buildCell('Unverified'),
+                      buildCell('1 year ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV008'),
+                      buildCell('Paid'),
+                      buildCell('Credit Card'),
+                      buildCell('\$250.00', true),
+                      buildCell('Verified'),
+                      buildCell('2 hours ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV009'),
+                      buildCell('Pending'),
+                      buildCell('PayPal'),
+                      buildCell('\$150.00', true),
+                      buildCell('Pending'),
+                      buildCell('1 day ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV010'),
+                      buildCell('Unpaid'),
+                      buildCell('Bank Transfer'),
+                      buildCell('\$350.00', true),
+                      buildCell('Unverified'),
+                      buildCell('1 week ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV011'),
+                      buildCell('Paid'),
+                      buildCell('Credit Card'),
+                      buildCell('\$450.00', true),
+                      buildCell('Verified'),
+                      buildCell('2 weeks ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV012'),
+                      buildCell('Paid'),
+                      buildCell('PayPal'),
+                      buildCell('\$550.00', true),
+                      buildCell('Verified'),
+                      buildCell('3 weeks ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV013'),
+                      buildCell('Pending'),
+                      buildCell('Bank Transfer'),
+                      buildCell('\$200.00', true),
+                      buildCell('Pending'),
+                      buildCell('1 month ago'),
+                    ],
+                  ),
+                  TableRow(
+                    cells: [
+                      buildCell('INV014'),
+                      buildCell('Unpaid'),
+                      buildCell('Credit Card'),
+                      buildCell('\$300.00', true),
+                      buildCell('Unverified'),
+                      buildCell('1 year ago'),
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
+    );
+  }
+}
+
+```
+
+### Table Example 4
+```dart
+import 'dart:ui';
+
+import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
+
+// Demonstrates Table.textDirection. Flip the toggle to see the same table laid
+// out right-to-left: column 0 moves to the right edge, the frozen first column
+// pins there, and horizontal scrolling starts there and runs leftwards.
+//
+// Column indices never change. columnWidths key 0 and TableRef(0) still mean
+// the first column in both directions.
+
+class TableExample4 extends StatefulWidget {
+  const TableExample4({super.key});
+
+  @override
+  State<TableExample4> createState() => _TableExample4State();
+}
+
+class _TableExample4State extends State<TableExample4> {
+  bool _rtl = false;
+
+  // Builds a bordered cell; the first column is tinted so it is easy to follow
+  // as it moves from one edge to the other.
+  TableCell buildCell(String text, {bool highlight = false}) {
+    final theme = Theme.of(context);
+    return TableCell(
+      theme: TableCellTheme(
+        border: WidgetStatePropertyAll(
+          Border.all(
+            color: theme.colorScheme.border,
+            strokeAlign: BorderSide.strokeAlignCenter,
+          ),
+        ),
+        backgroundColor: highlight
+            ? WidgetStatePropertyAll(theme.colorScheme.muted)
+            : null,
+      ),
+      child: Container(padding: const EdgeInsets.all(8), child: Text(text)),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final direction = _rtl ? TextDirection.rtl : TextDirection.ltr;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Checkbox(
+              state: _rtl ? CheckboxState.checked : CheckboxState.unchecked,
+              onChanged: (state) {
+                setState(() {
+                  _rtl = state == CheckboxState.checked;
+                });
+              },
+              trailing: const Text('Right-to-left'),
+            ),
+          ],
+        ),
+        const Gap(16),
+        ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.trackpad,
+            },
+            overscroll: false,
+          ),
+          child: SizedBox(
+            height: 280,
+            child: OutlinedContainer(
+              child: ScrollableClient(
+                diagonalDragBehavior: DiagonalDragBehavior.free,
+                // Reversed so that scroll offset zero is the first column,
+                // which under RTL sits at the right edge.
+                horizontalDetails: ScrollableDetails.horizontal(reverse: _rtl),
+                builder: (context, offset, viewportSize, child) {
+                  return Table(
+                    textDirection: direction,
+                    horizontalOffset: offset.dx,
+                    verticalOffset: offset.dy,
+                    viewportSize: viewportSize,
+                    defaultColumnWidth: const FixedTableSize(150),
+                    defaultRowHeight: const FixedTableSize(40),
+                    // Row 0 and column 0 stay pinned. Under RTL the frozen
+                    // column pins to the right rather than the left.
+                    frozenCells: const FrozenTableData(
+                      frozenRows: [TableRef(0)],
+                      frozenColumns: [TableRef(0)],
+                    ),
+                    rows: [
+                      TableHeader(
+                        cells: [
+                          buildCell('Invoice', highlight: true),
+                          buildCell('Status'),
+                          buildCell('Method'),
+                          buildCell('Amount'),
+                          buildCell('Verification'),
+                          buildCell('Last Updated'),
+                        ],
+                      ),
+                      for (final row in const [
+                        [
+                          'INV001',
+                          'Paid',
+                          'Credit Card',
+                          '250.00',
+                          'Verified',
+                          '2 hours ago',
+                        ],
+                        [
+                          'INV002',
+                          'Pending',
+                          'PayPal',
+                          '150.00',
+                          'Pending',
+                          '1 day ago',
+                        ],
+                        [
+                          'INV003',
+                          'Unpaid',
+                          'Bank Transfer',
+                          '350.00',
+                          'Unverified',
+                          '1 week ago',
+                        ],
+                        [
+                          'INV004',
+                          'Paid',
+                          'Credit Card',
+                          '450.00',
+                          'Verified',
+                          '2 weeks ago',
+                        ],
+                        [
+                          'INV005',
+                          'Paid',
+                          'PayPal',
+                          '550.00',
+                          'Verified',
+                          '3 weeks ago',
+                        ],
+                        [
+                          'INV006',
+                          'Pending',
+                          'Bank Transfer',
+                          '200.00',
+                          'Pending',
+                          '1 month ago',
+                        ],
+                      ])
+                        TableRow(
+                          cells: [
+                            buildCell(row[0], highlight: true),
+                            buildCell(row[1]),
+                            buildCell(row[2]),
+                            buildCell('\$${row[3]}'),
+                            buildCell(row[4]),
+                            buildCell(row[5]),
+                          ],
+                        ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -626,19 +807,23 @@ class TableTile extends StatelessWidget implements IComponentPage {
                       flex: 1,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text('Active',
-                            style: TextStyle(color: Colors.green)),
+                        child: const Text(
+                          'Active',
+                          style: TextStyle(color: Colors.green),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const Divider(height: 1),
+              const Divider(theme: DividerTheme(height: 1)),
               Container(
                 padding: const EdgeInsets.all(12),
                 child: Row(
@@ -649,19 +834,23 @@ class TableTile extends StatelessWidget implements IComponentPage {
                       flex: 1,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.orange.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text('Away',
-                            style: TextStyle(color: Colors.orange)),
+                        child: const Text(
+                          'Away',
+                          style: TextStyle(color: Colors.orange),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const Divider(height: 1),
+              const Divider(theme: DividerTheme(height: 1)),
               Container(
                 padding: const EdgeInsets.all(12),
                 child: Row(
@@ -672,13 +861,17 @@ class TableTile extends StatelessWidget implements IComponentPage {
                       flex: 1,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text('Active',
-                            style: TextStyle(color: Colors.green)),
+                        child: const Text(
+                          'Active',
+                          style: TextStyle(color: Colors.green),
+                        ),
                       ),
                     ),
                   ],
@@ -714,7 +907,7 @@ class TableTile extends StatelessWidget implements IComponentPage {
 | `columnWidths` | `Map<int, TableSize>?` | Specific column width overrides.  Type: `Map<int, TableSize>?`. Maps column indices to specific sizing strategies. Overrides [defaultColumnWidth] for specified columns. |
 | `rowHeights` | `Map<int, TableSize>?` | Specific row height overrides.  Type: `Map<int, TableSize>?`. Maps row indices to specific sizing strategies. Overrides [defaultRowHeight] for specified rows. |
 | `clipBehavior` | `Clip` | Clipping behavior for the table content.  Type: `Clip`. Controls how content is clipped at table boundaries. Defaults to [Clip.hardEdge] for clean boundaries. |
-| `theme` | `TableTheme?` | Theme configuration for the table appearance.  Type: `TableTheme?`. Controls borders, colors, and overall styling. If null, uses the default theme from [ComponentTheme]. |
+| `theme` | `TableTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |
 | `frozenCells` | `FrozenTableData?` | Configuration for frozen cells during scrolling.  Type: `FrozenTableData?`. Specifies which cells remain visible during horizontal or vertical scrolling. Useful for headers/footers. |
 | `horizontalOffset` | `double?` | Horizontal scroll offset for the table viewport.  Type: `double?`. Controls horizontal scrolling position. If provided, the table displays within a scrollable viewport. |
 | `verticalOffset` | `double?` | Vertical scroll offset for the table viewport.  Type: `double?`. Controls vertical scrolling position. If provided, the table displays within a scrollable viewport. |

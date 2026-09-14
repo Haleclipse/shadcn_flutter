@@ -67,14 +67,10 @@ class WrapperExample1 extends StatelessWidget {
       darkTheme: shadcn.ThemeData.dark(),
       child: shadcn.Scaffold(
         headers: [
-          shadcn.AppBar(
-            title: Text('Shadcn UI Wrapper Example'),
-          ),
+          shadcn.AppBar(title: Text('Shadcn UI Wrapper Example')),
           shadcn.Divider(),
         ],
-        child: Center(
-          child: shadcn.Text('Hello, Shadcn Flutter!'),
-        ),
+        child: Center(child: shadcn.Text('Hello, Shadcn Flutter!')),
       ),
     );
   }
@@ -108,9 +104,7 @@ class WrapperTile extends StatelessWidget implements IComponentPage {
               AppBar(title: Text('My App')),
               Divider(),
             ],
-            child: const Center(
-              child: Text('Hello, Shadcn Flutter!'),
-            ),
+            child: const Center(child: Text('Hello, Shadcn Flutter!')),
           ),
         ),
       ),

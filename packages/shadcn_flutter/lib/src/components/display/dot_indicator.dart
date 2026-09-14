@@ -5,7 +5,10 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// Takes the build context, dot index, and whether the dot is active,
 /// and returns a widget to display for that dot.
 typedef DotBuilder = Widget Function(
-    BuildContext context, int index, bool active);
+  BuildContext context,
+  int index,
+  bool active,
+);
 
 /// Theme configuration for [DotIndicator] and its dot items.
 class DotIndicatorTheme extends ComponentThemeData {
@@ -68,8 +71,9 @@ class DotIndicatorTheme extends ComponentThemeData {
       size: size == null ? this.size : size(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       activeColor: activeColor == null ? this.activeColor : activeColor(),
-      inactiveColor:
-          inactiveColor == null ? this.inactiveColor : inactiveColor(),
+      inactiveColor: inactiveColor == null
+          ? this.inactiveColor
+          : inactiveColor(),
       inactiveBorderColor: inactiveBorderColor == null
           ? this.inactiveBorderColor
           : inactiveBorderColor(),
@@ -96,15 +100,16 @@ class DotIndicatorTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-      spacing,
-      padding,
-      dotBuilder,
-      size,
-      borderRadius,
-      activeColor,
-      inactiveColor,
-      inactiveBorderColor,
-      inactiveBorderWidth);
+    spacing,
+    padding,
+    dotBuilder,
+    size,
+    borderRadius,
+    activeColor,
+    inactiveColor,
+    inactiveBorderColor,
+    inactiveBorderWidth,
+  );
 }
 
 /// Navigation indicator with customizable dots showing current position in a sequence.
@@ -135,9 +140,13 @@ class DotIndicatorTheme extends ComponentThemeData {
 ///   spacing: 12.0,
 /// );
 /// ```
-class DotIndicator extends StatelessWidget {
+class DotIndicator extends StatelessWidget
+    implements Styleable<DotIndicatorTheme> {
   static Widget _defaultDotBuilder(
-      BuildContext context, int index, bool active) {
+    BuildContext context,
+    int index,
+    bool active,
+  ) {
     return active ? const ActiveDotItem() : const InactiveDotItem();
   }
 
@@ -151,16 +160,22 @@ class DotIndicator extends StatelessWidget {
   final ValueChanged<int>? onChanged;
 
   /// Spacing between dots.
+  @Deprecated('Use theme: DotIndicatorTheme(spacing: ...) instead.')
   final double? spacing;
 
   /// The direction of the dot layout (horizontal or vertical).
   final Axis direction;
 
   /// Padding around the dots container.
+  @Deprecated('Use theme: DotIndicatorTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
 
   /// Custom builder for individual dots.
   final DotBuilder? dotBuilder;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final DotIndicatorTheme? theme;
 
   /// Creates a [DotIndicator].
   ///
@@ -202,6 +217,7 @@ class DotIndicator extends StatelessWidget {
     this.direction = Axis.horizontal,
     this.padding,
     this.dotBuilder,
+    this.theme,
   });
 
   @override
@@ -209,16 +225,19 @@ class DotIndicator extends StatelessWidget {
     final theme = Theme.of(context);
     final directionality = Directionality.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<DotIndicatorTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<DotIndicatorTheme>(context);
     final spacing = styleValue(
-        widgetValue: this.spacing,
-        themeValue: compTheme?.spacing,
-        defaultValue: 8 * scaling);
-    final padding = styleValue(
-                widgetValue: this.padding,
-                themeValue: compTheme?.padding,
-                defaultValue: const EdgeInsets.all(8))
-            .resolve(directionality) *
+      widgetValue: this.spacing,
+      themeValue: compTheme?.spacing,
+      defaultValue: 8 * scaling,
+    );
+    final padding =
+        styleValue(
+          widgetValue: this.padding,
+          themeValue: compTheme?.padding,
+          defaultValue: const EdgeInsets.all(8),
+        ).resolve(directionality) *
         theme.scaling;
     final dotBuilder =
         this.dotBuilder ?? compTheme?.dotBuilder ?? _defaultDotBuilder;
@@ -234,17 +253,19 @@ class DotIndicator extends StatelessWidget {
         left: leftPadding,
         right: rightPadding,
       );
-      children.add(Flexible(
-        child: Clickable(
-          behavior: HitTestBehavior.translucent,
-          onPressed: onChanged != null ? () => onChanged!(i) : null,
-          mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
-          child: Padding(
-            padding: itemPadding,
-            child: dotBuilder(context, i, i == index),
+      children.add(
+        Flexible(
+          child: Clickable(
+            behavior: HitTestBehavior.translucent,
+            onPressed: onChanged != null ? () => onChanged!(i) : null,
+            mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
+            child: Padding(
+              padding: itemPadding,
+              child: dotBuilder(context, i, i == index),
+            ),
           ),
         ),
-      ));
+      );
     }
     return IntrinsicHeight(
       child: Flex(
@@ -294,8 +315,9 @@ class DotItem extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: color,
-        borderRadius:
-            borderRadius != null ? BorderRadius.circular(borderRadius!) : null,
+        borderRadius: borderRadius != null
+            ? BorderRadius.circular(borderRadius!)
+            : null,
         border: borderColor != null && borderWidth != null
             ? Border.all(color: borderColor!, width: borderWidth!)
             : null,
@@ -307,14 +329,17 @@ class DotItem extends StatelessWidget {
 /// An active dot item widget representing the current position.
 ///
 /// Styled to highlight the currently active item in a dot indicator.
-class ActiveDotItem extends StatelessWidget {
+class ActiveDotItem extends StatelessWidget
+    implements Styleable<DotIndicatorTheme> {
   /// The size of the dot.
+  @Deprecated('Use theme: DotIndicatorTheme(size: ...) instead.')
   final double? size;
 
   /// The color of the dot.
   final Color? color;
 
   /// The border radius of the dot.
+  @Deprecated('Use theme: DotIndicatorTheme(borderRadius: ...) instead.')
   final double? borderRadius;
 
   /// The border color of the dot.
@@ -322,6 +347,10 @@ class ActiveDotItem extends StatelessWidget {
 
   /// The border width of the dot.
   final double? borderWidth;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final DotIndicatorTheme? theme;
 
   /// Creates an active dot item with the specified properties.
   const ActiveDotItem({
@@ -331,25 +360,30 @@ class ActiveDotItem extends StatelessWidget {
     this.borderRadius,
     this.borderColor,
     this.borderWidth,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<DotIndicatorTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<DotIndicatorTheme>(context);
     final scaling = theme.scaling;
     final size = styleValue(
-        widgetValue: this.size,
-        themeValue: compTheme?.size,
-        defaultValue: 12 * scaling);
+      widgetValue: this.size,
+      themeValue: compTheme?.size,
+      defaultValue: 12 * scaling,
+    );
     final color = styleValue(
-        widgetValue: this.color,
-        themeValue: compTheme?.activeColor,
-        defaultValue: theme.colorScheme.primary);
+      widgetValue: this.color,
+      themeValue: compTheme?.activeColor,
+      defaultValue: theme.colorScheme.primary,
+    );
     final borderRadius = styleValue(
-        widgetValue: this.borderRadius,
-        themeValue: compTheme?.borderRadius,
-        defaultValue: theme.radiusMd);
+      widgetValue: this.borderRadius,
+      themeValue: compTheme?.borderRadius,
+      defaultValue: theme.radiusMd,
+    );
     final borderColor = this.borderColor;
     final borderWidth = this.borderWidth;
     return Container(
@@ -370,14 +404,17 @@ class ActiveDotItem extends StatelessWidget {
 ///
 /// Styled to indicate inactive items in a dot indicator with
 /// optional border styling.
-class InactiveDotItem extends StatelessWidget {
+class InactiveDotItem extends StatelessWidget
+    implements Styleable<DotIndicatorTheme> {
   /// The size of the dot.
+  @Deprecated('Use theme: DotIndicatorTheme(size: ...) instead.')
   final double? size;
 
   /// The color of the dot.
   final Color? color;
 
   /// The border radius of the dot.
+  @Deprecated('Use theme: DotIndicatorTheme(borderRadius: ...) instead.')
   final double? borderRadius;
 
   /// The border color of the dot.
@@ -385,6 +422,10 @@ class InactiveDotItem extends StatelessWidget {
 
   /// The border width of the dot.
   final double? borderWidth;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final DotIndicatorTheme? theme;
 
   /// Creates an inactive dot item with the specified properties.
   const InactiveDotItem({
@@ -394,22 +435,27 @@ class InactiveDotItem extends StatelessWidget {
     this.borderRadius,
     this.borderColor,
     this.borderWidth,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<DotIndicatorTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<DotIndicatorTheme>(context);
     final scaling = theme.scaling;
     final size = styleValue(
-        widgetValue: this.size,
-        themeValue: compTheme?.size,
-        defaultValue: 12 * scaling);
+      widgetValue: this.size,
+      themeValue: compTheme?.size,
+      defaultValue: 12 * scaling,
+    );
     final borderRadius = styleValue(
-        widgetValue: this.borderRadius,
-        themeValue: compTheme?.borderRadius,
-        defaultValue: theme.radiusMd);
-    final borderColor = this.borderColor ??
+      widgetValue: this.borderRadius,
+      themeValue: compTheme?.borderRadius,
+      defaultValue: theme.radiusMd,
+    );
+    final borderColor =
+        this.borderColor ??
         compTheme?.inactiveBorderColor ??
         theme.colorScheme.secondary;
     final borderWidth =

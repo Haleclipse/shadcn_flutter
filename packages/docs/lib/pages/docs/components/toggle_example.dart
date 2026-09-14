@@ -24,7 +24,7 @@ class ToggleExample extends StatelessWidget {
           title: 'Group Example',
           path: 'lib/pages/docs/components/toggle/toggle_example_2.dart',
           child: ToggleExample2(),
-        )
+        ),
       ],
     );
   }

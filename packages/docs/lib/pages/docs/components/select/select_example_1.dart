@@ -17,10 +17,7 @@ class _SelectExample1State extends State<SelectExample1> {
         return Text(item);
       },
       // Limit the popup size so it doesn't grow too large in the docs view.
-      popupConstraints: const BoxConstraints(
-        maxHeight: 300,
-        maxWidth: 200,
-      ),
+      popupConstraints: const BoxConstraints(maxHeight: 300, maxWidth: 200),
       onChanged: (value) {
         setState(() {
           // Save the currently selected value (or null to clear).
@@ -34,18 +31,9 @@ class _SelectExample1State extends State<SelectExample1> {
         items: SelectItemList(
           children: [
             // A simple static list of options.
-            SelectItemButton(
-              value: 'Apple',
-              child: Text('Apple'),
-            ),
-            SelectItemButton(
-              value: 'Banana',
-              child: Text('Banana'),
-            ),
-            SelectItemButton(
-              value: 'Cherry',
-              child: Text('Cherry'),
-            ),
+            SelectItemButton(value: 'Apple', child: Text('Apple')),
+            SelectItemButton(value: 'Banana', child: Text('Banana')),
+            SelectItemButton(value: 'Cherry', child: Text('Cherry')),
           ],
         ),
       ),

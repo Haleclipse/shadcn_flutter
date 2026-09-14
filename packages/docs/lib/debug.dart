@@ -13,9 +13,7 @@ class _RebuildCounterState extends State<RebuildCounter> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.primaries[hashCode % Colors.primaries.length],
-      child: Center(
-        child: Text('Rebuild count: ${counter++}'),
-      ),
+      child: Center(child: Text('Rebuild count: ${counter++}')),
     );
   }
 }

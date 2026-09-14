@@ -25,18 +25,9 @@ class _TimelineAnimationExample1State extends State<TimelineAnimationExample1>
         Offset(-100, -100),
         Offset(100, -100),
       ),
-      const RelativeKeyframe(
-        Duration(seconds: 2),
-        Offset(100, 100),
-      ),
-      const RelativeKeyframe(
-        Duration(seconds: 1),
-        Offset(-100, 100),
-      ),
-      const RelativeKeyframe(
-        Duration(seconds: 2),
-        Offset(-100, -100),
-      ),
+      const RelativeKeyframe(Duration(seconds: 2), Offset(100, 100)),
+      const RelativeKeyframe(Duration(seconds: 1), Offset(-100, 100)),
+      const RelativeKeyframe(Duration(seconds: 2), Offset(-100, -100)),
     ],
     // Provide a lerp function for Offset values.
     lerp: Transformers.typeOffset,
@@ -44,21 +35,10 @@ class _TimelineAnimationExample1State extends State<TimelineAnimationExample1>
   // A separate timeline animating rotation in radians. StillKeyframe pauses movement.
   final TimelineAnimation<double> rotationTimeline = TimelineAnimation(
     keyframes: [
-      const AbsoluteKeyframe(
-        Duration(seconds: 1),
-        0,
-        pi / 2,
-      ),
-      const StillKeyframe(
-        Duration(seconds: 2),
-      ),
-      const RelativeKeyframe(
-        Duration(seconds: 1),
-        0,
-      ),
-      const StillKeyframe(
-        Duration(seconds: 2),
-      ),
+      const AbsoluteKeyframe(Duration(seconds: 1), 0, pi / 2),
+      const StillKeyframe(Duration(seconds: 2)),
+      const RelativeKeyframe(Duration(seconds: 1), 0),
+      const StillKeyframe(Duration(seconds: 2)),
     ],
     // Provide a lerp function for double values.
     lerp: Transformers.typeDouble,
@@ -72,10 +52,7 @@ class _TimelineAnimationExample1State extends State<TimelineAnimationExample1>
     controller = AnimationController(
       vsync: this,
       // Use the maximum duration across all timelines so they loop together.
-      duration: timelineMaxDuration([
-        offsetTimeline,
-        rotationTimeline,
-      ]),
+      duration: timelineMaxDuration([offsetTimeline, rotationTimeline]),
     )..repeat();
   }
 
@@ -96,11 +73,7 @@ class _TimelineAnimationExample1State extends State<TimelineAnimationExample1>
           child: Transform.rotate(
             // Sample the rotation timeline using the shared controller.
             angle: rotationTimeline.transformWithController(controller),
-            child: Container(
-              width: 50,
-              height: 50,
-              color: Colors.blue,
-            ),
+            child: Container(width: 50, height: 50, color: Colors.blue),
           ),
         );
       },

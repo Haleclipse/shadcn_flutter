@@ -570,10 +570,12 @@ class _AutoCompleteFeatureState
                 suggestions: snapshot.hasData
                     ? snapshot.requireData.toList()
                     : const [],
-                popoverConstraints: feature.popoverConstraints,
                 overlayConfiguration: feature.overlayConfiguration,
-                adaptiveOverlay: feature.adaptiveOverlay,
-                mode: feature.mode,
+                theme: AutoCompleteTheme(
+                  popoverConstraints: feature.popoverConstraints,
+                  adaptiveOverlay: feature.adaptiveOverlay,
+                  mode: feature.mode,
+                ),
                 child: child!,
               );
             },
@@ -582,10 +584,12 @@ class _AutoCompleteFeatureState
         return AutoComplete(
           key: _key,
           suggestions: suggestions == null ? const [] : suggestions.toList(),
-          popoverConstraints: feature.popoverConstraints,
           overlayConfiguration: feature.overlayConfiguration,
-          adaptiveOverlay: feature.adaptiveOverlay,
-          mode: feature.mode,
+          theme: AutoCompleteTheme(
+            popoverConstraints: feature.popoverConstraints,
+            adaptiveOverlay: feature.adaptiveOverlay,
+            mode: feature.mode,
+          ),
           child: child!,
         );
       },

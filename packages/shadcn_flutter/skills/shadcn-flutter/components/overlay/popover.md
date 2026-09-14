@@ -19,8 +19,7 @@ class PopoverExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'popover',
-      description:
-          'A floating message that appears when a user interacts with a target.',
+      description: 'A floating message that appears when a user interacts with a target.',
       displayName: 'Popover',
       children: [
         WidgetUsageExample(
@@ -79,30 +78,22 @@ class PopoverExample1 extends StatelessWidget {
                             FormField<double>(
                               key: FormKey(#width),
                               label: Text('Width'),
-                              child: TextField(
-                                initialValue: '100%',
-                              ),
+                              child: TextField(initialValue: '100%'),
                             ),
                             FormField<double>(
                               key: FormKey(#maxWidth),
                               label: Text('Max. Width'),
-                              child: TextField(
-                                initialValue: '300px',
-                              ),
+                              child: TextField(initialValue: '300px'),
                             ),
                             FormField<double>(
                               key: FormKey(#height),
                               label: Text('Height'),
-                              child: TextField(
-                                initialValue: '25px',
-                              ),
+                              child: TextField(initialValue: '25px'),
                             ),
                             FormField<double>(
                               key: FormKey(#maxHeight),
                               label: Text('Max. Height'),
-                              child: TextField(
-                                initialValue: 'none',
-                              ),
+                              child: TextField(initialValue: 'none'),
                             ),
                           ],
                           spacing: 8,
@@ -140,6 +131,7 @@ class PopoverExample1 extends StatelessWidget {
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components/calendar/calendar_example_2.dart';
+import 'package:gap/gap.dart';
 
 class PopoverTile extends StatelessWidget implements IComponentPage {
   const PopoverTile({super.key});
@@ -159,7 +151,6 @@ class PopoverTile extends StatelessWidget implements IComponentPage {
           children: [
             DatePicker(
               value: DateTime.now(),
-              mode: PromptMode.popover,
               stateBuilder: (date) {
                 if (date.isAfter(DateTime.now())) {
                   return DateState.disabled;
@@ -167,6 +158,7 @@ class PopoverTile extends StatelessWidget implements IComponentPage {
                 return DateState.enabled;
               },
               onChanged: (value) {},
+              theme: DatePickerTheme(mode: PromptMode.popover),
             ),
             const Gap(4),
             const CalendarExample2(),

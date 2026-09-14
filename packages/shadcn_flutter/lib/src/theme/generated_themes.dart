@@ -5,11 +5,19 @@ import '../../shadcn_flutter.dart';
 void _assertNotThemeModeSystem(ThemeMode mode, String label) {
   if (mode == ThemeMode.system) {
     final List<DiagnosticsNode> diagnosticList = [];
-    diagnosticList.add(ErrorSummary(
-        'ColorSchemes.${label.toLowerCase()}(ThemeMode mode) can only be used with ThemeMode.light or ThemeMode.dark.'));
-    diagnosticList.add(ErrorDescription(
-        'This method is only intended as a helper method to get either ColorSchemes.light$label() or ColorSchemes.dark$label().'));
-    diagnosticList.add(ErrorHint('To use system theme mode, do this:\n'
+    diagnosticList.add(
+      ErrorSummary(
+        'ColorSchemes.${label.toLowerCase()}(ThemeMode mode) can only be used with ThemeMode.light or ThemeMode.dark.',
+      ),
+    );
+    diagnosticList.add(
+      ErrorDescription(
+        'This method is only intended as a helper method to get either ColorSchemes.light$label() or ColorSchemes.dark$label().',
+      ),
+    );
+    diagnosticList.add(
+      ErrorHint(
+        'To use system theme mode, do this:\n'
         'ShadcnApp(\n'
         '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.light)),\n'
         '  darkTheme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.dark)),\n'
@@ -23,7 +31,9 @@ void _assertNotThemeModeSystem(ThemeMode mode, String label) {
         'instead of:\n'
         'ShadcnApp(\n'
         '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.system)),\n'
-        ')'));
+        ')',
+      ),
+    );
     throw FlutterError.fromParts(diagnosticList);
   }
 }

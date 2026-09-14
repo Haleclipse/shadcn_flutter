@@ -6,6 +6,8 @@ import '../../bootstrap_icons.dart';
 import '../../lucide_icons.dart';
 import '../docs_page.dart';
 
+import 'package:gap/gap.dart';
+
 class IconsPage extends StatefulWidget {
   const IconsPage({super.key});
 
@@ -47,8 +49,9 @@ class IconsPageState extends State<IconsPage> {
       DialogConfiguration(),
       builder: (context) {
         return AlertDialog(
-          title:
-              Text(capitalizeWords(_separateByCamelCase(entry.key)).join(' ')),
+          title: Text(
+            capitalizeWords(_separateByCamelCase(entry.key)).join(' '),
+          ),
           leading: Icon(entry.value, size: 48),
           content: IntrinsicWidth(
             child: Column(
@@ -56,10 +59,7 @@ class IconsPageState extends State<IconsPage> {
               children: [
                 const Text('Use this code to display this icon:'),
                 const Gap(8),
-                CodeBlock(
-                  code: 'Icon($className.${entry.key})',
-                  mode: 'dart',
-                ),
+                CodeBlock(code: 'Icon($className.${entry.key})', mode: 'dart'),
               ],
             ),
           ),
@@ -87,48 +87,49 @@ class IconsPageState extends State<IconsPage> {
           return [];
         },
         body: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              List<MapEntry<String, IconData>> filteredRadixIcons = [];
-              List<MapEntry<String, IconData>> filteredBootstrapIcons = [];
-              List<MapEntry<String, IconData>> filteredLucideIcons = [];
+          animation: _controller,
+          builder: (context, child) {
+            List<MapEntry<String, IconData>> filteredRadixIcons = [];
+            List<MapEntry<String, IconData>> filteredBootstrapIcons = [];
+            List<MapEntry<String, IconData>> filteredLucideIcons = [];
 
-              for (var entry in kRadixIcons.entries) {
-                if (_controller.text.isEmpty) {
-                  filteredRadixIcons.add(entry);
-                  continue;
-                }
-                String key = entry.key.toLowerCase();
-                if (key.contains(_controller.text.toLowerCase())) {
-                  filteredRadixIcons.add(entry);
-                }
+            for (var entry in kRadixIcons.entries) {
+              if (_controller.text.isEmpty) {
+                filteredRadixIcons.add(entry);
+                continue;
               }
-              for (var entry in kBootstrapIcons.entries) {
-                if (_controller.text.isEmpty) {
-                  filteredBootstrapIcons.add(entry);
-                  continue;
-                }
-                String key = entry.key.toLowerCase();
-                if (key.contains(_controller.text.toLowerCase())) {
-                  filteredBootstrapIcons.add(entry);
-                }
+              String key = entry.key.toLowerCase();
+              if (key.contains(_controller.text.toLowerCase())) {
+                filteredRadixIcons.add(entry);
               }
-              for (var entry in kLucideIcons.entries) {
-                if (_controller.text.isEmpty) {
-                  filteredLucideIcons.add(entry);
-                  continue;
-                }
-                String key = entry.key.toLowerCase();
-                if (key.contains(_controller.text.toLowerCase())) {
-                  filteredLucideIcons.add(entry);
-                }
+            }
+            for (var entry in kBootstrapIcons.entries) {
+              if (_controller.text.isEmpty) {
+                filteredBootstrapIcons.add(entry);
+                continue;
               }
-              filteredBootstrapIcons.sort((a, b) => a.key.compareTo(b.key));
-              filteredRadixIcons.sort((a, b) => a.key.compareTo(b.key));
-              filteredLucideIcons.sort((a, b) => a.key.compareTo(b.key));
-              return DefaultTextStyle.merge(
-                maxLines: 1,
-                child: CustomScrollView(slivers: [
+              String key = entry.key.toLowerCase();
+              if (key.contains(_controller.text.toLowerCase())) {
+                filteredBootstrapIcons.add(entry);
+              }
+            }
+            for (var entry in kLucideIcons.entries) {
+              if (_controller.text.isEmpty) {
+                filteredLucideIcons.add(entry);
+                continue;
+              }
+              String key = entry.key.toLowerCase();
+              if (key.contains(_controller.text.toLowerCase())) {
+                filteredLucideIcons.add(entry);
+              }
+            }
+            filteredBootstrapIcons.sort((a, b) => a.key.compareTo(b.key));
+            filteredRadixIcons.sort((a, b) => a.key.compareTo(b.key));
+            filteredLucideIcons.sort((a, b) => a.key.compareTo(b.key));
+            return DefaultTextStyle.merge(
+              maxLines: 1,
+              child: CustomScrollView(
+                slivers: [
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: _IconsPageHeader(
@@ -147,13 +148,15 @@ class IconsPageState extends State<IconsPage> {
                                 children: [
                                   const Text('Icons').h1(),
                                   const Text(
-                                          'Use bundled icons in your application')
-                                      .lead(),
+                                    'Use bundled icons in your application',
+                                  ).lead(),
                                   Row(
                                     children: [
                                       Expanded(
                                         child: Card(
-                                          clipBehavior: Clip.antiAlias,
+                                          theme: CardTheme(
+                                            clipBehavior: Clip.antiAlias,
+                                          ),
                                           child: Stack(
                                             clipBehavior: Clip.none,
                                             children: [
@@ -172,12 +175,14 @@ class IconsPageState extends State<IconsPage> {
                                               Positioned(
                                                 right: -32,
                                                 bottom: -48,
-                                                child: const Icon(
-                                                  RadixIcons.iconjarLogo,
-                                                  size: 96,
-                                                )
-                                                    .iconMutedForeground()
-                                                    .withOpacity(0.3),
+                                                child:
+                                                    const Icon(
+                                                          RadixIcons
+                                                              .iconjarLogo,
+                                                          size: 96,
+                                                        )
+                                                        .iconMutedForeground()
+                                                        .withOpacity(0.3),
                                               ),
                                             ],
                                           ),
@@ -185,7 +190,9 @@ class IconsPageState extends State<IconsPage> {
                                       ),
                                       Expanded(
                                         child: Card(
-                                          clipBehavior: Clip.antiAlias,
+                                          theme: CardTheme(
+                                            clipBehavior: Clip.antiAlias,
+                                          ),
                                           child: Stack(
                                             clipBehavior: Clip.none,
                                             children: [
@@ -194,8 +201,9 @@ class IconsPageState extends State<IconsPage> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text('${kBootstrapIcons.length}')
-                                                      .textLarge(),
+                                                  Text(
+                                                    '${kBootstrapIcons.length}',
+                                                  ).textLarge(),
                                                   const Text('Bootstrap Icons')
                                                       .muted()
                                                       .textSmall(),
@@ -204,12 +212,14 @@ class IconsPageState extends State<IconsPage> {
                                               Positioned(
                                                 right: -32,
                                                 bottom: -48,
-                                                child: const Icon(
-                                                  BootstrapIcons.bootstrap,
-                                                  size: 96,
-                                                )
-                                                    .iconMutedForeground()
-                                                    .withOpacity(0.3),
+                                                child:
+                                                    const Icon(
+                                                          BootstrapIcons
+                                                              .bootstrap,
+                                                          size: 96,
+                                                        )
+                                                        .iconMutedForeground()
+                                                        .withOpacity(0.3),
                                               ),
                                             ],
                                           ),
@@ -217,7 +227,9 @@ class IconsPageState extends State<IconsPage> {
                                       ),
                                       Expanded(
                                         child: Card(
-                                          clipBehavior: Clip.antiAlias,
+                                          theme: CardTheme(
+                                            clipBehavior: Clip.antiAlias,
+                                          ),
                                           child: Stack(
                                             clipBehavior: Clip.none,
                                             children: [
@@ -236,12 +248,13 @@ class IconsPageState extends State<IconsPage> {
                                               Positioned(
                                                 right: -32,
                                                 bottom: -48,
-                                                child: const Icon(
-                                                  LucideIcons.badgeInfo,
-                                                  size: 96,
-                                                )
-                                                    .iconMutedForeground()
-                                                    .withOpacity(0.3),
+                                                child:
+                                                    const Icon(
+                                                          LucideIcons.badgeInfo,
+                                                          size: 96,
+                                                        )
+                                                        .iconMutedForeground()
+                                                        .withOpacity(0.3),
                                               ),
                                             ],
                                           ),
@@ -255,7 +268,8 @@ class IconsPageState extends State<IconsPage> {
                                     controller: _controller,
                                     features: const [
                                       InputFeature.leading(
-                                          Icon(LucideIcons.search)),
+                                        Icon(LucideIcons.search),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -276,27 +290,22 @@ class IconsPageState extends State<IconsPage> {
                       sliver: SliverGrid(
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 120,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            var e = filteredRadixIcons[index];
-                            return Tooltip(
-                              tooltip: TooltipContainer(
-                                child: Text(e.key),
-                              ),
-                              child: OutlineButton(
-                                onPressed: () {
-                                  _onTap('RadixIcons', e);
-                                },
-                                child: Icon(e.value, size: 48),
-                              ),
-                            );
-                          },
-                          childCount: filteredRadixIcons.length,
-                        ),
+                              maxCrossAxisExtent: 120,
+                              mainAxisSpacing: 8,
+                              crossAxisSpacing: 8,
+                            ),
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          var e = filteredRadixIcons[index];
+                          return Tooltip(
+                            tooltip: TooltipContainer(child: Text(e.key)),
+                            child: OutlineButton(
+                              onPressed: () {
+                                _onTap('RadixIcons', e);
+                              },
+                              child: Icon(e.value, size: 48),
+                            ),
+                          );
+                        }, childCount: filteredRadixIcons.length),
                       ),
                     ),
                   ],
@@ -310,27 +319,22 @@ class IconsPageState extends State<IconsPage> {
                       sliver: SliverGrid(
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 120,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            var e = filteredBootstrapIcons[index];
-                            return Tooltip(
-                              tooltip: TooltipContainer(
-                                child: Text(e.key),
-                              ),
-                              child: OutlineButton(
-                                onPressed: () {
-                                  _onTap('BootstrapIcons', e);
-                                },
-                                child: Icon(e.value, size: 48),
-                              ),
-                            );
-                          },
-                          childCount: filteredBootstrapIcons.length,
-                        ),
+                              maxCrossAxisExtent: 120,
+                              mainAxisSpacing: 8,
+                              crossAxisSpacing: 8,
+                            ),
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          var e = filteredBootstrapIcons[index];
+                          return Tooltip(
+                            tooltip: TooltipContainer(child: Text(e.key)),
+                            child: OutlineButton(
+                              onPressed: () {
+                                _onTap('BootstrapIcons', e);
+                              },
+                              child: Icon(e.value, size: 48),
+                            ),
+                          );
+                        }, childCount: filteredBootstrapIcons.length),
                       ),
                     ),
                   ],
@@ -344,33 +348,30 @@ class IconsPageState extends State<IconsPage> {
                       sliver: SliverGrid(
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 120,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            var e = filteredLucideIcons[index];
-                            return Tooltip(
-                              tooltip: TooltipContainer(
-                                child: Text(e.key),
-                              ),
-                              child: OutlineButton(
-                                onPressed: () {
-                                  _onTap('LucideIcons', e);
-                                },
-                                child: Icon(e.value, size: 48),
-                              ),
-                            );
-                          },
-                          childCount: filteredLucideIcons.length,
-                        ),
+                              maxCrossAxisExtent: 120,
+                              mainAxisSpacing: 8,
+                              crossAxisSpacing: 8,
+                            ),
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          var e = filteredLucideIcons[index];
+                          return Tooltip(
+                            tooltip: TooltipContainer(child: Text(e.key)),
+                            child: OutlineButton(
+                              onPressed: () {
+                                _onTap('LucideIcons', e);
+                              },
+                              child: Icon(e.value, size: 48),
+                            ),
+                          );
+                        }, childCount: filteredLucideIcons.length),
                       ),
                     ),
                   ],
-                ]),
-              );
-            }),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -383,7 +384,10 @@ class _Header extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final theme = Theme.of(context);
     return Container(
       color: theme.colorScheme.background,
@@ -426,7 +430,10 @@ class _IconsPageHeader extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Container(
       color: background,
       // The header is laid out at maxExtent and clipped from the top as it

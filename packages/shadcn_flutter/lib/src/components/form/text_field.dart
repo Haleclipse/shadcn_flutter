@@ -1651,7 +1651,6 @@ abstract class TextInputStatefulWidget extends StatefulWidget with TextInput {
           ? this.contextMenuBuilder
           : contextMenuBuilder(),
       hintText: hintText == null ? this.hintText : hintText(),
-      border: border == null ? this.border : border(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       filled: filled == null ? this.filled : filled(),
       statesController: statesController == null
@@ -1670,6 +1669,7 @@ abstract class TextInputStatefulWidget extends StatefulWidget with TextInput {
       skipInputFeatureFocusTraversal: skipInputFeatureFocusTraversal == null
           ? this.skipInputFeatureFocusTraversal
           : skipInputFeatureFocusTraversal(),
+      theme: TextFieldTheme(border: border == null ? this.border : border()),
     );
   }
 }
@@ -1718,7 +1718,8 @@ abstract class TextInputStatefulWidget extends StatefulWidget with TextInput {
 ///   onChanged: (text) => _handleTextChange(text),
 /// );
 /// ```
-class TextField extends TextInputStatefulWidget {
+class TextField extends TextInputStatefulWidget
+    implements Styleable<TextFieldTheme> {
   /// Called when a drag-to-select gesture starts inside this field.
   ///
   /// Mirrors [TextSelectionGestureDetectorBuilder.onDragSelectionStart] so
@@ -1736,6 +1737,10 @@ class TextField extends TextInputStatefulWidget {
   ///
   /// See [onDragSelectionStart].
   final ValueChanged<TapDragEndDetails>? onDragSelectionEnd;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TextFieldTheme? theme;
 
   /// Creates a text input field widget.
   ///
@@ -1835,6 +1840,7 @@ class TextField extends TextInputStatefulWidget {
     this.onDragSelectionStart,
     this.onDragSelectionUpdate,
     this.onDragSelectionEnd,
+    this.theme,
   });
 
   /// Default context menu builder for editable text.
@@ -2825,7 +2831,8 @@ class TextFieldState extends State<TextField>
   Widget _buildDecorated(BuildContext context) {
     var widget = this.widget;
     final ThemeData theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<TextFieldTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<TextFieldTheme>(context);
     assert(debugCheckHasDirectionality(context));
     final TextEditingController controller = effectiveController;
 
@@ -3043,9 +3050,11 @@ class TextFieldState extends State<TextField>
       cursor: enabled ? SystemMouseCursors.text : SystemMouseCursors.forbidden,
       child: FocusOutline(
         focused: _effectiveFocusNode.hasFocus,
-        borderRadius: effectiveDecoration is BoxDecoration
-            ? effectiveDecoration.borderRadius
-            : null,
+        theme: FocusOutlineTheme(
+          borderRadius: effectiveDecoration is BoxDecoration
+              ? effectiveDecoration.borderRadius
+              : null,
+        ),
         child: IconTheme.merge(
           data: theme.iconTheme.small.copyWith(
             color: theme.colorScheme.mutedForeground,

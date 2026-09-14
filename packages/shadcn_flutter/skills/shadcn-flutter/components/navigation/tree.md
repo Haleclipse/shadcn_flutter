@@ -37,6 +37,7 @@ class TreeExample extends StatelessWidget {
 ### Tree Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates Tree with expandable items, branch lines (path/line),
 // and optional recursive selection behavior.
@@ -57,10 +58,13 @@ class _TreeExample1State extends State<TreeExample1> {
       data: 'Apple',
       expanded: true,
       children: [
-        TreeItemNode(data: 'Red Apple', children: [
-          TreeItemNode(data: 'Red Apple 1'),
-          TreeItemNode(data: 'Red Apple 2'),
-        ]),
+        TreeItemNode(
+          data: 'Red Apple',
+          children: [
+            TreeItemNode(data: 'Red Apple 1'),
+            TreeItemNode(data: 'Red Apple 2'),
+          ],
+        ),
         TreeItemNode(data: 'Green Apple'),
       ],
     ),
@@ -68,11 +72,14 @@ class _TreeExample1State extends State<TreeExample1> {
       data: 'Banana',
       children: [
         TreeItemNode(data: 'Yellow Banana'),
-        TreeItemNode(data: 'Green Banana', children: [
-          TreeItemNode(data: 'Green Banana 1'),
-          TreeItemNode(data: 'Green Banana 2'),
-          TreeItemNode(data: 'Green Banana 3'),
-        ]),
+        TreeItemNode(
+          data: 'Green Banana',
+          children: [
+            TreeItemNode(data: 'Green Banana 1'),
+            TreeItemNode(data: 'Green Banana 2'),
+            TreeItemNode(data: 'Green Banana 3'),
+          ],
+        ),
       ],
     ),
     TreeItemNode(
@@ -82,9 +89,7 @@ class _TreeExample1State extends State<TreeExample1> {
         TreeItemNode(data: 'Green Cherry'),
       ],
     ),
-    TreeItemNode(
-      data: 'Date',
-    ),
+    TreeItemNode(data: 'Date'),
     // Tree Root acts as a parent node with no data,
     // it will flatten the children into the parent node
     TreeRootNode(
@@ -126,14 +131,13 @@ class _TreeExample1State extends State<TreeExample1> {
               // Draw connecting lines either as path curves or straight lines.
               branchLine: usePath ? BranchLine.path : BranchLine.line,
               // Use a built-in handler to update selection state across nodes.
-              onSelectionChanged: Tree.defaultSelectionHandler(
-                treeItems,
-                (value) {
-                  setState(() {
-                    treeItems = value;
-                  });
-                },
-              ),
+              onSelectionChanged: Tree.defaultSelectionHandler(treeItems, (
+                value,
+              ) {
+                setState(() {
+                  treeItems = value;
+                });
+              }),
               builder: (context, node) {
                 return TreeItem(
                   onPressed: () {},
@@ -147,12 +151,15 @@ class _TreeExample1State extends State<TreeExample1> {
                       : null,
                   leading: node.leaf
                       ? const Icon(BootstrapIcons.fileImage)
-                      : Icon(node.expanded
-                          ? BootstrapIcons.folder2Open
-                          : BootstrapIcons.folder2),
+                      : Icon(
+                          node.expanded
+                              ? BootstrapIcons.folder2Open
+                              : BootstrapIcons.folder2,
+                        ),
                   // Expand/collapse handling; updates treeItems with new expanded state.
-                  onExpand:
-                      Tree.defaultItemExpandHandler(treeItems, node, (value) {
+                  onExpand: Tree.defaultItemExpandHandler(treeItems, node, (
+                    value,
+                  ) {
                     setState(() {
                       treeItems = value;
                     });
@@ -276,3 +283,4 @@ class TreeTile extends StatelessWidget implements IComponentPage {
 | `focusNode` | `FocusScopeNode?` | Optional focus scope node for keyboard navigation.  Type: `FocusScopeNode?`. Controls focus behavior within the tree view for keyboard navigation and accessibility. |
 | `onSelectionChanged` | `TreeNodeSelectionChanged<T>?` | Callback invoked when node selection changes.  Type: `TreeNodeSelectionChanged<T>?`. Called with the affected nodes, whether multi-select mode is active, and the new selection state. |
 | `recursiveSelection` | `bool?` | Whether selecting a parent node also selects its children.  Type: `bool?`. If null, defaults to true from theme. When true, selection operations recursively affect all descendant nodes. |
+| `theme` | `TreeTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

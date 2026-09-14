@@ -1,5 +1,6 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../toggle/toggle_example_2.dart';
 
 class ToggleTile extends StatelessWidget implements IComponentPage {
@@ -14,9 +15,8 @@ class ToggleTile extends StatelessWidget implements IComponentPage {
       name: 'toggle',
       title: 'Toggle',
       scale: 1.2,
-      example: Card(
-        child: const ToggleExample2().withAlign(Alignment.topLeft),
-      ).sized(height: 300, width: 300),
+      example: Card(child: const ToggleExample2().withAlign(Alignment.topLeft))
+          .sized(height: 300, width: 300),
     );
   }
 }

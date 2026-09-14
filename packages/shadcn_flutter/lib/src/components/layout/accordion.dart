@@ -45,13 +45,17 @@ import '../../../shadcn_flutter.dart';
 ///   ],
 /// );
 /// ```
-class Accordion extends StatefulWidget {
+class Accordion extends StatefulWidget implements Styleable<AccordionTheme> {
   /// The list of accordion items to display.
   ///
   /// Each item should be an [AccordionItem] widget containing a trigger and content.
   /// The accordion automatically adds visual dividers between items and manages
   /// the expansion state to ensure only one item can be expanded at a time.
   final List<Widget> items;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AccordionTheme? theme;
 
   /// Creates an [Accordion] widget with the specified items.
   ///
@@ -79,7 +83,7 @@ class Accordion extends StatefulWidget {
   ///   ],
   /// );
   /// ```
-  const Accordion({super.key, required this.items});
+  const Accordion({super.key, required this.items, this.theme});
 
   @override
   AccordionState createState() => AccordionState();
@@ -96,7 +100,8 @@ class AccordionState extends State<Accordion> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final accTheme = ComponentTheme.maybeOf<AccordionTheme>(context);
+    final accTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AccordionTheme>(context);
     return Data.inherit(
       data: this,
       child: IntrinsicWidth(
@@ -328,7 +333,8 @@ class AccordionTheme extends ComponentThemeData {
 ///   ),
 /// );
 /// ```
-class AccordionItem extends StatefulWidget {
+class AccordionItem extends StatefulWidget
+    implements Styleable<AccordionTheme> {
   /// The clickable header widget that controls expansion.
   ///
   /// Typically an [AccordionTrigger] widget, but can be any widget that
@@ -348,6 +354,10 @@ class AccordionItem extends StatefulWidget {
   /// When true, the item begins expanded and its content is immediately visible.
   /// Only one item in an accordion should typically start expanded.
   final bool expanded;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AccordionTheme? theme;
 
   /// Creates an [AccordionItem] with the specified trigger and content.
   ///
@@ -377,6 +387,7 @@ class AccordionItem extends StatefulWidget {
     required this.trigger,
     required this.content,
     this.expanded = false,
+    this.theme,
   });
 
   @override
@@ -422,7 +433,8 @@ class _AccordionItemState extends State<AccordionItem>
       accordion = newAccordion;
     }
 
-    final theme = ComponentTheme.maybeOf<AccordionTheme>(context);
+    final theme =
+        widget.theme ?? ComponentTheme.maybeOf<AccordionTheme>(context);
 
     if (_theme != theme) {
       _theme = theme;
@@ -546,13 +558,18 @@ class _AccordionItemState extends State<AccordionItem>
 ///   ),
 /// );
 /// ```
-class AccordionTrigger extends StatefulWidget {
+class AccordionTrigger extends StatefulWidget
+    implements Styleable<AccordionTheme> {
   /// The content widget displayed within the trigger.
   ///
   /// Typically contains text, icons, or other UI elements that describe the
   /// accordion section. The child receives automatic text styling and hover
   /// effects from the trigger.
   final Widget child;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AccordionTheme? theme;
 
   /// Creates an [AccordionTrigger] with the specified child content.
   ///
@@ -572,7 +589,7 @@ class AccordionTrigger extends StatefulWidget {
   ///   child: Text('Click to expand this section'),
   /// );
   /// ```
-  const AccordionTrigger({super.key, required this.child});
+  const AccordionTrigger({super.key, required this.child, this.theme});
 
   @override
   State<AccordionTrigger> createState() => _AccordionTriggerState();
@@ -612,7 +629,8 @@ class _AccordionTriggerState extends State<AccordionTrigger> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    final accTheme = ComponentTheme.maybeOf<AccordionTheme>(context);
+    final accTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AccordionTheme>(context);
     final scaling = theme.scaling;
     return GestureDetector(
       onTap: () {

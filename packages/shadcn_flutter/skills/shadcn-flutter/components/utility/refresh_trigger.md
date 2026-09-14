@@ -26,17 +26,13 @@ class RefreshTriggerExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/refresh_trigger/refresh_trigger_example_1.dart',
+          path: 'lib/pages/docs/components/refresh_trigger/refresh_trigger_example_1.dart',
           child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(dragDevices: {
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.touch,
-            }),
+            behavior: ScrollConfiguration.of(context).copyWith(
+              dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+            ),
             child: OutlinedContainer(
-              child: const RefreshTriggerExample1().sized(
-                height: 400,
-              ),
+              child: const RefreshTriggerExample1().sized(height: 400),
             ),
           ),
         ),
@@ -50,6 +46,7 @@ class RefreshTriggerExample extends StatelessWidget {
 ### Refresh Trigger Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class RefreshTriggerExample1 extends StatefulWidget {
   const RefreshTriggerExample1({super.key});
@@ -103,6 +100,7 @@ class _RefreshTriggerExample1State extends State<RefreshTriggerExample1> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
   const RefreshTriggerTile({super.key});
@@ -175,8 +173,10 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                           color: theme.colorScheme.muted.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child:
-                            const Text('Item 1', textAlign: TextAlign.center),
+                        child: const Text(
+                          'Item 1',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       const Gap(4),
                       Container(
@@ -186,8 +186,10 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                           color: theme.colorScheme.muted.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child:
-                            const Text('Item 2', textAlign: TextAlign.center),
+                        child: const Text(
+                          'Item 2',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       const Gap(4),
                       Container(
@@ -197,8 +199,10 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                           color: theme.colorScheme.muted.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child:
-                            const Text('Item 3', textAlign: TextAlign.center),
+                        child: const Text(
+                          'Item 3',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ],
                   ),
@@ -234,3 +238,4 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
 | `indicatorBuilder` | `RefreshIndicatorBuilder?` | Custom builder for the refresh indicator.  If null, uses [defaultIndicatorBuilder]. |
 | `curve` | `Curve?` | Animation curve for extent changes.  Controls how the pull extent animates during interactions. |
 | `completeDuration` | `Duration?` | Duration for the completion animation.  Time to display the completion state before hiding the indicator. |
+| `theme` | `RefreshTriggerTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

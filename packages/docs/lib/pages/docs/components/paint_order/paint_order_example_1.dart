@@ -22,10 +22,7 @@ class PaintOrderExample1 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Center(
-                child: Text(
-                  'Below',
-                  style: TextStyle(color: Colors.white),
-                ),
+                child: Text('Below', style: TextStyle(color: Colors.white)),
               ),
             ),
           ),
@@ -42,10 +39,7 @@ class PaintOrderExample1 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Center(
-                  child: Text(
-                    'On Top',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child: Text('On Top', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ),

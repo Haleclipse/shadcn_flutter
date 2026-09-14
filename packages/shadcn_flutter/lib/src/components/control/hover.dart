@@ -57,10 +57,12 @@ class HoverTheme extends ComponentThemeData {
     ValueGetter<Duration?>? showDuration,
   }) {
     return HoverTheme(
-      debounceDuration:
-          debounceDuration == null ? this.debounceDuration : debounceDuration(),
-      hitTestBehavior:
-          hitTestBehavior == null ? this.hitTestBehavior : hitTestBehavior(),
+      debounceDuration: debounceDuration == null
+          ? this.debounceDuration
+          : debounceDuration(),
+      hitTestBehavior: hitTestBehavior == null
+          ? this.hitTestBehavior
+          : hitTestBehavior(),
       waitDuration: waitDuration == null ? this.waitDuration : waitDuration(),
       minDuration: minDuration == null ? this.minDuration : minDuration(),
       showDuration: showDuration == null ? this.showDuration : showDuration(),
@@ -79,12 +81,12 @@ class HoverTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        debounceDuration,
-        hitTestBehavior,
-        waitDuration,
-        minDuration,
-        showDuration,
-      );
+    debounceDuration,
+    hitTestBehavior,
+    waitDuration,
+    minDuration,
+    showDuration,
+  );
 }
 
 /// A widget that tracks mouse hover state and triggers callbacks.
@@ -107,7 +109,7 @@ class HoverTheme extends ComponentThemeData {
 ///   ),
 /// )
 /// ```
-class HoverActivity extends StatefulWidget {
+class HoverActivity extends StatefulWidget implements Styleable<HoverTheme> {
   /// The widget to track for hover events.
   final Widget child;
 
@@ -125,10 +127,16 @@ class HoverActivity extends StatefulWidget {
   /// Interval for repeated [onHover] callbacks while the cursor remains over the widget.
   ///
   /// If `null`, [onHover] is called only once when hover begins.
+  @Deprecated('Use theme: HoverTheme(debounceDuration: ...) instead.')
   final Duration? debounceDuration;
 
   /// Hit test behavior determining how this widget participates in pointer event handling.
+  @Deprecated('Use theme: HoverTheme(hitTestBehavior: ...) instead.')
   final HitTestBehavior? hitTestBehavior;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final HoverTheme? theme;
 
   /// Creates a [HoverActivity] widget.
   const HoverActivity({
@@ -139,6 +147,7 @@ class HoverActivity extends StatefulWidget {
     this.onEnter,
     this.hitTestBehavior,
     this.debounceDuration,
+    this.theme,
   });
 
   @override
@@ -177,15 +186,18 @@ class _HoverActivityState extends State<HoverActivity>
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<HoverTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<HoverTheme>(context);
     final debounceDuration = styleValue(
-        widgetValue: widget.debounceDuration,
-        themeValue: compTheme?.debounceDuration,
-        defaultValue: const Duration(milliseconds: 100));
+      widgetValue: widget.debounceDuration,
+      themeValue: compTheme?.debounceDuration,
+      defaultValue: const Duration(milliseconds: 100),
+    );
     final behavior = styleValue(
-        widgetValue: widget.hitTestBehavior,
-        themeValue: compTheme?.hitTestBehavior,
-        defaultValue: HitTestBehavior.deferToChild);
+      widgetValue: widget.hitTestBehavior,
+      themeValue: compTheme?.hitTestBehavior,
+      defaultValue: HitTestBehavior.deferToChild,
+    );
     _controller.duration = debounceDuration;
     return MouseRegion(
       hitTestBehavior: behavior,
@@ -228,7 +240,7 @@ class _HoverActivityState extends State<HoverActivity>
 ///   ),
 /// )
 /// ```
-class Hover extends StatefulWidget {
+class Hover extends StatefulWidget implements Styleable<HoverTheme> {
   /// The widget to track for hover events.
   final Widget child;
 
@@ -240,19 +252,26 @@ class Hover extends StatefulWidget {
   /// Delay before activating hover after cursor enters.
   ///
   /// Prevents accidental activation from quick cursor passes. Defaults to 500ms.
+  @Deprecated('Use theme: HoverTheme(waitDuration: ...) instead.')
   final Duration? waitDuration;
 
   /// Minimum duration to keep hover active once triggered.
   ///
   /// Prevents flickering when cursor quickly moves over the widget. Defaults to 0ms.
-  final Duration?
-      minDuration; // The minimum duration to show the hover, if the cursor is quickly moved over the widget.
+  @Deprecated('Use theme: HoverTheme(minDuration: ...) instead.')
+  final Duration? minDuration; // The minimum duration to show the hover, if the cursor is quickly moved over the widget.
 
   /// Total duration for hover state before auto-deactivation.
+  @Deprecated('Use theme: HoverTheme(showDuration: ...) instead.')
   final Duration? showDuration; // The duration to show the hover
 
   /// Hit test behavior for pointer event handling.
+  @Deprecated('Use theme: HoverTheme(hitTestBehavior: ...) instead.')
   final HitTestBehavior? hitTestBehavior;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final HoverTheme? theme;
 
   /// Creates a [Hover] widget with timing configuration.
   const Hover({
@@ -263,6 +282,7 @@ class Hover extends StatefulWidget {
     this.minDuration,
     this.showDuration,
     this.hitTestBehavior,
+    this.theme,
   });
 
   @override
@@ -283,10 +303,7 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
     _waitDur = widget.waitDuration ?? const Duration(milliseconds: 500);
     _minDur = widget.minDuration ?? const Duration(milliseconds: 0);
     _showDur = widget.showDuration ?? const Duration(milliseconds: 200);
-    _controller = AnimationController(
-      vsync: this,
-      duration: _waitDur,
-    );
+    _controller = AnimationController(vsync: this, duration: _waitDur);
     _controller.addStatusListener(_onStatusChanged);
   }
 
@@ -325,25 +342,31 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final platform = Theme.of(context).platform;
-    final compTheme = ComponentTheme.maybeOf<HoverTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<HoverTheme>(context);
     _waitDur = styleValue(
-        widgetValue: widget.waitDuration,
-        themeValue: compTheme?.waitDuration,
-        defaultValue: const Duration(milliseconds: 500));
+      widgetValue: widget.waitDuration,
+      themeValue: compTheme?.waitDuration,
+      defaultValue: const Duration(milliseconds: 500),
+    );
     _minDur = styleValue(
-        widgetValue: widget.minDuration,
-        themeValue: compTheme?.minDuration,
-        defaultValue: const Duration(milliseconds: 0));
+      widgetValue: widget.minDuration,
+      themeValue: compTheme?.minDuration,
+      defaultValue: const Duration(milliseconds: 0),
+    );
     _showDur = styleValue(
-        widgetValue: widget.showDuration,
-        themeValue: compTheme?.showDuration,
-        defaultValue: const Duration(milliseconds: 200));
+      widgetValue: widget.showDuration,
+      themeValue: compTheme?.showDuration,
+      defaultValue: const Duration(milliseconds: 200),
+    );
     _behavior = styleValue(
-        widgetValue: widget.hitTestBehavior,
-        themeValue: compTheme?.hitTestBehavior,
-        defaultValue: HitTestBehavior.deferToChild);
+      widgetValue: widget.hitTestBehavior,
+      themeValue: compTheme?.hitTestBehavior,
+      defaultValue: HitTestBehavior.deferToChild,
+    );
     _controller.duration = _waitDur;
-    bool enableLongPress = platform == TargetPlatform.iOS ||
+    bool enableLongPress =
+        platform == TargetPlatform.iOS ||
         platform == TargetPlatform.android ||
         platform == TargetPlatform.fuchsia;
     return TapRegion(

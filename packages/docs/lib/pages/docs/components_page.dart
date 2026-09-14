@@ -101,6 +101,8 @@ import 'components/timeline_animation/timeline_animation_tile.dart';
 import 'components/window/window_tile.dart';
 import 'components/wrapper/wrapper_tile.dart';
 
+import 'package:gap/gap.dart';
+
 const kComponentsMode = ComponentsMode.normal;
 
 class ComponentsPage extends StatefulWidget {
@@ -142,142 +144,151 @@ class ComponentsPageState extends State<ComponentsPage> {
           children: [
             const Text('Components').h1(),
             const Text(
-                    'Beautifully designed components from Shadcn/UI is now available for Flutter.')
-                .lead(),
+              'Beautifully designed components from Shadcn/UI is now available for Flutter.',
+            ).lead(),
             const Gap(16),
             const Align(
               alignment: AlignmentDirectional.centerStart,
-              child: PrimaryBadge(
-                child: Text('Work in Progress'),
-              ),
+              child: PrimaryBadge(child: Text('Work in Progress')),
             ),
             const Gap(32),
             const Text('Animation').h2().anchored(animationKey),
             const Gap(16),
-            wrap(children: [
-              const AnimatedValueBuilderTile(),
-              const NumberTickerTile(),
-              const RepeatedAnimationBuilderTile(),
-            ]),
+            wrap(
+              children: [
+                const AnimatedValueBuilderTile(),
+                const NumberTickerTile(),
+                const RepeatedAnimationBuilderTile(),
+              ],
+            ),
             const Text('Disclosure').h2().anchored(disclosureKey),
+            const Gap(16),
+            wrap(children: [const AccordionTile(), const CollapsibleTile()]),
+            const Text('Feedback').h2().anchored(feedbackKey),
             const Gap(16),
             wrap(
               children: [
-                const AccordionTile(),
-                const CollapsibleTile(),
+                const AlertTile(),
+                const AlertDialogTile(),
+                const CircularProgressTile(),
+                const ProgressTile(),
+                const SkeletonTile(),
+                const ToastTile(),
+                const LinearProgressTile(),
               ],
             ),
-            const Text('Feedback').h2().anchored(feedbackKey),
-            const Gap(16),
-            wrap(children: [
-              const AlertTile(),
-              const AlertDialogTile(),
-              const CircularProgressTile(),
-              const ProgressTile(),
-              const SkeletonTile(),
-              const ToastTile(),
-              const LinearProgressTile(),
-            ]),
             const Text('Forms').h2().anchored(formsKey),
             const Gap(16),
-            wrap(children: [
-              const ButtonTile(),
-              const CheckboxTile(),
-              const ChipInputTile(),
-              const ColorPickerTile(),
-              const DatePickerTile(),
-              const FormTile(),
-              const InputTile(),
-              const InputOTPTile(),
-              const PhoneInputTile(),
-              const RadioGroupTile(),
-              const SelectTile(),
-              const SliderTile(),
-              const StarRatingTile(),
-              const SwitchTile(),
-              const TextAreaTile(),
-              const TimePickerTile(),
-              const ToggleTile(),
-              const AutocompleteTile(),
-              const ChipTile(),
-              const FormattedInputTile(),
-              const ItemPickerTile(),
-              const MultiselectTile(),
-              const NumberInputTile(),
-              const RadioCardTile(),
-              const SortableTile(),
-            ]),
+            wrap(
+              children: [
+                const ButtonTile(),
+                const CheckboxTile(),
+                const ChipInputTile(),
+                const ColorPickerTile(),
+                const DatePickerTile(),
+                const FormTile(),
+                const InputTile(),
+                const InputOTPTile(),
+                const PhoneInputTile(),
+                const RadioGroupTile(),
+                const SelectTile(),
+                const SliderTile(),
+                const StarRatingTile(),
+                const SwitchTile(),
+                const TextAreaTile(),
+                const TimePickerTile(),
+                const ToggleTile(),
+                const AutocompleteTile(),
+                const ChipTile(),
+                const FormattedInputTile(),
+                const ItemPickerTile(),
+                const MultiselectTile(),
+                const NumberInputTile(),
+                const RadioCardTile(),
+                const SortableTile(),
+              ],
+            ),
             const Text('Layout').h2().anchored(layoutKey),
             const Gap(16),
-            wrap(children: [
-              const CardTile(),
-              const CarouselTile(),
-              const DividerTile(),
-              const ResizableTile(),
-              const StepsTile(),
-              const StepperTile(),
-              const TimelineTile(),
-              const AppBarTile(),
-              const ExpandableSidebarTile(),
-              const ScaffoldTile(),
-              const SwiperTile(),
-              const WindowTile(),
-            ]),
+            wrap(
+              children: [
+                const CardTile(),
+                const CarouselTile(),
+                const DividerTile(),
+                const ResizableTile(),
+                const StepsTile(),
+                const StepperTile(),
+                const TimelineTile(),
+                const AppBarTile(),
+                const ExpandableSidebarTile(),
+                const ScaffoldTile(),
+                const SwiperTile(),
+                const WindowTile(),
+              ],
+            ),
             const Text('Navigation').h2().anchored(navigationKey),
             const Gap(16),
-            wrap(children: [
-              const BreadcrumbTile(),
-              const MenubarTile(),
-              const NavigationMenuTile(),
-              const PaginationTile(),
-              const TabsTile(),
-              const TabListTile(),
-              const TreeTile(),
-              const NavigationBarTile(),
-              const NavigationRailTile(),
-              const NavigationSidebarTile(),
-              const TabPaneTile(),
-              const SwitcherTile(),
-            ]),
+            wrap(
+              children: [
+                const BreadcrumbTile(),
+                const MenubarTile(),
+                const NavigationMenuTile(),
+                const PaginationTile(),
+                const TabsTile(),
+                const TabListTile(),
+                const TreeTile(),
+                const NavigationBarTile(),
+                const NavigationRailTile(),
+                const NavigationSidebarTile(),
+                const TabPaneTile(),
+                const SwitcherTile(),
+              ],
+            ),
             const Text('Surfaces').h2().anchored(surfacesKey),
             const Gap(16),
-            wrap(children: [
-              const DialogTile(),
-              const DrawerTile(),
-              const HoverCardTile(),
-              const SheetTile(),
-              const TooltipTile(),
-              const PopoverTile(),
-              const PinnedSheetTile(),
-            ]),
+            wrap(
+              children: [
+                const DialogTile(),
+                const DrawerTile(),
+                const HoverCardTile(),
+                const SheetTile(),
+                const TooltipTile(),
+                const PopoverTile(),
+                const PinnedSheetTile(),
+              ],
+            ),
             const Text('Data Display').h2().anchored(dataDisplayKey),
             const Gap(16),
-            wrap(children: [
-              const AvatarTile(),
-              const AvatarGroupTile(),
-              const WIPComponentCard(title: 'Data Table'),
-              const WIPComponentCard(title: 'Chart'),
-              const CodeSnippetTile(),
-              const TrackerTile(),
-              const DotIndicatorTile(),
-              const CardImageTile(),
-              const TableTile(),
-              const ChatTile(),
-            ]),
+            wrap(
+              children: [
+                const AvatarTile(),
+                const AvatarGroupTile(),
+                const WIPComponentCard(title: 'Data Table'),
+                const WIPComponentCard(title: 'Chart'),
+                const CodeSnippetTile(),
+                const TrackerTile(),
+                const DotIndicatorTile(),
+                const CardImageTile(),
+                const TableTile(),
+                const ChatTile(),
+              ],
+            ),
             const Text('Utilities').h2().anchored(utilitiesKey),
             const Gap(16),
-            wrap(children: [
-              const BadgeTile(),
-              const CalendarTile(),
-              const CommandTile(),
-              const ContextMenuTile(),
-              const DropdownMenuTile(),
-              const KeyboardDisplayTile(),
-              const OverflowMarqueeTile(),
-              const RefreshTriggerTile(),
-              const TimelineAnimationTile(),
-              const WrapperTile(),
-            ]),
+            wrap(
+              children: [
+                const BadgeTile(),
+                const CalendarTile(),
+                const CommandTile(),
+                const ContextMenuTile(),
+                const DropdownMenuTile(),
+                const KeyboardDisplayTile(),
+                const OverflowMarqueeTile(),
+                const RefreshTriggerTile(),
+                const TimelineAnimationTile(),
+                const WrapperTile(),
+              ],
+            ),
           ],
         ),
       ),
@@ -286,11 +297,7 @@ class ComponentsPageState extends State<ComponentsPage> {
 
   Widget wrap({required List<IComponentPage> children}) {
     children.sort((a, b) => a.title.compareTo(b.title));
-    return Wrap(
-      spacing: 16,
-      runSpacing: 16,
-      children: children,
-    );
+    return Wrap(spacing: 16, runSpacing: 16, children: children);
   }
 }
 
@@ -304,10 +311,7 @@ class WIPComponentCard extends StatelessWidget implements IComponentPage {
   @override
   final String title;
 
-  const WIPComponentCard({
-    super.key,
-    required this.title,
-  });
+  const WIPComponentCard({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -316,9 +320,7 @@ class WIPComponentCard extends StatelessWidget implements IComponentPage {
         name: '-',
         title: title,
         center: true,
-        example: const PrimaryBadge(
-          child: Text('Work in Progress'),
-        ),
+        example: const PrimaryBadge(child: Text('Work in Progress')),
       ),
     );
   }
@@ -368,21 +370,23 @@ class _ComponentCardState extends State<ComponentCard> {
       onTap: componentsMode == ComponentsMode.normal
           ? null
           : () {
-              final render = repaintKey.currentContext!.findRenderObject()
-                  as RenderRepaintBoundary;
-              render.toImage().then(
-                (value) async {
-                  var byteData =
-                      (await value.toByteData(format: ImageByteFormat.png))!;
-                  value.dispose();
-                  final list = byteData.buffer.asUint8List();
-                  // convert to base64 image
-                  final base64Image = base64.encode(list);
-                  final String baseImage = 'data:image/png;base64,$base64Image';
-                  launchUrlString(baseImage,
-                      mode: LaunchMode.externalApplication);
-                },
-              );
+              final render =
+                  repaintKey.currentContext!.findRenderObject()
+                      as RenderRepaintBoundary;
+              render.toImage().then((value) async {
+                var byteData = (await value.toByteData(
+                  format: ImageByteFormat.png,
+                ))!;
+                value.dispose();
+                final list = byteData.buffer.asUint8List();
+                // convert to base64 image
+                final base64Image = base64.encode(list);
+                final String baseImage = 'data:image/png;base64,$base64Image';
+                launchUrlString(
+                  baseImage,
+                  mode: LaunchMode.externalApplication,
+                );
+              });
             },
       child: Clickable(
         enabled: componentsMode == ComponentsMode.normal,
@@ -405,113 +409,106 @@ class _ComponentCardState extends State<ComponentCard> {
                 height: 200,
                 width: 250,
                 child: AnimatedValueBuilder(
-                    value: _hovering ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeInOut,
-                    builder: (context, value, child) {
-                      final borderColor = Color.lerp(theme.colorScheme.border,
-                          theme.colorScheme.ring, value);
-                      return OutlinedContainer(
-                        clipBehavior: Clip.antiAlias,
-                        borderColor: borderColor,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Expanded(
-                              child: IgnorePointer(
-                                child: Container(
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      // `accent` equals `border`/`muted` in the
-                                      // dark themes, which makes widget borders
-                                      // invisible against it; `card` keeps
-                                      // contrast in both themes.
-                                      color: theme.colorScheme.card,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft:
-                                            Radius.circular(theme.radiusMd + 3),
-                                        topRight:
-                                            Radius.circular(theme.radiusMd + 3),
-                                      ),
+                  value: _hovering ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  builder: (context, value, child) {
+                    final borderColor = Color.lerp(
+                      theme.colorScheme.border,
+                      theme.colorScheme.ring,
+                      value,
+                    );
+                    return OutlinedContainer(
+                      clipBehavior: Clip.antiAlias,
+                      theme: OutlinedContainerTheme(borderColor: borderColor),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: IgnorePointer(
+                              child: Container(
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  // `accent` equals `border`/`muted` in the
+                                  // dark themes, which makes widget borders
+                                  // invisible against it; `card` keeps
+                                  // contrast in both themes.
+                                  color: theme.colorScheme.card,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                      theme.radiusMd + 3,
                                     ),
-                                    child: Transform.scale(
-                                      scale: 1 + 0.3 * value,
-                                      child: Transform.rotate(
-                                        angle: pi / 180 * 10 * value,
-                                        child: widget.fit
-                                            ? Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: FittedBox(
-                                                  fit: BoxFit.contain,
+                                    topRight: Radius.circular(
+                                      theme.radiusMd + 3,
+                                    ),
+                                  ),
+                                ),
+                                child: Transform.scale(
+                                  scale: 1 + 0.3 * value,
+                                  child: Transform.rotate(
+                                    angle: pi / 180 * 10 * value,
+                                    child: widget.fit
+                                        ? Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: widget.example,
+                                            ),
+                                          )
+                                        : widget.center
+                                        ? Center(
+                                            child: Transform.scale(
+                                              scale: widget.scale,
+                                              child: SingleChildScrollView(
+                                                clipBehavior: Clip.none,
+                                                child: widget.example,
+                                              ),
+                                            ),
+                                          ).withPadding(all: 24)
+                                        : Stack(
+                                            children: [
+                                              Positioned(
+                                                top: !widget.reverseVertical
+                                                    ? widget.verticalOffset
+                                                    : null,
+                                                right: widget.reverse
+                                                    ? widget.horizontalOffset
+                                                    : null,
+                                                bottom: widget.reverseVertical
+                                                    ? widget.verticalOffset
+                                                    : null,
+                                                left: !widget.reverse
+                                                    ? widget.horizontalOffset
+                                                    : null,
+                                                child: Transform.scale(
+                                                  scale: widget.scale,
+                                                  alignment: widget.reverse
+                                                      ? widget.reverseVertical
+                                                            ? Alignment
+                                                                  .bottomRight
+                                                            : Alignment.topRight
+                                                      : widget.reverseVertical
+                                                      ? Alignment.bottomLeft
+                                                      : Alignment.topLeft,
                                                   child: widget.example,
                                                 ),
-                                              )
-                                            : widget.center
-                                                ? Center(
-                                                    child: Transform.scale(
-                                                        scale: widget.scale,
-                                                        child:
-                                                            SingleChildScrollView(
-                                                          clipBehavior:
-                                                              Clip.none,
-                                                          child: widget.example,
-                                                        )),
-                                                  ).withPadding(all: 24)
-                                                : Stack(
-                                                    children: [
-                                                      Positioned(
-                                                        top: !widget
-                                                                .reverseVertical
-                                                            ? widget
-                                                                .verticalOffset
-                                                            : null,
-                                                        right: widget.reverse
-                                                            ? widget
-                                                                .horizontalOffset
-                                                            : null,
-                                                        bottom: widget
-                                                                .reverseVertical
-                                                            ? widget
-                                                                .verticalOffset
-                                                            : null,
-                                                        left: !widget.reverse
-                                                            ? widget
-                                                                .horizontalOffset
-                                                            : null,
-                                                        child: Transform.scale(
-                                                          scale: widget.scale,
-                                                          alignment: widget
-                                                                  .reverse
-                                                              ? widget
-                                                                      .reverseVertical
-                                                                  ? Alignment
-                                                                      .bottomRight
-                                                                  : Alignment
-                                                                      .topRight
-                                                              : widget
-                                                                      .reverseVertical
-                                                                  ? Alignment
-                                                                      .bottomLeft
-                                                                  : Alignment
-                                                                      .topLeft,
-                                                          child: widget.example,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                      ),
-                                    )),
+                                              ),
+                                            ],
+                                          ),
+                                  ),
+                                ),
                               ),
                             ),
-                            const Divider(),
-                            Text(widget.title)
-                                .medium()
-                                .withPadding(vertical: 12, horizontal: 16),
-                          ],
-                        ),
-                      );
-                    }),
+                          ),
+                          const Divider(),
+                          Text(widget.title)
+                              .medium()
+                              .withPadding(vertical: 12, horizontal: 16),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),

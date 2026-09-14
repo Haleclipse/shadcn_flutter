@@ -177,7 +177,12 @@ class SelectableTextTheme extends ComponentThemeData {
 /// - [Text] for non-selectable text display
 /// - [TextField] for editable text input
 /// - [SelectableTextTheme] for theming selection appearance
-class SelectableText extends StatefulWidget {
+class SelectableText extends StatefulWidget
+    implements Styleable<SelectableTextTheme> {
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final SelectableTextTheme? theme;
+
   /// Creates selectable text from a plain string.
   ///
   /// The [data] parameter is the text to display. All other parameters
@@ -242,6 +247,7 @@ class SelectableText extends StatefulWidget {
     this.onSelectionChanged,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.magnifierConfiguration,
+    this.theme,
   }) : assert(maxLines == null || maxLines > 0),
        assert(minLines == null || minLines > 0),
        assert(
@@ -305,6 +311,7 @@ class SelectableText extends StatefulWidget {
     this.onSelectionChanged,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.magnifierConfiguration,
+    this.theme,
   }) : assert(maxLines == null || maxLines > 0),
        assert(minLines == null || minLines > 0),
        assert(
@@ -671,7 +678,8 @@ class _SelectableTextState extends State<SelectableText>
     );
 
     final ThemeData theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<SelectableTextTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<SelectableTextTheme>(context);
     final DefaultSelectionStyle selectionStyle = DefaultSelectionStyle.of(
       context,
     );

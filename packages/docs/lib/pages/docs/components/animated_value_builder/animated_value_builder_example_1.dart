@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// AnimatedValueBuilder example: animating between colors.
 ///
@@ -16,11 +17,7 @@ class AnimatedValueBuilderExample1 extends StatefulWidget {
 class _AnimatedValueBuilderExample1State
     extends State<AnimatedValueBuilderExample1> {
   // A small palette to cycle through.
-  List<Color> colors = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
-  ];
+  List<Color> colors = [Colors.red, Colors.green, Colors.blue];
   // Index of the current target color.
   int index = 0;
   @override
@@ -36,11 +33,7 @@ class _AnimatedValueBuilderExample1State
           lerp: Color.lerp,
           // The builder exposes the current animated value on each frame.
           builder: (context, value, child) {
-            return Container(
-              width: 100,
-              height: 100,
-              color: value,
-            );
+            return Container(width: 100, height: 100, color: value);
           },
         ),
         const Gap(32),

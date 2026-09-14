@@ -29,6 +29,7 @@ Scrollbar(
 
 | Property | Type | Description |
 | :--- | :--- | :--- |
+| `theme` | `ScrollbarTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |
 | `child` | `Widget` | The scrollable widget to attach the scrollbar to. |
 | `controller` | `ScrollController?` | Optional scroll controller for the scrollable content.  If not provided, the scrollbar will use the nearest [Scrollable]'s controller. |
 | `thumbVisibility` | `bool?` | Whether the scrollbar thumb is always visible.  When `true`, the thumb remains visible even when not scrolling. When `false` or `null`, the thumb fades out after scrolling stops. |

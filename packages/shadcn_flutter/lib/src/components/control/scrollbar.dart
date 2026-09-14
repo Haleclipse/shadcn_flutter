@@ -18,11 +18,7 @@ class ScrollbarTheme extends ComponentThemeData {
   final Radius? radius;
 
   /// Creates a [ScrollbarTheme].
-  const ScrollbarTheme({
-    this.color,
-    this.thickness,
-    this.radius,
-  });
+  const ScrollbarTheme({this.color, this.thickness, this.radius});
 
   /// Creates a copy of this theme with the given values replaced.
   ScrollbarTheme copyWith({
@@ -73,7 +69,11 @@ const Duration _kScrollbarTimeToFade = Duration(milliseconds: 600);
 ///   ),
 /// )
 /// ```
-class Scrollbar extends StatelessWidget {
+class Scrollbar extends StatelessWidget implements Styleable<ScrollbarTheme> {
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ScrollbarTheme? theme;
+
   /// Creates a [Scrollbar] widget.
   ///
   /// Parameters:
@@ -99,6 +99,7 @@ class Scrollbar extends StatelessWidget {
     this.notificationPredicate,
     this.interactive,
     this.scrollbarOrientation,
+    this.theme,
   });
 
   /// The scrollable widget to attach the scrollbar to.
@@ -171,12 +172,12 @@ class _ShadcnScrollbar extends RawScrollbar {
     super.interactive,
     super.scrollbarOrientation,
   }) : super(
-          fadeDuration: _kScrollbarFadeDuration,
-          timeToFade: _kScrollbarTimeToFade,
-          pressDuration: Duration.zero,
-          notificationPredicate:
-              notificationPredicate ?? defaultScrollNotificationPredicate,
-        );
+         fadeDuration: _kScrollbarFadeDuration,
+         timeToFade: _kScrollbarTimeToFade,
+         pressDuration: Duration.zero,
+         notificationPredicate:
+             notificationPredicate ?? defaultScrollNotificationPredicate,
+       );
 
   final Color? color;
 
@@ -215,24 +216,26 @@ class _ShadcnScrollbarState extends RawScrollbarState<_ShadcnScrollbar> {
     final compTheme = ComponentTheme.maybeOf<ScrollbarTheme>(context);
     scrollbarPainter
       ..color = styleValue(
-          widgetValue: widget.color,
-          themeValue: compTheme?.color,
-          defaultValue: _theme.colorScheme.border)
+        widgetValue: widget.color,
+        themeValue: compTheme?.color,
+        defaultValue: _theme.colorScheme.border,
+      )
       ..textDirection = Directionality.of(context)
       // Should this be affected by density?
       ..thickness = styleValue(
-          widgetValue: widget.thickness,
-          themeValue: compTheme?.thickness,
-          defaultValue: 7.0 * _theme.scaling)
+        widgetValue: widget.thickness,
+        themeValue: compTheme?.thickness,
+        defaultValue: 7.0 * _theme.scaling,
+      )
       ..radius = styleValue(
-          widgetValue: widget.radius,
-          themeValue: compTheme?.radius,
-          defaultValue: Radius.circular(_theme.radiusSm))
+        widgetValue: widget.radius,
+        themeValue: compTheme?.radius,
+        defaultValue: Radius.circular(_theme.radiusSm),
+      )
       ..minLength = _kScrollbarMinLength
-      ..padding = MediaQuery.paddingOf(context) +
-          EdgeInsets.all(
-            _theme.density.baseGap * _theme.scaling * 0.125,
-          )
+      ..padding =
+          MediaQuery.paddingOf(context) +
+          EdgeInsets.all(_theme.density.baseGap * _theme.scaling * 0.125)
       ..scrollbarOrientation = widget.scrollbarOrientation
       ..ignorePointer = !enableGestures;
   }

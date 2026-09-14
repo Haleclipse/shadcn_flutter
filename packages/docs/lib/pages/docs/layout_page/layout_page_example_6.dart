@@ -14,11 +14,7 @@ class _LayoutPageExample6State extends State<LayoutPageExample6> {
       child: const Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(' Item 1 '),
-          Text(' Item 2 '),
-          Text(' Item 3 '),
-        ],
+        children: [Text(' Item 1 '), Text(' Item 2 '), Text(' Item 3 ')],
       ).separator(const VerticalDivider()),
     );
   }

@@ -16,7 +16,8 @@ class SortableExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'sortable',
-      description: 'A sortable is a way of displaying a list of items in '
+      description:
+          'A sortable is a way of displaying a list of items in '
           'a way that allows the user to change the order of the items.',
       displayName: 'Sortable',
       children: [

@@ -18,18 +18,14 @@ class NavigationMenuExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return ComponentPage(
       name: 'navigation_menu',
-      description:
-          'Navigation menu is a component that provides a list of navigation items.',
+      description: 'Navigation menu is a component that provides a list of navigation items.',
       displayName: 'Navigation Menu',
       children: [
         ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: 600,
-          ),
+          constraints: const BoxConstraints(minHeight: 600),
           child: const WidgetUsageExample(
             title: 'Example',
-            path:
-                'lib/pages/docs/components/navigation_menu/navigation_menu_example_1.dart',
+            path: 'lib/pages/docs/components/navigation_menu/navigation_menu_example_1.dart',
             child: NavigationMenuExample1(),
           ),
         ),
@@ -43,6 +39,7 @@ class NavigationMenuExample extends StatelessWidget {
 ### Navigation Menu Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class NavigationMenuExample1 extends StatelessWidget {
   const NavigationMenuExample1({super.key});
@@ -63,40 +60,42 @@ class NavigationMenuExample1 extends StatelessWidget {
               NavigationMenuContent(
                 title: const Text('Introduction'),
                 content: const Text(
-                    'Component library for Flutter based on Shadcn/UI design.'),
+                  'Component library for Flutter based on Shadcn/UI design.',
+                ),
                 onPressed: () {},
               ),
               NavigationMenuContent(
                 title: const Text('Installation'),
                 content: const Text(
-                    'How to install this package in your Flutter project.'),
+                  'How to install this package in your Flutter project.',
+                ),
                 onPressed: () {},
               ),
               NavigationMenuContent(
                 title: const Text('Typography'),
                 content: const Text(
-                    'Styles and usage of typography in this package.'),
+                  'Styles and usage of typography in this package.',
+                ),
                 onPressed: () {},
               ),
               Clickable(
-                mouseCursor:
-                    const WidgetStatePropertyAll(SystemMouseCursors.click),
+                mouseCursor: const WidgetStatePropertyAll(
+                  SystemMouseCursors.click,
+                ),
                 child: Card(
-                  borderRadius: theme.borderRadiusMd,
+                  theme: CardTheme(borderRadius: theme.borderRadiusMd),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const FlutterLogo(
-                        size: 32,
-                      ),
+                      const FlutterLogo(size: 32),
                       const Gap(16),
                       const Text('shadcn_flutter').mono().semiBold().large(),
                       const Gap(8),
                       const Text(
-                              'Beautifully designed components from Shadcn/UI is now available for Flutter')
-                          .muted(),
+                        'Beautifully designed components from Shadcn/UI is now available for Flutter',
+                      ).muted(),
                     ],
                   ),
                 ).constrained(maxWidth: 192),
@@ -182,6 +181,7 @@ class NavigationMenuExample1 extends StatelessWidget {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class NavigationMenuTile extends StatelessWidget implements IComponentPage {
   const NavigationMenuTile({super.key});
@@ -213,10 +213,7 @@ class NavigationMenuTile extends StatelessWidget implements IComponentPage {
                       );
                     },
                   ),
-                  trailing: const Icon(
-                    RadixIcons.chevronUp,
-                    size: 12,
-                  ),
+                  trailing: const Icon(RadixIcons.chevronUp, size: 12),
                   child: const Text('Getting Started'),
                 ),
                 const NavigationMenuItem(
@@ -227,7 +224,7 @@ class NavigationMenuTile extends StatelessWidget implements IComponentPage {
             ),
             const Gap(8),
             OutlinedContainer(
-              borderRadius: theme.borderRadiusMd,
+              theme: OutlinedContainerTheme(borderRadius: theme.borderRadiusMd),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: NavigationMenuContentList(
@@ -248,10 +245,12 @@ class NavigationMenuTile extends StatelessWidget implements IComponentPage {
                       alignment: Alignment.topLeft,
                       child: Basic(
                         title: const Text('Installation').medium(),
-                        content:
-                            const Text('How to install Shadcn/UI for Flutter')
-                                .muted(),
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        content: const Text(
+                          'How to install Shadcn/UI for Flutter',
+                        ).muted(),
+                        theme: BasicTheme(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                        ),
                       ),
                     ).constrained(maxWidth: 16 * 16),
                   ],
@@ -282,3 +281,4 @@ class NavigationMenuTile extends StatelessWidget implements IComponentPage {
 | `surfaceBlur` | `double?` | Blur effect intensity for the popover surface.  Controls the backdrop blur effect applied behind the dropdown content. Higher values create more blur. If not specified, uses the theme's default surface blur setting. |
 | `children` | `List<Widget>` | The list of menu items to display in the navigation menu.  Each item should be a [NavigationMenuItem] that defines the menu's structure and behavior. Items can have content for dropdown functionality or simple press actions. |
 | `adaptiveOverlay` | `bool?` | Whether the popover may adapt to a different presentation on mobile platforms (see [showOverlay]'s `adaptive` parameter). |
+| `theme` | `NavigationMenuTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

@@ -35,8 +35,7 @@ class ButtonExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'button',
-      description:
-          'Buttons allow users to take actions, and make choices, with a single tap.',
+      description: 'Buttons allow users to take actions, and make choices, with a single tap.',
       displayName: 'Button',
       children: [
         WidgetUsageExample(
@@ -123,7 +122,7 @@ class ButtonExample extends StatelessWidget {
           title: 'Custom Button Example',
           path: 'lib/pages/docs/components/button/button_example_17.dart',
           child: ButtonExample17(),
-        )
+        ),
       ],
     );
   }
@@ -143,10 +142,7 @@ class ButtonExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
-      onPressed: () {},
-      child: const Text('Primary'),
-    );
+    return PrimaryButton(onPressed: () {}, child: const Text('Primary'));
   }
 }
 
@@ -260,10 +256,7 @@ class ButtonExample12 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      child: const Text('Text Button'),
-    );
+    return TextButton(onPressed: () {}, child: const Text('Text Button'));
   }
 }
 
@@ -314,10 +307,7 @@ class ButtonExample14 extends StatelessWidget {
       children: [
         ButtonGroupItem(
           // ButtonGroupItem is optional, but allows for paint reordering on focused item
-          child: PrimaryButton(
-            child: const Text('Primary'),
-            onPressed: () {},
-          ),
+          child: PrimaryButton(child: const Text('Primary'), onPressed: () {}),
         ),
         ButtonGroupItem(
           child: SecondaryButton(
@@ -332,16 +322,10 @@ class ButtonExample14 extends StatelessWidget {
           ),
         ),
         ButtonGroupItem(
-          child: OutlineButton(
-            child: const Text('Outlined'),
-            onPressed: () {},
-          ),
+          child: OutlineButton(child: const Text('Outlined'), onPressed: () {}),
         ),
         ButtonGroupItem(
-          child: GhostButton(
-            child: const Text('Ghost'),
-            onPressed: () {},
-          ),
+          child: GhostButton(child: const Text('Ghost'), onPressed: () {}),
         ),
         ButtonGroupItem(
           child: IconButton.primary(
@@ -369,8 +353,7 @@ class ButtonExample15 extends StatelessWidget {
       leading: const StatedWidget.map(
         states: {
           'disabled': Icon(LucideIcons.x),
-          {WidgetState.hovered, WidgetState.focused}:
-              Icon(LucideIcons.camera),
+          {WidgetState.hovered, WidgetState.focused}: Icon(LucideIcons.camera),
           WidgetState.hovered: Icon(LucideIcons.camera),
         },
         child: Icon(LucideIcons.camera),
@@ -402,8 +385,9 @@ class ButtonExample16 extends StatelessWidget {
       child: const Basic(
         title: Text('Project #1'),
         subtitle: Text('Project description'),
-        content:
-            Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+        content: Text(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        ),
       ),
     );
   }
@@ -446,10 +430,7 @@ class ButtonExample2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SecondaryButton(
-      onPressed: () {},
-      child: const Text('Secondary'),
-    );
+    return SecondaryButton(onPressed: () {}, child: const Text('Secondary'));
   }
 }
 
@@ -467,10 +448,7 @@ class ButtonExample3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
-      onPressed: () {},
-      child: const Text('Outlined'),
-    );
+    return OutlineButton(onPressed: () {}, child: const Text('Outlined'));
   }
 }
 
@@ -488,10 +466,7 @@ class ButtonExample4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GhostButton(
-      onPressed: () {},
-      child: const Text('Ghost'),
-    );
+    return GhostButton(onPressed: () {}, child: const Text('Ghost'));
   }
 }
 
@@ -527,10 +502,7 @@ class ButtonExample6 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LinkButton(
-      onPressed: () {},
-      child: const Text('Link'),
-    );
+    return LinkButton(onPressed: () {}, child: const Text('Link'));
   }
 }
 
@@ -549,24 +521,12 @@ class ButtonExample7 extends StatelessWidget {
       spacing: 8,
       runSpacing: 8,
       children: [
-        PrimaryButton(
-          child: Text('Disabled'),
-        ),
-        SecondaryButton(
-          child: Text('Disabled'),
-        ),
-        OutlineButton(
-          child: Text('Disabled'),
-        ),
-        GhostButton(
-          child: Text('Disabled'),
-        ),
-        TextButton(
-          child: Text('Disabled'),
-        ),
-        DestructiveButton(
-          child: Text('Disabled'),
-        ),
+        PrimaryButton(child: Text('Disabled')),
+        SecondaryButton(child: Text('Disabled')),
+        OutlineButton(child: Text('Disabled')),
+        GhostButton(child: Text('Disabled')),
+        TextButton(child: Text('Disabled')),
+        DestructiveButton(child: Text('Disabled')),
       ],
     );
   }
@@ -698,22 +658,10 @@ class ButtonTile extends StatelessWidget implements IComponentPage {
             spacing: 16,
             runSpacing: 16,
             children: [
-              PrimaryButton(
-                onPressed: () {},
-                child: const Text('Primary'),
-              ),
-              SecondaryButton(
-                onPressed: () {},
-                child: const Text('Secondary'),
-              ),
-              OutlineButton(
-                onPressed: () {},
-                child: const Text('Outline'),
-              ),
-              GhostButton(
-                onPressed: () {},
-                child: const Text('Ghost'),
-              ),
+              PrimaryButton(onPressed: () {}, child: const Text('Primary')),
+              SecondaryButton(onPressed: () {}, child: const Text('Secondary')),
+              OutlineButton(onPressed: () {}, child: const Text('Outline')),
+              GhostButton(onPressed: () {}, child: const Text('Ghost')),
               DestructiveButton(
                 child: const Text('Destructive'),
                 onPressed: () {},

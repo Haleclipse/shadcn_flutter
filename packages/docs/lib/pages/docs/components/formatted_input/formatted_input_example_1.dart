@@ -18,15 +18,23 @@ class FormattedInputExample1 extends StatelessWidget {
         }
       },
       initialValue: FormattedValue([
-        const InputPart.editable(length: 2, width: 40, placeholder: Text('MM'))
-            .withValue('01'),
-        const InputPart.static('/'),
-        const InputPart.editable(length: 2, width: 40, placeholder: Text('DD'))
-            .withValue('02'),
+        const InputPart.editable(
+          length: 2,
+          width: 40,
+          placeholder: Text('MM'),
+        ).withValue('01'),
         const InputPart.static('/'),
         const InputPart.editable(
-                length: 4, width: 60, placeholder: Text('YYYY'))
-            .withValue('2021'),
+          length: 2,
+          width: 40,
+          placeholder: Text('DD'),
+        ).withValue('02'),
+        const InputPart.static('/'),
+        const InputPart.editable(
+          length: 4,
+          width: 60,
+          placeholder: Text('YYYY'),
+        ).withValue('2021'),
       ]),
     );
   }

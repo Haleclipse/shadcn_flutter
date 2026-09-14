@@ -11,6 +11,8 @@ void main() async {
 
   print('Starting skill generation...');
 
+  collectDocTemplates();
+
   await generateComponentSkills(featureSet);
   await generateIconSkills(featureSet);
   await generateColorSkills(featureSet);
@@ -57,10 +59,12 @@ Future<void> generateComponentSkills(FeatureSet featureSet) async {
 
   for (final file in files) {
     final fileName = p.basenameWithoutExtension(file.path);
-    if (fileName == 'shadcn_localizations' ||
-        fileName.contains('_en') ||
-        fileName == 'async' ||
-        fileName == 'debug') {
+    if (fileName == 'async' || fileName == 'debug') {
+      continue;
+    }
+    // Generated sources are not components. Without this the localization
+    // tables produce one page per shipped locale.
+    if (file.readAsStringSync().startsWith('// GENERATED CODE')) {
       continue;
     }
 
@@ -349,16 +353,65 @@ Future<void> generateColorSkills(FeatureSet featureSet) async {
   print('  Generated colors guide at ${colorsGuide.path}');
 }
 
+/// Bodies of every `{@template name}` in the library, by name.
+final Map<String, String> _docTemplates = {};
+
+final RegExp _templatePattern = RegExp(
+  r'\{@template\s+([^}]+)\}(.*?)\{@endtemplate\}',
+  dotAll: true,
+);
+final RegExp _macroPattern = RegExp(r'\{@macro\s+([^}]+)\}');
+
+/// Scans the library for `{@template ...}` blocks so `{@macro ...}` references
+/// can be resolved.
+///
+/// dartdoc expands these itself, so they only leak into output that reads the
+/// comment text directly, like this generator does.
+void collectDocTemplates() {
+  final libDir = Directory('packages/shadcn_flutter/lib');
+  if (!libDir.existsSync()) return;
+  for (final entity in libDir.listSync(recursive: true)) {
+    if (entity is! File || !entity.path.endsWith('.dart')) continue;
+    for (final match in _templatePattern.allMatches(entity.readAsStringSync())) {
+      final name = match.group(1)!.trim();
+      final body = match
+          .group(2)!
+          .split('\n')
+          .map((line) => line.replaceFirst(RegExp(r'^\s*///\s?'), '').trim())
+          .where((line) => line.isNotEmpty)
+          .join(' ')
+          .trim();
+      if (body.isNotEmpty) _docTemplates[name] = body;
+    }
+  }
+  print('  Collected ${_docTemplates.length} doc template(s)');
+}
+
+/// Replaces `{@macro name}` with the matching template body.
+///
+/// An unknown macro is dropped rather than printed, since the literal
+/// directive is noise to anyone reading the generated markdown.
+String resolveDocMacros(String text) {
+  return text
+      .replaceAllMapped(
+        _macroPattern,
+        (m) => _docTemplates[m.group(1)!.trim()] ?? '',
+      )
+      .trim();
+}
+
 String normalizeIdentifier(String value) {
   return value.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '').toLowerCase();
 }
 
 String generateMarkdown(String fileName, String className,
     ClassDeclaration clazz, Directory docsDir) {
-  final comment = clazz.documentationComment?.tokens
-          .map((t) => t.lexeme.replaceFirst(RegExp(r'^///\s?'), ''))
-          .join('\n') ??
-      'No overview available.';
+  final comment = resolveDocMacros(
+    clazz.documentationComment?.tokens
+            .map((t) => t.lexeme.replaceFirst(RegExp(r'^///\s?'), ''))
+            .join('\n') ??
+        'No overview available.',
+  );
 
   // Split into overview and the rest
   final parts = comment.split('\n\n');
@@ -424,10 +477,12 @@ List<Property> extractProperties(ClassDeclaration clazz) {
   final props = <Property>[];
   for (final member in clazz.members) {
     if (member is FieldDeclaration) {
-      final doc = member.documentationComment?.tokens
-              .map((t) => t.lexeme.replaceAll('///', '').trim())
-              .join(' ') ??
-          '';
+      final doc = resolveDocMacros(
+        member.documentationComment?.tokens
+                .map((t) => t.lexeme.replaceAll('///', '').trim())
+                .join(' ') ??
+            '',
+      );
       final type = member.fields.type?.toString() ?? 'dynamic';
       for (final field in member.fields.variables) {
         props.add(Property(field.name.lexeme, type, doc));

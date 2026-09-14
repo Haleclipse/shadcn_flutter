@@ -127,8 +127,10 @@ Future<T?> showCommandDialog<T>({
             constraints ??
             const BoxConstraints.tightFor(width: 510, height: 349) * scaling,
         child: ModalBackdrop(
-          borderRadius: subtractByBorder(theme.borderRadiusXxl, 1 * scaling),
-          surfaceClip: ModalBackdrop.shouldClipSurface(surfaceOpacity),
+          theme: ModalBackdropTheme(
+            borderRadius: subtractByBorder(theme.borderRadiusXxl, 1 * scaling),
+            surfaceClip: ModalBackdrop.shouldClipSurface(surfaceOpacity),
+          ),
           child: Command(
             autofocus: autofocus,
             builder: builder,
@@ -366,8 +368,10 @@ class _CommandState extends State<Command> {
             child: IntrinsicWidth(
               child: OutlinedContainer(
                 clipBehavior: Clip.hardEdge,
-                surfaceBlur: widget.surfaceBlur ?? theme.surfaceBlur,
-                surfaceOpacity: widget.surfaceOpacity ?? theme.surfaceOpacity,
+                theme: OutlinedContainerTheme(
+                  surfaceBlur: widget.surfaceBlur ?? theme.surfaceBlur,
+                  surfaceOpacity: widget.surfaceOpacity ?? theme.surfaceOpacity,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -378,7 +382,6 @@ class _CommandState extends State<Command> {
                       ),
                       child: TextField(
                         autofocus: widget.autofocus,
-                        border: const Border.fromBorderSide(BorderSide.none),
                         borderRadius: BorderRadius.zero,
                         controller: _controller,
                         placeholder:
@@ -401,6 +404,9 @@ class _CommandState extends State<Command> {
                               ),
                             ),
                         ],
+                        theme: TextFieldTheme(
+                          border: const Border.fromBorderSide(BorderSide.none),
+                        ),
                       ),
                     ),
                     const Divider(),
@@ -687,10 +693,14 @@ class _CommandItemState extends State<CommandItem> {
                     children: [
                       if (widget.leading != null) widget.leading!,
                       if (widget.leading != null)
-                        Gap(themeData.density.baseGap * themeData.scaling),
+                        SizedBox(
+                          width: themeData.density.baseGap * themeData.scaling,
+                        ),
                       Expanded(child: widget.title),
                       if (widget.trailing != null)
-                        Gap(themeData.density.baseGap * themeData.scaling),
+                        SizedBox(
+                          width: themeData.density.baseGap * themeData.scaling,
+                        ),
                       if (widget.trailing != null)
                         widget.trailing!.muted().xSmall(),
                     ],
