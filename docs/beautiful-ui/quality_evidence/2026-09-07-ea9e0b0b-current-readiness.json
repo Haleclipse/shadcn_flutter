@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-07T06:16:00Z",
+  "source_revision": "ea9e0b0be67f7e41c64a1215be12a504c960d928",
+  "main_workflow": {
+    "run_id": 34089350151,
+    "status": "passed",
+    "jobs_passed": 12,
+    "jobs_total": 12,
+    "android_original_journey_with_three_candidates": "passed"
+  },
+  "input_and_at_workflow": {
+    "run_id": 34089350075,
+    "status": "failed_only_narrator_capability",
+    "jobs_passed": 8,
+    "jobs_total": 9,
+    "browser_input": {
+      "chrome": "passed",
+      "edge": "passed",
+      "firefox": "passed",
+      "safari": "passed"
+    },
+    "native_input": {
+      "linux": "passed",
+      "macos": "passed",
+      "windows": "passed"
+    },
+    "at_capability": {
+      "orca": "passed",
+      "narrator": "failed_no_render_audio_endpoint_and_no_safe_owned_window_minimization"
+    }
+  },
+  "independent_android_candidate": {
+    "run_id": 34089362118,
+    "status": "passed",
+    "source_bound": true,
+    "original_full_journey": "passed",
+    "native_candidate_clicks": 3,
+    "native_cleanup": "verified",
+    "summary_sha256": "a763f22576ac64f73125e9d1b378ebc6512893bca48d41d1117f7317a810f0e7",
+    "driver_summary_sha256": "f304c977a22a1019fc34042833a7098dba140888e883841e02ab77e44fb132c2",
+    "artifact_manifest_sha256": "dfa738dde8ae8d176f308e808257d0cbe85aecfc75d8a2bca2dc4e939270f095",
+    "stages": [
+      {
+        "id": "chat_send",
+        "candidate": "inventory",
+        "inspection_roundtrip_ms": 428.261,
+        "native_scan_ms": 211,
+        "tap_attempts": 1,
+        "drained": true,
+        "cleanup_verified": true
+      },
+      {
+        "id": "prompt_command",
+        "candidate": "rest",
+        "inspection_roundtrip_ms": 241.707,
+        "native_scan_ms": 113,
+        "tap_attempts": 1,
+        "drained": true,
+        "cleanup_verified": true
+      },
+      {
+        "id": "prompt_send",
+        "candidate": "restock",
+        "inspection_roundtrip_ms": 651.657,
+        "native_scan_ms": 210,
+        "tap_attempts": 1,
+        "drained": true,
+        "cleanup_verified": true
+      }
+    ]
+  },
+  "local_remaining_layers": {
+    "physical_mobile_devices": "blocked_no_connected_android_or_ios_device",
+    "automated_macos_chinese_ime": "not_accepted_cua_keys_produced_plain_trusted_insertText_without_composition",
+    "performance_repeatability": "failed_at_67515beb_two_engineering_gates",
+    "product_performance_budget": "engineering_default_not_product_approved",
+    "human_at_review": "not_accepted"
+  },
+  "release_status": {
+    "platforms": "all_six_partial",
+    "registry_entries": "27_in_progress",
+    "all_tasks_complete": false
+  }
+}

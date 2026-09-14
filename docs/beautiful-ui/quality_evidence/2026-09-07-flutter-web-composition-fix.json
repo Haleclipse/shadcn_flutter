@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-07T06:16:00Z",
+  "project_source_before_fix_commit": "546b21a6e41c1765c3b73013081e152ae1defc06",
+  "toolchain": {
+    "flutter_version": "3.47.0",
+    "framework_revision": "4cf24164269a5ebf0c16a028a00727d0e77bbb05",
+    "engine_revision": "5f77625673248ee5846fbcaf5d3e1a3878386fd7",
+    "dart_version": "3.13.0"
+  },
+  "patch": {
+    "path": "docs/beautiful-ui/diagnostics/flutter-web-composition-sdk/flutter-3.47.0-semantic-composition.patch",
+    "sha256": "1d13e1f64ef1fef69854a0ca9273e4c4c7c10b4c107e499015f5eccdf11b6f92",
+    "engine_source_before_sha256": "02648f4dcf353ac2031d2bb5b3a12ff6d60cd9219b21885282a39983f8c9f815",
+    "engine_source_after_sha256": "6e09d5dfcdbecc78b3ac741375ca35d7df69c71a66d9ac4f9a637b0f56df1862",
+    "engine_test_before_sha256": "e7391a64b4bbe2afd3a6f120c80613d768c1fd436b2d7e2e0ffadeea661ba1bb",
+    "engine_test_after_sha256": "1fdbe899803e0960713fc8bc74adba0a2221ae7f62c8553ff4ae5d5e4c2e2510",
+    "cached_source_before_sha256": "560248596a0ea39f197bd327dce65940f705abe166f5301634f8f15d6f46699b",
+    "cached_source_after_sha256": "edec15f4499c1bff1ad4f5a2e15f0625fef4045b3a486901f66ca3997af0eae2"
+  },
+  "engine_red": {
+    "browser": "Chrome headless",
+    "compiler": "dart2js",
+    "active_event_failure": {
+      "expected_composing": [
+        0,
+        1
+      ],
+      "actual_composing": [
+        -1,
+        -1
+      ]
+    },
+    "teardown_failure": {
+      "expected_composing_text": null,
+      "actual_composing_text": "active"
+    },
+    "framework_roundtrip_failure": {
+      "expected_composing": [
+        0,
+        2
+      ],
+      "actual_composing": [
+        -1,
+        -1
+      ]
+    },
+    "logs": {
+      "first_red_sha256": "f41ee46047e1ac70a5cc94863906f901f003292aa481b7c45a548e3434a00b53",
+      "complete_red_sha256": "defd76d1e9876db6bdf0df41e5af0eea2080c0c7615d021dec36a23765f802ae"
+    }
+  },
+  "engine_green": {
+    "dart2js": {
+      "status": "passed",
+      "tests": 26,
+      "compile_log_sha256": "fc3c00d5725766b5b2beae21f1748226262871090ee3bef35ef27255f80a1fd2",
+      "run_log_sha256": "ea3c277d9af976bc31abc152d2ed517a0c9555134c81ff461b417548687ec6a9"
+    },
+    "dart2wasm": {
+      "status": "passed",
+      "tests": 26,
+      "compile_log_sha256": "054f6c2bedd41d1e4fbb004072e034345847423eaab5de270686461302360735",
+      "run_log_sha256": "a23b23050aa0292df6c59b7bbc15646667c938c57563d7f92f640f1363e99050"
+    }
+  },
+  "sdk_rebuild": {
+    "status": "passed",
+    "fresh_isolated_sdk": true,
+    "artifact_count": 7,
+    "outputs": [
+      "ddc_outline.dill",
+      "dart2js_platform.dill",
+      "dart2wasm_platform.dill",
+      "amd-canvaskit/dart_sdk.js",
+      "amd-canvaskit/dart_sdk.js.map",
+      "ddcLibraryBundle-canvaskit/dart_sdk.js",
+      "ddcLibraryBundle-canvaskit/dart_sdk.js.map"
+    ]
+  },
+  "catalog_red_control": {
+    "status": "failed",
+    "condition": "patched Dart source with unchanged precompiled DDC Web SDK",
+    "expected_composing": [
+      0,
+      2
+    ],
+    "actual_composing": [
+      -1,
+      -1
+    ],
+    "interpretation": "The application loaded the unchanged precompiled dart_sdk.js; source editing alone is insufficient."
+  },
+  "catalog_green": {
+    "chrome": "152.0.7977.75",
+    "chromedriver": "152.0.7977.75",
+    "runner_run_id": "8da0274d41de465c926617b041a9d208",
+    "framework_suite": {
+      "status": "passed",
+      "scenarios": 5,
+      "composition_assertions_relaxed": false
+    },
+    "w3c_browser_suite": {
+      "status": "passed",
+      "stages": 26,
+      "javascript_text_injection": false
+    },
+    "owned_process_cleanup": "verified"
+  },
+  "release_builds": {
+    "javascript": "passed",
+    "wasm": "passed"
+  },
+  "boundaries": {
+    "operating_system_ime_accepted": false,
+    "screen_reader_accepted": false,
+    "framework_composition_delivery": "Flutter-injected TextEditingValue",
+    "browser_cjk_delivery": "W3C Unicode insertion"
+  },
+  "current_source_ci": {
+    "source_revision": "ea9e0b0be67f7e41c64a1215be12a504c960d928",
+    "workflow_run_id": 34089350075,
+    "workflow_status": "failed_only_narrator_capability",
+    "browsers": {
+      "chrome": {
+        "version": "152.0.7977.64",
+        "run_id": "8cbdf28917a0460fb827e78130c1c3f2",
+        "sdk_patch": "passed",
+        "framework_scenarios": "5/5 passed",
+        "w3c_browser": "passed",
+        "cleanup": "verified"
+      },
+      "edge": {
+        "version": "152.0.4191.53",
+        "run_id": "626779abb21e4f08b5c26f0c7f35b099",
+        "sdk_patch": "passed",
+        "framework_scenarios": "5/5 passed",
+        "w3c_browser": "passed",
+        "cleanup": "verified"
+      },
+      "firefox": {
+        "version": "154.0.1",
+        "run_id": "b01877152e964c0993b9408c7b19d0a1",
+        "sdk_patch": "passed",
+        "framework_scenarios": "5/5 passed",
+        "w3c_browser": "passed",
+        "cleanup": "verified"
+      },
+      "safari": {
+        "version": "26.6.2",
+        "run_id": "70e109f801044eddb5a18838c3cbd916",
+        "sdk_patch": "passed",
+        "original_journey": "passed",
+        "framework_scenarios": "5/5 passed",
+        "w3c_browser": "passed",
+        "cleanup": "verified"
+      }
+    },
+    "native_input_bridges": {
+      "linux": "passed",
+      "macos": "passed",
+      "windows": "passed"
+    },
+    "assistive_technology_capability": {
+      "orca": "passed",
+      "narrator": {
+        "status": "failed",
+        "reason": "No render audio endpoint and the owned Narrator window did not expose a safe minimize pattern; application acceptance remained not accepted."
+      }
+    }
+  }
+}

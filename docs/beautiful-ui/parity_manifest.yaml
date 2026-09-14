@@ -1,0 +1,888 @@
+schema_version: 1
+manifest_status: in_progress
+updated_at: "2026-09-03"
+
+project:
+  package: beautiful_ai_ui
+  implementation_kind: independent_flutter_reimplementation
+  official_affiliation: none
+
+baselines:
+  shadcn_flutter:
+    repository: https://github.com/sunarya-thito/shadcn_flutter
+    commit: 5a2376e416fca6c8cc5feb2b5fcf5bf160fa5f73
+    tag: v0.0.54
+  beautiful_ui:
+    repository: https://github.com/slev12397/beautiful-ui
+    commit: dd1ba4f323c29ef6c383b2dbf1d7100f2c26ccac
+    registry_path: public/r/registry.json
+
+scope_counts:
+  total: 27
+  foundation: 1
+  building_block: 6
+  composite_component: 20
+
+phase_meanings:
+  P0: Foundation, package seam, shared policy, catalog, and test infrastructure.
+  P1: Six-component MVP after the Loading State vertical slice.
+  P2: Agent workflow components and the building blocks first required by them.
+  P3: Complex data, navigation, composition, visualization, and selection experiences.
+
+status_meanings:
+  not_started: No implementation evidence has been accepted.
+  in_progress: Implementation exists but one or more definition-of-done dimensions are incomplete.
+  blocked: A recorded product, platform, dependency, or licensing decision prevents progress.
+  complete: All applicable definition-of-done dimensions and release evidence are accepted.
+  mapped_to_dependency: The source item is intentionally satisfied by an existing dependency and verified through the consuming composites.
+  excluded: The source item is deliberately outside distributable scope, with a recorded reason.
+
+definition_of_done:
+  - public_api_boundary
+  - visual_states
+  - core_interactions
+  - compact_medium_expanded
+  - state_preservation_on_resize
+  - touch_pointer_keyboard
+  - semantics_and_assistive_technology
+  - light_dark_high_contrast
+  - text_scale_localization_rtl
+  - reduced_motion
+  - unit_widget_semantics_golden_tests
+  - catalog_scenarios
+  - documentation
+  - source_license_and_asset_provenance
+  - required_platform_evidence
+
+automated_validation:
+  validated_code_commit: c2bde85dd5da7c33b0f7881234ae312f3be1826c
+  run_id: 33748054504
+  run_attempt: 1
+  jobs_passed: 12
+  evidence_path: docs/beautiful-ui/quality_evidence/2026-09-03-final-ci-33748054504.json
+  native_ios_driver: passed_with_strict_teardown_and_successful_termination
+
+release_open_items:
+  - Complete physical-device and real TalkBack, VoiceOver, Narrator, and Orca task workflows.
+  - Complete remaining browser, localization, visual-state and temporal-motion combinations beyond the accepted targeted Safari Flowchart review.
+  - Assess agreed frame and memory budgets, repeated-run stability and representative other-platform or physical-device performance beyond the completed source-matched macOS capture.
+
+items:
+  - registry_name: foundation
+    title: Beautiful UI foundation
+    source_type: registry:style
+    scope_kind: foundation
+    phase: P0
+    status: in_progress
+    planned_disposition: translate_to_flutter_tokens_and_policy
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/foundation
+      - packages/beautiful_ai_ui/lib/src/implementation/shadcn/theme_adapter.dart
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Verified inherited Geist Sans and Geist Mono are the current typography; Inter and JetBrains Mono are not bundled.
+      - Normal subtle text and light accent text on accentTint now meet the tested 4.5 contrast threshold, with four palette regressions.
+      - A fresh isolated consumer with unmodified hosted shadcn_flutter 0.0.54 passes atomic theme, state and focus checks and portable delivery of all 13 required notice labels.
+      - Fifth-run native iOS driver completes one whole Catalog journey with suite setup and strict teardown, exit zero and successful termination on validated code c2bde85dd5da7c33b0f7881234ae312f3be1826c.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-hosted-consumer.md
+    open_items:
+      - complete real assistive-technology and physical-device acceptance from the support matrix
+      - remaining visual combinations and temporal motion or interaction-state review
+
+  - registry_name: button
+    title: Button
+    source_type: registry:ui
+    scope_kind: building_block
+    phase: P0
+    status: in_progress
+    planned_disposition: package_private_action_control_without_public_shallow_wrapper
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/action_control.dart
+      - packages/beautiful_ai_ui/lib/src/components/recommendation_card.dart
+      - packages/beautiful_ai_ui/lib/src/components/context_cards.dart
+    intentional_deviations:
+      - The source atom is absorbed into a package-private control contract instead of becoming a public shallow wrapper.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Shared action contrast and selection are verified; muted ancestor tickers now force immediate color updates, with three paint regressions including the expanded Flowchart canvas.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+
+  - registry_name: glide-menu
+    title: GlideMenu
+    source_type: registry:ui
+    scope_kind: building_block
+    phase: P1
+    status: in_progress
+    planned_disposition: internal_semantic_search_result_pattern
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/search.dart
+    intentional_deviations:
+      - Search keeps the menu behavior internal and exposes only typed search items and callbacks.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+
+  - registry_name: entity-chip
+    title: EntityChip
+    source_type: registry:ui
+    scope_kind: building_block
+    phase: P1
+    status: in_progress
+    planned_disposition: absorbed_into_recommendation_card
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/recommendation_card.dart
+    intentional_deviations:
+      - Entity presentation is internal to the recommendation composite and is not a separately exported atom.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+
+  - registry_name: value-pill
+    title: ValuePill
+    source_type: registry:ui
+    scope_kind: building_block
+    phase: P1
+    status: in_progress
+    planned_disposition: absorbed_into_recommendation_card
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/recommendation_card.dart
+    intentional_deviations:
+      - Confidence values are rendered by the recommendation composite without a separately exported atom.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+
+  - registry_name: shimmer
+    title: Shimmer
+    source_type: registry:ui
+    scope_kind: building_block
+    phase: P0
+    status: in_progress
+    planned_disposition: absorbed_into_loading_state_with_reduced_motion
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/loading_state.dart
+      - packages/beautiful_ai_ui/lib/src/foundation/motion.dart
+    intentional_deviations:
+      - The shimmer is an internal Loading State treatment and freezes under reduced or disabled motion.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+
+  - registry_name: stream-text
+    title: StreamText
+    source_type: registry:ui
+    scope_kind: building_block
+    phase: P2
+    status: in_progress
+    planned_disposition: internal_stream_rendering_primitive
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/implementation/streaming/stream_content.dart
+      - packages/beautiful_ai_ui/lib/src/components/streaming_text.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/streaming_text_test.dart
+    intentional_deviations:
+      - The source timer, blur tail, and caret are replaced by immediate rendering of exact caller-owned text snapshots.
+      - Text selection and its copy action use Flutter selection infrastructure behind the composite boundary; the primitive is not exported.
+      - Incoming chunks never make the full answer a live region.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+    open_items:
+      - real assistive-technology and platform text-selection evidence
+
+  - registry_name: loading-state
+    title: Loading State
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P1
+    status: in_progress
+    planned_disposition: public_composite_and_vertical_slice
+    adaptive_note: Preserve status and elapsed information; reduce non-essential motion.
+    asset_note: The Surfer remote video is excluded.
+    variants:
+      - drive
+      - dots
+      - orbit
+      - surfer
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/loading_state.dart
+      - packages/beautiful_ai_ui/test/widget/loading_state_test.dart
+      - packages/beautiful_ai_ui/test/semantics
+      - packages/beautiful_ai_ui/test/golden
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    intentional_deviations:
+      - Elapsed time is caller-controlled instead of an internal demo timer.
+      - The Surfer variant has no default network request or third-party game video.
+      - Reduced motion freezes repeating pixels, shimmer, and the code-rendered media fallback; caller media state is preserved under TickerMode.
+      - Elapsed time is a separate non-live semantics node so decisecond changes cannot create announcement storms.
+      - Label and elapsed text use the stronger muted-ink token instead of source ink-3 so small text can meet contrast guidance.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology smoke evidence
+
+  - registry_name: thinking-state
+    title: Thinking
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P1
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Disclosure state survives constraint changes.
+    variants:
+      - steps
+      - reasoning
+      - search
+      - coding
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/thinking.dart
+      - packages/beautiful_ai_ui/test/widget/thinking_test.dart
+      - packages/beautiful_ai_ui/test/semantics/thinking_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    intentional_deviations:
+      - Status and immutable trace snapshots are caller-controlled; the package contains no demo sequence timer.
+      - Collapsed interactive descendants are removed from focus and Semantics traversal.
+      - Search and coding activation are delegated to the host and never open URLs or run tools internally.
+      - Compact and large-text layouts may wrap source content that the Web reference truncates.
+      - Reduced motion removes continuous shimmer and spinner motion without changing caller state.
+      - Disclosure actions use independent localizable labels so the status and button are not announced twice.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology smoke evidence
+      - remaining high-contrast combinations and temporal interaction-state review beyond accepted static fixtures
+
+  - registry_name: streaming-text
+    title: Streaming Text
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P2
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Selectable content grows naturally; sources and actions wrap or use a sheet.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/streaming_text.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/streaming/stream_content.dart
+      - packages/beautiful_ai_ui/test/widget/streaming_text_test.dart
+      - packages/beautiful_ai_ui/test/semantics/streaming_text_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    intentional_deviations:
+      - Exact Unicode text parts, lifecycle, feedback, and stable source IDs are caller-owned; no simulated token timer or network transport is bundled.
+      - Inline citations describe their source; expanded sources provide full-size touch and keyboard actions instead of tiny embedded links.
+      - Source artwork and demo URLs are omitted; host callbacks own source navigation, follow-ups, feedback, and retry.
+      - Clipboard and retry requests de-duplicate pending work and ignore obsolete completions after their generation or copy snapshot changes.
+      - Native live regions announce localized lifecycle and copy status without announcing every text chunk.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology and physical-device text-selection evidence
+      - long-answer streaming and selection performance evidence
+
+  - registry_name: approval-card
+    title: Approval Card
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P2
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Primary actions remain reachable above the software keyboard.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/approval_card.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/approval_card_test.dart
+      - packages/beautiful_ai_ui/test/semantics/approval_card_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    intentional_deviations:
+      - Stable question and option IDs preserve local drafts through reordering and discard removed choices.
+      - Single-choice auto-advance is explicit and configurable; multiple-choice and custom answers require Continue or Send.
+      - Submission passes immutable answers to an asynchronous host callback, de-duplicates pending requests, and ignores stale model completions.
+      - Success follows a completed host callback; failures preserve editable drafts and report through the root failure seam.
+      - Keyboard navigation, IME-safe custom entry, and scrollable keyboard-constrained layouts replace source browser-specific behavior.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - Selected and submitted checks use native path drawing and are visible with the pinned fonts.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology and physical-device keyboard evidence
+      - final normal and reduced-motion transition review
+
+  - registry_name: tool-chips
+    title: Tool Chips
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P2
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Details are inline disclosures with touch and keyboard paths at every width.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/tool_chips.dart
+      - packages/beautiful_ai_ui/test/widget/tool_chips_test.dart
+      - packages/beautiful_ai_ui/test/semantics/tool_chips_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    intentional_deviations:
+      - Caller-owned execution and output snapshots replace the scripted reveal timer.
+      - Stable operation and file IDs preserve disclosure through updates and reordering.
+      - Inline tool and file previews replace portal or hover-only details; Escape closes the focused panel and restores trigger focus.
+      - Added and removed lines use visible signs and semantic meaning; collapsed panels leave focus and Semantics traversal.
+      - The single source presentation has no artificial variant parameter.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology smoke evidence
+      - large-output layout and disclosure performance evidence
+
+  - registry_name: task-rows
+    title: Task Rows
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P2
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Labels wrap and progress is never communicated only by color.
+    variants:
+      - capsules
+      - list
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/task_rows.dart
+      - packages/beautiful_ai_ui/test/widget/task_rows_test.dart
+      - packages/beautiful_ai_ui/test/semantics/task_rows_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    intentional_deviations:
+      - Typed pending, running, completed, and failed snapshots replace simulated task progression.
+      - Stable task and detail IDs preserve disclosure and focus across reordering, resize, and variant changes.
+      - Optional host retry is de-duplicated and ignores obsolete snapshot completions; success never invents a task-state transition.
+      - Status, progress, and step have localized visible and semantic text; decorative indeterminate rings freeze under reduced motion.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology smoke evidence
+      - final normal and reduced-motion transition review
+
+  - registry_name: chat-composer
+    title: Chat
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P2
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Composer respects SafeArea, software keyboard, and scroll-to-latest behavior.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/chat.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/chat_test.dart
+      - packages/beautiful_ai_ui/test/semantics/chat_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    intentional_deviations:
+      - The host owns messages, response identity, context selection, and errors; no scripted replies or backend are included.
+      - Local draft, focus, and reading position survive snapshot and viewport changes; new conversation identity resets the draft and isolates old callbacks.
+      - Enter sends while Shift+Enter and software newline preserve multiline input; active IME composition never submits.
+      - Send and stop de-duplicate pending actions; send success clears only the unchanged submitted draft.
+      - New messages follow the bottom only when the reader was already there; otherwise an explicit latest action is available.
+      - Message bodies are readable without live token announcements; response and error status are announced separately.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology and physical-device keyboard evidence
+      - long-transcript layout and scrolling performance evidence
+
+  - registry_name: prompt-bar
+    title: Prompt Bar
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P3
+    status: in_progress
+    planned_disposition: public_composite_after_approved_contract
+    adaptive_note: Rounded or pill composition grows vertically; compact wraps controls and preserves the draft around keyboard and safe-area changes.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/prompt_bar.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/prompt_bar_test.dart
+      - packages/beautiful_ai_ui/test/semantics/prompt_bar_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    intentional_deviations:
+      - Host callbacks own send, file picking, source connection, dictation, and dictation stop; the package has no permission service, model client, or demo autoplay.
+      - Model and connected-source values are host controlled; local draft and attachment entries have explicit composer identity and stale-result guards.
+      - At-source and slash-command suggestions are lazy and keyboard accessible; selecting a command inserts text without executing a business action.
+      - New or reattached files and edits made during an older send survive its completion.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - The corresponding workload completed in final-source macOS run 20260903T114308Z with strict teardown and driver/finalizer success; source and build inputs match validated code c2bde85dd5da7c33b0f7881234ae312f3be1826c.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+      - docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/summary.json
+      - docs/beautiful-ui/quality_evidence/performance/index.json
+    open_items:
+      - remaining native and real interaction verification required by docs/beautiful-ui/support_matrix.md
+      - real assistive-technology and physical-device IME, clipboard, file, and dictation integration evidence
+      - agreed frame and memory budgets, repeated profiling, and representative other-platform or physical-device measurements for the 1000-option and 10000-character workloads
+  - registry_name: recommendation-card
+    title: Recommendation Card
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P1
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Primary action becomes full width and confidence includes text.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/recommendation_card.dart
+      - packages/beautiful_ai_ui/test/widget/recommendation_card_test.dart
+      - packages/beautiful_ai_ui/test/semantics/recommendation_card_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    intentional_deviations:
+      - Recommendation content is structured text instead of an arbitrary Widget or ReactNode slot.
+      - Acceptance is an asynchronous host callback with pending de-duplication and normalized failure reporting.
+      - A model generation prevents stale success or failure from committing after the recommendation snapshot changes.
+      - Collapsed alternatives leave focus and Semantics traversal.
+      - Compact and large-text layouts stack actions and make the primary action full width.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology smoke evidence
+      - explicit normal and reduced-motion acceptance-transition evidence
+
+  - registry_name: context-cards
+    title: Context Cards
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P1
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Compact uses a single column with expandable long content.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/context_cards.dart
+      - packages/beautiful_ai_ui/test/widget/context_cards_test.dart
+      - packages/beautiful_ai_ui/test/semantics/context_cards_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    intentional_deviations:
+      - Stable caller-owned IDs replace title-based reconciliation.
+      - Long compact content has an accessible local disclosure.
+      - Collapsed body Semantics expose a shortened summary; the full body is restored only after expansion.
+      - A source becomes interactive only when the host supplies a callback; the package never launches a URL.
+      - Platform targets are enlarged to Android and Apple accessibility guidance.
+      - The caller list is defensively snapshotted on insertion and widget updates.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology smoke evidence
+      - remaining high-contrast combinations and temporal interaction-state review beyond accepted static fixtures
+
+  - registry_name: diff-table
+    title: Diff Table
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P3
+    status: in_progress
+    planned_disposition: public_composite_after_approved_contract
+    adaptive_note: Compact uses per-record change cards; expanded aligns before and after values, with bounded pages in both modes.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/diff_table.dart
+      - packages/beautiful_ai_ui/test/widget/diff_table_test.dart
+      - packages/beautiful_ai_ui/test/semantics/diff_table_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    intentional_deviations:
+      - Immutable caller before and after maps replace the fixed timed source demo and infer added, removed, modified, and unchanged meaning.
+      - Local inclusion choices span all pages; asynchronous application submits an immutable set of changed row IDs and leaves record mutation to the host.
+      - Explicit old and new labels and Semantics preserve change meaning without color dependence.
+      - Pages default to 20 rows and allow at most 100; the deterministic workload exercises 500 records with three fields.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - The corresponding workload completed in final-source macOS run 20260903T114308Z with strict teardown and driver/finalizer success; source and build inputs match validated code c2bde85dd5da7c33b0f7881234ae312f3be1826c.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+      - docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/summary.json
+      - docs/beautiful-ui/quality_evidence/performance/index.json
+    open_items:
+      - remaining native and real interaction verification required by docs/beautiful-ui/support_matrix.md
+      - real assistive-technology change-review evidence
+      - agreed frame and memory budgets, repeated profiling, and representative other-platform or physical-device measurements for the paginated 500-record workload
+  - registry_name: records-table
+    title: Records Table
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P3
+    status: in_progress
+    planned_disposition: public_composite_after_approved_contract
+    adaptive_note: Compact cards expose record details; expanded provides a horizontal grid with a bounded lazy vertical viewport.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/records_table.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/records_table_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    intentional_deviations:
+      - Typed property, tool, cell, and row snapshots replace the fixed CRM schema and fabricated AI cell calculations.
+      - Search, sort, selection, pin, hide, width, and property drafts are local; accepted property settings and run results remain host owned.
+      - Save, add, run, and cell activation leave through host callbacks with normalized failures and stale-configuration guards.
+      - Sort and filter results are cached; only rows near the bounded viewport are realized for the 1000-record target and at most 20 columns.
+      - Native text controls and explicit width actions replace browser popovers and pointer-only controls; no spreadsheet formula engine or database is bundled.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - The corresponding workload completed in final-source macOS run 20260903T114308Z with strict teardown and driver/finalizer success; source and build inputs match validated code c2bde85dd5da7c33b0f7881234ae312f3be1826c.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+      - docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/summary.json
+      - docs/beautiful-ui/quality_evidence/performance/index.json
+    open_items:
+      - remaining native and real interaction verification required by docs/beautiful-ui/support_matrix.md
+      - real assistive-technology grid and compact-detail evidence
+      - agreed frame and memory budgets, repeated profiling, and representative other-platform or physical-device measurements for the lazy 1000-record and 20-column workload
+  - registry_name: filter-table
+    title: Filter Table
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P2
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Compact and medium modes use wrapping cards; expanded mode uses four aligned columns.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/filter_table.dart
+      - packages/beautiful_ai_ui/test/widget/filter_table_test.dart
+      - packages/beautiful_ai_ui/test/semantics/filter_table_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    intentional_deviations:
+      - Counts derive from immutable caller rows and local status selection; initialStatus is read once and onFilterChanged only reports user changes.
+      - Hidden rows leave visible and Semantics trees immediately; matching counts use a native live-region label.
+      - Expanded tables expose table, header, row, and cell semantics while smaller layouts preserve every field in list items.
+      - The host supplies scrolling for long result sets; the component does not fetch, edit, sort, or virtualize business records.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology table and list navigation evidence
+      - documented practical row-count and layout performance evidence
+
+  - registry_name: sidebar-nav
+    title: Sidebar Nav
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P3
+    status: in_progress
+    planned_disposition: public_composite_after_approved_contract
+    adaptive_note: Automatic compact drawer, medium rail, and expanded sidebar can be overridden for a narrow host navigation lane.
+    asset_note: Central Icons and source logos are excluded; replacement symbols are independently drawn.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/sidebar_nav.dart
+      - packages/beautiful_ai_ui/test/widget/sidebar_nav_test.dart
+      - packages/beautiful_ai_ui/test/semantics/sidebar_nav_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    intentional_deviations:
+      - Workspace, destination, and recent-item selections are host controlled; routing, new-chat creation, and workspace actions are callbacks.
+      - A bounded native inline drawer needs no Navigator and restores focus after dismissal.
+      - Recent search, text selection, expansion choice, and scroll position survive presentation changes; recent rows are lazy for the 1000-item target.
+      - Source portals, fixed workspace data, commercial icons, and source branding are omitted.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - The corresponding workload completed in final-source macOS run 20260903T114308Z with strict teardown and driver/finalizer success; source and build inputs match validated code c2bde85dd5da7c33b0f7881234ae312f3be1826c.
+      - The compact closed trigger now grows for large text, and its repaired static state was re-rendered and reviewed.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+      - docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/summary.json
+      - docs/beautiful-ui/quality_evidence/performance/index.json
+    open_items:
+      - remaining native and real interaction verification required by docs/beautiful-ui/support_matrix.md
+      - real assistive-technology navigation, drawer, and focus evidence
+      - agreed frame and memory budgets, repeated profiling, and representative other-platform or physical-device measurements for the 1000-recent history workload
+  - registry_name: search
+    title: Search
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P1
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: The public module is inline and responsive; host overlays choose dialog, popover, or compact sheet presentation.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/search.dart
+      - packages/beautiful_ai_ui/test/widget/search_test.dart
+      - packages/beautiful_ai_ui/test/semantics/search_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    intentional_deviations:
+      - Stable typed items replace bare strings and preserve identity across filtering and resize.
+      - Arrow navigation, Enter selection, Escape clearing, selected Semantics, and IME composition protection are implemented inside the module.
+      - The module does not own an overlay or product navigation; selection is returned through a callback.
+      - The empty state is delayed until three Unicode scalar values, matching source intent without assuming ASCII input.
+      - Item order and nested keywords are defensively snapshotted; pointer hover never reports semantic selection.
+      - Field, clear, and result hit regions remain at least 48dp across all adaptive modes.
+      - Result and clear actions explicitly expose enabled Semantics across Web and desktop accessibility bridges.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology smoke evidence
+      - remaining high-contrast combinations and temporal normal/reduced transition review beyond accepted static fixtures
+
+  - registry_name: flowchart
+    title: Flowchart
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P3
+    status: in_progress
+    planned_disposition: public_composite_after_approved_contract
+    adaptive_note: Expanded offers pan, bounded zoom, drag, and keyboard movement; compact preserves editable ordered steps and condition controls.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/flowchart.dart
+      - packages/beautiful_ai_ui/test/widget/flowchart_test.dart
+      - packages/beautiful_ai_ui/test/semantics/flowchart_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    intentional_deviations:
+      - Immutable host-controlled DAG snapshots replace fixed source nodes and conditions; every accepted edit is supplied back by the host.
+      - Release validation rejects missing or duplicate IDs, invalid endpoints, cycles, and data outside the approved node, edge, option, and position bounds.
+      - Measured node bounds anchor connectors; pan and zoom stay bounded and zoom never shrinks controls below their baseline target size.
+      - Ordered steps and explicit move actions preserve editing without relying on dragging; graph execution and arbitrary edge creation are excluded.
+    accepted_evidence:
+      - Three independently reviewed Safari light/dark/light captures with reduced motion confirm correct condition colors and no stale dark background; the full Safari matrix remains open.
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - The corresponding workload completed in final-source macOS run 20260903T114308Z with strict teardown and driver/finalizer success; source and build inputs match validated code c2bde85dd5da7c33b0f7881234ae312f3be1826c.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-safari-flowchart-theme-reduced.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+      - docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/summary.json
+      - docs/beautiful-ui/quality_evidence/performance/index.json
+    open_items:
+      - remaining native and real interaction verification required by docs/beautiful-ui/support_matrix.md
+      - real assistive-technology and physical-device canvas or ordered-step editing evidence
+      - agreed frame and memory budgets, repeated profiling, and representative other-platform or physical-device measurements for the 24-node and 48-edge workload
+  - registry_name: insight-cards
+    title: Insight Cards
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P3
+    status: in_progress
+    planned_disposition: public_composite_after_approved_contract
+    adaptive_note: Compact stacks prose and chart; expanded may pair them, with a textual summary and complete data disclosure for every chart.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/insight_cards.dart
+      - packages/beautiful_ai_ui/test/widget/insight_cards_test.dart
+      - packages/beautiful_ai_ui/test/semantics/insight_cards_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    intentional_deviations:
+      - Carousel page, anomaly metric, and allocation segment selections remain controlled by the host; inspected points and data disclosure are local.
+      - Private Flutter vector painters replace liveline and source autoplay, using exact finite supplied values with dashed and marker distinctions beyond color.
+      - Only the selected chart is painted; full textual observations are created on request and support touch, keyboard, and Semantics inspection.
+      - Work is bounded to 32 pages, four series of 512 points, eight metrics, and twelve allocation segments; no forecasting or synthetic time series is generated.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - The corresponding workload completed in final-source macOS run 20260903T114308Z with strict teardown and driver/finalizer success; source and build inputs match validated code c2bde85dd5da7c33b0f7881234ae312f3be1826c.
+      - Adjustable controls expose native slider flags and the appropriate value, enabled state, and adjustment actions.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+      - docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/summary.json
+      - docs/beautiful-ui/quality_evidence/performance/index.json
+    open_items:
+      - remaining native and real interaction verification required by docs/beautiful-ui/support_matrix.md
+      - real assistive-technology chart inspection and data-table evidence
+      - agreed frame and memory budgets, repeated profiling, and representative other-platform or physical-device measurements for the bounded chart workload
+  - registry_name: code-block
+    title: Code Block
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P1
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Code scrolls horizontally and copy feedback is announced.
+    variants:
+      - code
+      - diff
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/code_block.dart
+      - packages/beautiful_ai_ui/test/widget/code_block_test.dart
+      - packages/beautiful_ai_ui/test/semantics/code_block_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    intentional_deviations:
+      - Named constructors and one canonical code string replace string variants and divergent display/copy values.
+      - Long code remains unwrapped in a horizontal viewport rather than using the source pre-wrap behavior.
+      - Copy is de-duplicated while pending and exposes localized success or failure live feedback.
+      - Diff rows announce added, removed, or context meaning instead of relying on color.
+      - Copy and header targets are enlarged from the source visual size to Flutter accessibility guidance.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology smoke evidence
+      - remaining high-contrast combinations and temporal interaction-state review beyond accepted static fixtures
+      - long-source tokenization and intrinsic-layout benchmark before a stable release
+
+  - registry_name: fine-tune-card
+    title: Fine-tune Card
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P2
+    status: in_progress
+    planned_disposition: public_composite
+    adaptive_note: Compact stacks fields; numeric controls support touch, keyboard, and direct input.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/fine_tune_card.dart
+      - packages/beautiful_ai_ui/test/widget/fine_tune_card_test.dart
+      - packages/beautiful_ai_ui/test/semantics/fine_tune_card_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    intentional_deviations:
+      - The host owns accepted settings; every edit emits a complete proposed snapshot instead of silently accepting it locally.
+      - Stable field IDs and finite bounds are validated, including release builds; fractional steps are retained rather than rounded to integers.
+      - Numeric drafts preserve invalid and composing input, commit on Enter, Done, or blur, and restore the accepted value on Escape.
+      - Numeric adjustment supports 48dp buttons, arrow keys, Shift acceleration, horizontal pointer scrubbing, and assistive increase and decrease actions.
+      - Type choices open inline and restore focus on dismissal; the Edited marker compares accepted values with the initial mounted snapshot.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - Adjustable controls expose native slider flags and the appropriate value, enabled state, and adjustment actions.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+    open_items:
+      - real assistive-technology and physical-device numeric input evidence
+
+  - registry_name: selection-actions
+    title: Selection Actions
+    source_type: registry:component
+    scope_kind: composite_component
+    phase: P3
+    status: in_progress
+    planned_disposition: public_composite_after_approved_contract
+    adaptive_note: Native read-only selection anchors a quick toolbar; an in-flow preview panel keeps request and acceptance actions reachable across input methods.
+    implementation_paths:
+      - packages/beautiful_ai_ui/lib/src/components/selection_actions.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/selection_actions_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    intentional_deviations:
+      - Actual native Flutter selection and exact UTF-16 ranges replace the source demo selection and canned rewrite.
+      - Host onRequest returns replacement or explanation text; onApply receives the original request and exact replacement with an updatedText helper.
+      - Document identity and meaningful text, range, or instruction changes invalidate obsolete pending UI; initialSelection is a seed rather than a controlled range.
+      - Native gestures and guarded clipboard controls share the selection boundary with keyboard and Semantics actions; the source timers, npm icons, and AI simulation are omitted.
+      - Plain text uses a bounded read-only editor viewport; rich-text editing and document persistence remain outside the package.
+    accepted_evidence:
+      - Integrated local package tests and strict analysis cover the item directly or through its consuming composites.
+      - Recorded source attribution and complete required dependency notices were verified for the audited release artifacts.
+      - Representative static states were included in the accepted 49-image review; remaining combinations and temporal states stay open.
+      - The corresponding workload completed in final-source macOS run 20260903T114308Z with strict teardown and driver/finalizer success; source and build inputs match validated code c2bde85dd5da7c33b0f7881234ae312f3be1826c.
+    evidence_paths:
+      - docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-license-audit.md
+      - docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md
+      - docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/summary.json
+      - docs/beautiful-ui/quality_evidence/performance/index.json
+    open_items:
+      - remaining native and real interaction verification required by docs/beautiful-ui/support_matrix.md
+      - real assistive-technology and physical-device selection, toolbar, and clipboard evidence
+      - agreed frame and memory budgets, repeated profiling, and representative other-platform or physical-device measurements for the 20000-character document workload

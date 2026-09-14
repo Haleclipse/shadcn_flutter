@@ -1,0 +1,350 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-07T06:01:00Z",
+  "run_id": "beautiful-native-all-67515beb-repeat-20260907",
+  "source_revision": "67515bebf58fc3a5e0c7c6990ccfd094c8429a77",
+  "capture_status": "complete",
+  "budget_status": "budget_fail",
+  "budget_id": "engineering_budget_v1",
+  "approval_status": "engineering_default_not_product_approved",
+  "all_platform_release_accepted": false,
+  "environment": {
+    "operating_system": "macos",
+    "operating_system_version": "Version 15.7.9 (Build 24G830)",
+    "dart_vm_version": "3.13.0 (stable) (Wed Aug 5 00:28:05 2026 -0700) on \"macos_arm64\"",
+    "logical_processor_count": 10,
+    "build_mode": "profile",
+    "application_lifecycle_state": "resumed",
+    "frames_enabled": true,
+    "native_view_physical_px": {
+      "width": 3456.0,
+      "height": 2160.0
+    },
+    "native_view_logical_dp": {
+      "width": 1728.0,
+      "height": 1080.0
+    },
+    "device_pixel_ratio": 2.0,
+    "display_refresh_rate_hz": 120.0,
+    "surface_width_dp": 1696.0,
+    "platform_text_scale_at_14dp": 14.0,
+    "platform_disable_animations": false,
+    "platform_high_contrast": false,
+    "semantics_enabled": true,
+    "platform_semantics_enabled": true,
+    "framework_semantics_enabled": true,
+    "locale": "zh-Hans-CN",
+    "platform_locale": "zh-Hans-CN",
+    "widget_locale": "en-US",
+    "legacy_metadata_note": "locale and semantics_enabled retain the historical platform-dispatcher meaning; widget locale and framework Semantics are recorded independently.",
+    "theme": "light",
+    "motion_policy": "system",
+    "renderer": {
+      "observed_backend": null,
+      "requested_backend": "platform default",
+      "observation_status": "Not exposed by the Flutter public runtime API; inspect the saved engine launch log."
+    },
+    "device_label": "macos"
+  },
+  "source_integrity": {
+    "schema_version": 1,
+    "status": "verified_unchanged",
+    "revision_unchanged": true,
+    "before_revision": "67515bebf58fc3a5e0c7c6990ccfd094c8429a77",
+    "after_revision": "67515bebf58fc3a5e0c7c6990ccfd094c8429a77",
+    "before_manifest_sha256": "b31e82656174d539645a27bea8a4f7c47c81db76f682a13611b9031231c1bc4e",
+    "after_manifest_sha256": "b31e82656174d539645a27bea8a4f7c47c81db76f682a13611b9031231c1bc4e",
+    "before_file_count": 318,
+    "after_file_count": 318,
+    "changed_paths": [],
+    "source_worktree_status_unchanged": true,
+    "scope_note": "Recomputed from the recorded source manifests. Listed input hashes and git revision are unchanged; this does not claim a clean worktree or rehash unavailable historical source contents."
+  },
+  "totals": {
+    "scenarios": 15,
+    "frame_samples": 10298,
+    "rss_samples": 1022,
+    "highest_rss_sample_peak_bytes": 463994880,
+    "process_lifetime_max_at_last_sample_bytes": 506298368
+  },
+  "failed_gates": [
+    {
+      "scenario": "diff_table",
+      "gates": [
+        {
+          "name": "build_or_raster_over_interval_fraction",
+          "observed": 0.012195121951219513,
+          "maximum": 0.01,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "scenario": "records_table",
+      "gates": [
+        {
+          "name": "build_max_us",
+          "observed": 16858,
+          "maximum": 16666.666666666668,
+          "passed": false
+        }
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "prompt_bar",
+      "status": "pass",
+      "frame_samples": 895,
+      "rss_samples": 83,
+      "build_p95_us": 1347,
+      "build_max_us": 4194,
+      "raster_p95_us": 1691,
+      "raster_max_us": 4659,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 219463680,
+      "rss_signed_end_minus_start_bytes": 6963200,
+      "failed_gates": []
+    },
+    {
+      "id": "diff_table",
+      "status": "budget_fail",
+      "frame_samples": 492,
+      "rss_samples": 53,
+      "build_p95_us": 3566,
+      "build_max_us": 14107,
+      "raster_p95_us": 2139,
+      "raster_max_us": 4313,
+      "build_or_raster_over_interval_count": 6,
+      "build_or_raster_over_interval_fraction": 0.012195121951219513,
+      "rss_sample_peak_bytes": 258359296,
+      "rss_signed_end_minus_start_bytes": 5931008,
+      "failed_gates": [
+        {
+          "name": "build_or_raster_over_interval_fraction",
+          "observed": 0.012195121951219513,
+          "maximum": 0.01,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "records_table",
+      "status": "budget_fail",
+      "frame_samples": 1157,
+      "rss_samples": 115,
+      "build_p95_us": 1461,
+      "build_max_us": 16858,
+      "raster_p95_us": 2320,
+      "raster_max_us": 4405,
+      "build_or_raster_over_interval_count": 9,
+      "build_or_raster_over_interval_fraction": 0.007778738115816767,
+      "rss_sample_peak_bytes": 293552128,
+      "rss_signed_end_minus_start_bytes": 3981312,
+      "failed_gates": [
+        {
+          "name": "build_max_us",
+          "observed": 16858,
+          "maximum": 16666.666666666668,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "sidebar_nav",
+      "status": "pass",
+      "frame_samples": 729,
+      "rss_samples": 66,
+      "build_p95_us": 1061,
+      "build_max_us": 2520,
+      "raster_p95_us": 1649,
+      "raster_max_us": 2775,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 294354944,
+      "rss_signed_end_minus_start_bytes": 5177344,
+      "failed_gates": []
+    },
+    {
+      "id": "flowchart",
+      "status": "pass",
+      "frame_samples": 464,
+      "rss_samples": 58,
+      "build_p95_us": 4243,
+      "build_max_us": 5768,
+      "raster_p95_us": 3058,
+      "raster_max_us": 8029,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 323600384,
+      "rss_signed_end_minus_start_bytes": -4472832,
+      "failed_gates": []
+    },
+    {
+      "id": "insight_cards",
+      "status": "pass",
+      "frame_samples": 1054,
+      "rss_samples": 106,
+      "build_p95_us": 3121,
+      "build_max_us": 4733,
+      "raster_p95_us": 3301,
+      "raster_max_us": 8194,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 348864512,
+      "rss_signed_end_minus_start_bytes": -23117824,
+      "failed_gates": []
+    },
+    {
+      "id": "selection_actions",
+      "status": "pass",
+      "frame_samples": 303,
+      "rss_samples": 38,
+      "build_p95_us": 3928,
+      "build_max_us": 5720,
+      "raster_p95_us": 1891,
+      "raster_max_us": 3283,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 331202560,
+      "rss_signed_end_minus_start_bytes": 15122432,
+      "failed_gates": []
+    },
+    {
+      "id": "search_long_catalog",
+      "status": "pass",
+      "frame_samples": 1301,
+      "rss_samples": 115,
+      "build_p95_us": 1580,
+      "build_max_us": 4124,
+      "raster_p95_us": 1668,
+      "raster_max_us": 5712,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 340541440,
+      "rss_signed_end_minus_start_bytes": 9322496,
+      "failed_gates": []
+    },
+    {
+      "id": "code_block_long_source",
+      "status": "pass",
+      "frame_samples": 732,
+      "rss_samples": 81,
+      "build_p95_us": 639,
+      "build_max_us": 3249,
+      "raster_p95_us": 3157,
+      "raster_max_us": 6608,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 463994880,
+      "rss_signed_end_minus_start_bytes": -8323072,
+      "failed_gates": []
+    },
+    {
+      "id": "thinking_long_trace",
+      "status": "pass",
+      "frame_samples": 619,
+      "rss_samples": 58,
+      "build_p95_us": 759,
+      "build_max_us": 2214,
+      "raster_p95_us": 1928,
+      "raster_max_us": 3516,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 418660352,
+      "rss_signed_end_minus_start_bytes": -4390912,
+      "failed_gates": []
+    },
+    {
+      "id": "streaming_long_answer",
+      "status": "pass",
+      "frame_samples": 775,
+      "rss_samples": 69,
+      "build_p95_us": 4973,
+      "build_max_us": 6852,
+      "raster_p95_us": 2828,
+      "raster_max_us": 4469,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 429899776,
+      "rss_signed_end_minus_start_bytes": -4505600,
+      "failed_gates": []
+    },
+    {
+      "id": "tool_chips_large_output",
+      "status": "pass",
+      "frame_samples": 535,
+      "rss_samples": 51,
+      "build_p95_us": 3067,
+      "build_max_us": 5641,
+      "raster_p95_us": 1240,
+      "raster_max_us": 3070,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 440287232,
+      "rss_signed_end_minus_start_bytes": -1097728,
+      "failed_gates": []
+    },
+    {
+      "id": "chat_long_transcript",
+      "status": "pass",
+      "frame_samples": 311,
+      "rss_samples": 35,
+      "build_p95_us": 571,
+      "build_max_us": 1081,
+      "raster_p95_us": 766,
+      "raster_max_us": 3144,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 445988864,
+      "rss_signed_end_minus_start_bytes": 12779520,
+      "failed_gates": []
+    },
+    {
+      "id": "filter_table_large_dataset",
+      "status": "pass",
+      "frame_samples": 362,
+      "rss_samples": 40,
+      "build_p95_us": 3387,
+      "build_max_us": 6633,
+      "raster_p95_us": 1493,
+      "raster_max_us": 3111,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 457900032,
+      "rss_signed_end_minus_start_bytes": 1261568,
+      "failed_gates": []
+    },
+    {
+      "id": "task_rows_large_workflow",
+      "status": "pass",
+      "frame_samples": 569,
+      "rss_samples": 54,
+      "build_p95_us": 2466,
+      "build_max_us": 3375,
+      "raster_p95_us": 1217,
+      "raster_max_us": 4374,
+      "build_or_raster_over_interval_count": 0,
+      "build_or_raster_over_interval_fraction": 0.0,
+      "rss_sample_peak_bytes": 461455360,
+      "rss_signed_end_minus_start_bytes": -1753088,
+      "failed_gates": []
+    }
+  ],
+  "raw_artifacts": {
+    "directory": "/tmp/beautiful-native-all-67515beb-repeat-20260907",
+    "p3_performance_sha256": "9949a287c8e54f9cb2cb7e202659958999b67e1d63f00f76eb2e5a912f2fcacd",
+    "frame_samples_sha256": "acba6805d34cd82def6f5300cb13b28ab6209b28aa14743a0300d62c9db67830",
+    "memory_samples_sha256": "93e3fc9b7fb6ed0841925b5a39ee7951039a57c1f78d7778fcba6785ad8867bb",
+    "source_integrity_sha256": "42a2d278a9d5b38b22d036aff2eac6c5a2d83988a48d476c8f07a7d57859fb3a",
+    "budget_assessment_sha256": "544ae23cb59ae1b0bc40e040d2a6757120b7f10fe972cdcf3f626a5667c10255",
+    "timeline_codec_verification_sha256": "3a6d1e77036cc23841c2647098a158ce4a39dbd49448b95a7ae38da132824164"
+  },
+  "boundaries": [
+    "All 15 workload bodies, finalization, source integrity and one trace transport replay passed.",
+    "The explicit engineering budget failed and is not a product-approved budget.",
+    "Other desktop activity was not isolated; no causal regression is inferred.",
+    "Component allocation, leak absence, other platforms and physical input remain unassessed."
+  ]
+}

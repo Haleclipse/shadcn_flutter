@@ -1,0 +1,459 @@
+schema_version: 1
+updated_at: "2026-09-03"
+
+project:
+  package: beautiful_ai_ui
+  relationship: independent_unofficial_reimplementation
+
+source:
+  project: Beautiful UI
+  repository: https://github.com/slev12397/beautiful-ui
+  commit: dd1ba4f323c29ef6c383b2dbf1d7100f2c26ccac
+  license: MIT
+  license_file: LICENSES/BEAUTIFUL_UI_MIT.txt
+  copyright: Copyright (c) 2026 Shane Levine
+  registry_index: public/r/registry.json
+
+method:
+  description: Reimplement visual hierarchy, state, and interaction intent in Flutter; do not translate TSX or Tailwind line by line.
+  runtime_dependency_on_source: false
+  source_branding_in_distribution: false
+  source_demo_data_in_library: false
+  source_npm_dependencies_in_library: false
+
+status_contract:
+  source_registration: complete
+  implementation_status: Uses the exact status vocabulary defined by docs/beautiful-ui/parity_manifest.yaml.
+
+items:
+  - name: foundation
+    source_path: public/r/foundation.json
+    source_type: registry:style
+    adaptation: flutter_foundation_tokens_and_policy
+    phase: P0
+    implementation_status: in_progress
+    source_files:
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/foundation
+      - packages/beautiful_ai_ui/lib/src/implementation/shadcn/theme_adapter.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: button
+    source_path: public/r/button.json
+    source_type: registry:ui
+    adaptation: independent_internal_action_control_no_public_wrapper
+    phase: P0
+    implementation_status: in_progress
+    source_files:
+      - components/atoms/Button.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/action_control.dart
+      - packages/beautiful_ai_ui/lib/src/components/recommendation_card.dart
+      - packages/beautiful_ai_ui/lib/src/components/context_cards.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: glide-menu
+    source_path: public/r/glide-menu.json
+    source_type: registry:ui
+    adaptation: independent_internal_search_result_pattern_no_public_wrapper
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/GlideMenu.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/search.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: entity-chip
+    source_path: public/r/entity-chip.json
+    source_type: registry:ui
+    adaptation: absorbed_into_recommendation_card_no_public_wrapper
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/atoms/EntityChip.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/recommendation_card.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: value-pill
+    source_path: public/r/value-pill.json
+    source_type: registry:ui
+    adaptation: absorbed_into_recommendation_card_no_public_wrapper
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/atoms/ValuePill.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/recommendation_card.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: shimmer
+    source_path: public/r/shimmer.json
+    source_type: registry:ui
+    adaptation: absorbed_into_loading_state_with_reduced_motion
+    phase: P0
+    implementation_status: in_progress
+    source_files:
+      - components/atoms/Shimmer.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/loading_state.dart
+      - packages/beautiful_ai_ui/lib/src/foundation/motion.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: stream-text
+    source_path: public/r/stream-text.json
+    source_type: registry:ui
+    adaptation: internal_flutter_stream_rendering
+    phase: P2
+    implementation_status: in_progress
+    source_files:
+      - components/atoms/StreamText.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/implementation/streaming/stream_content.dart
+      - packages/beautiful_ai_ui/lib/src/components/streaming_text.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/streaming_text_test.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: loading-state
+    source_path: public/r/loading-state.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/LoadingState.tsx
+      - app/globals.css
+      - lib/meta.ts
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/loading_state.dart
+      - packages/beautiful_ai_ui/test/widget/loading_state_test.dart
+      - packages/beautiful_ai_ui/test/semantics
+      - packages/beautiful_ai_ui/test/golden
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    license_decision: adapted_under_beautiful_ui_mit
+    excluded_source_assets:
+      - subway-surfers.mp4
+      - https://95dnc2a95qgwt9ff.public.blob.vercel-storage.com/subway-surfers.mp4
+  - name: thinking-state
+    source_path: public/r/thinking-state.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/ThinkingState.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/thinking.dart
+      - packages/beautiful_ai_ui/test/widget/thinking_test.dart
+      - packages/beautiful_ai_ui/test/semantics/thinking_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: streaming-text
+    source_path: public/r/streaming-text.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P2
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/StreamingText.tsx
+      - components/atoms/StreamText.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/streaming_text.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/streaming/stream_content.dart
+      - packages/beautiful_ai_ui/test/widget/streaming_text_test.dart
+      - packages/beautiful_ai_ui/test/semantics/streaming_text_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+    excluded_source_assets:
+      - Embedded SOURCE_IMAGES data-URI demonstration artwork
+      - Demo source URLs and remote artwork
+  - name: approval-card
+    source_path: public/r/approval-card.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P2
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/ApprovalCard.tsx
+      - components/atoms/Button.tsx
+      - components/primitives/GlideMenu.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/approval_card.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/approval_card_test.dart
+      - packages/beautiful_ai_ui/test/semantics/approval_card_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: tool-chips
+    source_path: public/r/tool-chips.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P2
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/ToolChips.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/tool_chips.dart
+      - packages/beautiful_ai_ui/test/widget/tool_chips_test.dart
+      - packages/beautiful_ai_ui/test/semantics/tool_chips_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: task-rows
+    source_path: public/r/task-rows.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P2
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/TaskRows.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/task_rows.dart
+      - packages/beautiful_ai_ui/test/widget/task_rows_test.dart
+      - packages/beautiful_ai_ui/test/semantics/task_rows_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: chat-composer
+    source_path: public/r/chat-composer.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P2
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/ChatComposer.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/chat.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/chat_test.dart
+      - packages/beautiful_ai_ui/test/semantics/chat_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: prompt-bar
+    source_path: public/r/prompt-bar.json
+    source_type: registry:component
+    adaptation: public_flutter_composite_after_approved_contract
+    phase: P3
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/PromptBar.tsx
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/prompt_bar.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/prompt_bar_test.dart
+      - packages/beautiful_ai_ui/test/semantics/prompt_bar_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+    excluded_source_assets:
+      - glimm browser shader dependency
+      - Scripted files, dictation text, and autoplay scenarios
+  - name: recommendation-card
+    source_path: public/r/recommendation-card.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/RecommendationCard.tsx
+      - components/atoms/Button.tsx
+      - components/atoms/EntityChip.tsx
+      - components/atoms/ValuePill.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/recommendation_card.dart
+      - packages/beautiful_ai_ui/test/widget/recommendation_card_test.dart
+      - packages/beautiful_ai_ui/test/semantics/recommendation_card_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: context-cards
+    source_path: public/r/context-cards.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/ContextCards.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/context_cards.dart
+      - packages/beautiful_ai_ui/test/widget/context_cards_test.dart
+      - packages/beautiful_ai_ui/test/semantics/context_cards_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: diff-table
+    source_path: public/r/diff-table.json
+    source_type: registry:component
+    adaptation: public_flutter_composite_after_approved_contract
+    phase: P3
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/DiffTable.tsx
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/diff_table.dart
+      - packages/beautiful_ai_ui/test/widget/diff_table_test.dart
+      - packages/beautiful_ai_ui/test/semantics/diff_table_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: records-table
+    source_path: public/r/records-table.json
+    source_type: registry:component
+    adaptation: public_flutter_composite_after_approved_contract
+    phase: P3
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/RecordsTable.tsx
+      - app/beautifui/records-table.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/records_table.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/records_table_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+    excluded_source_assets:
+      - Fixed CRM demo records and simulated competitor results
+  - name: filter-table
+    source_path: public/r/filter-table.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P2
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/FilterTable.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/filter_table.dart
+      - packages/beautiful_ai_ui/test/widget/filter_table_test.dart
+      - packages/beautiful_ai_ui/test/semantics/filter_table_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: sidebar-nav
+    source_path: public/r/sidebar-nav.json
+    source_type: registry:component
+    adaptation: public_flutter_composite_after_approved_contract
+    phase: P3
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/SidebarNav.tsx
+      - app/beautifui/sidebar-nav.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/sidebar_nav.dart
+      - packages/beautiful_ai_ui/test/widget/sidebar_nav_test.dart
+      - packages/beautiful_ai_ui/test/semantics/sidebar_nav_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+    excluded_source_assets:
+      - "@central-icons-react/round-outlined-radius-2-stroke-2"
+      - Beautiful UI and source workspace branding
+  - name: search
+    source_path: public/r/search.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/SearchList.tsx
+      - components/primitives/GlideMenu.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/search.dart
+      - packages/beautiful_ai_ui/test/widget/search_test.dart
+      - packages/beautiful_ai_ui/test/semantics/search_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: flowchart
+    source_path: public/r/flowchart.json
+    source_type: registry:component
+    adaptation: public_flutter_composite_after_approved_contract
+    phase: P3
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/Flowchart.tsx
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/flowchart.dart
+      - packages/beautiful_ai_ui/test/widget/flowchart_test.dart
+      - packages/beautiful_ai_ui/test/semantics/flowchart_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: insight-cards
+    source_path: public/r/insight-cards.json
+    source_type: registry:component
+    adaptation: public_flutter_composite_after_approved_contract
+    phase: P3
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/InsightCards.tsx
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/insight_cards.dart
+      - packages/beautiful_ai_ui/test/widget/insight_cards_test.dart
+      - packages/beautiful_ai_ui/test/semantics/insight_cards_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+    excluded_source_assets:
+      - liveline React chart dependency
+      - Synthetic source time-series values and autoplay
+  - name: code-block
+    source_path: public/r/code-block.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P1
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/CodeBlock.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/code_block.dart
+      - packages/beautiful_ai_ui/test/widget/code_block_test.dart
+      - packages/beautiful_ai_ui/test/semantics/code_block_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/main.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: fine-tune-card
+    source_path: public/r/fine-tune-card.json
+    source_type: registry:component
+    adaptation: public_flutter_composite
+    phase: P2
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/FineTuneCard.tsx
+      - components/primitives/GlideMenu.tsx
+      - app/globals.css
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/fine_tune_card.dart
+      - packages/beautiful_ai_ui/test/widget/fine_tune_card_test.dart
+      - packages/beautiful_ai_ui/test/semantics/fine_tune_card_semantics_test.dart
+      - packages/beautiful_ai_ui/test/golden/p2_components_golden_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p2_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+  - name: selection-actions
+    source_path: public/r/selection-actions.json
+    source_type: registry:component
+    adaptation: public_flutter_composite_after_approved_contract
+    phase: P3
+    implementation_status: in_progress
+    source_files:
+      - components/primitives/SelectionActions.tsx
+    target_files:
+      - packages/beautiful_ai_ui/lib/src/components/selection_actions.dart
+      - packages/beautiful_ai_ui/lib/src/implementation/controls/text_selection.dart
+      - packages/beautiful_ai_ui/test/widget/selection_actions_test.dart
+      - packages/beautiful_ai_ui/test/semantics/selection_actions_semantics_test.dart
+      - packages/beautiful_ai_ui_catalog/lib/p3_examples.dart
+    license_decision: adapted_under_beautiful_ui_mit
+    excluded_source_assets:
+      - iconoir-react dependency
+      - Canned source selection, rewrite, and streaming timers
+maintenance:
+  - Update an item when implementation begins, source material beyond the listed registry entry is consulted, or a file contains a substantial adaptation.
+  - Add the exact source path, source commit, destination path, adaptation status, reviewer, and license decision before marking the parity item complete.
+  - Keep every phase and implementation_status exactly aligned with docs/beautiful-ui/parity_manifest.yaml, and keep attribution aligned with THIRD_PARTY_NOTICES.md.
