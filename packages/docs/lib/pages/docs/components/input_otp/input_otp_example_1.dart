@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class InputOTPExample1 extends StatefulWidget {
   const InputOTPExample1({super.key});
@@ -39,7 +40,7 @@ class _InputOTPExample1State extends State<InputOTPExample1> {
             InputOTPChild.character(allowDigit: true),
           ],
         ),
-        gap(16),
+        Gap(16),
         Text('Value: $value'),
         Text('Submitted Value: $submittedValue'),
       ],

@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class MultiselectTile extends StatelessWidget implements IComponentPage {
   const MultiselectTile({super.key});

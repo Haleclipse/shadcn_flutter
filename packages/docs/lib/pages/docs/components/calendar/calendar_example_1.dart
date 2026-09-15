@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Calendar with range selection mode.
 ///
@@ -35,7 +36,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
                       _view = _view.previous;
                     });
                   },
-                  child: const Icon(Icons.arrow_back).iconXSmall(),
+                  child: const Icon(LucideIcons.arrowLeft).iconXSmall(),
                 ),
                 Text('${localizations.getMonth(_view.month)} ${_view.year}')
                     .small()
@@ -50,7 +51,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
                       _view = _view.next;
                     });
                   },
-                  child: const Icon(Icons.arrow_forward).iconXSmall(),
+                  child: const Icon(LucideIcons.arrowRight).iconXSmall(),
                 ),
               ],
             ),

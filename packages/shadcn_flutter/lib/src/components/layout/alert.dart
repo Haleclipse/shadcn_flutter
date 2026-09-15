@@ -62,8 +62,9 @@ class AlertTheme extends ComponentThemeData {
   }) {
     return AlertTheme(
       padding: padding == null ? this.padding : padding(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       borderColor: borderColor == null ? this.borderColor : borderColor(),
     );
   }
@@ -101,16 +102,16 @@ class AlertTheme extends ComponentThemeData {
 /// Example:
 /// ```dart
 /// Alert(
-///   leading: Icon(Icons.info),
+///   leading: Icon(LucideIcons.info),
 ///   title: Text('Information'),
 ///   content: Text('This is an informational alert message.'),
 ///   trailing: IconButton(
-///     icon: Icon(Icons.close),
+///     icon: Icon(LucideIcons.x),
 ///     onPressed: () {},
 ///   ),
 /// );
 /// ```
-class Alert extends StatelessWidget {
+class Alert extends StatelessWidget implements Styleable<AlertTheme> {
   /// Optional leading widget, typically an icon.
   ///
   /// Type: `Widget?`. Displayed at the start of the alert layout.
@@ -141,6 +142,10 @@ class Alert extends StatelessWidget {
   /// scheme to text and icons for error or warning messages.
   final bool destructive;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AlertTheme? theme;
+
   /// Creates an [Alert] with standard styling.
   ///
   /// All content parameters are optional, allowing for flexible layouts
@@ -160,13 +165,15 @@ class Alert extends StatelessWidget {
   ///   content: Text('Operation completed successfully.'),
   /// );
   /// ```
-  const Alert(
-      {super.key,
-      this.leading,
-      this.title,
-      this.content,
-      this.trailing,
-      this.destructive = false});
+  const Alert({
+    super.key,
+    this.leading,
+    this.title,
+    this.content,
+    this.trailing,
+    this.destructive = false,
+    this.theme,
+  });
 
   /// Creates an [Alert] with destructive styling pre-configured.
   ///
@@ -182,7 +189,7 @@ class Alert extends StatelessWidget {
   /// Example:
   /// ```dart
   /// Alert.destructive(
-  ///   leading: Icon(Icons.error),
+  ///   leading: Icon(LucideIcons.circleAlert),
   ///   title: Text('Error'),
   ///   content: Text('Something went wrong. Please try again.'),
   /// );
@@ -193,6 +200,7 @@ class Alert extends StatelessWidget {
     this.title,
     this.content,
     this.trailing,
+    this.theme,
   }) : destructive = true;
 
   @override
@@ -200,13 +208,9 @@ class Alert extends StatelessWidget {
     if (destructive) {
       var destructive2 = Theme.of(context).colorScheme.destructive;
       return DefaultTextStyle.merge(
-        style: TextStyle(
-          color: destructive2,
-        ),
+        style: TextStyle(color: destructive2),
         child: IconTheme.merge(
-          data: IconThemeData(
-            color: destructive2,
-          ),
+          data: IconThemeData(color: destructive2),
           child: _build(context),
         ),
       );
@@ -216,7 +220,7 @@ class Alert extends StatelessWidget {
 
   Widget _build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<AlertTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<AlertTheme>(context);
     final scaling = theme.scaling;
     final densityContentPadding = theme.density.baseContentPadding * scaling;
     var scheme = theme.colorScheme;
@@ -233,7 +237,7 @@ class Alert extends StatelessWidget {
     );
 
     return OutlinedContainer(
-      backgroundColor: backgroundColor,
+      theme: OutlinedContainerTheme(backgroundColor: backgroundColor),
       child: Container(
         padding: padding,
         child: Basic(

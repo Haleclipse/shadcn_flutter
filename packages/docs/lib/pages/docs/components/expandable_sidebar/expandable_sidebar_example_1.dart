@@ -67,48 +67,59 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
             expandedSize: 250,
             expanded: expanded,
             header: [
-              Builder(builder: (context) {
-                return NavigationSlot(
-                  leading: IconContainer(
-                    backgroundColor: Colors.blue,
-                    icon: const Icon(LucideIcons.galleryVerticalEnd).iconMedium,
-                  ),
-                  title: const Text('Acme Inc').medium.small,
-                  subtitle: const Text('Enterprise').xSmall.normal,
-                  trailing: const Icon(LucideIcons.chevronsUpDown).iconSmall,
-                  onPressed: () {
-                    showDropdown(
+              Builder(
+                builder: (context) {
+                  return NavigationSlot(
+                    leading: IconContainer(
+                      icon: const Icon(LucideIcons.galleryVerticalEnd)
+                          .iconMedium,
+                      theme: IconContainerTheme(backgroundColor: Colors.blue),
+                    ),
+                    title: const Text('Acme Inc').medium.small,
+                    subtitle: const Text('Enterprise').xSmall.normal,
+                    trailing: const Icon(LucideIcons.chevronsUpDown).iconSmall,
+                    onPressed: () {
+                      showDropdown(
                         context: context,
                         anchorAlignment: AlignmentDirectional.centerEnd,
                         alignment: AlignmentDirectional.centerStart,
                         offset: const Offset(16, 0),
                         builder: (context) {
-                          return DropdownMenu(children: [
-                            MenuButton(
-                                leading: const Icon(Icons.person),
+                          return DropdownMenu(
+                            children: [
+                              MenuButton(
+                                leading: const Icon(LucideIcons.user),
                                 child: const Text('Profile'),
-                                onPressed: (ctx) {}),
-                            MenuButton(
-                                leading: const Icon(Icons.settings),
+                                onPressed: (ctx) {},
+                              ),
+                              MenuButton(
+                                leading: const Icon(LucideIcons.settings),
                                 child: const Text('Settings'),
-                                onPressed: (ctx) {}),
-                            const MenuDivider(),
-                            MenuButton(
-                                leading: const Icon(Icons.logout),
+                                onPressed: (ctx) {},
+                              ),
+                              const MenuDivider(),
+                              MenuButton(
+                                leading: const Icon(LucideIcons.logOut),
                                 child: const Text('Logout'),
-                                onPressed: (ctx) {}),
-                          ]);
-                        });
-                  },
-                );
-              }),
+                                onPressed: (ctx) {},
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
             ],
             footer: [
               NavigationSlot(
                 leading: Avatar(
-                  size: 32,
                   initials: 'SU',
-                  backgroundColor: Colors.green.shade800,
+                  theme: AvatarTheme(
+                    size: 32,
+                    backgroundColor: Colors.green.shade800,
+                  ),
                 ),
                 title: const Text('sunarya-thito').medium.small,
                 subtitle: const Text('m@gmail.com').xSmall.normal,
@@ -118,32 +129,32 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
             ],
             children: [
               buildLabel('You', [
-                buildButton('Home', Icons.home_filled),
-                buildButton('Trending', Icons.trending_up),
-                buildButton('Subscription', Icons.subscriptions),
+                buildButton('Home', LucideIcons.house),
+                buildButton('Trending', LucideIcons.trendingUp),
+                buildButton('Subscription', LucideIcons.youtube),
               ]),
               const NavigationDivider(),
               NavigationCollapsible(
-                leading: const Icon(Icons.history),
+                leading: const Icon(LucideIcons.history),
                 label: const Text('History'),
                 children: [
-                  buildButton('History', Icons.history),
-                  buildButton('Watch Later', Icons.access_time_rounded),
+                  buildButton('History', LucideIcons.history),
+                  buildButton('Watch Later', LucideIcons.clock),
                 ],
               ),
               const NavigationDivider(),
               buildLabel('Movie', [
-                buildButton('Action', Icons.movie_creation_outlined),
-                buildButton('Horror', Icons.movie_creation_outlined),
-                buildButton('Thriller', Icons.movie_creation_outlined),
+                buildButton('Action', LucideIcons.clapperboard),
+                buildButton('Horror', LucideIcons.clapperboard),
+                buildButton('Thriller', LucideIcons.clapperboard),
               ]),
               const NavigationDivider(),
               NavigationCollapsible(
-                leading: const Icon(Icons.movie_filter_outlined),
+                leading: const Icon(LucideIcons.clapperboard),
                 label: const Text('Short Films'),
                 children: [
-                  buildButton('Action', Icons.movie_creation_outlined),
-                  buildButton('Horror', Icons.movie_creation_outlined),
+                  buildButton('Action', LucideIcons.clapperboard),
+                  buildButton('Horror', LucideIcons.clapperboard),
                 ],
               ),
             ],

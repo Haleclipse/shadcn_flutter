@@ -7,12 +7,7 @@ void main() {
   group('Switch', () {
     testWidgets('renders with initial value', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: Switch(
-            value: true,
-            onChanged: (value) {},
-          ),
-        ),
+        SimpleApp(child: Switch(value: true, onChanged: (value) {})),
       );
 
       expect(find.byType(Switch), findsOneWidget);
@@ -73,11 +68,7 @@ void main() {
     testWidgets('works with controller', (tester) async {
       final controller = SwitchController(false);
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledSwitch(
-            controller: controller,
-          ),
-        ),
+        SimpleApp(child: ControlledSwitch(controller: controller)),
       );
 
       expect(find.byType(Switch), findsOneWidget);
@@ -92,11 +83,7 @@ void main() {
 
     testWidgets('works with initialValue', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledSwitch(
-            initialValue: true,
-          ),
-        ),
+        SimpleApp(child: ControlledSwitch(initialValue: true)),
       );
 
       expect(find.byType(Switch), findsOneWidget);

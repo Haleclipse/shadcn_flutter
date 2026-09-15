@@ -1,7 +1,7 @@
 import 'package:docs/pages/docs/components_page.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // paint a cursor
 class CursorPainter extends CustomPainter {
@@ -12,7 +12,7 @@ class CursorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = material.Colors.white
+      ..color = Colors.white
       ..style = PaintingStyle.fill;
     final path = Path()
       ..moveTo(4, 0)
@@ -25,7 +25,7 @@ class CursorPainter extends CustomPainter {
       ..close();
     canvas.drawPath(path, paint);
     paint
-      ..color = material.Colors.black
+      ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
     canvas.drawPath(path, paint);
@@ -56,55 +56,61 @@ class DropdownMenuTile extends StatelessWidget implements IComponentPage {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                OutlineButton(
-                  onPressed: () {},
-                  child: const Text('Options'),
-                ),
+                OutlineButton(onPressed: () {}, child: const Text('Options')),
                 const Gap(8),
                 SizedBox(
                   width: 192,
-                  child: MenuPopup(children: [
-                    Button(
-                      style: const ButtonStyle.menu(),
-                      onPressed: () {},
-                      child: const Text('Profile'),
-                    ),
-                    Button(
-                      style: const ButtonStyle.menu().copyWith(
+                  child: MenuPopup(
+                    children: [
+                      Button(
+                        style: const ButtonStyle.menu(),
+                        onPressed: () {},
+                        child: const Text('Profile'),
+                      ),
+                      Button(
+                        style: const ButtonStyle.menu().copyWith(
                           decoration: (context, states, value) {
-                        return (value as BoxDecoration).copyWith(
-                          color: theme.colorScheme.accent,
-                          borderRadius: BorderRadius.circular(theme.radiusSm),
-                        );
-                      }),
-                      onPressed: () {},
-                      child: const Text('Billing'),
-                    ),
-                    const MenuDivider(),
-                    Button(
-                      style: const ButtonStyle.menu(),
-                      onPressed: () {},
-                      child: const Text('Settings'),
-                    ),
-                    Button(
-                      style: const ButtonStyle.menu(),
-                      onPressed: () {},
-                      trailing: const MenuShortcut(
-                        activator: SingleActivator(LogicalKeyboardKey.keyC,
-                            control: true),
+                            return (value as BoxDecoration).copyWith(
+                              color: theme.colorScheme.accent,
+                              borderRadius: BorderRadius.circular(
+                                theme.radiusSm,
+                              ),
+                            );
+                          },
+                        ),
+                        onPressed: () {},
+                        child: const Text('Billing'),
                       ),
-                      child: const Text('Copy'),
-                    ),
-                    Button(
-                      style: const ButtonStyle.menu(),
-                      onPressed: () {},
-                      trailing: const MenuShortcut(
-                        activator: SingleActivator(LogicalKeyboardKey.keyV,
-                            control: true),
+                      const MenuDivider(),
+                      Button(
+                        style: const ButtonStyle.menu(),
+                        onPressed: () {},
+                        child: const Text('Settings'),
                       ),
-                      child: const Text('Paste'),
-                    ),
-                  ]),
+                      Button(
+                        style: const ButtonStyle.menu(),
+                        onPressed: () {},
+                        trailing: const MenuShortcut(
+                          activator: SingleActivator(
+                            LogicalKeyboardKey.keyC,
+                            control: true,
+                          ),
+                        ),
+                        child: const Text('Copy'),
+                      ),
+                      Button(
+                        style: const ButtonStyle.menu(),
+                        onPressed: () {},
+                        trailing: const MenuShortcut(
+                          activator: SingleActivator(
+                            LogicalKeyboardKey.keyV,
+                            control: true,
+                          ),
+                        ),
+                        child: const Text('Paste'),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -112,10 +118,8 @@ class DropdownMenuTile extends StatelessWidget implements IComponentPage {
           const Positioned(
             top: 105,
             left: 170,
-            child: CustomPaint(
-              painter: CursorPainter(),
-            ),
-          )
+            child: CustomPaint(painter: CursorPainter()),
+          ),
         ],
       ),
     );

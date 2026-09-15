@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SortableTile extends StatelessWidget implements IComponentPage {
   const SortableTile({super.key});
@@ -25,7 +26,7 @@ class SortableTile extends StatelessWidget implements IComponentPage {
                     padding: EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        Icon(Icons.drag_handle),
+                        Icon(LucideIcons.gripHorizontal),
                         Gap(8),
                         Text('Item 1'),
                       ],
@@ -38,7 +39,7 @@ class SortableTile extends StatelessWidget implements IComponentPage {
                     padding: EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        Icon(Icons.drag_handle),
+                        Icon(LucideIcons.gripHorizontal),
                         Gap(8),
                         Text('Item 2'),
                       ],
@@ -51,7 +52,7 @@ class SortableTile extends StatelessWidget implements IComponentPage {
                     padding: EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        Icon(Icons.drag_handle),
+                        Icon(LucideIcons.gripHorizontal),
                         Gap(8),
                         Text('Item 3'),
                       ],

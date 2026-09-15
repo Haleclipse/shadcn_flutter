@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormattedInputExample2 extends StatefulWidget {
   const FormattedInputExample2({super.key});
@@ -13,9 +14,7 @@ class _FormattedInputExample2State extends State<FormattedInputExample2> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DateInput(
-          onChanged: (value) => setState(() => _selectedDate = value),
-        ),
+        DateInput(onChanged: (value) => setState(() => _selectedDate = value)),
         const Gap(16),
         if (_selectedDate != null) Text('Selected date: $_selectedDate'),
       ],

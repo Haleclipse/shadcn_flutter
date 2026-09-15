@@ -18,15 +18,14 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../main.dart';
 import 'docs/sidebar_nav.dart';
 
+import 'package:gap/gap.dart';
+
 const double breakpointWidth = 768;
 const double breakpointWidth2 = 1024;
 
 extension CustomWidgetExtension on Widget {
   Widget anchored(OnThisPage onThisPage) {
-    return PageItemWidget(
-      onThisPage: onThisPage,
-      child: this,
-    );
+    return PageItemWidget(onThisPage: onThisPage, child: this);
   }
 }
 
@@ -94,42 +93,36 @@ enum ShadcnFeatureTag {
     switch (this) {
       case ShadcnFeatureTag.newFeature:
         copy = theme.copyWith(
-          colorScheme: () => theme.colorScheme.copyWith(
-            primary: () => Colors.green,
-          ),
+          colorScheme: () =>
+              theme.colorScheme.copyWith(primary: () => Colors.green),
         );
         badgeText = 'New';
         break;
       case ShadcnFeatureTag.updated:
         copy = theme.copyWith(
-          colorScheme: () => theme.colorScheme.copyWith(
-            primary: () => Colors.blue,
-          ),
+          colorScheme: () =>
+              theme.colorScheme.copyWith(primary: () => Colors.blue),
         );
         badgeText = 'Updated';
         break;
       case ShadcnFeatureTag.workInProgress:
         copy = theme.copyWith(
-          colorScheme: () => theme.colorScheme.copyWith(
-            primary: () => Colors.orange,
-          ),
+          colorScheme: () =>
+              theme.colorScheme.copyWith(primary: () => Colors.orange),
         );
         badgeText = 'WIP';
         break;
       case ShadcnFeatureTag.experimental:
         copy = theme.copyWith(
-          colorScheme: () => theme.colorScheme.copyWith(
-            primary: () => Colors.purple,
-          ),
+          colorScheme: () =>
+              theme.colorScheme.copyWith(primary: () => Colors.purple),
         );
         badgeText = 'Experimental';
         break;
     }
     return Theme(
       data: copy,
-      child: PrimaryBadge(
-        child: Text(badgeText),
-      ),
+      child: PrimaryBadge(child: Text(badgeText)),
     );
   }
 }
@@ -147,185 +140,175 @@ class ShadcnDocsSection {
   final List<ShadcnDocsPage> pages;
   final IconData icon;
 
-  ShadcnDocsSection(this.title, this.pages, [this.icon = Icons.book]);
+  ShadcnDocsSection(this.title, this.pages, [this.icon = LucideIcons.book]);
 }
 
 class DocsPageState extends State<DocsPage> {
   static final List<ShadcnDocsSection> sections = [
     ShadcnDocsSection(
-        'Getting Started',
-        List.unmodifiable([
-          ShadcnDocsPage('Introduction', 'introduction'),
-          ShadcnDocsPage('Installation', 'installation'),
-          ShadcnDocsPage('Theme', 'theme'),
-          ShadcnDocsPage('Typography', 'typography'),
-          ShadcnDocsPage('Layout', 'layout'),
-          ShadcnDocsPage('Web Preloader', 'web_preloader'),
-          ShadcnDocsPage('Components', 'components'),
-          ShadcnDocsPage('Icons', 'icons'),
-          ShadcnDocsPage('Colors', 'colors'),
-          ShadcnDocsPage('Material/Cupertino', 'external'),
-          ShadcnDocsPage('State Management', 'state'),
-          ShadcnDocsPage('GenUI', 'genui', ShadcnFeatureTag.experimental),
-        ]),
-        Icons.book),
+      'Getting Started',
+      List.unmodifiable([
+        ShadcnDocsPage('Introduction', 'introduction'),
+        ShadcnDocsPage('Installation', 'installation'),
+        ShadcnDocsPage('Theme', 'theme'),
+        ShadcnDocsPage('Typography', 'typography'),
+        ShadcnDocsPage('Layout', 'layout'),
+        ShadcnDocsPage('Web Preloader', 'web_preloader'),
+        ShadcnDocsPage('Components', 'components'),
+        ShadcnDocsPage('Icons', 'icons'),
+        ShadcnDocsPage('Colors', 'colors'),
+        ShadcnDocsPage('Material/Cupertino', 'external'),
+        ShadcnDocsPage('State Management', 'state'),
+        ShadcnDocsPage('Localizations', 'localizations'),
+        ShadcnDocsPage('GenUI', 'genui', ShadcnFeatureTag.experimental),
+      ]),
+      LucideIcons.book,
+    ),
     // COMPONENTS BEGIN
-    ShadcnDocsSection(
-      'Application',
-      [
-        ShadcnDocsPage('App Example', 'app'),
-        ShadcnDocsPage('GoRouter Example', 'go_router_app_example'),
-        ShadcnDocsPage('ShadcnLayer', 'wrapper'),
-      ],
-    ),
-    ShadcnDocsSection(
-      'Animation',
-      [
-        ShadcnDocsPage('Animated Value', 'animated_value_builder'),
-        // https://nyxbui.design/docs/components/number-ticker
-        ShadcnDocsPage('Number Ticker', 'number_ticker'),
-        ShadcnDocsPage('Repeated Animation', 'repeated_animation_builder'),
-        ShadcnDocsPage('Timeline Animation', 'timeline_animation'),
-      ],
-    ),
+    ShadcnDocsSection('Application', [
+      ShadcnDocsPage('App Example', 'app'),
+      ShadcnDocsPage('GoRouter Example', 'go_router_app_example'),
+      ShadcnDocsPage('ShadcnLayer', 'wrapper'),
+    ]),
+    ShadcnDocsSection('Animation', [
+      ShadcnDocsPage('Animated Value', 'animated_value_builder'),
+      // https://nyxbui.design/docs/components/number-ticker
+      ShadcnDocsPage('Number Ticker', 'number_ticker'),
+      ShadcnDocsPage('Repeated Animation', 'repeated_animation_builder'),
+      ShadcnDocsPage('Timeline Animation', 'timeline_animation'),
+    ]),
     ShadcnDocsSection('Control', [
       ShadcnDocsPage('Button', 'button'),
       ShadcnDocsPage(
-          'Audio Control', 'audio_control', ShadcnFeatureTag.workInProgress),
+        'Audio Control',
+        'audio_control',
+        ShadcnFeatureTag.workInProgress,
+      ),
       ShadcnDocsPage(
-          'Video Control', 'video_control', ShadcnFeatureTag.workInProgress),
+        'Video Control',
+        'video_control',
+        ShadcnFeatureTag.workInProgress,
+      ),
     ]),
-    ShadcnDocsSection(
-      'Disclosure',
-      [
-        ShadcnDocsPage('Accordion', 'accordion'),
-        ShadcnDocsPage('Collapsible', 'collapsible'),
-      ],
-    ),
-    ShadcnDocsSection(
-      'Display',
-      [
-        ShadcnDocsPage('Avatar', 'avatar'),
-        ShadcnDocsPage('Avatar Group', 'avatar_group'),
-        ShadcnDocsPage('Code Snippet', 'code_snippet'),
-        ShadcnDocsPage('Chat Bubble', 'chat', ShadcnFeatureTag.newFeature),
-        ShadcnDocsPage('Table', 'table'),
-        ShadcnDocsPage('Tracker', 'tracker'),
-      ],
-    ),
-    ShadcnDocsSection(
-      'Feedback',
-      [
-        ShadcnDocsPage('Alert', 'alert'),
-        ShadcnDocsPage('Alert Dialog', 'alert_dialog'),
-        ShadcnDocsPage('Circular Progress', 'circular_progress'),
-        ShadcnDocsPage('Progress', 'progress'),
-        ShadcnDocsPage('Linear Progress', 'linear_progress'),
-        ShadcnDocsPage('Skeleton', 'skeleton'),
-        ShadcnDocsPage('Toast', 'toast'),
-      ],
-    ),
-    ShadcnDocsSection(
-      'Form',
-      [
-        ShadcnDocsPage('Checkbox', 'checkbox'),
-        ShadcnDocsPage('Chip Input', 'chip_input'),
-        ShadcnDocsPage('Color Picker', 'color_picker'),
-        ShadcnDocsPage('Linear Gradient Picker', 'linear_gradient_picker',
-            ShadcnFeatureTag.workInProgress),
-        ShadcnDocsPage('Radial Gradient Picker', 'radial_gradient_picker',
-            ShadcnFeatureTag.workInProgress),
-        ShadcnDocsPage('Sweep Gradient Picker', 'sweep_gradient_picker',
-            ShadcnFeatureTag.workInProgress),
-        ShadcnDocsPage('Date Picker', 'date_picker'),
-        ShadcnDocsPage('Form', 'form'),
-        ShadcnDocsPage('Formatted Input', 'formatted_input'),
-        ShadcnDocsPage('Text Input', 'input'),
-        ShadcnDocsPage('AutoComplete', 'autocomplete'),
-        ShadcnDocsPage('Number Input', 'number_input'),
-        ShadcnDocsPage('Input OTP', 'input_otp'),
-        ShadcnDocsPage('Phone Input', 'phone_input'),
-        ShadcnDocsPage('Radio Group', 'radio_group'),
-        ShadcnDocsPage('Radio Card', 'radio_card'),
-        ShadcnDocsPage('Select', 'select'),
-        ShadcnDocsPage('Slider', 'slider'),
-        ShadcnDocsPage('Star Rating', 'star_rating'),
-        ShadcnDocsPage('Switch', 'switch'),
-        ShadcnDocsPage('Text Area', 'text_area'),
-        ShadcnDocsPage('Time Picker', 'time_picker'),
-        ShadcnDocsPage('Toggle', 'toggle'),
-        ShadcnDocsPage('Multi Select', 'multiselect'),
-        ShadcnDocsPage('Item Picker', 'item_picker'),
-      ],
-    ),
-    ShadcnDocsSection(
-      'Layout',
-      [
-        ShadcnDocsPage('Card', 'card'),
-        ShadcnDocsPage('Carousel', 'carousel'),
-        ShadcnDocsPage('Divider', 'divider'),
-        ShadcnDocsPage('Resizable', 'resizable'),
-        ShadcnDocsPage('Sortable', 'sortable'),
-        ShadcnDocsPage('Steps', 'steps'),
-        ShadcnDocsPage('Stepper', 'stepper'),
-        ShadcnDocsPage('Timeline', 'timeline'),
-        ShadcnDocsPage('Scaffold', 'scaffold'),
-        ShadcnDocsPage('App Bar', 'app_bar'),
-        ShadcnDocsPage('Card Image', 'card_image'),
-      ],
-    ),
-    ShadcnDocsSection(
-      'Navigation',
-      [
-        ShadcnDocsPage('Breadcrumb', 'breadcrumb'),
-        ShadcnDocsPage('Menubar', 'menubar'),
-        ShadcnDocsPage('Navigation Menu', 'navigation_menu'),
-        ShadcnDocsPage('Pagination', 'pagination'),
-        ShadcnDocsPage('Tabs', 'tabs'),
-        ShadcnDocsPage('Tab List', 'tab_list'),
-        ShadcnDocsPage('Tab Pane', 'tab_pane'),
-        ShadcnDocsPage('Tree', 'tree'),
-        // aka Bottom Navigation Bar
-        ShadcnDocsPage('Navigation Bar', 'navigation_bar'),
-        ShadcnDocsPage('Navigation Rail', 'navigation_rail'),
-        ShadcnDocsPage('Expandable Sidebar', 'expandable_sidebar'),
-        // aka Drawer
-        ShadcnDocsPage('Navigation Sidebar', 'navigation_sidebar'),
-        ShadcnDocsPage('Dot Indicator', 'dot_indicator'),
-        //
-        ShadcnDocsPage('Switcher', 'switcher'),
-      ],
-    ),
-    ShadcnDocsSection(
-      'Overlay',
-      [
-        ShadcnDocsPage('Dialog', 'dialog'),
-        ShadcnDocsPage('Drawer', 'drawer'),
-        ShadcnDocsPage('Hover Card', 'hover_card'),
-        ShadcnDocsPage('Popover', 'popover'),
-        ShadcnDocsPage('Sheet', 'sheet'),
-        ShadcnDocsPage(
-            'Pinned Sheet', 'pinned_sheet', ShadcnFeatureTag.newFeature),
-        ShadcnDocsPage('Swiper', 'swiper'),
-        ShadcnDocsPage('Tooltip', 'tooltip'),
-        ShadcnDocsPage('Window', 'window', ShadcnFeatureTag.experimental),
-      ],
-    ),
+    ShadcnDocsSection('Disclosure', [
+      ShadcnDocsPage('Accordion', 'accordion'),
+      ShadcnDocsPage('Collapsible', 'collapsible'),
+    ]),
+    ShadcnDocsSection('Display', [
+      ShadcnDocsPage('Avatar', 'avatar'),
+      ShadcnDocsPage('Avatar Group', 'avatar_group'),
+      ShadcnDocsPage('Code Snippet', 'code_snippet'),
+      ShadcnDocsPage('Chat Bubble', 'chat', ShadcnFeatureTag.newFeature),
+      ShadcnDocsPage('Table', 'table'),
+      ShadcnDocsPage('Tracker', 'tracker'),
+    ]),
+    ShadcnDocsSection('Feedback', [
+      ShadcnDocsPage('Alert', 'alert'),
+      ShadcnDocsPage('Alert Dialog', 'alert_dialog'),
+      ShadcnDocsPage('Circular Progress', 'circular_progress'),
+      ShadcnDocsPage('Progress', 'progress'),
+      ShadcnDocsPage('Linear Progress', 'linear_progress'),
+      ShadcnDocsPage('Skeleton', 'skeleton'),
+      ShadcnDocsPage('Toast', 'toast'),
+    ]),
+    ShadcnDocsSection('Form', [
+      ShadcnDocsPage('Checkbox', 'checkbox'),
+      ShadcnDocsPage('Chip Input', 'chip_input'),
+      ShadcnDocsPage('Color Picker', 'color_picker'),
+      ShadcnDocsPage(
+        'Linear Gradient Picker',
+        'linear_gradient_picker',
+        ShadcnFeatureTag.workInProgress,
+      ),
+      ShadcnDocsPage(
+        'Radial Gradient Picker',
+        'radial_gradient_picker',
+        ShadcnFeatureTag.workInProgress,
+      ),
+      ShadcnDocsPage(
+        'Sweep Gradient Picker',
+        'sweep_gradient_picker',
+        ShadcnFeatureTag.workInProgress,
+      ),
+      ShadcnDocsPage('Date Picker', 'date_picker'),
+      ShadcnDocsPage('Form', 'form'),
+      ShadcnDocsPage('Formatted Input', 'formatted_input'),
+      ShadcnDocsPage('Text Input', 'input'),
+      ShadcnDocsPage('AutoComplete', 'autocomplete'),
+      ShadcnDocsPage('Number Input', 'number_input'),
+      ShadcnDocsPage('Input OTP', 'input_otp'),
+      ShadcnDocsPage('Phone Input', 'phone_input'),
+      ShadcnDocsPage('Radio Group', 'radio_group'),
+      ShadcnDocsPage('Radio Card', 'radio_card'),
+      ShadcnDocsPage('Select', 'select'),
+      ShadcnDocsPage('Slider', 'slider'),
+      ShadcnDocsPage('Star Rating', 'star_rating'),
+      ShadcnDocsPage('Switch', 'switch'),
+      ShadcnDocsPage('Text Area', 'text_area'),
+      ShadcnDocsPage('Time Picker', 'time_picker'),
+      ShadcnDocsPage('Toggle', 'toggle'),
+      ShadcnDocsPage('Multi Select', 'multiselect'),
+      ShadcnDocsPage('Item Picker', 'item_picker'),
+    ]),
+    ShadcnDocsSection('Layout', [
+      ShadcnDocsPage('Card', 'card'),
+      ShadcnDocsPage('Carousel', 'carousel'),
+      ShadcnDocsPage('Divider', 'divider'),
+      ShadcnDocsPage('Resizable', 'resizable'),
+      ShadcnDocsPage('Sortable', 'sortable'),
+      ShadcnDocsPage('Steps', 'steps'),
+      ShadcnDocsPage('Stepper', 'stepper'),
+      ShadcnDocsPage('Timeline', 'timeline'),
+      ShadcnDocsPage('Scaffold', 'scaffold'),
+      ShadcnDocsPage('App Bar', 'app_bar'),
+      ShadcnDocsPage('Card Image', 'card_image'),
+    ]),
+    ShadcnDocsSection('Navigation', [
+      ShadcnDocsPage('Breadcrumb', 'breadcrumb'),
+      ShadcnDocsPage('Menubar', 'menubar'),
+      ShadcnDocsPage('Navigation Menu', 'navigation_menu'),
+      ShadcnDocsPage('Pagination', 'pagination'),
+      ShadcnDocsPage('Tabs', 'tabs'),
+      ShadcnDocsPage('Tab List', 'tab_list'),
+      ShadcnDocsPage('Tab Pane', 'tab_pane'),
+      ShadcnDocsPage('Tree', 'tree'),
+      // aka Bottom Navigation Bar
+      ShadcnDocsPage('Navigation Bar', 'navigation_bar'),
+      ShadcnDocsPage('Navigation Rail', 'navigation_rail'),
+      ShadcnDocsPage('Expandable Sidebar', 'expandable_sidebar'),
+      // aka Drawer
+      ShadcnDocsPage('Navigation Sidebar', 'navigation_sidebar'),
+      ShadcnDocsPage('Dot Indicator', 'dot_indicator'),
+      //
+      ShadcnDocsPage('Switcher', 'switcher'),
+    ]),
+    ShadcnDocsSection('Overlay', [
+      ShadcnDocsPage('Dialog', 'dialog'),
+      ShadcnDocsPage('Drawer', 'drawer'),
+      ShadcnDocsPage('Hover Card', 'hover_card'),
+      ShadcnDocsPage('Popover', 'popover'),
+      ShadcnDocsPage('Sheet', 'sheet'),
+      ShadcnDocsPage(
+        'Pinned Sheet',
+        'pinned_sheet',
+        ShadcnFeatureTag.newFeature,
+      ),
+      ShadcnDocsPage('Swiper', 'swiper'),
+      ShadcnDocsPage('Tooltip', 'tooltip'),
+      ShadcnDocsPage('Window', 'window', ShadcnFeatureTag.experimental),
+    ]),
 
-    ShadcnDocsSection(
-      'Utility',
-      [
-        ShadcnDocsPage('Badge', 'badge'),
-        ShadcnDocsPage('Chip', 'chip'),
-        ShadcnDocsPage('Calendar', 'calendar'),
-        ShadcnDocsPage('Command', 'command'),
-        ShadcnDocsPage('Context Menu', 'context_menu'),
-        ShadcnDocsPage('Dropdown Menu', 'dropdown_menu'),
-        ShadcnDocsPage('Keyboard Display', 'keyboard_display'),
-        ShadcnDocsPage('Refresh Trigger', 'refresh_trigger'),
-        ShadcnDocsPage('Overflow Marquee', 'overflow_marquee'),
-      ],
-    ),
+    ShadcnDocsSection('Utility', [
+      ShadcnDocsPage('Badge', 'badge'),
+      ShadcnDocsPage('Chip', 'chip'),
+      ShadcnDocsPage('Calendar', 'calendar'),
+      ShadcnDocsPage('Command', 'command'),
+      ShadcnDocsPage('Context Menu', 'context_menu'),
+      ShadcnDocsPage('Dropdown Menu', 'dropdown_menu'),
+      ShadcnDocsPage('Keyboard Display', 'keyboard_display'),
+      ShadcnDocsPage('Refresh Trigger', 'refresh_trigger'),
+      ShadcnDocsPage('Overflow Marquee', 'overflow_marquee'),
+    ]),
     // COMPONENTS END
   ];
 
@@ -416,13 +399,15 @@ class DocsPageState extends State<DocsPage> {
           for (final page in section.pages) {
             if (query == null ||
                 page.title.toLowerCase().contains(query.toLowerCase())) {
-              resultItems.add(CommandItem(
-                title: Text(page.title),
-                trailing: Icon(section.icon),
-                onTap: () {
-                  context.goNamed(page.name);
-                },
-              ));
+              resultItems.add(
+                CommandItem(
+                  title: Text(page.title),
+                  trailing: Icon(section.icon),
+                  onTap: () {
+                    context.goNamed(page.name);
+                  },
+                ),
+              );
             }
           }
           if (resultItems.isNotEmpty) {
@@ -455,53 +440,56 @@ class DocsPageState extends State<DocsPage> {
         color = Colors.green;
         break;
     }
-    return Builder(builder: (context) {
-      return PrimaryBadge(
-        onPressed: () {
-          showDropdown(
-            context: context,
-            offset: const Offset(0, 8) * Theme.of(context).scaling,
-            builder: (context) {
-              return DropdownMenu(
-                children: [
-                  MenuButton(
-                    child: Text(getReleaseTagName()),
-                    onPressed: (context) {
-                      launchUrlString(
-                          'https://sunarya-thito.github.io/shadcn_flutter/');
-                    },
-                  ),
-                  MenuButton(
-                    child: const Text('Experimental'),
-                    onPressed: (context) {
-                      launchUrlString(
-                          'https://sunarya-thito.github.io/shadcn_flutter/experimental/');
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        },
-        style: const ButtonStyle.primary(
-          density: ButtonDensity.dense,
-          size: ButtonSize.small,
-        ).copyWith(
-          decoration: (context, states, value) {
-            return (value as BoxDecoration).copyWith(
-              color: color,
+    return Builder(
+      builder: (context) {
+        return PrimaryBadge(
+          onPressed: () {
+            showDropdown(
+              context: context,
+              offset: const Offset(0, 8) * Theme.of(context).scaling,
+              builder: (context) {
+                return DropdownMenu(
+                  children: [
+                    MenuButton(
+                      child: Text(getReleaseTagName()),
+                      onPressed: (context) {
+                        launchUrlString(
+                          'https://sunarya-thito.github.io/shadcn_flutter/',
+                        );
+                      },
+                    ),
+                    MenuButton(
+                      child: const Text('Experimental'),
+                      onPressed: (context) {
+                        launchUrlString(
+                          'https://sunarya-thito.github.io/shadcn_flutter/experimental/',
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
             );
           },
-          textStyle: (context, states, value) {
-            return value.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-            );
-          },
-        ),
-        child: Text(text),
-      );
-    });
+          style:
+              const ButtonStyle.primary(
+                density: ButtonDensity.dense,
+                size: ButtonSize.small,
+              ).copyWith(
+                decoration: (context, states, value) {
+                  return (value as BoxDecoration).copyWith(color: color);
+                },
+                textStyle: (context, states, value) {
+                  return value.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  );
+                },
+              ),
+          child: Text(text),
+        );
+      },
+    );
   }
 
   @override
@@ -532,61 +520,64 @@ class DocsPageState extends State<DocsPage> {
       child: ClipRect(
         child: PageStorage(
           bucket: docsBucket,
-          child: Builder(builder: (context) {
-            return StageContainer(
-              builder: (context, padding) {
-                return Scaffold(
-                  headers: [
-                    Container(
-                      color: theme.colorScheme.background.scaleAlpha(0.3),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          MediaQueryVisibility(
-                            minWidth: breakpointWidth,
-                            alternateChild: AppBar(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 12 * theme.scaling,
-                                horizontal: 18 * theme.scaling,
-                              ),
-                              leading: [
-                                OverlayAnchor(
-                                  anchor: #menuDrawer,
-                                  child: GhostButton(
-                                    density: ButtonDensity.icon,
-                                    onPressed: () {
-                                      _openDrawer(context);
-                                    },
-                                    child: const Icon(Icons.menu),
-                                  ),
+          child: Builder(
+            builder: (context) {
+              return StageContainer(
+                builder: (context, padding) {
+                  return Scaffold(
+                    headers: [
+                      Container(
+                        color: theme.colorScheme.background.scaleAlpha(0.3),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            MediaQueryVisibility(
+                              alternateChild: AppBar(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 12 * theme.scaling,
+                                  horizontal: 18 * theme.scaling,
                                 ),
-                              ],
-                              trailing: [
-                                Semantics(
-                                  link: true,
-                                  linkUrl: Uri.tryParse(
-                                    'https://github.com/sunarya-thito/shadcn_flutter',
+                                leading: [
+                                  OverlayAnchor(
+                                    anchor: #menuDrawer,
+                                    child: GhostButton(
+                                      density: ButtonDensity.icon,
+                                      onPressed: () {
+                                        _openDrawer(context);
+                                      },
+                                      child: const Icon(LucideIcons.menu),
+                                    ),
                                   ),
-                                  child: GhostButton(
+                                ],
+                                trailing: [
+                                  Semantics(
+                                    link: true,
+                                    linkUrl: Uri.tryParse(
+                                      'https://github.com/sunarya-thito/shadcn_flutter',
+                                    ),
+                                    child: GhostButton(
+                                      density: ButtonDensity.icon,
+                                      onPressed: () {
+                                        openInNewTab(
+                                          'https://github.com/sunarya-thito/shadcn_flutter',
+                                        );
+                                      },
+                                      child: FaIcon(
+                                        FontAwesomeIcons.github,
+                                        color: theme
+                                            .colorScheme
+                                            .secondaryForeground,
+                                      ).iconLarge(),
+                                    ),
+                                  ),
+                                  // pub.dev icon
+                                  GhostButton(
                                     density: ButtonDensity.icon,
                                     onPressed: () {
                                       openInNewTab(
-                                          'https://github.com/sunarya-thito/shadcn_flutter');
-                                    },
-                                    child: FaIcon(
-                                      FontAwesomeIcons.github,
-                                      color:
-                                          theme.colorScheme.secondaryForeground,
-                                    ).iconLarge(),
-                                  ),
-                                ),
-                                // pub.dev icon
-                                GhostButton(
-                                    density: ButtonDensity.icon,
-                                    onPressed: () {
-                                      openInNewTab(
-                                          'https://pub.dev/packages/shadcn_flutter');
+                                        'https://pub.dev/packages/shadcn_flutter',
+                                      );
                                     },
                                     child: ColorFiltered(
                                       // turns into white
@@ -597,195 +588,212 @@ class DocsPageState extends State<DocsPage> {
                                       child: FlutterLogo(
                                         size: 24 * theme.scaling,
                                       ),
-                                    )),
-                              ],
-                              child: Center(
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: OutlineButton(
-                                    onPressed: () {
-                                      showSearchBar();
-                                    },
-                                    trailing: const Icon(Icons.search)
-                                        .iconSmall()
-                                        .iconMutedForeground(),
-                                    child: Row(
-                                      spacing: 8,
-                                      children: [
-                                        const Text('Search documentation...')
-                                            .muted()
-                                            .normal(),
-                                        const KeyboardDisplay.fromActivator(
-                                          activator: SingleActivator(
+                                    ),
+                                  ),
+                                ],
+                                child: Center(
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: OutlineButton(
+                                      onPressed: () {
+                                        showSearchBar();
+                                      },
+                                      trailing: const Icon(LucideIcons.search)
+                                          .iconSmall()
+                                          .iconMutedForeground(),
+                                      child: Row(
+                                        spacing: 8,
+                                        children: [
+                                          const Text('Search documentation...')
+                                              .muted()
+                                              .normal(),
+                                          const KeyboardDisplay.fromActivator(
+                                            activator: SingleActivator(
                                               LogicalKeyboardKey.keyF,
-                                              control: true),
-                                        ).xSmall.withOpacity(0.8),
-                                      ],
+                                              control: true,
+                                            ),
+                                          ).xSmall.withOpacity(0.8),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            child: MediaQueryVisibility(
-                              minWidth: breakpointWidth2,
-                              alternateChild: _buildAppBar(
+                              theme: MediaQueryVisibilityTheme(
+                                minWidth: breakpointWidth,
+                              ),
+                              child: MediaQueryVisibility(
+                                alternateChild: _buildAppBar(
                                   padding.copyWith(
                                         top: 12,
                                         bottom: 12,
                                         right: 32,
                                       ) *
                                       theme.scaling,
-                                  theme),
-                              child: _buildAppBar(
-                                  padding.copyWith(
-                                        top: 12,
-                                        bottom: 12,
-                                      ) *
+                                  theme,
+                                ),
+                                theme: MediaQueryVisibilityTheme(
+                                  minWidth: breakpointWidth2,
+                                ),
+                                child: _buildAppBar(
+                                  padding.copyWith(top: 12, bottom: 12) *
                                       theme.scaling,
-                                  theme),
+                                  theme,
+                                ),
+                              ),
                             ),
-                          ),
-                          const Divider(),
-                        ],
-                      ),
-                    ),
-                  ],
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      MediaQueryVisibility(
-                        minWidth: breakpointWidth,
-                        child: FocusTraversalGroup(
-                          child: SingleChildScrollView(
-                            key: const PageStorageKey('sidebar'),
-                            padding: EdgeInsets.only(
-                                    top: 32,
-                                    left: 24 + padding.left,
-                                    bottom: 32) *
-                                theme.scaling,
-                            child: _DocsSidebar(
-                                sections: sections, pageName: widget.name),
-                          ),
+                            const Divider(),
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: FocusTraversalGroup(
-                          child: widget.scrollable
-                              ? Builder(builder: (context) {
-                                  var mq = MediaQuery.of(context);
-                                  return SingleChildScrollView(
-                                    controller: scrollController,
+                    ],
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        MediaQueryVisibility(
+                          theme: MediaQueryVisibilityTheme(
+                            minWidth: breakpointWidth,
+                          ),
+                          child: FocusTraversalGroup(
+                            child: SingleChildScrollView(
+                              key: const PageStorageKey('sidebar'),
+                              padding:
+                                  EdgeInsets.only(
+                                    top: 32,
+                                    left: 24 + padding.left,
+                                    bottom: 32,
+                                  ) *
+                                  theme.scaling,
+                              child: _DocsSidebar(
+                                sections: sections,
+                                pageName: widget.name,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FocusTraversalGroup(
+                            child: widget.scrollable
+                                ? Builder(
+                                    builder: (context) {
+                                      var mq = MediaQuery.of(context);
+                                      return SingleChildScrollView(
+                                        controller: scrollController,
+                                        clipBehavior: Clip.none,
+                                        padding: !hasOnThisPage
+                                            ? const EdgeInsets.symmetric(
+                                                        horizontal: 40,
+                                                        vertical: 32,
+                                                      ).copyWith(
+                                                        right:
+                                                            padding.right + 32,
+                                                      ) *
+                                                      theme.scaling +
+                                                  mq.padding
+                                            : const EdgeInsets.symmetric(
+                                                        horizontal: 40,
+                                                        vertical: 32,
+                                                      ).copyWith(right: 24) *
+                                                      theme.scaling +
+                                                  mq.padding,
+                                        child: MediaQuery(
+                                          data: mq.copyWith(
+                                            padding: EdgeInsets.zero,
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              Breadcrumb(
+                                                separator:
+                                                    Breadcrumb.arrowSeparator,
+                                                children: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      context.goNamed(
+                                                        'introduction',
+                                                      );
+                                                    },
+                                                    density:
+                                                        ButtonDensity.compact,
+                                                    child: const Text('Docs'),
+                                                  ),
+                                                  ...widget.navigationItems,
+                                                  if (page != null)
+                                                    Text(page.title),
+                                                ],
+                                              ),
+                                              Gap(16 * theme.scaling),
+                                              widget.child,
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Container(
                                     clipBehavior: Clip.none,
                                     padding: !hasOnThisPage
                                         ? const EdgeInsets.symmetric(
-                                                  horizontal: 40,
-                                                  vertical: 32,
-                                                ).copyWith(
-                                                  right: padding.right + 32,
-                                                ) *
-                                                theme.scaling +
-                                            mq.padding
+                                                horizontal: 40,
+                                                vertical: 32,
+                                              ).copyWith(
+                                                right: padding.right + 32,
+                                                bottom: 0,
+                                              ) *
+                                              theme.scaling
                                         : const EdgeInsets.symmetric(
-                                                  horizontal: 40,
-                                                  vertical: 32,
-                                                ).copyWith(right: 24) *
-                                                theme.scaling +
-                                            mq.padding,
-                                    child: MediaQuery(
-                                      data: mq.copyWith(
-                                        padding: EdgeInsets.zero,
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Breadcrumb(
-                                            separator:
-                                                Breadcrumb.arrowSeparator,
-                                            children: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  context
-                                                      .goNamed('introduction');
-                                                },
-                                                density: ButtonDensity.compact,
-                                                child: const Text('Docs'),
-                                              ),
-                                              ...widget.navigationItems,
-                                              if (page != null)
-                                                Text(page.title),
-                                            ],
-                                          ),
-                                          Gap(16 * theme.scaling),
-                                          widget.child,
-                                        ],
-                                      ),
+                                                horizontal: 40,
+                                                vertical: 32,
+                                              ).copyWith(right: 24, bottom: 0) *
+                                              theme.scaling,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Breadcrumb(
+                                          separator: Breadcrumb.arrowSeparator,
+                                          children: [
+                                            TextButton(
+                                              onPressed: () {
+                                                context.goNamed('introduction');
+                                              },
+                                              density: ButtonDensity.compact,
+                                              child: const Text('Docs'),
+                                            ),
+                                            ...widget.navigationItems,
+                                            if (page != null) Text(page.title),
+                                          ],
+                                        ),
+                                        Gap(16 * theme.scaling),
+                                        Expanded(child: widget.child),
+                                      ],
                                     ),
-                                  );
-                                })
-                              : Container(
-                                  clipBehavior: Clip.none,
-                                  padding: !hasOnThisPage
-                                      ? const EdgeInsets.symmetric(
-                                            horizontal: 40,
-                                            vertical: 32,
-                                          ).copyWith(
-                                            right: padding.right + 32,
-                                            bottom: 0,
-                                          ) *
-                                          theme.scaling
-                                      : const EdgeInsets.symmetric(
-                                            horizontal: 40,
-                                            vertical: 32,
-                                          ).copyWith(
-                                            right: 24,
-                                            bottom: 0,
-                                          ) *
-                                          theme.scaling,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Breadcrumb(
-                                        separator: Breadcrumb.arrowSeparator,
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              context.goNamed('introduction');
-                                            },
-                                            density: ButtonDensity.compact,
-                                            child: const Text('Docs'),
-                                          ),
-                                          ...widget.navigationItems,
-                                          if (page != null) Text(page.title),
-                                        ],
-                                      ),
-                                      Gap(16 * theme.scaling),
-                                      Expanded(child: widget.child),
-                                    ],
                                   ),
-                                ),
-                        ),
-                      ),
-                      if (hasOnThisPage)
-                        MediaQueryVisibility(
-                          minWidth: breakpointWidth2,
-                          child: _DocsSecondarySidebar(
-                            onThisPage: onThisPage,
-                            isVisible: isVisible,
-                            padding: padding,
                           ),
                         ),
-                    ],
-                  ),
-                );
-              },
-            );
-          }),
+                        if (hasOnThisPage)
+                          MediaQueryVisibility(
+                            theme: MediaQueryVisibilityTheme(
+                              minWidth: breakpointWidth2,
+                            ),
+                            child: _DocsSecondarySidebar(
+                              onThisPage: onThisPage,
+                              isVisible: isVisible,
+                              padding: padding,
+                            ),
+                          ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -805,16 +813,12 @@ class DocsPageState extends State<DocsPage> {
       // ),
       padding: padding,
       title: Basic(
-        leading: FlutterLogo(
-          size: 32 * theme.scaling,
-        ),
+        leading: FlutterLogo(size: 32 * theme.scaling),
         content: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              'shadcn_flutter',
-            ).textLarge().mono(),
+            const Text('shadcn_flutter').textLarge().mono(),
             Gap(16 * theme.scaling),
             buildFlavorTag(),
           ],
@@ -829,15 +833,18 @@ class DocsPageState extends State<DocsPage> {
               onPressed: () {
                 showSearchBar();
               },
-              trailing:
-                  const Icon(Icons.search).iconSmall().iconMutedForeground(),
+              trailing: const Icon(LucideIcons.search)
+                  .iconSmall()
+                  .iconMutedForeground(),
               child: Row(
                 spacing: 16,
                 children: [
                   const Text('Search documentation...').muted().normal(),
                   const KeyboardDisplay.fromActivator(
-                    activator:
-                        SingleActivator(LogicalKeyboardKey.keyF, control: true),
+                    activator: SingleActivator(
+                      LogicalKeyboardKey.keyF,
+                      control: true,
+                    ),
                   ).xSmall.withOpacity(0.8),
                 ],
               ),
@@ -850,26 +857,26 @@ class DocsPageState extends State<DocsPage> {
           onPressed: () {
             openInNewTab('https://github.com/sunarya-thito/shadcn_flutter');
           },
-          child: FaIcon(FontAwesomeIcons.github,
-                  color: theme.colorScheme.secondaryForeground)
-              .iconLarge(),
+          child: FaIcon(
+            FontAwesomeIcons.github,
+            color: theme.colorScheme.secondaryForeground,
+          ).iconLarge(),
         ),
         // pub.dev icon
         GhostButton(
-            density: ButtonDensity.icon,
-            onPressed: () {
-              openInNewTab('https://pub.dev/packages/shadcn_flutter');
-            },
-            child: ColorFiltered(
-              // turns into white
-              colorFilter: ColorFilter.mode(
-                theme.colorScheme.secondaryForeground,
-                BlendMode.srcIn,
-              ),
-              child: FlutterLogo(
-                size: 24 * theme.scaling,
-              ),
-            )),
+          density: ButtonDensity.icon,
+          onPressed: () {
+            openInNewTab('https://pub.dev/packages/shadcn_flutter');
+          },
+          child: ColorFiltered(
+            // turns into white
+            colorFilter: ColorFilter.mode(
+              theme.colorScheme.secondaryForeground,
+              BlendMode.srcIn,
+            ),
+            child: FlutterLogo(size: 24 * theme.scaling),
+          ),
+        ),
       ],
     );
   }
@@ -894,13 +901,9 @@ class DocsPageState extends State<DocsPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  FlutterLogo(
-                    size: 24 * scaling,
-                  ),
+                  FlutterLogo(size: 24 * scaling),
                   Gap(18 * scaling),
-                  const Text(
-                    'shadcn_flutter',
-                  ).medium().mono(),
+                  const Text('shadcn_flutter').medium().mono(),
                   Gap(12 * scaling),
                   buildFlavorTag(),
                   const Spacer(),
@@ -910,7 +913,7 @@ class DocsPageState extends State<DocsPage> {
                     onPressed: () {
                       closeDrawer(context);
                     },
-                    child: const Icon(Icons.close),
+                    child: const Icon(LucideIcons.x),
                   ),
                 ],
               ).withPadding(left: 32 * scaling, right: 32 * scaling),
@@ -918,65 +921,70 @@ class DocsPageState extends State<DocsPage> {
               Expanded(
                 child: FocusTraversalGroup(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(
-                            left: 32, right: 32, bottom: 48) *
+                    padding:
+                        const EdgeInsets.only(left: 32, right: 32, bottom: 48) *
                         scaling,
                     key: const PageStorageKey('sidebar'),
-                    child: SidebarNav(children: [
-                      for (var section in sections)
-                        SidebarSection(
-                          header: Text(section.title),
-                          children: [
-                            for (var page in section.pages)
-                              Semantics(
-                                link: true,
-                                linkUrl: Uri.tryParse(
-                                  'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, page.name)}',
-                                ),
-                                child: DocsNavigationButton(
-                                  onPressed: () {
-                                    if (page.tag ==
-                                        ShadcnFeatureTag.workInProgress) {
-                                      showOverlay(
-                                        context,
-                                        DialogConfiguration(),
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                'Work in Progress'),
-                                            content: const Text(
-                                                'This page is still under development. Please come back later.'),
-                                            actions: [
-                                              PrimaryButton(
+                    child: SidebarNav(
+                      children: [
+                        for (var section in sections)
+                          SidebarSection(
+                            header: Text(section.title),
+                            children: [
+                              for (var page in section.pages)
+                                Semantics(
+                                  link: true,
+                                  linkUrl: Uri.tryParse(
+                                    'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, page.name)}',
+                                  ),
+                                  child: DocsNavigationButton(
+                                    onPressed: () {
+                                      if (page.tag ==
+                                          ShadcnFeatureTag.workInProgress) {
+                                        showOverlay(
+                                          context,
+                                          DialogConfiguration(),
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: const Text(
+                                                'Work in Progress',
+                                              ),
+                                              content: const Text(
+                                                'This page is still under development. Please come back later.',
+                                              ),
+                                              actions: [
+                                                PrimaryButton(
                                                   onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pop();
+                                                    Navigator.of(context).pop();
                                                   },
-                                                  child:
-                                                      const Text('Close')),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                      return;
-                                    }
-                                    context.goNamed(page.name);
-                                  },
-                                  selected: page.name == widget.name,
-                                  child: Basic(
-                                    trailing: page.tag?.buildBadge(context),
-                                    trailingAlignment:
-                                        AlignmentDirectional.centerStart,
-                                    content: Text(page.title),
+                                                  child: const Text('Close'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        return;
+                                      }
+                                      context.goNamed(page.name);
+                                    },
+                                    selected: page.name == widget.name,
+                                    child: Basic(
+                                      trailing: page.tag?.buildBadge(context),
+                                      content: Text(page.title),
+                                      theme: BasicTheme(
+                                        trailingAlignment:
+                                            AlignmentDirectional.centerStart,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                          ],
-                        ),
-                    ]),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -990,10 +998,7 @@ class OpenSearchCommandIntent extends Intent {
 }
 
 class _DocsSidebar extends StatefulWidget {
-  const _DocsSidebar({
-    required this.sections,
-    required this.pageName,
-  });
+  const _DocsSidebar({required this.sections, required this.pageName});
 
   final List<ShadcnDocsSection> sections;
   final String pageName;
@@ -1044,20 +1049,23 @@ class _DocsSecondarySidebarState extends State<_DocsSecondarySidebar> {
     super.initState();
     var side = <Widget>[];
     for (var key in widget.onThisPage.keys) {
-      side.add(SidebarButton(
-        onPressed: () {
-          Scrollable.ensureVisible(widget.onThisPage[key]!.currentContext!,
+      side.add(
+        SidebarButton(
+          onPressed: () {
+            Scrollable.ensureVisible(
+              widget.onThisPage[key]!.currentContext!,
               duration: kDefaultDuration,
-              alignmentPolicy: ScrollPositionAlignmentPolicy.explicit);
-        },
-        selected: widget.isVisible(widget.onThisPage[key]!),
-        child: Text(key),
-      ));
+              alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
+            );
+          },
+          selected: widget.isVisible(widget.onThisPage[key]!),
+          child: Text(key),
+        ),
+      );
     }
-    _sideChildren.add(SidebarSection(
-      header: const Text('On This Page'),
-      children: side,
-    ));
+    _sideChildren.add(
+      SidebarSection(header: const Text('On This Page'), children: side),
+    );
   }
 
   @override
@@ -1068,12 +1076,8 @@ class _DocsSecondarySidebarState extends State<_DocsSecondarySidebar> {
       alignment: Alignment.topLeft,
       child: FocusTraversalGroup(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.only(
-                top: 32,
-                right: 24,
-                bottom: 32,
-                left: 24,
-              ) *
+          padding:
+              const EdgeInsets.only(top: 32, right: 24, bottom: 32, left: 24) *
               theme.scaling,
           child: SidebarNav(children: _sideChildren),
         ),
@@ -1083,10 +1087,7 @@ class _DocsSecondarySidebarState extends State<_DocsSecondarySidebar> {
 }
 
 class _DocsSidebarSection extends StatefulWidget {
-  const _DocsSidebarSection({
-    required this.section,
-    required this.pageName,
-  });
+  const _DocsSidebarSection({required this.section, required this.pageName});
 
   final ShadcnDocsSection section;
   final String pageName;
@@ -1111,18 +1112,12 @@ class _DocsSidebarSectionState extends State<_DocsSidebarSection> {
 
   @override
   Widget build(BuildContext context) {
-    return SidebarSection(
-      header: Text(widget.section.title),
-      children: pages,
-    );
+    return SidebarSection(header: Text(widget.section.title), children: pages);
   }
 }
 
 class _DocsSidebarButton extends StatefulWidget {
-  const _DocsSidebarButton({
-    required this.page,
-    required this.pageName,
-  });
+  const _DocsSidebarButton({required this.page, required this.pageName});
 
   final ShadcnDocsPage page;
   final String pageName;
@@ -1152,9 +1147,7 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
         onPressed: _onPressed,
         selected: widget.page.name == widget.pageName,
         trailing: DefaultTextStyle.merge(
-          style: const TextStyle(
-            decoration: TextDecoration.none,
-          ),
+          style: const TextStyle(decoration: TextDecoration.none),
           child: widget.page.tag?.buildBadge(context) ?? const SizedBox(),
         ),
         child: Text(widget.page.title),
@@ -1171,13 +1164,15 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
           return AlertDialog(
             title: const Text('Work in Progress'),
             content: const Text(
-                'This page is still under development. Please come back later.'),
+              'This page is still under development. Please come back later.',
+            ),
             actions: [
               PrimaryButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Close')),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Close'),
+              ),
             ],
           );
         },

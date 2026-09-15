@@ -238,8 +238,8 @@ class _SubFocusScopeState extends State<SubFocusScope> with SubFocusScopeState {
       alignmentPolicy: forward == null
           ? ScrollPositionAlignmentPolicy.explicit
           : forward
-              ? ScrollPositionAlignmentPolicy.keepVisibleAtEnd
-              : ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+          ? ScrollPositionAlignmentPolicy.keepVisibleAtEnd
+          : ScrollPositionAlignmentPolicy.keepVisibleAtStart,
     );
     _currentState = item;
   }
@@ -260,8 +260,10 @@ class _SubFocusScopeState extends State<SubFocusScope> with SubFocusScopeState {
       if (currentBox == null || parentBox == null) {
         return false;
       }
-      final Offset currentOffset =
-          currentBox.localToGlobal(Offset.zero, ancestor: parentBox);
+      final Offset currentOffset = currentBox.localToGlobal(
+        Offset.zero,
+        ancestor: parentBox,
+      );
 
       late final bool horizontal;
       late final bool forward;
@@ -289,15 +291,17 @@ class _SubFocusScopeState extends State<SubFocusScope> with SubFocusScopeState {
         if (attached == _currentState) continue;
         final RenderBox? box = attached.findRenderObject();
         if (box == null) continue;
-        final Offset offset =
-            box.localToGlobal(Offset.zero, ancestor: parentBox);
+        final Offset offset = box.localToGlobal(
+          Offset.zero,
+          ancestor: parentBox,
+        );
         final double delta = horizontal
             ? (forward
-                ? (offset.dx - currentOffset.dx)
-                : (currentOffset.dx - offset.dx))
+                  ? (offset.dx - currentOffset.dx)
+                  : (currentOffset.dx - offset.dx))
             : (forward
-                ? (offset.dy - currentOffset.dy)
-                : (currentOffset.dy - offset.dy));
+                  ? (offset.dy - currentOffset.dy)
+                  : (currentOffset.dy - offset.dy));
         if (delta <= 0) continue;
         if (nearestNextItem == null || delta < nearestNextItem.$2) {
           nearestNextItem = (attached, delta);
@@ -581,14 +585,12 @@ class _SubFocusState extends State<SubFocus> with SubFocusState {
   }
 
   @override
-  void ensureVisible(
-      {ScrollPositionAlignmentPolicy alignmentPolicy =
-          ScrollPositionAlignmentPolicy.explicit}) {
+  void ensureVisible({
+    ScrollPositionAlignmentPolicy alignmentPolicy =
+        ScrollPositionAlignmentPolicy.explicit,
+  }) {
     if (!mounted || !_active) return;
-    Scrollable.ensureVisible(
-      context,
-      alignmentPolicy: alignmentPolicy,
-    );
+    Scrollable.ensureVisible(context, alignmentPolicy: alignmentPolicy);
   }
 
   @override

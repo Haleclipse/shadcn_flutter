@@ -99,7 +99,6 @@ Shadcn Flutter features over 100+ high-quality components. Below are the core ca
 | **Alert** | [components/feedback/alert.md](./components/feedback/alert.md) |
 | **Alert Dialog** | [components/feedback/alert_dialog.md](./components/feedback/alert_dialog.md) |
 | **Progress** | [components/feedback/progress.md](./components/feedback/progress.md) |
-| **Skeleton** | [components/feedback/skeleton.md](./components/feedback/skeleton.md) |
 | **Toast** | [components/feedback/toast.md](./components/feedback/toast.md) |
 
 ### Form
@@ -158,6 +157,7 @@ Shadcn Flutter features over 100+ high-quality components. Below are the core ca
 | **Dialog** | [components/overlay/dialog.md](./components/overlay/dialog.md) |
 | **Drawer** | [components/overlay/drawer.md](./components/overlay/drawer.md) |
 | **Hover Card** | [components/overlay/hover_card.md](./components/overlay/hover_card.md) |
+| **Pinned Sheet** | [components/overlay/pinned_sheet.md](./components/overlay/pinned_sheet.md) |
 | **Popover** | [components/overlay/popover.md](./components/overlay/popover.md) |
 | **Swiper** | [components/overlay/swiper.md](./components/overlay/swiper.md) |
 | **Tooltip** | [components/overlay/tooltip.md](./components/overlay/tooltip.md) |

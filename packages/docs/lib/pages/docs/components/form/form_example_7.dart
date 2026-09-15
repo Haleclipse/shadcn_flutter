@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates IgnoreForm to exclude widgets from form participation.
 ///
@@ -22,9 +23,11 @@ class FormExample7 extends StatelessWidget {
       width: 480,
       child: Form(
         onSubmit: (context, values) {
-          String json = jsonEncode(values.map((key, value) {
-            return MapEntry(key.key, value);
-          }));
+          String json = jsonEncode(
+            values.map((key, value) {
+              return MapEntry(key.key, value);
+            }),
+          );
           showOverlay(
             context,
             DialogConfiguration(),
@@ -55,9 +58,7 @@ class FormExample7 extends StatelessWidget {
                   // This TextField is wrapped in IgnoreForm, so it does NOT
                   // participate in form validation or submission.
                   child: IgnoreForm(
-                    child: TextField(
-                      placeholder: Text('Type to search...'),
-                    ),
+                    child: TextField(placeholder: Text('Type to search...')),
                   ),
                 ),
                 // These fields participate in the form normally.

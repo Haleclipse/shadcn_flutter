@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class AvatarTile extends StatelessWidget implements IComponentPage {
   const AvatarTile({super.key});
@@ -19,12 +20,11 @@ class AvatarTile extends StatelessWidget implements IComponentPage {
             Avatar(
               initials: Avatar.getInitials('sunarya-thito'),
               provider: const NetworkImage(
-                  'https://avatars.githubusercontent.com/u/64018564?v=4'),
+                'https://avatars.githubusercontent.com/u/64018564?v=4',
+              ),
             ),
             const Gap(16),
-            Avatar(
-              initials: Avatar.getInitials('sunarya-thito'),
-            ),
+            Avatar(initials: Avatar.getInitials('sunarya-thito')),
           ],
         ),
       ),

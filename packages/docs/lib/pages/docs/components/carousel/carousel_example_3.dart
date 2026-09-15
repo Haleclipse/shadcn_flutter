@@ -2,6 +2,8 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import '../carousel_example.dart';
 
+import 'package:gap/gap.dart';
+
 /// Carousel with fading transition and dot indicators.
 ///
 /// Items fade in/out instead of sliding. Draggable is disabled and the
@@ -48,19 +50,20 @@ class _CarouselExample3State extends State<CarouselExample3> {
               CarouselDotIndicator(itemCount: 5, controller: controller),
               const Spacer(),
               OutlineButton(
-                  shape: ButtonShape.circle,
-                  onPressed: () {
-                    controller
-                        .animatePrevious(const Duration(milliseconds: 500));
-                  },
-                  child: const Icon(Icons.arrow_back)),
+                shape: ButtonShape.circle,
+                onPressed: () {
+                  controller.animatePrevious(const Duration(milliseconds: 500));
+                },
+                child: const Icon(LucideIcons.arrowLeft),
+              ),
               const Gap(8),
               OutlineButton(
-                  shape: ButtonShape.circle,
-                  onPressed: () {
-                    controller.animateNext(const Duration(milliseconds: 500));
-                  },
-                  child: const Icon(Icons.arrow_forward)),
+                shape: ButtonShape.circle,
+                onPressed: () {
+                  controller.animateNext(const Duration(milliseconds: 500));
+                },
+                child: const Icon(LucideIcons.arrowRight),
+              ),
             ],
           ),
         ],

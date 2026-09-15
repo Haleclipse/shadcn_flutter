@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DataExample15 extends StatefulWidget {
   const DataExample15({super.key});
@@ -68,7 +69,8 @@ class _InnerWidgetState extends State<InnerWidget> {
             #firstCounter,
             builder: (context, model, child) {
               return Text(
-                  'First Counter: ${model.value} (Rebuild Count: $rebuildCount)');
+                'First Counter: ${model.value} (Rebuild Count: $rebuildCount)',
+              );
             },
           ),
           const Gap(8),
@@ -99,14 +101,15 @@ class _LeafWidgetState extends State<LeafWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                  'Second Counter: ${model.value} (Rebuild Count: $rebuildCount)'),
+                'Second Counter: ${model.value} (Rebuild Count: $rebuildCount)',
+              ),
               const Gap(24),
               PrimaryButton(
                 onPressed: () {
                   model.value = model.value + 1;
                   // or model.data++ works too
                 },
-                child: const Icon(Icons.add),
+                child: const Icon(LucideIcons.plus),
               ),
             ],
           );

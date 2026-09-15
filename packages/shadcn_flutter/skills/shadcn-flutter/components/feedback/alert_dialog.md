@@ -19,14 +19,12 @@ class AlertDialogExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'alert_dialog',
-      description:
-          'An alert dialog informs the user about situations that require acknowledgement.',
+      description: 'An alert dialog informs the user about situations that require acknowledgement.',
       displayName: 'Alert Dialog',
       children: [
         WidgetUsageExample(
           title: 'Alert Dialog Example',
-          path:
-              'lib/pages/docs/components/alert_dialog/alert_dialog_example_1.dart',
+          path: 'lib/pages/docs/components/alert_dialog/alert_dialog_example_1.dart',
           child: AlertDialogExample1(),
         ),
       ],
@@ -54,13 +52,15 @@ class AlertDialogExample1 extends StatelessWidget {
       child: const Text('Click Here'),
       onPressed: () {
         // Standard Flutter API to present a dialog above the current route.
-        showDialog(
-          context: context,
+        showOverlay(
+          context,
+          DialogConfiguration(),
           builder: (context) {
             return AlertDialog(
               title: const Text('Alert title'),
               content: const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+              ),
               actions: [
                 // Secondary action to cancel/dismiss.
                 OutlineButton(
@@ -110,14 +110,8 @@ class AlertDialogTile extends StatelessWidget implements IComponentPage {
         title: const Text('Alert Dialog'),
         content: const Text('This is an alert dialog.'),
         actions: [
-          SecondaryButton(
-            onPressed: () {},
-            child: const Text('Cancel'),
-          ),
-          PrimaryButton(
-            onPressed: () {},
-            child: const Text('OK'),
-          ),
+          SecondaryButton(onPressed: () {}, child: const Text('Cancel')),
+          PrimaryButton(onPressed: () {}, child: const Text('OK')),
         ],
       ),
     );

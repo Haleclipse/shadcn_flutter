@@ -45,10 +45,28 @@ class SizeUnitLocale {
   }
 }
 
-const _fileByteUnits =
-    SizeUnitLocale(1024, ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']);
-const _fileBitUnits = SizeUnitLocale(
-    1024, ['Bi', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']);
+const _fileByteUnits = SizeUnitLocale(1024, [
+  'B',
+  'KB',
+  'MB',
+  'GB',
+  'TB',
+  'PB',
+  'EB',
+  'ZB',
+  'YB',
+]);
+const _fileBitUnits = SizeUnitLocale(1024, [
+  'Bi',
+  'KiB',
+  'MiB',
+  'GiB',
+  'TiB',
+  'PiB',
+  'EiB',
+  'ZiB',
+  'YiB',
+]);
 
 double _log10(num x) {
   return log(x) / ln10;
@@ -78,8 +96,9 @@ String formatFileSize(int bytes, SizeUnitLocale unit) {
   // return '${NumberFormat('#,##0.#').format(bytes / pow(base, digitGroups))} ${units[digitGroups]}';
   // do it without NumberFormat, but format to #,##0.# format
   final value = bytes / pow(base, digitGroups);
-  final formattedValue =
-      value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1);
+  final formattedValue = value.toStringAsFixed(
+    value.truncateToDouble() == value ? 0 : 1,
+  );
   return '$formattedValue ${units[digitGroups]}';
 }
 
@@ -114,8 +133,7 @@ enum DatePart {
   month(_getMonth, _computeMonthValueRange),
 
   /// Day component.
-  day(_getDay, _computeDayValueRange),
-  ;
+  day(_getDay, _computeDayValueRange);
 
   /// Function that extracts the date/time component value from a DateTime.
   final int Function(DateTime dateTime) getter;
@@ -129,7 +147,7 @@ enum DatePart {
   /// minimum and maximum valid values for this component, considering
   /// constraints like month lengths or leap years.
   final (int? min, int? max) Function(Map<DatePart, int> values)
-      computeValueRange;
+  computeValueRange;
 
   const DatePart(this.getter, this.computeValueRange, {this.length = 2});
 }
@@ -140,17 +158,17 @@ int _getDurationMinute(Duration duration) => duration.inMinutes % 60;
 int _getDurationSecond(Duration duration) => duration.inSeconds % 60;
 
 (int? min, int? max) _computeDurationDayValueRange(
-        Map<DurationPart, int> values) =>
-    (0, null);
+  Map<DurationPart, int> values,
+) => (0, null);
 (int? min, int? max) _computeDurationHourValueRange(
-        Map<DurationPart, int> values) =>
-    (0, 23);
+  Map<DurationPart, int> values,
+) => (0, 23);
 (int? min, int? max) _computeDurationMinuteValueRange(
-        Map<DurationPart, int> values) =>
-    (0, 59);
+  Map<DurationPart, int> values,
+) => (0, 59);
 (int? min, int? max) _computeDurationSecondValueRange(
-        Map<DurationPart, int> values) =>
-    (0, 59);
+  Map<DurationPart, int> values,
+) => (0, 59);
 
 /// Represents a part of a duration (day, hour, minute, or second).
 enum DurationPart {
@@ -164,15 +182,14 @@ enum DurationPart {
   minute(_getDurationMinute, _computeDurationMinuteValueRange),
 
   /// Second component.
-  second(_getDurationSecond, _computeDurationSecondValueRange),
-  ;
+  second(_getDurationSecond, _computeDurationSecondValueRange);
 
   /// Function that extracts the duration component value from a Duration.
   final int Function(Duration duration) getter;
 
   /// Function that computes the valid value range for this component.
   final (int? min, int? max) Function(Map<DurationPart, int> values)
-      computeValueRange;
+  computeValueRange;
 
   const DurationPart(this.getter, this.computeValueRange);
 }
@@ -197,15 +214,74 @@ enum TimePart {
   minute(_getTimeMinute, _computeTimeMinuteValueRange),
 
   /// Second component.
-  second(_getTimeSecond, _computeTimeSecondValueRange),
-  ;
+  second(_getTimeSecond, _computeTimeSecondValueRange);
 
   /// Function that extracts the time component value from a TimeOfDay.
   final int Function(TimeOfDay time) getter;
 
   /// Function that computes the valid value range for this component.
   final (int? min, int? max) Function(Map<TimePart, int> values)
-      computeValueRange;
+  computeValueRange;
 
   const TimePart(this.getter, this.computeValueRange);
+}
+
+/// Normalizes a locale string to the `ll_RR` form the localization lookup uses.
+///
+/// Lower-cases nothing and upper-cases the region: `en-us` and `en_us` both
+/// become `en_US`, while `zh_Hans_CN` and other longer subtags are left alone.
+/// `C` maps to `en_ISO`, matching the POSIX convention.
+///
+/// This replaces `Intl.canonicalizedLocale` from `package:intl`, which
+/// shadcn_flutter used to depend on for this one call. Behaviour is the same
+/// for every locale string Flutter produces.
+///
+/// Parameters:
+/// - [locale] (`String`, required): The locale to normalize.
+///
+/// Returns: `String` — the canonicalized locale.
+String canonicalizeLocale(String locale) {
+  if (locale == 'C') return 'en_ISO';
+  // Anything shorter cannot carry a region, and a separator anywhere but at
+  // index 2 means this is not a plain `ll_RR`.
+  if (locale.length < 5) return locale;
+  if (locale[2] != '-' && locale[2] != '_') return locale;
+  var region = locale.substring(3);
+  // Longer than three is a script or variant subtag, not a region; leave the
+  // casing to the caller.
+  if (region.length <= 3) region = region.toUpperCase();
+  return '${locale.substring(0, 2)}_$region';
+}
+
+/// Renders [value] for display, without a trailing `.0` on whole numbers.
+///
+/// Groups digits in the integer part with [separator], so `1234.5` reads
+/// `1,234.5` and `5.0` reads `5`. Fractional digits are left as Dart prints
+/// them.
+///
+/// This covers what `NumberFormat.decimalPattern` from `package:intl` did for
+/// the form validation messages, without the dependency. It is not a general
+/// locale-aware number formatter: the grouping separator is a parameter rather
+/// than something read from the locale.
+///
+/// Parameters:
+/// - [value] (`num`, required): The number to render.
+/// - [separator] (`String`, default: ','): Digit group separator.
+///
+/// Returns: `String` — the formatted number.
+String formatDecimal(num value, {String separator = ','}) {
+  var text = value is int || value == value.truncateToDouble()
+      ? value.toInt().toString()
+      : value.toString();
+  final negative = text.startsWith('-');
+  if (negative) text = text.substring(1);
+  final dot = text.indexOf('.');
+  var whole = dot == -1 ? text : text.substring(0, dot);
+  final fraction = dot == -1 ? '' : text.substring(dot);
+  final buffer = StringBuffer();
+  for (var i = 0; i < whole.length; i++) {
+    if (i > 0 && (whole.length - i) % 3 == 0) buffer.write(separator);
+    buffer.write(whole[i]);
+  }
+  return '${negative ? '-' : ''}$buffer$fraction';
 }

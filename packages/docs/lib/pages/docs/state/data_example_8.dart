@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DataExample8 extends StatefulWidget {
   const DataExample8({super.key});
@@ -28,17 +29,15 @@ class DataExample8State extends State<DataExample8> {
                 });
               },
               density: ButtonDensity.icon,
-              child: const Icon(Icons.add),
-            )
+              child: const Icon(LucideIcons.plus),
+            ),
           ],
         ),
         const Gap(24),
         Data.inherit(
           data: counter,
-          child: const InnerWidget(
-            child: MostInnerWidget(),
-          ),
-        )
+          child: const InnerWidget(child: MostInnerWidget()),
+        ),
       ],
     );
   }
@@ -64,7 +63,7 @@ class _InnerWidgetState extends State<InnerWidget> {
         children: [
           Text('InnerWidget Rebuild Count: $innerRebuildCount'),
           const Gap(12),
-          widget.child
+          widget.child,
         ],
       ),
     );
@@ -87,7 +86,8 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
       child: DataBuilder<int>(
         builder: (context, data, _) {
           return Text(
-              'MostInnerWidget Data: $data - Rebuild Count: $mostInnerRebuildCount');
+            'MostInnerWidget Data: $data - Rebuild Count: $mostInnerRebuildCount',
+          );
         },
       ),
     );

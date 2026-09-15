@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+
 import '../test_helper.dart';
 
 void main() {
@@ -102,7 +103,7 @@ void main() {
         SimpleApp(
           child: CardImage(
             image: Container(width: 100, height: 100, color: Colors.blue),
-            style: ButtonStyle.primary(),
+            theme: CardImageTheme(style: ButtonStyle.primary()),
           ),
         ),
       );
@@ -117,7 +118,7 @@ void main() {
           child: CardImage(
             image: Container(width: 100, height: 100, color: Colors.blue),
             title: const Text('Title'),
-            direction: Axis.vertical,
+            theme: CardImageTheme(direction: Axis.vertical),
           ),
         ),
       );
@@ -132,7 +133,7 @@ void main() {
           child: CardImage(
             image: Container(width: 100, height: 100, color: Colors.blue),
             title: const Text('Title'),
-            direction: Axis.horizontal,
+            theme: CardImageTheme(direction: Axis.horizontal),
           ),
         ),
       );
@@ -146,30 +147,33 @@ void main() {
         SimpleApp(
           child: CardImage(
             image: Container(width: 100, height: 100, color: Colors.blue),
-            normalScale: 0.9,
+            theme: CardImageTheme(normalScale: 0.9),
           ),
         ),
       );
 
-      final animatedScale =
-          tester.widget<AnimatedScale>(find.byType(AnimatedScale));
+      final animatedScale = tester.widget<AnimatedScale>(
+        find.byType(AnimatedScale),
+      );
       expect(animatedScale.scale, equals(0.9));
     });
 
-    testWidgets('applies background color to OutlinedContainer',
-        (tester) async {
+    testWidgets('applies background color to OutlinedContainer', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         SimpleApp(
           child: CardImage(
             image: Container(width: 100, height: 100, color: Colors.blue),
-            backgroundColor: Colors.red,
+            theme: CardImageTheme(backgroundColor: Colors.red),
           ),
         ),
       );
 
-      final outlinedContainer =
-          tester.widget<OutlinedContainer>(find.byType(OutlinedContainer));
-      expect(outlinedContainer.backgroundColor, equals(Colors.red));
+      final outlinedContainer = tester.widget<OutlinedContainer>(
+        find.byType(OutlinedContainer),
+      );
+      expect(outlinedContainer.theme?.backgroundColor, equals(Colors.red));
     });
 
     testWidgets('applies border color to OutlinedContainer', (tester) async {
@@ -177,14 +181,15 @@ void main() {
         SimpleApp(
           child: CardImage(
             image: Container(width: 100, height: 100, color: Colors.blue),
-            borderColor: Colors.green,
+            theme: CardImageTheme(borderColor: Colors.green),
           ),
         ),
       );
 
-      final outlinedContainer =
-          tester.widget<OutlinedContainer>(find.byType(OutlinedContainer));
-      expect(outlinedContainer.borderColor, equals(Colors.green));
+      final outlinedContainer = tester.widget<OutlinedContainer>(
+        find.byType(OutlinedContainer),
+      );
+      expect(outlinedContainer.theme?.borderColor, equals(Colors.green));
     });
 
     testWidgets('applies custom gap to layout', (tester) async {
@@ -193,13 +198,18 @@ void main() {
           child: CardImage(
             image: Container(width: 100, height: 100, color: Colors.blue),
             title: const Text('Title'),
-            gap: 20.0,
+            theme: CardImageTheme(gap: 20.0),
           ),
         ),
       );
 
-      final gap = tester.widget<Gap>(find.byType(Gap));
-      expect(gap.mainAxisExtent, equals(20.0));
+      // Vertical by default, so the spacer sizes on the main axis height.
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget is SizedBox && widget.height == 20.0,
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders complex layout with all components', (tester) async {
@@ -211,13 +221,15 @@ void main() {
             subtitle: const Text('A stunning visual'),
             leading: const Icon(RadixIcons.star),
             trailing: const Icon(RadixIcons.arrowRight),
-            direction: Axis.horizontal,
-            backgroundColor: Colors.gray.shade200,
-            borderColor: Colors.gray,
-            hoverScale: 1.1,
-            normalScale: 1.0,
-            gap: 16.0,
             onPressed: () {},
+            theme: CardImageTheme(
+              direction: Axis.horizontal,
+              backgroundColor: Colors.gray.shade200,
+              borderColor: Colors.gray,
+              hoverScale: 1.1,
+              normalScale: 1.0,
+              gap: 16.0,
+            ),
           ),
         ),
       );
@@ -230,16 +242,25 @@ void main() {
       final flex = tester.widget<Flex>(find.byType(Flex));
       expect(flex.direction, equals(Axis.horizontal));
 
-      final gap = tester.widget<Gap>(find.byType(Gap));
-      expect(gap.mainAxisExtent, equals(16.0));
+      expect(
+        find.byWidgetPredicate(
+          (widget) => widget is SizedBox && widget.width == 16.0,
+        ),
+        findsOneWidget,
+      );
 
-      final outlinedContainer =
-          tester.widget<OutlinedContainer>(find.byType(OutlinedContainer));
-      expect(outlinedContainer.backgroundColor, equals(Colors.gray.shade200));
-      expect(outlinedContainer.borderColor, equals(Colors.gray));
+      final outlinedContainer = tester.widget<OutlinedContainer>(
+        find.byType(OutlinedContainer),
+      );
+      expect(
+        outlinedContainer.theme?.backgroundColor,
+        equals(Colors.gray.shade200),
+      );
+      expect(outlinedContainer.theme?.borderColor, equals(Colors.gray));
 
-      final animatedScale =
-          tester.widget<AnimatedScale>(find.byType(AnimatedScale));
+      final animatedScale = tester.widget<AnimatedScale>(
+        find.byType(AnimatedScale),
+      );
       expect(animatedScale.scale, equals(1.0)); // normalScale value
     });
 

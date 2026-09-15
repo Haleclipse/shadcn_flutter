@@ -11,8 +11,7 @@ class DialogExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'dialog',
-      description:
-          'A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.',
+      description: 'A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.',
       displayName: 'Dialog',
       children: [
         WidgetUsageExample(

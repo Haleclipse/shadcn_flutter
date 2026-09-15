@@ -20,55 +20,28 @@ class DropdownMenuExample1 extends StatelessWidget {
               children: [
                 MenuLabel(child: Text('My Account')),
                 MenuDivider(),
-                MenuButton(
-                  child: Text('Profile'),
-                ),
-                MenuButton(
-                  child: Text('Billing'),
-                ),
-                MenuButton(
-                  child: Text('Settings'),
-                ),
-                MenuButton(
-                  child: Text('Keyboard shortcuts'),
-                ),
+                MenuButton(child: Text('Profile')),
+                MenuButton(child: Text('Billing')),
+                MenuButton(child: Text('Settings')),
+                MenuButton(child: Text('Keyboard shortcuts')),
                 MenuDivider(),
-                MenuButton(
-                  child: Text('Team'),
-                ),
+                MenuButton(child: Text('Team')),
                 MenuButton(
                   // Demonstrates a nested submenu.
                   subMenu: [
-                    MenuButton(
-                      child: Text('Email'),
-                    ),
-                    MenuButton(
-                      child: Text('Message'),
-                    ),
+                    MenuButton(child: Text('Email')),
+                    MenuButton(child: Text('Message')),
                     MenuDivider(),
-                    MenuButton(
-                      child: Text('More...'),
-                    ),
+                    MenuButton(child: Text('More...')),
                   ],
                   child: Text('Invite users'),
                 ),
-                MenuButton(
-                  child: Text('New Team'),
-                ),
+                MenuButton(child: Text('New Team')),
                 MenuDivider(),
-                MenuButton(
-                  child: Text('GitHub'),
-                ),
-                MenuButton(
-                  child: Text('Support'),
-                ),
-                MenuButton(
-                  enabled: false,
-                  child: Text('API'),
-                ),
-                MenuButton(
-                  child: Text('Log out'),
-                ),
+                MenuButton(child: Text('GitHub')),
+                MenuButton(child: Text('Support')),
+                MenuButton(enabled: false, child: Text('API')),
+                MenuButton(child: Text('Log out')),
               ],
             );
           },

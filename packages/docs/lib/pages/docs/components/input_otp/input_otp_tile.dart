@@ -1,6 +1,9 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../input_otp/input_otp_example_2.dart';
+
+import 'package:gap/gap.dart';
 
 class InputOTPTile extends StatelessWidget implements IComponentPage {
   const InputOTPTile({super.key});
@@ -16,9 +19,7 @@ class InputOTPTile extends StatelessWidget implements IComponentPage {
       scale: 1,
       example: Column(
         children: [
-          const Card(
-            child: InputOTPExample2(),
-          ),
+          const Card(child: InputOTPExample2()),
           const Gap(24),
           Transform.translate(
             offset: const Offset(-150, 0),

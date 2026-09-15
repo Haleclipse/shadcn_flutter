@@ -22,9 +22,7 @@ class WrapperTile extends StatelessWidget implements IComponentPage {
               AppBar(title: Text('My App')),
               Divider(),
             ],
-            child: const Center(
-              child: Text('Hello, Shadcn Flutter!'),
-            ),
+            child: const Center(child: Text('Hello, Shadcn Flutter!')),
           ),
         ),
       ),

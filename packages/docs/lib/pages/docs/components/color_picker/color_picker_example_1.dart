@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ColorPickerExample1 extends StatefulWidget {
   const ColorPickerExample1({super.key});
@@ -22,13 +23,13 @@ class _ColorPickerExample1State extends State<ColorPickerExample1> {
             child: ColorInput(
               // A compact square color input that opens a popover prompt.
               value: color,
-              orientation: Axis.horizontal,
               promptMode: PromptMode.popover,
               onChanged: (value) {
                 setState(() {
                   color = value;
                 });
               },
+              theme: ColorInputTheme(orientation: Axis.horizontal),
             ),
           ),
           const Gap(16),

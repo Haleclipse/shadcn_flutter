@@ -37,6 +37,7 @@ class ProgressExample extends StatelessWidget {
 ### Progress Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ProgressExample1 extends StatefulWidget {
   const ProgressExample1({super.key});
@@ -106,7 +107,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
               child: const Text('Increase by 10'),
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -130,9 +131,7 @@ class ProgressTile extends StatelessWidget implements IComponentPage {
     return ComponentCard(
       title: 'Progress',
       name: 'progress',
-      example: const Progress(
-        progress: 0.75,
-      ).sized(width: 200),
+      example: const Progress(progress: 0.75).sized(width: 200),
       center: true,
     );
   }
@@ -157,3 +156,4 @@ class ProgressTile extends StatelessWidget implements IComponentPage {
 | `disableAnimation` | `bool` | Whether to disable progress fill animations.  Type: `bool`, default: `false`. When true, progress changes immediately without smooth transitions. Useful for performance optimization. |
 | `color` | `Color?` | The color of the progress indicator fill.  Type: `Color?`. If null, uses the theme's progress color or the color specified in [ProgressTheme]. Overrides theme values. |
 | `backgroundColor` | `Color?` | The background color of the progress track.  Type: `Color?`. If null, uses the theme's background color or a semi-transparent version of the progress color. Overrides theme values. |
+| `theme` | `ProgressTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

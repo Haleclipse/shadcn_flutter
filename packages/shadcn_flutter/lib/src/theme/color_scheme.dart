@@ -88,7 +88,7 @@ class ColorShades implements Color, ColorSwatch {
     700,
     800,
     900,
-    950
+    950,
   ];
   final Map<int, Color> _colors;
 
@@ -103,8 +103,10 @@ class ColorShades implements Color, ColorSwatch {
   /// The list must contain exactly 11 colors corresponding to shades
   /// 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, and 950.
   factory ColorShades.sorted(List<Color> colors) {
-    assert(colors.length == shadeValues.length,
-        'ColorShades.sorted: Invalid number of colors');
+    assert(
+      colors.length == shadeValues.length,
+      'ColorShades.sorted: Invalid number of colors',
+    );
     final slate = ColorShades._();
     for (int i = 0; i < shadeValues.length; i++) {
       slate._colors[shadeValues[i]] = colors[i];
@@ -118,45 +120,57 @@ class ColorShades implements Color, ColorSwatch {
   /// [base] is the shade value for the accent color (default: 500).
   /// [hueShift], [saturationStepDown], [saturationStepUp], [lightnessStepDown],
   /// and [lightnessStepUp] control how shades are generated.
-  factory ColorShades.fromAccent(Color accent,
-      {int base = 500,
-      int hueShift = 0,
-      int saturationStepDown = 0,
-      int saturationStepUp = 0,
-      int lightnessStepDown = 8,
-      int lightnessStepUp = 9}) {
-    assert(shadeValues.contains(base),
-        'ColorShades.fromAccent: Invalid base value');
+  factory ColorShades.fromAccent(
+    Color accent, {
+    int base = 500,
+    int hueShift = 0,
+    int saturationStepDown = 0,
+    int saturationStepUp = 0,
+    int lightnessStepDown = 8,
+    int lightnessStepUp = 9,
+  }) {
+    assert(
+      shadeValues.contains(base),
+      'ColorShades.fromAccent: Invalid base value',
+    );
     final hsl = HSLColor.fromColor(accent);
-    return ColorShades.fromAccentHSL(hsl,
-        base: base,
-        hueShift: hueShift,
-        saturationStepDown: saturationStepDown,
-        saturationStepUp: saturationStepUp,
-        lightnessStepDown: lightnessStepDown,
-        lightnessStepUp: lightnessStepUp);
+    return ColorShades.fromAccentHSL(
+      hsl,
+      base: base,
+      hueShift: hueShift,
+      saturationStepDown: saturationStepDown,
+      saturationStepUp: saturationStepUp,
+      lightnessStepDown: lightnessStepDown,
+      lightnessStepUp: lightnessStepUp,
+    );
   }
 
   /// Creates color shades from an accent HSL color.
   ///
   /// Similar to [fromAccent] but takes an HSL color directly.
-  factory ColorShades.fromAccentHSL(HSLColor accent,
-      {int base = 500,
-      int hueShift = 0,
-      int saturationStepDown = 0,
-      int saturationStepUp = 0,
-      int lightnessStepDown = 8,
-      int lightnessStepUp = 9}) {
-    assert(shadeValues.contains(base),
-        'ColorShades.fromAccent: Invalid base value');
+  factory ColorShades.fromAccentHSL(
+    HSLColor accent, {
+    int base = 500,
+    int hueShift = 0,
+    int saturationStepDown = 0,
+    int saturationStepUp = 0,
+    int lightnessStepDown = 8,
+    int lightnessStepUp = 9,
+  }) {
+    assert(
+      shadeValues.contains(base),
+      'ColorShades.fromAccent: Invalid base value',
+    );
     final slate = ColorShades._();
     for (final key in shadeValues) {
       double delta = (key - base) / _step;
       double hueDelta = delta * (hueShift / 10);
-      double saturationDelta =
-          delta > 0 ? delta * saturationStepUp : delta * saturationStepDown;
-      double lightnessDelta =
-          delta > 0 ? delta * lightnessStepUp : delta * lightnessStepDown;
+      double saturationDelta = delta > 0
+          ? delta * saturationStepUp
+          : delta * saturationStepDown;
+      double lightnessDelta = delta > 0
+          ? delta * lightnessStepUp
+          : delta * lightnessStepDown;
       final h = (accent.hue + hueDelta) % 360;
       final s = (accent.saturation * 100 - saturationDelta).clamp(0, 100) / 100;
       final l = (accent.lightness * 100 - lightnessDelta).clamp(0, 100) / 100;
@@ -179,14 +193,18 @@ class ColorShades implements Color, ColorSwatch {
     int lightnessStepUp = 9,
     int lightnessStepDown = 8,
   }) {
-    assert(shadeValues.contains(base),
-        'ColorShades.fromAccent: Invalid base value');
+    assert(
+      shadeValues.contains(base),
+      'ColorShades.fromAccent: Invalid base value',
+    );
     double delta = (targetBase - base) / _step;
     double hueDelta = delta * (hueShift / 10);
-    double saturationDelta =
-        delta > 0 ? delta * saturationStepUp : delta * saturationStepDown;
-    double lightnessDelta =
-        delta > 0 ? delta * lightnessStepUp : delta * lightnessStepDown;
+    double saturationDelta = delta > 0
+        ? delta * saturationStepUp
+        : delta * saturationStepDown;
+    double lightnessDelta = delta > 0
+        ? delta * lightnessStepUp
+        : delta * lightnessStepDown;
     final h = (hsv.hue + hueDelta) % 360;
     final s = (hsv.saturation * 100 - saturationDelta).clamp(0, 100) / 100;
     final l = (hsv.lightness * 100 - lightnessDelta).clamp(0, 100) / 100;
@@ -200,8 +218,10 @@ class ColorShades implements Color, ColorSwatch {
   factory ColorShades.fromMap(Map<int, Color> colors) {
     final slate = ColorShades._();
     for (final key in shadeValues) {
-      assert(colors.containsKey(key),
-          'ColorShades.fromMap: Missing value for $key');
+      assert(
+        colors.containsKey(key),
+        'ColorShades.fromMap: Missing value for $key',
+      );
       slate._colors[key] = colors[key]!;
     }
     return slate;
@@ -289,8 +309,10 @@ class ColorShades implements Color, ColorSwatch {
     // calculate the difference between the current blue value and the new value
     int delta = b - blue;
     for (final key in shadeValues) {
-      int safe =
-          (((_colors[key]!.b * 255).round() & 0xFF) + delta).clamp(0, 255);
+      int safe = (((_colors[key]!.b * 255).round() & 0xFF) + delta).clamp(
+        0,
+        255,
+      );
       colors[key] = _colors[key]!.withBlue(safe);
     }
     return ColorShades._direct(colors);
@@ -302,8 +324,10 @@ class ColorShades implements Color, ColorSwatch {
     // calculate the difference between the current green value and the new value
     int delta = g - green;
     for (final key in shadeValues) {
-      int safe =
-          (((_colors[key]!.g * 255).round() & 0xFF) + delta).clamp(0, 255);
+      int safe = (((_colors[key]!.g * 255).round() & 0xFF) + delta).clamp(
+        0,
+        255,
+      );
       colors[key] = _colors[key]!.withGreen(safe);
     }
     return ColorShades._direct(colors);
@@ -324,8 +348,10 @@ class ColorShades implements Color, ColorSwatch {
     // calculate the difference between the current red value and the new value
     int delta = r - red;
     for (final key in shadeValues) {
-      int safe =
-          (((_colors[key]!.r * 255).round() & 0xFF) + delta).clamp(0, 255);
+      int safe = (((_colors[key]!.r * 255).round() & 0xFF) + delta).clamp(
+        0,
+        255,
+      );
       colors[key] = _colors[key]!.withRed(safe);
     }
     return ColorShades._direct(colors);
@@ -357,12 +383,13 @@ class ColorShades implements Color, ColorSwatch {
   double get r => _primary.r;
 
   @override
-  Color withValues(
-      {double? alpha,
-      double? red,
-      double? green,
-      double? blue,
-      ColorSpace? colorSpace}) {
+  Color withValues({
+    double? alpha,
+    double? red,
+    double? green,
+    double? blue,
+    ColorSpace? colorSpace,
+  }) {
     Map<int, Color> colors = {};
     for (final key in shadeValues) {
       colors[key] = _colors[key]!.withValues(
@@ -553,35 +580,36 @@ class ColorScheme implements ChartColorScheme {
 
   /// Creates a color scheme from a map of color names to values.
   ColorScheme.fromMap(Map<String, dynamic> map)
-      : background = map._col('background'),
-        foreground = map._col('foreground'),
-        card = map._col('card'),
-        cardForeground = map._col('cardForeground'),
-        popover = map._col('popover'),
-        popoverForeground = map._col('popoverForeground'),
-        primary = map._col('primary'),
-        primaryForeground = map._col('primaryForeground'),
-        secondary = map._col('secondary'),
-        secondaryForeground = map._col('secondaryForeground'),
-        muted = map._col('muted'),
-        mutedForeground = map._col('mutedForeground'),
-        accent = map._col('accent'),
-        accentForeground = map._col('accentForeground'),
-        destructive = map._col('destructive'),
-        // ignore: deprecated_member_use_from_same_package
-        destructiveForeground = map._col('destructiveForeground'),
-        border = map._col('border'),
-        input = map._col('input'),
-        ring = map._col('ring'),
-        chart1 = map._col('chart1'),
-        chart2 = map._col('chart2'),
-        chart3 = map._col('chart3'),
-        chart4 = map._col('chart4'),
-        chart5 = map._col('chart5'),
-        brightness = Brightness.values
-                .where((element) => element.name == map['brightness'])
-                .firstOrNull ??
-            Brightness.light;
+    : background = map._col('background'),
+      foreground = map._col('foreground'),
+      card = map._col('card'),
+      cardForeground = map._col('cardForeground'),
+      popover = map._col('popover'),
+      popoverForeground = map._col('popoverForeground'),
+      primary = map._col('primary'),
+      primaryForeground = map._col('primaryForeground'),
+      secondary = map._col('secondary'),
+      secondaryForeground = map._col('secondaryForeground'),
+      muted = map._col('muted'),
+      mutedForeground = map._col('mutedForeground'),
+      accent = map._col('accent'),
+      accentForeground = map._col('accentForeground'),
+      destructive = map._col('destructive'),
+      // ignore: deprecated_member_use_from_same_package
+      destructiveForeground = map._col('destructiveForeground'),
+      border = map._col('border'),
+      input = map._col('input'),
+      ring = map._col('ring'),
+      chart1 = map._col('chart1'),
+      chart2 = map._col('chart2'),
+      chart3 = map._col('chart3'),
+      chart4 = map._col('chart4'),
+      chart5 = map._col('chart5'),
+      brightness =
+          Brightness.values
+              .where((element) => element.name == map['brightness'])
+              .firstOrNull ??
+          Brightness.light;
 
   /// Converts the color scheme to a map of hex color strings.
   ///
@@ -675,32 +703,32 @@ class ColorScheme implements ChartColorScheme {
     required Map<String, Color> colors,
     required Brightness brightness,
   }) : this(
-          brightness: brightness,
-          background: colors._col('background'),
-          foreground: colors._col('foreground'),
-          card: colors._col('card'),
-          cardForeground: colors._col('cardForeground'),
-          popover: colors._col('popover'),
-          popoverForeground: colors._col('popoverForeground'),
-          primary: colors._col('primary'),
-          primaryForeground: colors._col('primaryForeground'),
-          secondary: colors._col('secondary'),
-          secondaryForeground: colors._col('secondaryForeground'),
-          muted: colors._col('muted'),
-          mutedForeground: colors._col('mutedForeground'),
-          accent: colors._col('accent'),
-          accentForeground: colors._col('accentForeground'),
-          destructive: colors._col('destructive'),
-          destructiveForeground: colors._col('destructiveForeground'),
-          border: colors._col('border'),
-          input: colors._col('input'),
-          ring: colors._col('ring'),
-          chart1: colors._col('chart1'),
-          chart2: colors._col('chart2'),
-          chart3: colors._col('chart3'),
-          chart4: colors._col('chart4'),
-          chart5: colors._col('chart5'),
-        );
+         brightness: brightness,
+         background: colors._col('background'),
+         foreground: colors._col('foreground'),
+         card: colors._col('card'),
+         cardForeground: colors._col('cardForeground'),
+         popover: colors._col('popover'),
+         popoverForeground: colors._col('popoverForeground'),
+         primary: colors._col('primary'),
+         primaryForeground: colors._col('primaryForeground'),
+         secondary: colors._col('secondary'),
+         secondaryForeground: colors._col('secondaryForeground'),
+         muted: colors._col('muted'),
+         mutedForeground: colors._col('mutedForeground'),
+         accent: colors._col('accent'),
+         accentForeground: colors._col('accentForeground'),
+         destructive: colors._col('destructive'),
+         destructiveForeground: colors._col('destructiveForeground'),
+         border: colors._col('border'),
+         input: colors._col('input'),
+         ring: colors._col('ring'),
+         chart1: colors._col('chart1'),
+         chart2: colors._col('chart2'),
+         chart3: colors._col('chart3'),
+         chart4: colors._col('chart4'),
+         chart5: colors._col('chart5'),
+       );
 
   /// Creates a copy of this ColorScheme with specified properties replaced.
   ///
@@ -749,8 +777,9 @@ class ColorScheme implements ChartColorScheme {
       background: background == null ? this.background : background(),
       foreground: foreground == null ? this.foreground : foreground(),
       card: card == null ? this.card : card(),
-      cardForeground:
-          cardForeground == null ? this.cardForeground : cardForeground(),
+      cardForeground: cardForeground == null
+          ? this.cardForeground
+          : cardForeground(),
       popover: popover == null ? this.popover : popover(),
       popoverForeground: popoverForeground == null
           ? this.popoverForeground
@@ -764,11 +793,13 @@ class ColorScheme implements ChartColorScheme {
           ? this.secondaryForeground
           : secondaryForeground(),
       muted: muted == null ? this.muted : muted(),
-      mutedForeground:
-          mutedForeground == null ? this.mutedForeground : mutedForeground(),
+      mutedForeground: mutedForeground == null
+          ? this.mutedForeground
+          : mutedForeground(),
       accent: accent == null ? this.accent : accent(),
-      accentForeground:
-          accentForeground == null ? this.accentForeground : accentForeground(),
+      accentForeground: accentForeground == null
+          ? this.accentForeground
+          : accentForeground(),
       destructive: destructive == null ? this.destructive : destructive(),
       destructiveForeground: destructiveForeground == null
           // ignore: deprecated_member_use_from_same_package
@@ -807,14 +838,23 @@ class ColorScheme implements ChartColorScheme {
       card: Color.lerp(a.card, b.card, t)!,
       cardForeground: Color.lerp(a.cardForeground, b.cardForeground, t)!,
       popover: Color.lerp(a.popover, b.popover, t)!,
-      popoverForeground:
-          Color.lerp(a.popoverForeground, b.popoverForeground, t)!,
+      popoverForeground: Color.lerp(
+        a.popoverForeground,
+        b.popoverForeground,
+        t,
+      )!,
       primary: Color.lerp(a.primary, b.primary, t)!,
-      primaryForeground:
-          Color.lerp(a.primaryForeground, b.primaryForeground, t)!,
+      primaryForeground: Color.lerp(
+        a.primaryForeground,
+        b.primaryForeground,
+        t,
+      )!,
       secondary: Color.lerp(a.secondary, b.secondary, t)!,
-      secondaryForeground:
-          Color.lerp(a.secondaryForeground, b.secondaryForeground, t)!,
+      secondaryForeground: Color.lerp(
+        a.secondaryForeground,
+        b.secondaryForeground,
+        t,
+      )!,
       muted: Color.lerp(a.muted, b.muted, t)!,
       mutedForeground: Color.lerp(a.mutedForeground, b.mutedForeground, t)!,
       accent: Color.lerp(a.accent, b.accent, t)!,
@@ -863,31 +903,31 @@ class ColorScheme implements ChartColorScheme {
 
   @override
   int get hashCode => Object.hash(
-        Object.hash(
-          brightness,
-          background,
-          foreground,
-          card,
-          cardForeground,
-          popover,
-          popoverForeground,
-          primary,
-          primaryForeground,
-          secondary,
-          secondaryForeground,
-          muted,
-          mutedForeground,
-          accent,
-          accentForeground,
-          destructive,
-          // ignore: deprecated_member_use_from_same_package
-          destructiveForeground,
-          border,
-          input,
-          ring,
-        ),
-        Object.hash(chart1, chart2, chart3, chart4, chart5),
-      );
+    Object.hash(
+      brightness,
+      background,
+      foreground,
+      card,
+      cardForeground,
+      popover,
+      popoverForeground,
+      primary,
+      primaryForeground,
+      secondary,
+      secondaryForeground,
+      muted,
+      mutedForeground,
+      accent,
+      accentForeground,
+      destructive,
+      // ignore: deprecated_member_use_from_same_package
+      destructiveForeground,
+      border,
+      input,
+      ring,
+    ),
+    Object.hash(chart1, chart2, chart3, chart4, chart5),
+  );
 
   @override
   String toString() {

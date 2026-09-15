@@ -31,7 +31,9 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// };
 /// ```
 typedef FutureOrWidgetBuilder<T> = Widget Function(
-    BuildContext context, AsyncSnapshot<T> snapshot);
+  BuildContext context,
+  AsyncSnapshot<T> snapshot,
+);
 
 /// A widget that builds itself based on a [FutureOr] value.
 ///
@@ -113,6 +115,8 @@ class FutureOrBuilder<T> extends StatelessWidget {
       );
     }
     return builder(
-        context, AsyncSnapshot.withData(ConnectionState.done, future as T));
+      context,
+      AsyncSnapshot.withData(ConnectionState.done, future as T),
+    );
   }
 }

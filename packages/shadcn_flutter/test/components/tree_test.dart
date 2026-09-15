@@ -4,15 +4,14 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 import '../test_helper.dart';
 
 Widget _defaultItemBuilder(BuildContext context, TreeItemNode<String> node) {
-  return TreeItem(
-    child: Text(node.data),
-  );
+  return TreeItem(child: Text(node.data));
 }
 
 void main() {
   group('Tree', () {
-    testWidgets('keeps collapsed descendants in the tree (animated collapse)',
-        (tester) async {
+    testWidgets('keeps collapsed descendants in the tree (animated collapse)', (
+      tester,
+    ) async {
       final nodes = <TreeNode<String>>[
         TreeItemNode(
           data: 'Fruits',

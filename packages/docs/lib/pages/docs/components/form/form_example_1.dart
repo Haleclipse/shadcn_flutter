@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class FormExample1 extends StatefulWidget {
   const FormExample1({super.key});
@@ -25,9 +26,11 @@ class _FormExample1State extends State<FormExample1> {
           String? password = _passwordKey[values];
           String? confirmPassword = _confirmPasswordKey[values];
           // or just encode the whole map to JSON directly
-          String json = jsonEncode(values.map((key, value) {
-            return MapEntry(key.key, value);
-          }));
+          String json = jsonEncode(
+            values.map((key, value) {
+              return MapEntry(key.key, value);
+            }),
+          );
           showOverlay(
             context,
             DialogConfiguration(),
@@ -65,26 +68,22 @@ class _FormExample1State extends State<FormExample1> {
                   label: const Text('Username'),
                   hint: const Text('This is your public display name'),
                   validator: const LengthValidator(min: 4),
-                  child: const TextField(
-                    initialValue: 'sunarya-thito',
-                  ),
+                  child: const TextField(initialValue: 'sunarya-thito'),
                 ),
                 FormField(
                   key: _passwordKey,
                   label: const Text('Password'),
                   validator: const LengthValidator(min: 8),
-                  child: const TextField(
-                    obscureText: true,
-                  ),
+                  child: const TextField(obscureText: true),
                 ),
                 FormField(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
-                  validator: CompareWith.equal(_passwordKey,
-                      message: 'Passwords do not match'),
-                  child: const TextField(
-                    obscureText: true,
+                  validator: CompareWith.equal(
+                    _passwordKey,
+                    message: 'Passwords do not match',
                   ),
+                  child: const TextField(obscureText: true),
                 ),
               ],
             ),
@@ -97,7 +96,7 @@ class _FormExample1State extends State<FormExample1> {
                   child: const Text('Submit'),
                 );
               },
-            )
+            ),
           ],
         ),
       ),

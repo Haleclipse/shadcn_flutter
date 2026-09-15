@@ -11,8 +11,7 @@ class ChipInputExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'chip_input',
-      description:
-          'A chip input is a text input that allows users to input multiple chips.',
+      description: 'A chip input is a text input that allows users to input multiple chips.',
       displayName: 'Chip Input',
       children: [
         WidgetUsageExample(

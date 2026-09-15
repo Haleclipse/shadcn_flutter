@@ -28,14 +28,18 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// print(colorToHex(color, true)); // Output: #FF0080FF
 /// print(colorToHex(color, false, false)); // Output: 0080FF
 /// ```
-String colorToHex(Color color,
-    [bool showAlpha = false, bool hashPrefix = true]) {
+String colorToHex(
+  Color color, [
+  bool showAlpha = false,
+  bool hashPrefix = true,
+]) {
   String r = ((color.r * 255).round() & 0xFF).toRadixString(16).padLeft(2, '0');
   String g = ((color.g * 255).round() & 0xFF).toRadixString(16).padLeft(2, '0');
   String b = ((color.b * 255).round() & 0xFF).toRadixString(16).padLeft(2, '0');
   if (showAlpha) {
-    String a =
-        ((color.a * 255).round() & 0xFF).toRadixString(16).padLeft(2, '0');
+    String a = ((color.a * 255).round() & 0xFF)
+        .toRadixString(16)
+        .padLeft(2, '0');
     return hashPrefix ? '#$a$r$g$b' : '$a$r$g$b';
   } else {
     return hashPrefix ? '#$r$g$b' : '$r$g$b';
@@ -512,7 +516,10 @@ abstract class ColorGradient {
   ///
   /// Returns: A new [ColorGradient] with both values updated.
   ColorGradient changeColorAndPositionAt(
-      int index, ColorDerivative color, double position);
+    int index,
+    ColorDerivative color,
+    double position,
+  );
 
   /// Inserts a new color stop at a specific position in the gradient.
   ///
@@ -523,8 +530,12 @@ abstract class ColorGradient {
   /// - [textDirection]: The text direction for resolving directional alignments.
   ///
   /// Returns: A record containing the updated gradient and the index where the color was inserted.
-  ({ColorGradient gradient, int index}) insertColorAt(ColorDerivative color,
-      Offset position, Size size, TextDirection textDirection);
+  ({ColorGradient gradient, int index}) insertColorAt(
+    ColorDerivative color,
+    Offset position,
+    Size size,
+    TextDirection textDirection,
+  );
 
   /// Converts this color gradient to a Flutter [Gradient].
   ///
@@ -552,10 +563,7 @@ class ColorStop {
   final double position;
 
   /// Creates a [ColorStop] with the specified [color] and [position].
-  const ColorStop({
-    required this.color,
-    required this.position,
-  });
+  const ColorStop({required this.color, required this.position});
 }
 
 /// An abstract base class for representing gradient angles with alignment geometry.
@@ -608,7 +616,6 @@ abstract class GradientAngleGeometry {
 /// ```
 class DirectionalGradientAngle extends GradientAngleGeometry {
   @override
-
   /// The angle of the gradient in radians.
   final double angle;
 
@@ -616,7 +623,6 @@ class DirectionalGradientAngle extends GradientAngleGeometry {
   const DirectionalGradientAngle(this.angle);
 
   @override
-
   /// The beginning alignment calculated from the angle.
   AlignmentGeometry get begin {
     final x = 0.5 + 0.5 * cos(angle);
@@ -625,7 +631,6 @@ class DirectionalGradientAngle extends GradientAngleGeometry {
   }
 
   @override
-
   /// The ending alignment calculated from the angle.
   AlignmentGeometry get end {
     final x = 0.5 + 0.5 * cos(angle + pi);
@@ -647,7 +652,6 @@ class DirectionalGradientAngle extends GradientAngleGeometry {
 /// ```
 class GradientAngle extends GradientAngleGeometry {
   @override
-
   /// The angle of the gradient in radians.
   final double angle;
 
@@ -655,7 +659,6 @@ class GradientAngle extends GradientAngleGeometry {
   const GradientAngle(this.angle);
 
   @override
-
   /// The beginning alignment calculated from the angle.
   AlignmentGeometry get begin {
     final x = 0.5 + 0.5 * cos(angle);
@@ -664,7 +667,6 @@ class GradientAngle extends GradientAngleGeometry {
   }
 
   @override
-
   /// The ending alignment calculated from the angle.
   AlignmentGeometry get end {
     final x = 0.5 + 0.5 * cos(angle + pi);
@@ -741,21 +743,22 @@ class LinearColorGradient extends ColorGradient {
 
   @override
   LinearColorGradient changeColorAndPositionAt(
-      int index, ColorDerivative color, double position) {
+    int index,
+    ColorDerivative color,
+    double position,
+  ) {
     List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
-      color: color,
-      position: position,
-    );
+    newColors[index] = ColorStop(color: color, position: position);
     return copyWith(colors: newColors);
   }
 
   @override
   ({LinearColorGradient gradient, int index}) insertColorAt(
-      ColorDerivative color,
-      Offset position,
-      Size size,
-      TextDirection textDirection) {
+    ColorDerivative color,
+    Offset position,
+    Size size,
+    TextDirection textDirection,
+  ) {
     Alignment alignBegin = angle.begin.resolve(textDirection);
     Alignment alignEnd = angle.end.resolve(textDirection);
     final dx = alignEnd.x - alignBegin.x;
@@ -773,14 +776,8 @@ class LinearColorGradient extends ColorGradient {
         insertIndex = i + 1;
       }
     }
-    newColors.insert(
-      insertIndex,
-      ColorStop(color: color, position: pos),
-    );
-    return (
-      gradient: copyWith(colors: newColors),
-      index: insertIndex,
-    );
+    newColors.insert(insertIndex, ColorStop(color: color, position: pos));
+    return (gradient: copyWith(colors: newColors), index: insertIndex);
   }
 
   @override
@@ -868,21 +865,22 @@ class RadialColorGradient extends ColorGradient {
 
   @override
   RadialColorGradient changeColorAndPositionAt(
-      int index, ColorDerivative color, double position) {
+    int index,
+    ColorDerivative color,
+    double position,
+  ) {
     List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
-      color: color,
-      position: position,
-    );
+    newColors[index] = ColorStop(color: color, position: position);
     return copyWith(colors: newColors);
   }
 
   @override
   ({RadialColorGradient gradient, int index}) insertColorAt(
-      ColorDerivative color,
-      Offset position,
-      Size size,
-      TextDirection textDirection) {
+    ColorDerivative color,
+    Offset position,
+    Size size,
+    TextDirection textDirection,
+  ) {
     Alignment alignCenter = center.resolve(textDirection);
     final px = (position.dx / size.width) * 2 - 1;
     final py = (position.dy / size.height) * 2 - 1;
@@ -898,14 +896,8 @@ class RadialColorGradient extends ColorGradient {
         insertIndex = i + 1;
       }
     }
-    newColors.insert(
-      insertIndex,
-      ColorStop(color: color, position: pos),
-    );
-    return (
-      gradient: copyWith(colors: newColors),
-      index: insertIndex,
-    );
+    newColors.insert(insertIndex, ColorStop(color: color, position: pos));
+    return (gradient: copyWith(colors: newColors), index: insertIndex);
   }
 
   @override
@@ -989,21 +981,22 @@ class SweepColorGradient extends ColorGradient {
 
   @override
   SweepColorGradient changeColorAndPositionAt(
-      int index, ColorDerivative color, double position) {
+    int index,
+    ColorDerivative color,
+    double position,
+  ) {
     List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
-      color: color,
-      position: position,
-    );
+    newColors[index] = ColorStop(color: color, position: position);
     return copyWith(colors: newColors);
   }
 
   @override
   ({SweepColorGradient gradient, int index}) insertColorAt(
-      ColorDerivative color,
-      Offset position,
-      Size size,
-      TextDirection textDirection) {
+    ColorDerivative color,
+    Offset position,
+    Size size,
+    TextDirection textDirection,
+  ) {
     Alignment alignCenter = center.resolve(textDirection);
     final px = (position.dx / size.width) * 2 - 1;
     final py = (position.dy / size.height) * 2 - 1;
@@ -1023,14 +1016,8 @@ class SweepColorGradient extends ColorGradient {
         insertIndex = i + 1;
       }
     }
-    newColors.insert(
-      insertIndex,
-      ColorStop(color: color, position: pos),
-    );
-    return (
-      gradient: copyWith(colors: newColors),
-      index: insertIndex,
-    );
+    newColors.insert(insertIndex, ColorStop(color: color, position: pos));
+    return (gradient: copyWith(colors: newColors), index: insertIndex);
   }
 
   @override

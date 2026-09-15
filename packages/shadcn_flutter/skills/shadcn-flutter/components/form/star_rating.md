@@ -24,8 +24,7 @@ class StarRatingExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/star_rating/star_rating_example_1.dart',
+          path: 'lib/pages/docs/components/star_rating/star_rating_example_1.dart',
           child: StarRatingExample1(),
         ),
       ],
@@ -71,6 +70,7 @@ class _StarRatingExample1State extends State<StarRatingExample1> {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+import 'package:gap/gap.dart';
 
 class StarRatingTile extends StatelessWidget implements IComponentPage {
   const StarRatingTile({super.key});
@@ -88,15 +88,9 @@ class StarRatingTile extends StatelessWidget implements IComponentPage {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          StarRating(
-            starSize: 64,
-            value: 3.5,
-          ),
+          StarRating(value: 3.5, theme: StarRatingTheme(starSize: 64)),
           Gap(16),
-          StarRating(
-            starSize: 64,
-            value: 2.5,
-          ),
+          StarRating(value: 2.5, theme: StarRatingTheme(starSize: 64)),
         ],
       ),
     );
@@ -132,3 +126,4 @@ class StarRatingTile extends StatelessWidget implements IComponentPage {
 | `starInnerRadiusRatio` | `double?` | Inner to outer radius ratio for stars.  Controls the depth of star valleys. Lower values create deeper valleys. If `null`, uses a default ratio. |
 | `starRotation` | `double?` | Rotation angle for stars in radians.  Rotates each star by this angle. If `null`, stars are not rotated. |
 | `enabled` | `bool?` | Whether the star rating is interactive.  When `false`, the widget is in read-only mode. Defaults to `true` if [onChanged] is provided. |
+| `theme` | `StarRatingTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

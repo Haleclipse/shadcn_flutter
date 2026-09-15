@@ -11,7 +11,10 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 ///
 /// Returns: `Widget` — the built widget reflecting the validation state.
 typedef ValidatedBuilder = Widget Function(
-    BuildContext context, ValidationResult? error, Widget? child);
+  BuildContext context,
+  ValidationResult? error,
+  Widget? child,
+);
 
 /// A widget that displays validation feedback for form entries.
 ///

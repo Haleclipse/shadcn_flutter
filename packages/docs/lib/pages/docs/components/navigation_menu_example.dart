@@ -10,18 +10,14 @@ class NavigationMenuExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return ComponentPage(
       name: 'navigation_menu',
-      description:
-          'Navigation menu is a component that provides a list of navigation items.',
+      description: 'Navigation menu is a component that provides a list of navigation items.',
       displayName: 'Navigation Menu',
       children: [
         ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: 600,
-          ),
+          constraints: const BoxConstraints(minHeight: 600),
           child: const WidgetUsageExample(
             title: 'Example',
-            path:
-                'lib/pages/docs/components/navigation_menu/navigation_menu_example_1.dart',
+            path: 'lib/pages/docs/components/navigation_menu/navigation_menu_example_1.dart',
             child: NavigationMenuExample1(),
           ),
         ),

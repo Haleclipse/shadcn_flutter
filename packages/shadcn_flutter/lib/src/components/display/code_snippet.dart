@@ -105,8 +105,9 @@ class CodeSnippetTheme extends ComponentThemeData {
     ValueGetter<EdgeInsetsGeometry?>? padding,
   }) {
     return CodeSnippetTheme(
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       borderColor: borderColor == null ? this.borderColor : borderColor(),
       borderWidth: borderWidth == null ? this.borderWidth : borderWidth(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
@@ -127,12 +128,12 @@ class CodeSnippetTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        backgroundColor,
-        borderColor,
-        borderWidth,
-        borderRadius,
-        padding,
-      );
+    backgroundColor,
+    borderColor,
+    borderWidth,
+    borderRadius,
+    padding,
+  );
 }
 
 /// A syntax-highlighted code display widget with copy functionality.
@@ -172,13 +173,14 @@ class CodeSnippetTheme extends ComponentThemeData {
 ///   constraints: BoxConstraints(maxHeight: 200),
 ///   actions: [
 ///     IconButton(
-///       icon: Icon(Icons.share),
+///       icon: Icon(LucideIcons.share2),
 ///       onPressed: () => shareCode(),
 ///     ),
 ///   ],
 /// );
 /// ```
-class CodeSnippet extends StatefulWidget {
+class CodeSnippet extends StatefulWidget
+    implements Styleable<CodeSnippetTheme> {
   /// Optional constraints for the code display area.
   ///
   /// Type: `BoxConstraints?`. Controls the maximum/minimum size of the
@@ -193,6 +195,10 @@ class CodeSnippet extends StatefulWidget {
   /// Type: `List<Widget>`. Custom action buttons shown alongside the
   /// default copy button. Useful for share, edit, or other operations.
   final List<Widget> actions;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CodeSnippetTheme? theme;
 
   /// Creates a [CodeSnippet] widget.
   ///
@@ -218,6 +224,7 @@ class CodeSnippet extends StatefulWidget {
     this.constraints,
     this.actions = const [],
     required this.code,
+    this.theme,
   });
 
   @override
@@ -291,7 +298,8 @@ class _CodeSnippetState extends State<CodeSnippet> {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContentPadding =
         theme.density.baseContentPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<CodeSnippetTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<CodeSnippetTheme>(context);
     final backgroundColor = styleValue(
       themeValue: compTheme?.backgroundColor,
       defaultValue: theme.colorScheme.card,
@@ -321,10 +329,7 @@ class _CodeSnippetState extends State<CodeSnippet> {
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor,
-        border: Border.all(
-          color: borderColor,
-          width: borderWidth,
-        ),
+        border: Border.all(color: borderColor, width: borderWidth),
         borderRadius: borderRadius,
       ),
       child: Stack(

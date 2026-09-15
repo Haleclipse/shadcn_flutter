@@ -30,18 +30,14 @@ class DividerExample4 extends StatelessWidget {
               childAlignment: const AxisAlignment(-0.6),
               padding: EdgeInsets.zero,
               child: IconButton.outline(
-                icon: const Icon(Icons.arrow_back_ios_new),
+                icon: const Icon(LucideIcons.chevronLeft),
                 shape: ButtonShape.circle,
                 size: ButtonSize.small,
                 onPressed: () {},
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              color: Colors.black,
-            ),
-          ),
+          Expanded(child: Container(color: Colors.black)),
         ],
       ),
     );

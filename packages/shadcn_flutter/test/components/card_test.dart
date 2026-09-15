@@ -1,17 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+
 import '../test_helper.dart';
 
 void main() {
   group('Card', () {
     testWidgets('renders child widget', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: Card(
-            child: Text('Card Content'),
-          ),
-        ),
+        SimpleApp(child: Card(child: Text('Card Content'))),
       );
 
       expect(find.byType(Card), findsOneWidget);
@@ -22,7 +18,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            padding: EdgeInsets.all(32.0),
+            theme: CardTheme(padding: EdgeInsets.all(32.0)),
             child: Text('Padded Content'),
           ),
         ),
@@ -37,7 +33,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            filled: true,
+            theme: CardTheme(filled: true),
             child: Text('Filled Card'),
           ),
         ),
@@ -51,8 +47,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            filled: true,
-            fillColor: material.Colors.blue,
+            theme: CardTheme(filled: true, fillColor: Colors.blue),
             child: Text('Colored Card'),
           ),
         ),
@@ -66,7 +61,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            borderRadius: BorderRadius.circular(16.0),
+            theme: CardTheme(borderRadius: BorderRadius.circular(16.0)),
             child: Text('Rounded Card'),
           ),
         ),
@@ -80,8 +75,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            borderColor: Colors.red,
-            borderWidth: 2.0,
+            theme: CardTheme(borderColor: Colors.red, borderWidth: 2.0),
             child: Text('Bordered Card'),
           ),
         ),
@@ -95,13 +89,15 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.2),
-                blurRadius: 8.0,
-                offset: Offset(0, 4),
-              )
-            ],
+            theme: CardTheme(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  blurRadius: 8.0,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
             child: Text('Shadowed Card'),
           ),
         ),
@@ -115,8 +111,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            surfaceOpacity: 0.8,
-            surfaceBlur: 10.0,
+            theme: CardTheme(surfaceOpacity: 0.8, surfaceBlur: 10.0),
             child: Text('Surface Card'),
           ),
         ),
@@ -130,7 +125,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            clipBehavior: Clip.antiAlias,
+            theme: CardTheme(clipBehavior: Clip.antiAlias),
             child: Text('Clipped Card'),
           ),
         ),
@@ -144,7 +139,7 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            duration: Duration(milliseconds: 500),
+            theme: CardTheme(duration: Duration(milliseconds: 500)),
             child: Text('Animated Card'),
           ),
         ),
@@ -163,7 +158,7 @@ void main() {
                 Text('Title'),
                 SizedBox(height: 8),
                 Text('Description'),
-                Icon(Icons.star),
+                Icon(LucideIcons.star),
               ],
             ),
           ),
@@ -173,34 +168,28 @@ void main() {
       expect(find.byType(Card), findsOneWidget);
       expect(find.text('Title'), findsOneWidget);
       expect(find.text('Description'), findsOneWidget);
-      expect(find.byIcon(Icons.star), findsOneWidget);
-      expect(find.byType(Column),
-          findsWidgets); // May find multiple due to SimpleApp
+      expect(find.byIcon(LucideIcons.star), findsOneWidget);
+      expect(
+        find.byType(Column),
+        findsWidgets,
+      ); // May find multiple due to SimpleApp
     });
 
     testWidgets('applies default text style', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: Card(
-            child: Text('Styled Text'),
-          ),
-        ),
+        SimpleApp(child: Card(child: Text('Styled Text'))),
       );
 
       expect(find.byType(Card), findsOneWidget);
-      expect(find.byType(DefaultTextStyle),
-          findsWidgets); // May find multiple due to SimpleApp
+      expect(
+        find.byType(DefaultTextStyle),
+        findsWidgets,
+      ); // May find multiple due to SimpleApp
       expect(find.text('Styled Text'), findsOneWidget);
     });
 
     testWidgets('handles empty child', (tester) async {
-      await tester.pumpWidget(
-        SimpleApp(
-          child: Card(
-            child: SizedBox.shrink(),
-          ),
-        ),
-      );
+      await tester.pumpWidget(SimpleApp(child: Card(child: SizedBox.shrink())));
 
       expect(find.byType(Card), findsOneWidget);
       expect(find.byType(SizedBox), findsOneWidget);
@@ -210,23 +199,25 @@ void main() {
       await tester.pumpWidget(
         SimpleApp(
           child: Card(
-            padding: EdgeInsets.all(24.0),
-            filled: true,
-            fillColor: Colors.green,
-            borderRadius: BorderRadius.circular(12.0),
-            borderColor: Colors.blue,
-            borderWidth: 3.0,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.3),
-                blurRadius: 12.0,
-                offset: Offset(0, 6),
-              )
-            ],
-            surfaceOpacity: 0.9,
-            surfaceBlur: 8.0,
-            clipBehavior: Clip.antiAlias,
-            duration: Duration(milliseconds: 300),
+            theme: CardTheme(
+              padding: EdgeInsets.all(24.0),
+              filled: true,
+              fillColor: Colors.green,
+              borderRadius: BorderRadius.circular(12.0),
+              borderColor: Colors.blue,
+              borderWidth: 3.0,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 12.0,
+                  offset: Offset(0, 6),
+                ),
+              ],
+              surfaceOpacity: 0.9,
+              surfaceBlur: 8.0,
+              clipBehavior: Clip.antiAlias,
+              duration: Duration(milliseconds: 300),
+            ),
             child: Text('Complex Card'),
           ),
         ),
@@ -250,28 +241,21 @@ void main() {
       );
 
       expect(find.byType(Card), findsOneWidget);
-      expect(find.byType(Padding),
-          findsWidgets); // May find multiple due to SimpleApp
+      expect(
+        find.byType(Padding),
+        findsWidgets,
+      ); // May find multiple due to SimpleApp
       expect(find.text('Nested Content'), findsOneWidget);
     });
 
     testWidgets('handles state changes', (tester) async {
-      await tester.pumpWidget(
-        SimpleApp(
-          child: Card(
-            child: Text('Initial'),
-          ),
-        ),
-      );
+      await tester.pumpWidget(SimpleApp(child: Card(child: Text('Initial'))));
 
       expect(find.text('Initial'), findsOneWidget);
 
       await tester.pumpWidget(
         SimpleApp(
-          child: Card(
-            filled: true,
-            child: Text('Updated'),
-          ),
+          child: Card(theme: CardTheme(filled: true), child: Text('Updated')),
         ),
       );
 

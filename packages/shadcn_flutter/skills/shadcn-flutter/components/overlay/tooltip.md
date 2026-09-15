@@ -19,8 +19,7 @@ class TooltipExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'tooltip',
-      description:
-          'A floating message that appears when a user interacts with a target.',
+      description: 'A floating message that appears when a user interacts with a target.',
       displayName: 'Tooltip',
       children: [
         WidgetUsageExample(
@@ -49,9 +48,7 @@ class TooltipExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       // Tooltip wraps a target widget and shows TooltipContainer on hover/focus.
-      tooltip: const TooltipContainer(
-        child: Text('This is a tooltip.'),
-      ),
+      tooltip: const TooltipContainer(child: Text('This is a tooltip.')),
       child: PrimaryButton(
         onPressed: () {},
         child: const Text('Hover over me'),
@@ -65,8 +62,8 @@ class TooltipExample1 extends StatelessWidget {
 ### Tooltip Tile
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
-import 'package:flutter/material.dart' as material hide Card;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // paint a cursor
 class CursorPainter extends CustomPainter {
@@ -120,23 +117,19 @@ class TooltipTile extends StatelessWidget implements IComponentPage {
           Column(
             children: [
               DestructiveButton(
-                leading: const Icon(material.Icons.delete),
+                leading: const Icon(LucideIcons.trash),
                 child: const Text('Delete'),
                 onPressed: () {},
               ),
               const Gap(4),
-              const TooltipContainer(
-                child: Text('Click to delete this item'),
-              ),
+              const TooltipContainer(child: Text('Click to delete this item')),
             ],
           ),
           const Positioned(
             top: 25,
             left: 100,
-            child: CustomPaint(
-              painter: CursorPainter(),
-            ),
-          )
+            child: CustomPaint(painter: CursorPainter()),
+          ),
         ],
       ),
     );
@@ -163,3 +156,4 @@ class TooltipTile extends StatelessWidget implements IComponentPage {
 | `waitDuration` | `Duration` | Time to wait before showing the tooltip on hover. |
 | `showDuration` | `Duration` | Duration of the tooltip show animation. |
 | `minDuration` | `Duration` | Minimum time the tooltip stays visible once shown. |
+| `adaptiveOverlay` | `bool` | Whether this tooltip may adapt to a different presentation on mobile platforms (see [showOverlay]'s `adaptive` parameter). Defaults to `false` — a tooltip should never become a bottom drawer; its own simplified fixed-position mobile presentation ([TooltipConfiguration]) always applies regardless of this flag. |

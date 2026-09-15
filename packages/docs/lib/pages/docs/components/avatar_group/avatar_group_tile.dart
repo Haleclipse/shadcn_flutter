@@ -1,5 +1,4 @@
 import 'package:docs/pages/docs/components_page.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 class AvatarGroupTile extends StatelessWidget implements IComponentPage {
@@ -15,24 +14,26 @@ class AvatarGroupTile extends StatelessWidget implements IComponentPage {
       title: 'Avatar Group',
       scale: 1.5,
       center: true,
-      example: AvatarGroup.toLeft(children: [
-        Avatar(
-          initials: Avatar.getInitials('sunarya-thito'),
-          backgroundColor: material.Colors.red,
-        ),
-        Avatar(
-          initials: Avatar.getInitials('sunarya-thito'),
-          backgroundColor: material.Colors.green,
-        ),
-        Avatar(
-          initials: Avatar.getInitials('sunarya-thito'),
-          backgroundColor: material.Colors.blue,
-        ),
-        Avatar(
-          initials: Avatar.getInitials('sunarya-thito'),
-          backgroundColor: material.Colors.yellow,
-        ),
-      ]),
+      example: AvatarGroup.toLeft(
+        children: [
+          Avatar(
+            initials: Avatar.getInitials('sunarya-thito'),
+            theme: AvatarTheme(backgroundColor: Colors.red),
+          ),
+          Avatar(
+            initials: Avatar.getInitials('sunarya-thito'),
+            theme: AvatarTheme(backgroundColor: Colors.green),
+          ),
+          Avatar(
+            initials: Avatar.getInitials('sunarya-thito'),
+            theme: AvatarTheme(backgroundColor: Colors.blue),
+          ),
+          Avatar(
+            initials: Avatar.getInitials('sunarya-thito'),
+            theme: AvatarTheme(backgroundColor: Colors.yellow),
+          ),
+        ],
+      ),
     );
   }
 }

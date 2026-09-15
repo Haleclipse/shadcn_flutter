@@ -9,8 +9,6 @@ class BadgeExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PrimaryBadge(
-      child: Text('Primary'),
-    );
+    return const PrimaryBadge(child: Text('Primary'));
   }
 }

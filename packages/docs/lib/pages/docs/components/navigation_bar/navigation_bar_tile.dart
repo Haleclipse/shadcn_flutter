@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class NavigationBarTile extends StatelessWidget implements IComponentPage {
   const NavigationBarTile({super.key});
@@ -28,7 +29,7 @@ class NavigationBarTile extends StatelessWidget implements IComponentPage {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.home, color: theme.colorScheme.primary),
+                  Icon(LucideIcons.house, color: theme.colorScheme.primary),
                   const Gap(4),
                   Text(
                     'Home',
@@ -42,34 +43,25 @@ class NavigationBarTile extends StatelessWidget implements IComponentPage {
               const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.search),
+                  Icon(LucideIcons.search),
                   Gap(4),
-                  Text(
-                    'Search',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  Text('Search', style: TextStyle(fontSize: 12)),
                 ],
               ),
               const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.favorite),
+                  Icon(LucideIcons.heart),
                   Gap(4),
-                  Text(
-                    'Favorites',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  Text('Favorites', style: TextStyle(fontSize: 12)),
                 ],
               ),
               const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.person),
+                  Icon(LucideIcons.user),
                   Gap(4),
-                  Text(
-                    'Profile',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  Text('Profile', style: TextStyle(fontSize: 12)),
                 ],
               ),
             ],

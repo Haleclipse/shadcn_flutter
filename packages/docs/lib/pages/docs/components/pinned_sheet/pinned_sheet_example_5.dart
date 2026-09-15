@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Demonstrates `PinnedSheet(contentExpands: true)`: the sheet content is
 /// sized to the visible extent (0 when closed → the backdrop size when fully

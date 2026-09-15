@@ -21,7 +21,8 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// - **Bar**: Standard horizontal or vertical bar with items arranged linearly.
 /// - **Rail**: Compact sidebar-style navigation typically used on screen edges.
 /// - **Sidebar**: Full-featured expandable sidebar for complex navigation hierarchies.
-class NavigationBar extends StatefulWidget {
+class NavigationBar extends StatefulWidget
+    implements Styleable<NavigationBarTheme> {
   /// The list of navigation items, dividers, or gaps to display.
   final List<Widget> children;
 
@@ -78,6 +79,10 @@ class NavigationBar extends StatefulWidget {
   /// The spacing between navigation items.
   final double? spacing;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final NavigationBarTheme? theme;
+
   /// Creates a [NavigationBar] with the specified configuration.
   const NavigationBar({
     super.key,
@@ -99,6 +104,7 @@ class NavigationBar extends StatefulWidget {
     this.expandedSize,
     this.collapsedSize,
     this.spacing,
+    this.theme,
   });
 
   @override
@@ -115,20 +121,22 @@ class _NavigationBarState extends State<NavigationBar> {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final direction = widget.direction ?? Axis.horizontal;
-    final backgroundColor = widget.backgroundColor ??
+    final backgroundColor =
+        widget.backgroundColor ??
         theme.colorScheme.background.scaleAlpha(widget.surfaceOpacity ?? 1);
     final densityGap = theme.density.baseGap * scaling;
     final densityContentPadding = theme.density.baseContentPadding * scaling;
-    final resolvedPadding = (widget.padding ??
-            EdgeInsets.symmetric(
-              horizontal: direction == Axis.horizontal
-                  ? densityContentPadding
-                  : densityGap,
-              vertical: direction == Axis.vertical
-                  ? densityContentPadding
-                  : densityGap,
-            ))
-        .resolve(Directionality.of(context));
+    final resolvedPadding =
+        (widget.padding ??
+                EdgeInsets.symmetric(
+                  horizontal: direction == Axis.horizontal
+                      ? densityContentPadding
+                      : densityGap,
+                  vertical: direction == Axis.vertical
+                      ? densityContentPadding
+                      : densityGap,
+                ))
+            .resolve(Directionality.of(context));
 
     final labelType = widget.labelType;
     final labelPosition = widget.labelPosition;
@@ -185,7 +193,9 @@ class _NavigationBarState extends State<NavigationBar> {
             constraints: direction == Axis.vertical
                 ? BoxConstraints(minWidth: animatedMinSize, maxWidth: maxSize)
                 : BoxConstraints(
-                    minHeight: animatedMinSize, maxHeight: maxSize),
+                    minHeight: animatedMinSize,
+                    maxHeight: maxSize,
+                  ),
             child: child,
           );
         },

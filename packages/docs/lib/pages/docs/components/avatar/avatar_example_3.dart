@@ -11,11 +11,8 @@ class AvatarExample3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Avatar(
       initials: Avatar.getInitials('sunarya-thito'),
-      size: 64,
-      badge: const AvatarBadge(
-        size: 20,
-        color: Colors.green,
-      ),
+      badge: const AvatarBadge(size: 20, color: Colors.green),
+      theme: AvatarTheme(size: 64),
     );
   }
 }

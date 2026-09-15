@@ -40,3 +40,4 @@ OutlinedContainer(
 | `width` | `double?` | Explicit width of the container.  If `null`, size is determined by child and padding. |
 | `height` | `double?` | Explicit height of the container.  If `null`, size is determined by child and padding. |
 | `duration` | `Duration?` | Duration for animating property changes.  If `null`, changes are applied immediately without animation. |
+| `theme` | `OutlinedContainerTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

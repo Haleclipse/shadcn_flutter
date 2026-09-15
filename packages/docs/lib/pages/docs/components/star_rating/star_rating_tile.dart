@@ -1,5 +1,6 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+import 'package:gap/gap.dart';
 
 class StarRatingTile extends StatelessWidget implements IComponentPage {
   const StarRatingTile({super.key});
@@ -17,15 +18,9 @@ class StarRatingTile extends StatelessWidget implements IComponentPage {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          StarRating(
-            starSize: 64,
-            value: 3.5,
-          ),
+          StarRating(value: 3.5, theme: StarRatingTheme(starSize: 64)),
           Gap(16),
-          StarRating(
-            starSize: 64,
-            value: 2.5,
-          ),
+          StarRating(value: 2.5, theme: StarRatingTheme(starSize: 64)),
         ],
       ),
     );

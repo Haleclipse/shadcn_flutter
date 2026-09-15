@@ -18,8 +18,7 @@ class ChipExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'chip',
-      description:
-          'A chip is a small, interactive element that represents an attribute, text, entity, or action.',
+      description: 'A chip is a small, interactive element that represents an attribute, text, entity, or action.',
       displayName: 'Chip',
       children: [
         WidgetUsageExample(
@@ -55,7 +54,7 @@ class ChipExample1 extends StatelessWidget {
           // Trailing action; in real apps you might remove the chip.
           trailing: ChipButton(
             onPressed: () {},
-            child: const Icon(Icons.close),
+            child: const Icon(LucideIcons.x),
           ),
           child: const Text('Apple'),
         ),
@@ -64,7 +63,7 @@ class ChipExample1 extends StatelessWidget {
           style: const ButtonStyle.primary(),
           trailing: ChipButton(
             onPressed: () {},
-            child: const Icon(Icons.close),
+            child: const Icon(LucideIcons.x),
           ),
           child: const Text('Banana'),
         ),
@@ -73,7 +72,7 @@ class ChipExample1 extends StatelessWidget {
           style: const ButtonStyle.outline(),
           trailing: ChipButton(
             onPressed: () {},
-            child: const Icon(Icons.close),
+            child: const Icon(LucideIcons.x),
           ),
           child: const Text('Cherry'),
         ),
@@ -82,7 +81,7 @@ class ChipExample1 extends StatelessWidget {
           style: const ButtonStyle.ghost(),
           trailing: ChipButton(
             onPressed: () {},
-            child: const Icon(Icons.close),
+            child: const Icon(LucideIcons.x),
           ),
           child: const Text('Durian'),
         ),
@@ -91,7 +90,7 @@ class ChipExample1 extends StatelessWidget {
           style: const ButtonStyle.destructive(),
           trailing: ChipButton(
             onPressed: () {},
-            child: const Icon(Icons.close),
+            child: const Icon(LucideIcons.x),
           ),
           child: const Text('Elderberry'),
         ),
@@ -124,10 +123,7 @@ class ChipTile extends StatelessWidget implements IComponentPage {
           spacing: 8,
           runSpacing: 8,
           children: [
-            Chip(
-              child: const Text('Default'),
-              onPressed: () {},
-            ),
+            Chip(child: const Text('Default'), onPressed: () {}),
             Chip(
               leading: const Icon(LucideIcons.user),
               child: const Text('With Icon'),
@@ -138,9 +134,7 @@ class ChipTile extends StatelessWidget implements IComponentPage {
               onPressed: () {},
               child: const Text('Removable'),
             ),
-            const Chip(
-              child: Text('Disabled'),
-            ),
+            const Chip(child: Text('Disabled')),
           ],
         ).withPadding(all: 16),
       ),
@@ -169,3 +163,4 @@ class ChipTile extends StatelessWidget implements IComponentPage {
 | `trailing` | `Widget?` | Optional widget displayed after the child. |
 | `onPressed` | `VoidCallback?` | Callback invoked when the chip is pressed. |
 | `style` | `AbstractButtonStyle?` | Custom button style for the chip. |
+| `theme` | `ChipTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

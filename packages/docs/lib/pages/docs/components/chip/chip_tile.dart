@@ -18,10 +18,7 @@ class ChipTile extends StatelessWidget implements IComponentPage {
           spacing: 8,
           runSpacing: 8,
           children: [
-            Chip(
-              child: const Text('Default'),
-              onPressed: () {},
-            ),
+            Chip(child: const Text('Default'), onPressed: () {}),
             Chip(
               leading: const Icon(LucideIcons.user),
               child: const Text('With Icon'),
@@ -32,9 +29,7 @@ class ChipTile extends StatelessWidget implements IComponentPage {
               onPressed: () {},
               child: const Text('Removable'),
             ),
-            const Chip(
-              child: Text('Disabled'),
-            ),
+            const Chip(child: Text('Disabled')),
           ],
         ).withPadding(all: 16),
       ),

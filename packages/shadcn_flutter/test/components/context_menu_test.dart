@@ -80,7 +80,9 @@ void main() {
               MenuButton(
                 subMenu: [
                   MenuButton(
-                      child: const Text('SubItem 1'), onPressed: (context) {}),
+                    child: const Text('SubItem 1'),
+                    onPressed: (context) {},
+                  ),
                 ],
                 onPressed: (context) {},
                 child: const Text('Submenu'),
@@ -105,8 +107,9 @@ void main() {
       await tester.pump();
       await gesture.moveTo(tester.getCenter(find.text('Submenu')));
       await tester.pump();
-      await tester
-          .pump(const Duration(milliseconds: 500)); // Wait for hover delay
+      await tester.pump(
+        const Duration(milliseconds: 500),
+      ); // Wait for hover delay
       await tester.pumpAndSettle(); // Wait for animation
 
       // TODO: Fix submenu test

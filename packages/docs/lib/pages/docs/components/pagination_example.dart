@@ -11,8 +11,7 @@ class PaginationExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'pagination',
-      description:
-          'A pagination component is used to navigate through a series of pages.',
+      description: 'A pagination component is used to navigate through a series of pages.',
       displayName: 'Pagination',
       children: [
         WidgetUsageExample(

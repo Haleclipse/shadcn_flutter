@@ -15,11 +15,7 @@ class WindowTile extends StatelessWidget implements IComponentPage {
       name: 'window',
       title: 'Window',
       fit: true,
-      example: SizedBox(
-        width: 420,
-        height: 660,
-        child: WindowExample1(),
-      ),
+      example: SizedBox(width: 420, height: 660, child: WindowExample1()),
     );
   }
 }

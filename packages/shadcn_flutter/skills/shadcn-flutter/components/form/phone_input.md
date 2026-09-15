@@ -24,8 +24,7 @@ class PhoneInputExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/phone_input/phone_input_example_1.dart',
+          path: 'lib/pages/docs/components/phone_input/phone_input_example_1.dart',
           child: PhoneInputExample1(),
         ),
       ],
@@ -38,6 +37,7 @@ class PhoneInputExample extends StatelessWidget {
 ### Phone Input Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class PhoneInputExample1 extends StatefulWidget {
   const PhoneInputExample1({super.key});
@@ -53,19 +53,20 @@ class _PhoneInputExample1State extends State<PhoneInputExample1> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        PhoneInput(
-          // Preselect a country; phone parsing/formatting adapt accordingly.
-          initialCountry: Country.indonesia,
-          onChanged: (value) {
-            setState(() {
-              _phoneNumber = value;
-            });
-          },
+        SizedBox(
+          width: 300,
+          child: PhoneInput(
+            // Preselect a country; phone parsing/formatting adapt accordingly.
+            initialCountry: Country.indonesia,
+            onChanged: (value) {
+              setState(() {
+                _phoneNumber = value;
+              });
+            },
+          ),
         ),
         const Gap(24),
-        Text(
-          _phoneNumber?.value ?? '(No value)',
-        ),
+        Text(_phoneNumber?.value ?? '(No value)'),
       ],
     );
   }
@@ -90,11 +91,14 @@ class PhoneInputTile extends StatelessWidget implements IComponentPage {
       name: 'phone_input',
       title: 'Phone Input',
       scale: 1.5,
-      example: Card(
-        child: const PhoneInput(
-          initialValue: PhoneNumber(Country.indonesia, '81234567890'),
-        ).withAlign(Alignment.topLeft),
-      ).sized(height: 300),
+      example: SizedBox(
+        width: 280,
+        child: Card(
+          child: const PhoneInput(
+            initialValue: PhoneNumber(Country.indonesia, '81234567890'),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -114,7 +118,7 @@ class PhoneInputTile extends StatelessWidget implements IComponentPage {
 | :--- | :--- | :--- |
 | `initialCountry` | `Country?` | The default country to display when no initial value is provided.  If both [initialCountry] and [initialValue] are null, defaults to United States. When [initialValue] is provided, its country takes precedence over this setting. |
 | `initialValue` | `PhoneNumber?` | The initial phone number value including country and number.  When provided, both the country selector and number field are initialized with the values from this phone number. Takes precedence over [initialCountry] for country selection. |
-| `onChanged` | `ValueChanged<PhoneNumber>?` | Callback invoked when the phone number changes.  Called whenever the user changes either the country selection or the phone number text. The callback receives a [PhoneNumber] object containing both the selected country and entered number. |
+| `onChanged` | `ValueChanged<PhoneNumber?>?` | Callback invoked when the phone number changes.  Called whenever the user changes either the country selection or the phone number text. The callback receives a [PhoneNumber] object containing both the selected country and entered number. |
 | `controller` | `TextEditingController?` | Optional text editing controller for the number input field.  When provided, this controller manages the text content of the phone number input field. If null, an internal controller is created and managed. |
 | `filterPlusCode` | `bool` | Whether to filter out plus (+) symbols from input.  When true, plus symbols are automatically removed from user input since the country code already provides the international prefix. |
 | `filterZeroCode` | `bool` | Whether to filter out leading zeros from input.  When true, leading zeros are automatically removed from the phone number to normalize the input format according to international standards. |
@@ -122,3 +126,4 @@ class PhoneInputTile extends StatelessWidget implements IComponentPage {
 | `onlyNumber` | `bool` | Whether to allow only numeric characters in the input.  When true, restricts input to numeric characters only, removing any letters, symbols, or formatting characters that users might enter. |
 | `countries` | `List<Country>?` | Optional list of countries to display in the country selector.  When provided, only these countries will be available for selection in the country picker popup. If null, all supported countries are available. |
 | `searchPlaceholder` | `Widget?` | Widget displayed as placeholder in the country search field.  Appears in the search input at the top of the country selector popup to guide users on how to search for countries. |
+| `theme` | `PhoneInputTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

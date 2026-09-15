@@ -66,8 +66,9 @@ class AutoCompleteTheme extends ComponentThemeData {
       overlayConfiguration: overlayConfiguration == null
           ? this.overlayConfiguration
           : overlayConfiguration(),
-      adaptiveOverlay:
-          adaptiveOverlay == null ? this.adaptiveOverlay : adaptiveOverlay(),
+      adaptiveOverlay: adaptiveOverlay == null
+          ? this.adaptiveOverlay
+          : adaptiveOverlay(),
       mode: mode == null ? this.mode : mode(),
     );
   }
@@ -84,7 +85,11 @@ class AutoCompleteTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-      popoverConstraints, overlayConfiguration, adaptiveOverlay, mode);
+    popoverConstraints,
+    overlayConfiguration,
+    adaptiveOverlay,
+    mode,
+  );
 }
 
 /// Intelligent autocomplete functionality with customizable suggestion handling.
@@ -117,7 +122,8 @@ class AutoCompleteTheme extends ComponentThemeData {
 ///   ),
 /// )
 /// ```
-class AutoComplete extends StatefulWidget {
+class AutoComplete extends StatefulWidget
+    implements Styleable<AutoCompleteTheme> {
   /// List of suggestions to display in the autocomplete popover.
   ///
   /// When non-empty, triggers the popover to appear with selectable options.
@@ -136,6 +142,7 @@ class AutoComplete extends StatefulWidget {
   ///
   /// Overrides the theme default. Controls maximum/minimum dimensions of the
   /// suggestion list. When null, uses theme value or framework default.
+  @Deprecated('Use theme: AutoCompleteTheme(popoverConstraints: ...) instead.')
   final BoxConstraints? popoverConstraints;
 
   /// Overrides the [OverlayConfiguration] used to present the suggestion
@@ -147,12 +154,14 @@ class AutoComplete extends StatefulWidget {
   /// Whether the suggestion popover may adapt to a different presentation on
   /// mobile platforms (see [showOverlay]'s `adaptive` parameter). Defaults to
   /// `false` — the suggestion popup should always be a real anchored popover.
+  @Deprecated('Use theme: AutoCompleteTheme(adaptiveOverlay: ...) instead.')
   final bool? adaptiveOverlay;
 
   /// Text replacement strategy when a suggestion is selected.
   ///
   /// Overrides the theme default. Controls how selected suggestions modify
   /// the text field content. When null, uses theme or [AutoCompleteMode.replaceWord].
+  @Deprecated('Use theme: AutoCompleteTheme(mode: ...) instead.')
   final AutoCompleteMode? mode;
 
   /// Function to customize suggestion text before application.
@@ -161,6 +170,10 @@ class AutoComplete extends StatefulWidget {
   /// text inserted into the field. Useful for adding prefixes, suffixes, or
   /// formatting. Defaults to returning the suggestion unchanged.
   final AutoCompleteCompleter completer;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AutoCompleteTheme? theme;
 
   /// Creates an [AutoComplete] widget.
   ///
@@ -195,6 +208,7 @@ class AutoComplete extends StatefulWidget {
     this.adaptiveOverlay,
     this.mode,
     this.completer = _defaultCompleter,
+    this.theme,
   });
 
   @override
@@ -286,7 +300,8 @@ class _AutoCompleteState extends State<AutoComplete> {
   bool _suppressReopen = false;
 
   AutoCompleteMode get _mode {
-    final compTheme = ComponentTheme.maybeOf<AutoCompleteTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AutoCompleteTheme>(context);
     return styleValue(
       widgetValue: widget.mode,
       themeValue: compTheme?.mode,
@@ -329,9 +344,11 @@ class _AutoCompleteState extends State<AutoComplete> {
     if (_popoverController.hasOpenOverlay || !allowOpen) {
       return;
     }
-    final compTheme = ComponentTheme.maybeOf<AutoCompleteTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AutoCompleteTheme>(context);
     _selectedIndex.value = -1;
-    final overlayConfiguration = widget.overlayConfiguration ??
+    final overlayConfiguration =
+        widget.overlayConfiguration ??
         compTheme?.overlayConfiguration ??
         const PopoverConfiguration(
           widthConstraint: PopoverConstraint.anchorFixedSize,
@@ -339,56 +356,56 @@ class _AutoCompleteState extends State<AutoComplete> {
           alignment: AlignmentDirectional.topStart,
         );
     final adaptiveOverlay = styleValue(
-        widgetValue: widget.adaptiveOverlay,
-        themeValue: compTheme?.adaptiveOverlay,
-        defaultValue: false);
+      widgetValue: widget.adaptiveOverlay,
+      themeValue: compTheme?.adaptiveOverlay,
+      defaultValue: false,
+    );
     _popoverController.show(
-        context,
-        overlayConfiguration,
-        builder: (context) {
-          final theme = Theme.of(context);
-          final densityGap = theme.density.baseGap * theme.scaling;
-          final compTheme =
-              ComponentTheme.maybeOf<AutoCompleteTheme>(context);
-          final popoverConstraints = styleValue<BoxConstraints>(
-            widgetValue: widget.popoverConstraints,
-            themeValue: compTheme?.popoverConstraints,
-            defaultValue: BoxConstraints(
-              maxHeight: 300 * theme.scaling,
-            ),
-          );
-          return TextFieldTapRegion(
-            child: ConstrainedBox(
-              constraints: popoverConstraints,
-              child: SurfaceCard(
-                padding: EdgeInsets.all(densityGap * 0.5),
-                child: AnimatedBuilder(
-                    animation:
-                        Listenable.merge([_suggestions, _selectedIndex]),
-                    builder: (context, child) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _suggestions.value.length,
-                          itemBuilder: (context, index) {
-                            final suggestion = _suggestions.value[index];
-                            return _AutoCompleteItem(
-                              suggestion: suggestion,
-                              selected: index == _selectedIndex.value,
-                              onSelected: () {
-                                _selectedIndex.value = index;
-                                _handleProceed();
-                              },
-                            );
-                          });
-                    }),
+      context,
+      overlayConfiguration,
+      builder: (context) {
+        final theme = Theme.of(context);
+        final densityGap = theme.density.baseGap * theme.scaling;
+        final compTheme =
+            widget.theme ?? ComponentTheme.maybeOf<AutoCompleteTheme>(context);
+        final popoverConstraints = styleValue<BoxConstraints>(
+          widgetValue: widget.popoverConstraints,
+          themeValue: compTheme?.popoverConstraints,
+          defaultValue: BoxConstraints(maxHeight: 300 * theme.scaling),
+        );
+        return TextFieldTapRegion(
+          child: ConstrainedBox(
+            constraints: popoverConstraints,
+            child: SurfaceCard(
+              theme: CardTheme(padding: EdgeInsets.all(densityGap * 0.5)),
+              child: AnimatedBuilder(
+                animation: Listenable.merge([_suggestions, _selectedIndex]),
+                builder: (context, child) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _suggestions.value.length,
+                    itemBuilder: (context, index) {
+                      final suggestion = _suggestions.value[index];
+                      return _AutoCompleteItem(
+                        suggestion: suggestion,
+                        selected: index == _selectedIndex.value,
+                        onSelected: () {
+                          _selectedIndex.value = index;
+                          _handleProceed();
+                        },
+                      );
+                    },
+                  );
+                },
               ),
             ),
-          );
-        },
-        // AutoComplete's suggestion popup defaults to always being a real
-        // anchored popover, never a bottom drawer, on every platform.
-        adaptive: adaptiveOverlay,
-      );
+          ),
+        );
+      },
+      // AutoComplete's suggestion popup defaults to always being a real
+      // anchored popover, never a bottom drawer, on every platform.
+      adaptive: adaptiveOverlay,
+    );
   }
 
   void _handleProceed() {
@@ -402,12 +419,8 @@ class _AutoCompleteState extends State<AutoComplete> {
     _suppressReopen = true;
     _popoverController.close();
     var suggestion = _suggestions.value[selectedIndex];
-    suggestion = widget.completer(
-      suggestion,
-    );
-    invokeActionOnFocusedWidget(
-      AutoCompleteIntent(suggestion, _mode),
-    );
+    suggestion = widget.completer(suggestion);
+    invokeActionOnFocusedWidget(AutoCompleteIntent(suggestion, _mode));
   }
 
   @override
@@ -438,53 +451,54 @@ class _AutoCompleteState extends State<AutoComplete> {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-        listenable: _selectedIndex,
-        builder: (context, child) {
-          return FocusableActionDetector(
-            onFocusChange: _onFocusChanged,
-            shortcuts: _popoverController.hasOpenOverlay
-                ? {
-                    LogicalKeySet(LogicalKeyboardKey.arrowDown):
-                        const NavigateSuggestionIntent(1),
-                    LogicalKeySet(LogicalKeyboardKey.arrowUp):
-                        const NavigateSuggestionIntent(-1),
-                    if (widget.suggestions.isNotEmpty &&
-                        _selectedIndex.value != -1)
-                      LogicalKeySet(LogicalKeyboardKey.tab):
-                          const AcceptSuggestionIntent(),
-                  }
-                : null,
-            actions: _popoverController.hasOpenOverlay
-                ? {
-                    NavigateSuggestionIntent:
-                        CallbackAction<NavigateSuggestionIntent>(
-                      onInvoke: (intent) {
-                        final direction = intent.direction;
-                        final selectedIndex = _selectedIndex.value;
-                        final suggestions = _suggestions.value;
-                        if (suggestions.isEmpty) {
+      listenable: _selectedIndex,
+      builder: (context, child) {
+        return FocusableActionDetector(
+          onFocusChange: _onFocusChanged,
+          shortcuts: _popoverController.hasOpenOverlay
+              ? {
+                  LogicalKeySet(LogicalKeyboardKey.arrowDown):
+                      const NavigateSuggestionIntent(1),
+                  LogicalKeySet(LogicalKeyboardKey.arrowUp):
+                      const NavigateSuggestionIntent(-1),
+                  if (widget.suggestions.isNotEmpty &&
+                      _selectedIndex.value != -1)
+                    LogicalKeySet(LogicalKeyboardKey.tab):
+                        const AcceptSuggestionIntent(),
+                }
+              : null,
+          actions: _popoverController.hasOpenOverlay
+              ? {
+                  NavigateSuggestionIntent:
+                      CallbackAction<NavigateSuggestionIntent>(
+                        onInvoke: (intent) {
+                          final direction = intent.direction;
+                          final selectedIndex = _selectedIndex.value;
+                          final suggestions = _suggestions.value;
+                          if (suggestions.isEmpty) {
+                            return;
+                          }
+                          final newSelectedIndex =
+                              (selectedIndex + direction) % suggestions.length;
+                          _selectedIndex.value = newSelectedIndex < 0
+                              ? suggestions.length - 1
+                              : newSelectedIndex;
                           return;
-                        }
-                        final newSelectedIndex =
-                            (selectedIndex + direction) % suggestions.length;
-                        _selectedIndex.value = newSelectedIndex < 0
-                            ? suggestions.length - 1
-                            : newSelectedIndex;
-                        return;
-                      },
-                    ),
-                    AcceptSuggestionIntent:
-                        CallbackAction<AcceptSuggestionIntent>(
-                      onInvoke: (intent) {
-                        _handleProceed();
-                        return;
-                      },
-                    ),
-                  }
-                : null,
-            child: widget.child,
-          );
-        });
+                        },
+                      ),
+                  AcceptSuggestionIntent:
+                      CallbackAction<AcceptSuggestionIntent>(
+                        onInvoke: (intent) {
+                          _handleProceed();
+                          return;
+                        },
+                      ),
+                }
+              : null,
+          child: widget.child,
+        );
+      },
+    );
   }
 }
 

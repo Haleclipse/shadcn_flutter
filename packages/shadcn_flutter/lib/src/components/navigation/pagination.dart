@@ -14,10 +14,7 @@ class PaginationTheme extends ComponentThemeData {
   final bool? showLabel;
 
   /// Creates a [PaginationTheme].
-  const PaginationTheme({
-    this.gap,
-    this.showLabel,
-  });
+  const PaginationTheme({this.gap, this.showLabel});
 
   /// Returns a copy of this theme with the given fields replaced.
   PaginationTheme copyWith({
@@ -39,10 +36,7 @@ class PaginationTheme extends ComponentThemeData {
   }
 
   @override
-  int get hashCode => Object.hash(
-        gap,
-        showLabel,
-      );
+  int get hashCode => Object.hash(gap, showLabel);
 }
 
 /// A navigation widget for paginated content with comprehensive page controls.
@@ -95,7 +89,7 @@ class PaginationTheme extends ComponentThemeData {
 ///   hideNextOnLastPage: true,
 /// );
 /// ```
-class Pagination extends StatelessWidget {
+class Pagination extends StatelessWidget implements Styleable<PaginationTheme> {
   /// The current active page number (1-indexed).
   ///
   /// Must be between 1 and [totalPages] inclusive.
@@ -143,12 +137,18 @@ class Pagination extends StatelessWidget {
   ///
   /// When `true`, shows "Previous" and "Next" text along with icons.
   /// When `false`, shows only icons. If `null`, uses theme default.
+  @Deprecated('Use theme: PaginationTheme(showLabel: ...) instead.')
   final bool? showLabel;
 
   /// Spacing between pagination controls in logical pixels.
   ///
   /// If `null`, uses theme default spacing.
+  @Deprecated('Use theme: PaginationTheme(gap: ...) instead.')
   final double? gap;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final PaginationTheme? theme;
 
   /// Creates a pagination widget.
   ///
@@ -175,6 +175,7 @@ class Pagination extends StatelessWidget {
     this.hideNextOnLastPage = false,
     this.showLabel,
     this.gap,
+    this.theme,
   });
 
   /// Whether there is a previous page available.
@@ -202,7 +203,9 @@ class Pagination extends StatelessWidget {
         yield* List.generate(maxPages, (index) => index + 1);
       } else if (end > totalPages) {
         yield* List.generate(
-            maxPages, (index) => totalPages - maxPages + index + 1);
+          maxPages,
+          (index) => totalPages - maxPages + index + 1,
+        );
       } else {
         yield* List.generate(maxPages, (index) => start + index);
       }
@@ -246,7 +249,9 @@ class Pagination extends StatelessWidget {
   bool get hasMoreNextPages => lastShownPage < totalPages;
 
   Widget _buildPreviousLabel(
-      ShadcnLocalizations localizations, bool showLabel) {
+    ShadcnLocalizations localizations,
+    bool showLabel,
+  ) {
     if (showLabel) {
       return GhostButton(
         onPressed: hasPrevious ? () => onPageChanged(page - 1) : null,
@@ -278,15 +283,18 @@ class Pagination extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<PaginationTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<PaginationTheme>(context);
     final gap = styleValue(
-        widgetValue: this.gap,
-        themeValue: compTheme?.gap,
-        defaultValue: 4 * scaling);
+      widgetValue: this.gap,
+      themeValue: compTheme?.gap,
+      defaultValue: 4 * scaling,
+    );
     final showLabel = styleValue(
-        widgetValue: this.showLabel,
-        themeValue: compTheme?.showLabel,
-        defaultValue: true);
+      widgetValue: this.showLabel,
+      themeValue: compTheme?.showLabel,
+      defaultValue: true,
+    );
     ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
     return IntrinsicHeight(
       child: Row(
@@ -313,10 +321,7 @@ class Pagination extends StatelessWidget {
                 child: Text('$p'),
               )
             else
-              GhostButton(
-                onPressed: () => onPageChanged(p),
-                child: Text('$p'),
-              ),
+              GhostButton(onPressed: () => onPageChanged(p), child: Text('$p')),
           if (hasMoreNextPages) ...[
             GhostButton(
               onPressed: () => onPageChanged(lastShownPage + 1),

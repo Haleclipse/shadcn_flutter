@@ -27,19 +27,16 @@ class ColorPickerExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Color Input Example',
-          path:
-              'lib/pages/docs/components/color_picker/color_picker_example_1.dart',
+          path: 'lib/pages/docs/components/color_picker/color_picker_example_1.dart',
           child: ColorPickerExample1(),
         ),
         WidgetUsageExample(
-          path:
-              'lib/pages/docs/components/color_picker/color_picker_example_2.dart',
+          path: 'lib/pages/docs/components/color_picker/color_picker_example_2.dart',
           title: 'Screen Color Picker Example',
           child: ColorPickerExample2(),
         ),
         WidgetUsageExample(
-          path:
-              'lib/pages/docs/components/color_picker/color_picker_example_3.dart',
+          path: 'lib/pages/docs/components/color_picker/color_picker_example_3.dart',
           title: 'Color Picker Trigger Example',
           child: ColorPickerExample3(),
         ),
@@ -53,6 +50,7 @@ class ColorPickerExample extends StatelessWidget {
 ### Color Picker Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ColorPickerExample1 extends StatefulWidget {
   const ColorPickerExample1({super.key});
@@ -76,13 +74,13 @@ class _ColorPickerExample1State extends State<ColorPickerExample1> {
             child: ColorInput(
               // A compact square color input that opens a popover prompt.
               value: color,
-              orientation: Axis.horizontal,
               promptMode: PromptMode.popover,
               onChanged: (value) {
                 setState(() {
                   color = value;
                 });
               },
+              theme: ColorInputTheme(orientation: Axis.horizontal),
             ),
           ),
           const Gap(16),
@@ -110,6 +108,7 @@ class _ColorPickerExample1State extends State<ColorPickerExample1> {
 ### Color Picker Example 2
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ColorPickerExample2 extends StatelessWidget {
   const ColorPickerExample2({super.key});
@@ -127,22 +126,23 @@ class ColorPickerExample2 extends StatelessWidget {
             context: context,
             builder: (context, overlay) {
               return SurfaceCard(
-                  child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Color: ${colorToHex(result)}'),
-                  const Gap(16),
-                  Container(
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      color: result,
-                      borderRadius: BorderRadius.circular(4),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Color: ${colorToHex(result)}'),
+                    const Gap(16),
+                    Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: result,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
                     ),
-                  ),
-                ],
-              ));
+                  ],
+                ),
+              );
             },
           );
         }
@@ -157,6 +157,7 @@ class ColorPickerExample2 extends StatelessWidget {
 ### Color Picker Example 3
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ColorPickerExample3 extends StatefulWidget {
   const ColorPickerExample3({super.key});
@@ -174,63 +175,70 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Builder(builder: (context) {
-          return PrimaryButton(
+        OverlayAnchor(
+          anchor: #colorPickerButton,
+          child: PrimaryButton(
             onPressed: () {
               // Show the color picker as a popover anchored to the button.
-              showPopover(
-                context: context,
-                alignment: Alignment.topCenter,
-                anchorAlignment: Alignment.bottomCenter,
-                widthConstraint: PopoverConstraint.intrinsic,
-                heightConstraint: PopoverConstraint.intrinsic,
-                offset: const Offset(0, 8),
+              showOverlay(
+                context,
+                PopoverConfiguration(
+                  anchor: LinkedAnchor(#colorPickerButton),
+                  alignment: Alignment.topCenter,
+                  anchorAlignment: Alignment.bottomCenter,
+                  widthConstraint: PopoverConstraint.intrinsic,
+                  heightConstraint: PopoverConstraint.intrinsic,
+                  offset: const Offset(0, 8),
+                ),
                 builder: (context) {
                   return ListenableBuilder(
-                      listenable: selectedColorNotifier,
-                      builder: (context, _) {
-                        return SurfaceCard(
-                          child: ColorPicker(
-                            value: selectedColorNotifier.value,
-                            orientation: Axis.horizontal,
-                            showAlpha: true,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedColorNotifier.value = value;
-                              });
-                            },
-                          ),
-                        );
-                      });
-                },
-              );
-            },
-            child: const Text('Open Color Picker Popover'),
-          );
-        }),
-        const Gap(16),
-        PrimaryButton(
-          onPressed: () {
-            // Show the color picker as a dialog with a title.
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text('Select Color'),
-                  content: ListenableBuilder(
-                      listenable: selectedColorNotifier,
-                      builder: (context, _) {
-                        return ColorPicker(
+                    listenable: selectedColorNotifier,
+                    builder: (context, _) {
+                      return SurfaceCard(
+                        child: ColorPicker(
                           value: selectedColorNotifier.value,
-                          orientation: Axis.horizontal,
                           showAlpha: true,
                           onChanged: (value) {
                             setState(() {
                               selectedColorNotifier.value = value;
                             });
                           },
-                        );
-                      }),
+                          theme: ColorPickerTheme(orientation: Axis.horizontal),
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            },
+            child: const Text('Open Color Picker Popover'),
+          ),
+        ),
+        const Gap(16),
+        PrimaryButton(
+          onPressed: () {
+            // Show the color picker as a dialog with a title.
+            showOverlay(
+              context,
+              DialogConfiguration(),
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Select Color'),
+                  content: ListenableBuilder(
+                    listenable: selectedColorNotifier,
+                    builder: (context, _) {
+                      return ColorPicker(
+                        value: selectedColorNotifier.value,
+                        showAlpha: true,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedColorNotifier.value = value;
+                          });
+                        },
+                        theme: ColorPickerTheme(orientation: Axis.horizontal),
+                      );
+                    },
+                  ),
                   actions: [
                     PrimaryButton(
                       onPressed: () {
@@ -254,7 +262,6 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
 
 ### Color Picker Tile
 ```dart
-import 'package:flutter/material.dart' as material;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
 
@@ -272,9 +279,7 @@ class ColorPickerTile extends StatelessWidget implements IComponentPage {
       reverse: true,
       reverseVertical: true,
       example: Card(
-        child: ColorPicker(
-          value: ColorDerivative.fromColor(material.Colors.blue),
-        ),
+        child: ColorPicker(value: ColorDerivative.fromColor(Colors.blue)),
       ),
     );
   }
@@ -307,3 +312,4 @@ class ColorPickerTile extends StatelessWidget implements IComponentPage {
 | `spacing` | `double?` | Spacing between major sections. |
 | `controlSpacing` | `double?` | Spacing between individual controls. |
 | `sliderSize` | `double?` | Size of the color sliders. |
+| `theme` | `ColorPickerTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

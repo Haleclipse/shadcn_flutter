@@ -35,7 +35,7 @@ class AlertExample extends StatelessWidget {
           child: Alert(
             title: Text('Alert title'),
             content: Text('This is alert content.'),
-            trailing: Icon(Icons.dangerous_outlined),
+            trailing: Icon(LucideIcons.octagonAlert),
             destructive: true,
           ),
         ),
@@ -64,7 +64,7 @@ class AlertExample1 extends StatelessWidget {
     return const Alert(
       title: Text('Alert title'),
       content: Text('This is alert content.'),
-      leading: Icon(Icons.info_outline),
+      leading: Icon(LucideIcons.info),
     );
   }
 }
@@ -88,7 +88,7 @@ class AlertExample2 extends StatelessWidget {
     return const Alert.destructive(
       title: Text('Alert title'),
       content: Text('This is alert content.'),
-      trailing: Icon(Icons.dangerous_outlined),
+      trailing: Icon(LucideIcons.octagonAlert),
     );
   }
 }
@@ -113,7 +113,7 @@ class AlertTile extends StatelessWidget implements IComponentPage {
       title: 'Alert',
       center: true,
       example: Alert(
-        leading: Icon(Icons.info_outline),
+        leading: Icon(LucideIcons.info),
         title: Text('Alert'),
         content: Text('This is an alert.'),
       ),
@@ -139,3 +139,4 @@ class AlertTile extends StatelessWidget implements IComponentPage {
 | `content` | `Widget?` | Optional content widget for detailed alert information.  Type: `Widget?`. Provides additional context or description below the title. Can contain longer text or complex content layouts. |
 | `trailing` | `Widget?` | Optional trailing widget, typically for actions or dismissal.  Type: `Widget?`. Displayed at the end of the alert layout. Common use cases include close buttons or action controls. |
 | `destructive` | `bool` | Whether to apply destructive styling to the alert.  Type: `bool`, default: `false`. When true, applies destructive color scheme to text and icons for error or warning messages. |
+| `theme` | `AlertTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

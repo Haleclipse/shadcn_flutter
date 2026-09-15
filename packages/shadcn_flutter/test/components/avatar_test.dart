@@ -6,13 +6,7 @@ import '../test_helper.dart';
 void main() {
   group('Avatar', () {
     testWidgets('renders with initials', (tester) async {
-      await tester.pumpWidget(
-        SimpleApp(
-          child: Avatar(
-            initials: 'JD',
-          ),
-        ),
-      );
+      await tester.pumpWidget(SimpleApp(child: Avatar(initials: 'JD')));
 
       expect(find.byType(Avatar), findsOneWidget);
       expect(find.text('JD'), findsOneWidget);
@@ -21,29 +15,23 @@ void main() {
     testWidgets('renders with custom size', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: Avatar(
-            initials: 'JD',
-            size: 60,
-          ),
+          child: Avatar(initials: 'JD', theme: AvatarTheme(size: 60)),
         ),
       );
 
       final avatar = tester.widget<Avatar>(find.byType(Avatar));
-      expect(avatar.size, 60);
+      expect(avatar.theme?.size, 60);
     });
 
     testWidgets('renders with custom border radius', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: Avatar(
-            initials: 'JD',
-            borderRadius: 10,
-          ),
+          child: Avatar(initials: 'JD', theme: AvatarTheme(borderRadius: 10)),
         ),
       );
 
       final avatar = tester.widget<Avatar>(find.byType(Avatar));
-      expect(avatar.borderRadius, 10);
+      expect(avatar.theme?.borderRadius, 10);
     });
 
     testWidgets('renders with custom background color', (tester) async {
@@ -51,13 +39,13 @@ void main() {
         SimpleApp(
           child: Avatar(
             initials: 'JD',
-            backgroundColor: Color(0xFFFF0000),
+            theme: AvatarTheme(backgroundColor: Color(0xFFFF0000)),
           ),
         ),
       );
 
       final avatar = tester.widget<Avatar>(find.byType(Avatar));
-      expect(avatar.backgroundColor, Color(0xFFFF0000));
+      expect(avatar.theme?.backgroundColor, Color(0xFFFF0000));
     });
 
     testWidgets('renders with image provider', (tester) async {
@@ -124,13 +112,13 @@ void main() {
           child: Avatar(
             initials: 'JD',
             badge: AvatarBadge(color: Colors.green),
-            badgeAlignment: Alignment.topRight,
+            theme: AvatarTheme(badgeAlignment: Alignment.topRight),
           ),
         ),
       );
 
       final avatar = tester.widget<Avatar>(find.byType(Avatar));
-      expect(avatar.badgeAlignment, Alignment.topRight);
+      expect(avatar.theme?.badgeAlignment, Alignment.topRight);
     });
 
     testWidgets('renders with custom badge gap', (tester) async {
@@ -139,13 +127,13 @@ void main() {
           child: Avatar(
             initials: 'JD',
             badge: AvatarBadge(color: Colors.green),
-            badgeGap: 8,
+            theme: AvatarTheme(badgeGap: 8),
           ),
         ),
       );
 
       final avatar = tester.widget<Avatar>(find.byType(Avatar));
-      expect(avatar.badgeGap, 8);
+      expect(avatar.theme?.badgeGap, 8);
     });
 
     testWidgets('getInitials generates correct initials', (tester) async {
@@ -157,13 +145,7 @@ void main() {
     });
 
     testWidgets('handles empty initials', (tester) async {
-      await tester.pumpWidget(
-        SimpleApp(
-          child: Avatar(
-            initials: '',
-          ),
-        ),
-      );
+      await tester.pumpWidget(SimpleApp(child: Avatar(initials: '')));
 
       expect(find.byType(Avatar), findsOneWidget);
       expect(find.text(''), findsOneWidget);
@@ -171,11 +153,7 @@ void main() {
 
     testWidgets('handles long initials', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: Avatar(
-            initials: 'VERYLONGINITIALS',
-          ),
-        ),
+        SimpleApp(child: Avatar(initials: 'VERYLONGINITIALS')),
       );
 
       expect(find.byType(Avatar), findsOneWidget);
@@ -186,11 +164,7 @@ void main() {
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.rtl,
-          child: SimpleApp(
-            child: Avatar(
-              initials: 'JD',
-            ),
-          ),
+          child: SimpleApp(child: Avatar(initials: 'JD')),
         ),
       );
 
@@ -199,34 +173,22 @@ void main() {
     });
 
     testWidgets('applies theme scaling', (tester) async {
-      await tester.pumpWidget(
-        SimpleApp(
-          child: Avatar(
-            initials: 'JD',
-          ),
-        ),
-      );
+      await tester.pumpWidget(SimpleApp(child: Avatar(initials: 'JD')));
 
       expect(find.byType(Avatar), findsOneWidget);
       // The scaling should be applied to size and border radius
     });
 
     testWidgets('handles null optional parameters', (tester) async {
-      await tester.pumpWidget(
-        SimpleApp(
-          child: Avatar(
-            initials: 'JD',
-          ),
-        ),
-      );
+      await tester.pumpWidget(SimpleApp(child: Avatar(initials: 'JD')));
 
       final avatar = tester.widget<Avatar>(find.byType(Avatar));
-      expect(avatar.backgroundColor, null);
-      expect(avatar.size, null);
-      expect(avatar.borderRadius, null);
+      expect(avatar.theme?.backgroundColor, null);
+      expect(avatar.theme?.size, null);
+      expect(avatar.theme?.borderRadius, null);
       expect(avatar.badge, null);
-      expect(avatar.badgeAlignment, null);
-      expect(avatar.badgeGap, null);
+      expect(avatar.theme?.badgeAlignment, null);
+      expect(avatar.theme?.badgeGap, null);
       expect(avatar.provider, null);
     });
   });

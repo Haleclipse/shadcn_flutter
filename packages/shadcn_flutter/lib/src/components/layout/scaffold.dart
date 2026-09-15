@@ -43,8 +43,9 @@ class ScaffoldTheme extends ComponentThemeData {
     ValueGetter<bool?>? resizeToAvoidBottomInset,
   }) {
     return ScaffoldTheme(
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       headerBackgroundColor: headerBackgroundColor == null
           ? this.headerBackgroundColor
           : headerBackgroundColor(),
@@ -71,12 +72,12 @@ class ScaffoldTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        backgroundColor,
-        headerBackgroundColor,
-        footerBackgroundColor,
-        showLoadingSparks,
-        resizeToAvoidBottomInset,
-      );
+    backgroundColor,
+    headerBackgroundColor,
+    footerBackgroundColor,
+    showLoadingSparks,
+    resizeToAvoidBottomInset,
+  );
 
   @override
   String toString() =>
@@ -127,8 +128,8 @@ class ScaffoldTheme extends ComponentThemeData {
 ///   footers: [
 ///     BottomNavigationBar(
 ///       items: [
-///         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-///         BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+///         BottomNavigationBarItem(icon: Icon(LucideIcons.house), label: 'Home'),
+///         BottomNavigationBarItem(icon: Icon(LucideIcons.search), label: 'Search'),
 ///       ],
 ///     ),
 ///   ],
@@ -136,7 +137,7 @@ class ScaffoldTheme extends ComponentThemeData {
 ///   showLoadingSparks: true,
 /// );
 /// ```
-class Scaffold extends StatefulWidget {
+class Scaffold extends StatefulWidget implements Styleable<ScaffoldTheme> {
   /// Header widgets displayed at the top of the scaffold.
   final List<Widget> headers;
 
@@ -173,6 +174,10 @@ class Scaffold extends StatefulWidget {
   /// Whether to resize when keyboard appears.
   final bool? resizeToAvoidBottomInset;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ScaffoldTheme? theme;
+
   /// Creates a [Scaffold].
   const Scaffold({
     super.key,
@@ -188,6 +193,7 @@ class Scaffold extends StatefulWidget {
     this.footerBackgroundColor,
     this.showLoadingSparks,
     this.resizeToAvoidBottomInset,
+    this.theme,
   });
 
   @override
@@ -228,7 +234,8 @@ class ScaffoldState extends State<Scaffold> {
   ///
   /// Returns: Widget tree for the header.
   Widget buildHeader(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ScaffoldTheme>(context);
     return RepaintBoundary(
       child: Container(
         color: widget.headerBackgroundColor ?? compTheme?.headerBackgroundColor,
@@ -252,11 +259,13 @@ class ScaffoldState extends State<Scaffold> {
                           left: 0,
                           right: 0,
                           child: LinearProgressIndicator(
-                            backgroundColor: Colors.transparent,
                             value: widget.loadingProgressIndeterminate
                                 ? null
                                 : widget.loadingProgress,
-                            showSparks: false,
+                            theme: LinearProgressIndicatorTheme(
+                              backgroundColor: Colors.transparent,
+                              showSparks: false,
+                            ),
                           ),
                         ),
                       ],
@@ -292,11 +301,13 @@ class ScaffoldState extends State<Scaffold> {
                       left: 0,
                       right: 0,
                       child: LinearProgressIndicator(
-                        backgroundColor: Colors.transparent,
                         value: widget.loadingProgressIndeterminate
                             ? null
                             : widget.loadingProgress,
-                        showSparks: true,
+                        theme: LinearProgressIndicatorTheme(
+                          backgroundColor: Colors.transparent,
+                          showSparks: true,
+                        ),
                       ),
                     ),
                   ],
@@ -316,7 +327,8 @@ class ScaffoldState extends State<Scaffold> {
   ///
   /// Returns: Widget tree for the footer.
   Widget buildFooter(BuildContext context, EdgeInsets viewInsets) {
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ScaffoldTheme>(context);
     return Offstage(
       offstage: viewInsets.bottom > 0,
       child: RepaintBoundary(
@@ -344,11 +356,13 @@ class ScaffoldState extends State<Scaffold> {
 
   Widget _buildContent(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ScaffoldTheme>(context);
     final viewInsets = MediaQuery.viewInsetsOf(context);
     return DrawerOverlay(
       child: Container(
-        color: widget.backgroundColor ??
+        color:
+            widget.backgroundColor ??
             compTheme?.backgroundColor ??
             theme.colorScheme.background,
         child: _ScaffoldFlex(
@@ -358,14 +372,15 @@ class ScaffoldState extends State<Scaffold> {
             buildHeader(context),
             LayoutBuilder(
               builder: (context, constraints) {
-                Widget child = (widget.resizeToAvoidBottomInset ??
+                Widget child =
+                    (widget.resizeToAvoidBottomInset ??
                         compTheme?.resizeToAvoidBottomInset ??
                         true)
                     ? Container(
                         // Clamp to prevent negative padding on web when keyboard appears
                         padding: EdgeInsets.only(
-                            bottom:
-                                viewInsets.bottom.clamp(0.0, double.infinity)),
+                          bottom: viewInsets.bottom.clamp(0.0, double.infinity),
+                        ),
                         child: MediaQuery(
                           data: MediaQuery.of(context).copyWith(
                             viewInsets: viewInsets.copyWith(bottom: 0),
@@ -555,13 +570,13 @@ class ScaffoldBoxConstraints extends BoxConstraints {
 /// ```dart
 /// AppBar(
 ///   leading: [
-///     IconButton(icon: Icon(Icons.menu), onPressed: _openDrawer),
+///     IconButton(icon: Icon(LucideIcons.menu), onPressed: _openDrawer),
 ///   ],
 ///   title: Text('My Application'),
 ///   subtitle: Text('Dashboard'),
 ///   trailing: [
-///     IconButton(icon: Icon(Icons.search), onPressed: _openSearch),
-///     IconButton(icon: Icon(Icons.more_vert), onPressed: _showMenu),
+///     IconButton(icon: Icon(LucideIcons.search), onPressed: _openSearch),
+///     IconButton(icon: Icon(LucideIcons.ellipsisVertical), onPressed: _showMenu),
 ///   ],
 ///   backgroundColor: Colors.blue.shade50,
 /// )
@@ -692,7 +707,7 @@ class AppBar extends StatefulWidget {
   ///   leading: [BackButton()],
   ///   title: Text('Settings'),
   ///   trailing: [
-  ///     IconButton(icon: Icon(Icons.help), onPressed: _showHelp),
+  ///     IconButton(icon: Icon(LucideIcons.circleHelp), onPressed: _showHelp),
   ///     PopupMenuButton(items: menuItems),
   ///   ],
   ///   backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -717,9 +732,9 @@ class AppBar extends StatefulWidget {
     this.surfaceOpacity,
     this.useSafeArea = true,
   }) : assert(
-          child == null || title == null,
-          'Cannot provide both child and title',
-        );
+         child == null || title == null,
+         'Cannot provide both child and title',
+       );
 
   @override
   State<AppBar> createState() => _AppBarState();
@@ -744,21 +759,25 @@ class _AppBarState extends State<AppBar> {
             sigmaY: surfaceBlur ?? 0,
           ),
           child: Container(
-            color: widget.backgroundColor ??
+            color:
+                widget.backgroundColor ??
                 theme.colorScheme.card.scaleAlpha(surfaceOpacity ?? 1),
             alignment: widget.alignment,
-            padding: widget.padding ??
+            padding:
+                widget.padding ??
                 EdgeInsets.symmetric(
                   horizontal: densityContainerPadding * 1.125,
                   vertical: densityGap * 1.5,
                 ),
             child: SafeArea(
-              top: widget.useSafeArea &&
+              top:
+                  widget.useSafeArea &&
                   barData?.isHeader == true &&
                   barData?.childIndex == 0,
               right: widget.useSafeArea,
               left: widget.useSafeArea,
-              bottom: widget.useSafeArea &&
+              bottom:
+                  widget.useSafeArea &&
                   barData?.isHeader == false &&
                   barData?.childIndex == (barData?.childrenCount ?? 0) - 1,
               child: SizedBox(
@@ -776,7 +795,8 @@ class _AppBarState extends State<AppBar> {
                         fit: widget.trailingExpanded
                             ? FlexFit.loose
                             : FlexFit.tight,
-                        child: widget.child ??
+                        child:
+                            widget.child ??
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -866,10 +886,9 @@ class _ScaffoldParentData extends ContainerBoxParentData<RenderBox> {}
 class _ScaffoldRenderFlex extends RenderBox
     with ContainerRenderObjectMixin<RenderBox, _ScaffoldParentData> {
   _ScaffoldRenderFlex({
-    required bool floatingHeader,
-    required bool floatingFooter,
-  })  : _floatingHeader = floatingHeader,
-        _floatingFooter = floatingFooter;
+    required this._floatingHeader,
+    required this._floatingFooter,
+  });
 
   bool _floatingHeader = false;
   bool _floatingFooter = false;
@@ -1041,9 +1060,7 @@ class _RenderScaffoldPadding extends RenderBox
         RenderBoxContainerDefaultsMixin<RenderBox, _ScaffoldParentData> {
   final _ScaffoldPaddingType _paddingType;
 
-  _RenderScaffoldPadding({
-    _ScaffoldPaddingType paddingType = _ScaffoldPaddingType.header,
-  }) : _paddingType = paddingType;
+  _RenderScaffoldPadding({this._paddingType = _ScaffoldPaddingType.header});
 
   _ScaffoldRenderFlex? findParent() {
     RenderObject? parent = this;
@@ -1083,15 +1100,15 @@ class _RenderScaffoldPadding extends RenderBox
     switch (_paddingType) {
       case _ScaffoldPaddingType.header:
         constraints = this.constraints.copyWith(
-              minHeight: parentData!._headerSize.value,
-              maxHeight: parentData._headerSize.value,
-            );
+          minHeight: parentData!._headerSize.value,
+          maxHeight: parentData._headerSize.value,
+        );
         break;
       case _ScaffoldPaddingType.footer:
         constraints = this.constraints.copyWith(
-              minHeight: parentData!._footerSize.value,
-              maxHeight: parentData._footerSize.value,
-            );
+          minHeight: parentData!._footerSize.value,
+          maxHeight: parentData._footerSize.value,
+        );
         break;
     }
     final child = firstChild;

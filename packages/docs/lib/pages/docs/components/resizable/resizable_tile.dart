@@ -1,5 +1,6 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import 'resizable_example_3.dart';
 
 class ResizableTile extends StatelessWidget implements IComponentPage {

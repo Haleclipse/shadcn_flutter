@@ -23,11 +23,7 @@ class FocusOutlineTheme extends ComponentThemeData {
   /// - [align] (`double?`, optional): Outline alignment offset.
   /// - [border] (`Border?`, optional): Outline border style.
   /// - [borderRadius] (`BorderRadiusGeometry?`, optional): Corner rounding.
-  const FocusOutlineTheme({
-    this.align,
-    this.border,
-    this.borderRadius,
-  });
+  const FocusOutlineTheme({this.align, this.border, this.borderRadius});
 
   /// Creates a copy of this theme with the given fields replaced.
   ///
@@ -80,7 +76,8 @@ class FocusOutlineTheme extends ComponentThemeData {
 ///   ),
 /// )
 /// ```
-class FocusOutline extends StatelessWidget {
+class FocusOutline extends StatelessWidget
+    implements Styleable<FocusOutlineTheme> {
   /// The child widget to wrap with the focus outline.
   final Widget child;
 
@@ -92,22 +89,29 @@ class FocusOutline extends StatelessWidget {
   /// Border radius for the focus outline corners.
   ///
   /// If `null`, uses the default from [FocusOutlineTheme].
+  @Deprecated('Use theme: FocusOutlineTheme(borderRadius: ...) instead.')
   final BorderRadiusGeometry? borderRadius;
 
   /// Alignment offset for positioning the outline.
   ///
   /// If `null`, uses the default from [FocusOutlineTheme].
+  @Deprecated('Use theme: FocusOutlineTheme(align: ...) instead.')
   final double? align;
 
   /// The border style for the outline.
   ///
   /// If `null`, uses the default from [FocusOutlineTheme].
+  @Deprecated('Use theme: FocusOutlineTheme(border: ...) instead.')
   final Border? border;
 
   /// The shape of the outline.
   ///
   /// Can be [BoxShape.rectangle] or [BoxShape.circle].
   final BoxShape? shape;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final FocusOutlineTheme? theme;
 
   /// Creates a [FocusOutline].
   ///
@@ -126,6 +130,7 @@ class FocusOutline extends StatelessWidget {
     this.align,
     this.border,
     this.shape,
+    this.theme,
   });
 
   BorderRadius _getAdjustedBorderRadius(
@@ -146,7 +151,8 @@ class FocusOutline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<FocusOutlineTheme>(context);
+    final compTheme =
+        theme ?? ComponentTheme.maybeOf<FocusOutlineTheme>(context);
     final double align = styleValue(
       defaultValue: 3.0,
       themeValue: compTheme?.align,
@@ -166,41 +172,41 @@ class FocusOutline extends StatelessWidget {
       children: [
         child,
         AnimatedValueBuilder(
-            value: focused ? 1.0 : 0.0,
-            duration: kDefaultDuration,
-            builder: (context, value, child) {
-              final borderStyle = styleValue(
-                defaultValue: Border.all(
-                  color: Theme.of(context).colorScheme.ring.scaleAlpha(0.5),
-                  width: 3.0,
-                ),
-                themeValue: compTheme?.border,
-                widgetValue: border,
-              ).scale(value);
+          value: focused ? 1.0 : 0.0,
+          duration: kDefaultDuration,
+          builder: (context, value, child) {
+            final borderStyle = styleValue(
+              defaultValue: Border.all(
+                color: Theme.of(context).colorScheme.ring.scaleAlpha(0.5),
+                width: 3.0,
+              ),
+              themeValue: compTheme?.border,
+              widgetValue: border,
+            ).scale(value);
 
-              final shapeBorder =
-                  (shape ?? BoxShape.rectangle) == BoxShape.circle
-                      ? CircleBorder(side: borderStyle.top)
-                      : RoundedRectangleBorder(
-                          borderRadius: _getAdjustedBorderRadius(
-                            textDirection,
-                            align,
-                            borderRadius,
-                          ),
-                          side: borderStyle.top,
-                        );
-              return Positioned(
-                top: offset * value,
-                right: offset * value,
-                bottom: offset * value,
-                left: offset * value,
-                child: IgnorePointer(
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(shape: shapeBorder),
-                  ),
+            final shapeBorder = (shape ?? BoxShape.rectangle) == BoxShape.circle
+                ? CircleBorder(side: borderStyle.top)
+                : RoundedRectangleBorder(
+                    borderRadius: _getAdjustedBorderRadius(
+                      textDirection,
+                      align,
+                      borderRadius,
+                    ),
+                    side: borderStyle.top,
+                  );
+            return Positioned(
+              top: offset * value,
+              right: offset * value,
+              bottom: offset * value,
+              left: offset * value,
+              child: IgnorePointer(
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(shape: shapeBorder),
                 ),
-              );
-            }),
+              ),
+            );
+          },
+        ),
       ],
     );
   }

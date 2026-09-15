@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Nested [PinnedSheet]s. The outer sheet's [PinnedSheet.backdrop] contains a
 /// second [PinnedSheet]; when the outer sheet scales its backdrop, the inner
@@ -76,8 +77,8 @@ class _PinnedSheetExample4State extends State<PinnedSheetExample4> {
                   const Text('Nested pinned sheets. ').large().medium(),
                   const Gap(8),
                   const Text(
-                          'You can press the button or drag this container to open it.')
-                      .muted(),
+                    'You can press the button or drag this container to open it.',
+                  ).muted(),
                   const Gap(16),
                   PrimaryButton(
                     onPressed: () => inner.stage = const SheetStage.expanded(),

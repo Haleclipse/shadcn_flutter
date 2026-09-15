@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// A controller-driven [PinnedSheet] with three snap stages.
 ///
@@ -35,6 +36,7 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
       height: 420,
       child: OutlinedContainer(
         clipBehavior: Clip.antiAlias,
+        theme: OutlinedContainerTheme(padding: const EdgeInsets.all(24)),
         child: PinnedSheet(
           controller: controller,
           position: OverlayPosition.bottom,
@@ -45,10 +47,7 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
           backdrop: ListenableBuilder(
             listenable: controller,
             builder: (context, child) {
-              return Opacity(
-                opacity: 1.0 - controller.fraction,
-                child: child,
-              );
+              return Opacity(opacity: 1.0 - controller.fraction, child: child);
             },
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
@@ -58,8 +57,10 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
                 }
               },
               child: Card(
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.muted,
+                theme: CardTheme(
+                  filled: true,
+                  fillColor: Theme.of(context).colorScheme.muted,
+                ),
                 child: Center(
                   child: IntrinsicWidth(
                     child: Column(
@@ -116,7 +117,6 @@ class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
           child: DrawerContainer(
             child: Container(
               height: 320,
-              padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

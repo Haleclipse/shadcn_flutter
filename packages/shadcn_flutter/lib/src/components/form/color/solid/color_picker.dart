@@ -52,7 +52,7 @@ enum HSVColorSliderType {
   valAlpha,
 
   /// Alpha (opacity) slider only.
-  alpha;
+  alpha,
 }
 
 /// Defines available slider types for HSL color pickers.
@@ -88,7 +88,7 @@ enum HSLColorSliderType {
   lumAlpha,
 
   /// Alpha (opacity) slider only.
-  alpha;
+  alpha,
 }
 
 /// Theme configuration for [ColorPicker] widget styling and layout.
@@ -131,11 +131,13 @@ class ColorPickerTheme extends ComponentThemeData {
   }) {
     return ColorPickerTheme(
       spacing: spacing == null ? this.spacing : spacing(),
-      controlSpacing:
-          controlSpacing == null ? this.controlSpacing : controlSpacing(),
+      controlSpacing: controlSpacing == null
+          ? this.controlSpacing
+          : controlSpacing(),
       orientation: orientation == null ? this.orientation : orientation(),
-      enableEyeDropper:
-          enableEyeDropper == null ? this.enableEyeDropper : enableEyeDropper(),
+      enableEyeDropper: enableEyeDropper == null
+          ? this.enableEyeDropper
+          : enableEyeDropper(),
       sliderSize: sliderSize == null ? this.sliderSize : sliderSize(),
     );
   }
@@ -153,7 +155,12 @@ class ColorPickerTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-      spacing, controlSpacing, orientation, enableEyeDropper, sliderSize);
+    spacing,
+    controlSpacing,
+    orientation,
+    enableEyeDropper,
+    sliderSize,
+  );
 }
 
 /// A comprehensive color picker widget with multiple color mode support.
@@ -183,7 +190,8 @@ class ColorPickerTheme extends ComponentThemeData {
 ///   enableEyeDropper: true,
 /// )
 /// ```
-class ColorPicker extends StatefulWidget {
+class ColorPicker extends StatefulWidget
+    implements Styleable<ColorPickerTheme> {
   /// The current color value.
   final ColorDerivative value;
 
@@ -215,16 +223,24 @@ class ColorPicker extends StatefulWidget {
   final bool? enableEyeDropper;
 
   /// Layout orientation of the color picker.
+  @Deprecated('Use theme: ColorPickerTheme(orientation: ...) instead.')
   final Axis? orientation;
 
   /// Spacing between major sections.
+  @Deprecated('Use theme: ColorPickerTheme(spacing: ...) instead.')
   final double? spacing;
 
   /// Spacing between individual controls.
+  @Deprecated('Use theme: ColorPickerTheme(controlSpacing: ...) instead.')
   final double? controlSpacing;
 
   /// Size of the color sliders.
+  @Deprecated('Use theme: ColorPickerTheme(sliderSize: ...) instead.')
   final double? sliderSize;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ColorPickerTheme? theme;
 
   /// Creates a [ColorPicker] widget.
   const ColorPicker({
@@ -243,6 +259,7 @@ class ColorPicker extends StatefulWidget {
     this.sliderSize,
     this.showHistoryButton = true,
     this.initialShowHistory = false,
+    this.theme,
   });
 
   @override
@@ -284,20 +301,23 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final componentTheme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final componentTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ColorPickerTheme>(context);
     final spacing = styleValue(
-        defaultValue: 12.0,
-        themeValue: componentTheme?.spacing,
-        widgetValue: widget.spacing);
+      defaultValue: 12.0,
+      themeValue: componentTheme?.spacing,
+      widgetValue: widget.spacing,
+    );
     final controlSpacing = styleValue(
       defaultValue: 8.0,
       themeValue: componentTheme?.controlSpacing,
       widgetValue: widget.controlSpacing,
     );
     final orientation = styleValue(
-        defaultValue: Axis.vertical,
-        themeValue: componentTheme?.orientation,
-        widgetValue: widget.orientation);
+      defaultValue: Axis.vertical,
+      themeValue: componentTheme?.orientation,
+      widgetValue: widget.orientation,
+    );
 
     var colorControls = ColorControls(
       value: _effectiveValue,
@@ -305,7 +325,6 @@ class _ColorPickerState extends State<ColorPicker> {
       onChanging: _onChanging,
       showAlpha: widget.showAlpha,
       mode: _mode,
-      enableEyeDropper: widget.enableEyeDropper,
       onEyeDropperRequested: widget.onEyeDropperRequested,
       showHistory: _showHistory,
       showHistoryButton:
@@ -321,10 +340,13 @@ class _ColorPickerState extends State<ColorPicker> {
         });
         widget.onModeChanged?.call(mode);
       },
-      controlSpacing: styleValue(
-        defaultValue: 8.0,
-        themeValue: componentTheme?.controlSpacing,
-        widgetValue: widget.controlSpacing,
+      theme: ColorPickerTheme(
+        enableEyeDropper: widget.enableEyeDropper,
+        controlSpacing: styleValue(
+          defaultValue: 8.0,
+          themeValue: componentTheme?.controlSpacing,
+          widgetValue: widget.controlSpacing,
+        ),
       ),
     );
     var content = Flex(
@@ -390,16 +412,18 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   List<Widget> buildSliders(BuildContext context) {
-    final componentTheme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final componentTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ColorPickerTheme>(context);
     final sliderSize = styleValue(
       defaultValue: 24.0,
       themeValue: componentTheme?.sliderSize,
       widgetValue: widget.sliderSize,
     );
     final orientation = styleValue(
-        defaultValue: Axis.vertical,
-        themeValue: componentTheme?.orientation,
-        widgetValue: widget.orientation);
+      defaultValue: Axis.vertical,
+      themeValue: componentTheme?.orientation,
+      widgetValue: widget.orientation,
+    );
     return [
       SizedBox(
         height: orientation == Axis.vertical ? sliderSize : null,
@@ -407,19 +431,17 @@ class _ColorPickerState extends State<ColorPicker> {
         child: HSVColorSlider(
           reverse: orientation == Axis.vertical,
           radius: Theme.of(context).radiusSmRadius,
-          value:
-              _effectiveValue.toHSVColor().withSaturation(1.0).withValue(1.0),
+          value: _effectiveValue
+              .toHSVColor()
+              .withSaturation(1.0)
+              .withValue(1.0),
           onChanging: (hsvColor) {
             final hue = hsvColor.hue;
-            _onChanging(
-              _effectiveValue.changeToHSVHue(hue),
-            );
+            _onChanging(_effectiveValue.changeToHSVHue(hue));
           },
           onChanged: (hsvColor) {
             final hue = hsvColor.hue;
-            _onChanged(
-              _effectiveValue.changeToHSVHue(hue),
-            );
+            _onChanged(_effectiveValue.changeToHSVHue(hue));
           },
           sliderType: HSVColorSliderType.hue,
         ),
@@ -434,15 +456,11 @@ class _ColorPickerState extends State<ColorPicker> {
             value: _effectiveValue.toHSVColor(),
             onChanging: (hsvColor) {
               final alpha = hsvColor.alpha;
-              _onChanging(
-                _effectiveValue.changeToOpacity(alpha),
-              );
+              _onChanging(_effectiveValue.changeToOpacity(alpha));
             },
             onChanged: (hsvColor) {
               final alpha = hsvColor.alpha;
-              _onChanged(
-                _effectiveValue.changeToOpacity(alpha),
-              );
+              _onChanged(_effectiveValue.changeToOpacity(alpha));
             },
             sliderType: HSVColorSliderType.alpha,
           ),
@@ -521,7 +539,8 @@ class _ColorPickerState extends State<ColorPicker> {
 ///
 /// Displays inputs for editing colors in RGB, HSL, HSV, or HEX formats
 /// with optional alpha channel and eye dropper tool support.
-class ColorControls extends StatelessWidget {
+class ColorControls extends StatelessWidget
+    implements Styleable<ColorPickerTheme> {
   /// The current color value.
   final ColorDerivative value;
 
@@ -541,9 +560,11 @@ class ColorControls extends StatelessWidget {
   final ColorPickerMode mode;
 
   /// Spacing between control elements.
+  @Deprecated('Use theme: ColorPickerTheme(controlSpacing: ...) instead.')
   final double? controlSpacing;
 
   /// Whether to enable the eye dropper tool.
+  @Deprecated('Use theme: ColorPickerTheme(enableEyeDropper: ...) instead.')
   final bool? enableEyeDropper;
 
   /// Callback invoked when the eye dropper tool is requested.
@@ -557,6 +578,10 @@ class ColorControls extends StatelessWidget {
 
   /// Whether to show the color history button.
   final bool showHistoryButton;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ColorPickerTheme? theme;
 
   /// Creates color controls.
   const ColorControls({
@@ -573,16 +598,19 @@ class ColorControls extends StatelessWidget {
     this.showHistory = false,
     this.onShowHistoryChanged,
     this.showHistoryButton = true,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final theme =
+        this.theme ?? ComponentTheme.maybeOf<ColorPickerTheme>(context);
     final locale = ShadcnLocalizations.of(context);
     final enableEyeDropper = styleValue(
-        defaultValue: true,
-        themeValue: theme?.enableEyeDropper,
-        widgetValue: this.enableEyeDropper);
+      defaultValue: true,
+      themeValue: theme?.enableEyeDropper,
+      widgetValue: this.enableEyeDropper,
+    );
     final controlSpacing = styleValue(
       defaultValue: 8.0,
       themeValue: theme?.controlSpacing,
@@ -609,8 +637,9 @@ class ColorControls extends StatelessWidget {
         children: [
           if (enableEyeDropper)
             IconButton.outline(
-              icon: const Icon(Icons.colorize),
-              onPressed: onEyeDropperRequested ??
+              icon: const Icon(LucideIcons.pipette),
+              onPressed:
+                  onEyeDropperRequested ??
                   () async {
                     final result = await pickColorFromScreen(context);
                     if (result != null) {
@@ -623,10 +652,11 @@ class ColorControls extends StatelessWidget {
             ),
           if (showHistoryButton)
             IconButton(
-              variance:
-                  showHistory ? ButtonVariance.primary : ButtonVariance.outline,
+              variance: showHistory
+                  ? ButtonVariance.primary
+                  : ButtonVariance.outline,
               icon: Icon(
-                showHistory ? Icons.history_toggle_off : Icons.history,
+                showHistory ? LucideIcons.timerOff : LucideIcons.history,
               ),
               onPressed: () {
                 onShowHistoryChanged?.call(!showHistory);
@@ -648,18 +678,20 @@ class ColorControls extends StatelessWidget {
                       }
                     },
                     popup: SelectPopup.noVirtualization(
-                      items: SelectItemList(children: [
-                        for (var mode in ColorPickerMode.values)
-                          SelectItemButton(
+                      items: SelectItemList(
+                        children: [
+                          for (var mode in ColorPickerMode.values)
+                            SelectItemButton(
                               value: mode,
-                              child: Text(pickerModeToLabel(mode))),
-                      ]),
+                              child: Text(pickerModeToLabel(mode)),
+                            ),
+                        ],
+                      ),
                     ).call,
                   ),
                 ),
-                ...buildInputs(context).map(
-                  (input) => FocusToFront(child: input),
-                )
+                ...buildInputs(context)
+                    .map((input) => FocusToFront(child: input)),
               ],
             ),
           ),
@@ -679,7 +711,8 @@ class ColorControls extends StatelessWidget {
   }
 
   void Function(String value) _onInputChanged(
-      void Function(double val) changer) {
+    void Function(double val) changer,
+  ) {
     return (String value) {
       final parsed = double.tryParse(value);
       if (parsed != null) {
@@ -705,9 +738,7 @@ class ColorControls extends StatelessWidget {
             final r = val.clamp(0.0, 255.0);
             onChanged?.call(value.changeToColorRed(r));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 255),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 255)],
         ),
       ),
       SizedBox(
@@ -720,9 +751,7 @@ class ColorControls extends StatelessWidget {
             final g = val.clamp(0.0, 255.0);
             onChanged?.call(value.changeToColorGreen(g));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 255),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 255)],
         ),
       ),
       SizedBox(
@@ -735,9 +764,7 @@ class ColorControls extends StatelessWidget {
             final b = val.clamp(0.0, 255.0);
             onChanged?.call(value.changeToColorBlue(b));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 255),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 255)],
         ),
       ),
       if (showAlpha)
@@ -773,9 +800,7 @@ class ColorControls extends StatelessWidget {
             final h = val.clamp(0.0, 360.0);
             onChanged?.call(value.changeToHSLHue(h));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 360),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 360)],
         ),
       ),
       SizedBox(
@@ -788,9 +813,7 @@ class ColorControls extends StatelessWidget {
             final s = (val.clamp(0.0, 100.0)) / 100.0;
             onChanged?.call(value.changeToHSLSaturation(s));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 100),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 100)],
         ),
       ),
       SizedBox(
@@ -803,9 +826,7 @@ class ColorControls extends StatelessWidget {
             final l = (val.clamp(0.0, 100.0)) / 100.0;
             onChanged?.call(value.changeToHSLLightness(l));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 100),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 100)],
         ),
       ),
       if (showAlpha)
@@ -841,9 +862,7 @@ class ColorControls extends StatelessWidget {
             final h = val.clamp(0.0, 360.0);
             onChanged?.call(value.changeToHSVHue(h));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 360),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 360)],
         ),
       ),
       SizedBox(
@@ -856,9 +875,7 @@ class ColorControls extends StatelessWidget {
             final s = (val.clamp(0.0, 100.0)) / 100.0;
             onChanged?.call(value.changeToHSVSaturation(s));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 100),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 100)],
         ),
       ),
       SizedBox(
@@ -871,9 +888,7 @@ class ColorControls extends StatelessWidget {
             final v = (val.clamp(0.0, 100.0)) / 100.0;
             onChanged?.call(value.changeToHSVValue(v));
           }),
-          inputFormatters: [
-            TextInputFormatters.integerOnly(min: 0, max: 100),
-          ],
+          inputFormatters: [TextInputFormatters.integerOnly(min: 0, max: 100)],
         ),
       ),
       if (showAlpha)
@@ -929,9 +944,7 @@ class ColorControls extends StatelessWidget {
               );
             }
           },
-          inputFormatters: [
-            TextInputFormatters.hex(hashPrefix: true),
-          ],
+          inputFormatters: [TextInputFormatters.hex(hashPrefix: true)],
         ),
       ),
       if (showAlpha)

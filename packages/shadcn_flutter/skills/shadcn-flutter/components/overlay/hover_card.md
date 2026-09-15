@@ -56,7 +56,8 @@ class HoverCardExample1 extends StatelessWidget {
             leading: FlutterLogo(),
             title: Text('@flutter'),
             content: Text(
-                'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.'),
+              'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.',
+            ),
           ),
         ).sized(width: 300);
       },
@@ -75,14 +76,14 @@ class HoverCardExample1 extends StatelessWidget {
 ### Hover Card Tile
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
-import 'package:flutter/material.dart' as material hide Card;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class CursorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = material.Colors.black
+      ..color = Colors.black
       ..strokeWidth = 2
       ..style = PaintingStyle.fill;
 
@@ -126,7 +127,8 @@ class HoverCardTile extends StatelessWidget implements IComponentPage {
                   leading: FlutterLogo(),
                   title: Text('@flutter'),
                   content: Text(
-                      'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.'),
+                    'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.',
+                  ),
                 ),
               ).sized(width: 300),
             ],
@@ -134,9 +136,7 @@ class HoverCardTile extends StatelessWidget implements IComponentPage {
           Positioned(
             top: 13,
             left: 160,
-            child: CustomPaint(
-              painter: CursorPainter(),
-            ),
+            child: CustomPaint(painter: CursorPainter()),
           ),
         ],
       ),
@@ -165,5 +165,6 @@ class HoverCardTile extends StatelessWidget implements IComponentPage {
 | `anchorAlignment` | `AlignmentGeometry?` | Alignment point on the anchor widget. |
 | `popoverOffset` | `Offset?` | Offset of the popover from its calculated position. |
 | `behavior` | `HitTestBehavior?` | Hit test behavior for mouse interactions. |
-| `controller` | `PopoverController?` | Controller to programmatically manage the popover. |
-| `handler` | `OverlayHandler?` | Custom overlay handler for popover display. |
+| `controller` | `OverlayController?` | Controller to programmatically manage the popover. |
+| `adaptiveOverlay` | `bool` | Whether this hover card may adapt to a different presentation on mobile platforms (see [showOverlay]'s `adaptive` parameter). Defaults to `false` — see [Tooltip.adaptiveOverlay]; a hover card is presented via [TooltipConfiguration] just like [Tooltip]. |
+| `theme` | `HoverCardTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

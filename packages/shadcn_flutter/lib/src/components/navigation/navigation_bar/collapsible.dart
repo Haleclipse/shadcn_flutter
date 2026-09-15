@@ -1,5 +1,6 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/src/components/layout/hidden.dart';
+
 import 'misc.dart';
 
 /// A navigation item that can expand to reveal nested navigation items.
@@ -7,7 +8,8 @@ import 'misc.dart';
 /// Provides a labeled header row that toggles visibility of sub-items. Intended
 /// for hierarchical navigation structures, especially in vertical sidebars or
 /// rails.
-class NavigationCollapsible extends StatefulWidget {
+class NavigationCollapsible extends StatefulWidget
+    implements Styleable<TreeTheme> {
   /// Optional leading widget for the group header.
   final Widget? leading;
 
@@ -59,6 +61,10 @@ class NavigationCollapsible extends StatefulWidget {
   /// How to handle label overflow.
   final NavigationOverflow overflow;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TreeTheme? theme;
+
   /// Creates a [NavigationCollapsible].
   const NavigationCollapsible({
     super.key,
@@ -79,6 +85,7 @@ class NavigationCollapsible extends StatefulWidget {
     this.alignment,
     this.enabled,
     this.overflow = NavigationOverflow.marquee,
+    this.theme,
   });
 
   @override
@@ -137,7 +144,8 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
     final depth = [TreeNodeDepth(childIndex, childCount)];
-    final compTheme = ComponentTheme.maybeOf<TreeTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<TreeTheme>(context);
     final branchLine =
         widget.branchLine ?? compTheme?.branchLine ?? BranchLine.line;
     final guideIndex = branchLine is IndentGuideLine ? 1 : 0;
@@ -186,9 +194,11 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final densityGap = theme.density.baseGap * scaling;
     final labelType = data?.parentLabelType ?? NavigationLabelType.none;
     final direction = data?.direction ?? Axis.vertical;
-    final showLabel = labelType == NavigationLabelType.all ||
+    final showLabel =
+        labelType == NavigationLabelType.all ||
         (labelType == NavigationLabelType.expanded && data?.expanded == true);
-    final canShowLabel = labelType == NavigationLabelType.expanded ||
+    final canShowLabel =
+        labelType == NavigationLabelType.expanded ||
         labelType == NavigationLabelType.all ||
         labelType == NavigationLabelType.selected;
     final label = DefaultTextStyle.merge(
@@ -212,11 +222,13 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
       child: widget.leading ?? const SizedBox.shrink(),
     );
 
-    AbstractButtonStyle style = widget.style ??
+    AbstractButtonStyle style =
+        widget.style ??
         (data?.containerType != NavigationContainerType.sidebar
             ? const ButtonStyle.ghost(density: ButtonDensity.icon)
             : const ButtonStyle.ghost());
-    AbstractButtonStyle selectedStyle = widget.selectedStyle ??
+    AbstractButtonStyle selectedStyle =
+        widget.selectedStyle ??
         (data?.containerType != NavigationContainerType.sidebar
             ? const ButtonStyle.secondary(density: ButtonDensity.icon)
             : const ButtonStyle.secondary());
@@ -225,13 +237,13 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final trailing = hasChildren
         ? Hidden(
             hidden: !(data?.expanded ?? true),
-            direction: Axis.horizontal,
             // curve: Curves.easeInOut,
             duration: kDefaultDuration,
+            theme: HiddenTheme(direction: Axis.horizontal),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Gap(densityGap),
+                SizedBox(width: densityGap),
                 AnimatedRotation(
                   turns: _isExpanded ? 0.25 : 0.0,
                   duration: kDefaultDuration,
@@ -248,7 +260,8 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
         : null;
 
     final parentExpanded = data?.expanded ?? true;
-    final isSelected = widget.selected ??
+    final isSelected =
+        widget.selected ??
         (widget.key != null && widget.key == data?.selectedKey);
 
     Widget header = SelectedButton(
@@ -265,17 +278,18 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
       },
       style: style,
       selectedStyle: selectedStyle,
-      alignment: widget.alignment ??
+      alignment:
+          widget.alignment ??
           (data?.containerType == NavigationContainerType.sidebar &&
                   data?.labelDirection == Axis.horizontal
               ? (data?.parentLabelPosition == NavigationLabelPosition.start
-                  ? AlignmentDirectional.centerEnd
-                  : AlignmentDirectional.centerStart)
+                    ? AlignmentDirectional.centerEnd
+                    : AlignmentDirectional.centerStart)
               : null),
       child: Row(
         children: [
           Expanded(child: content),
-          if (trailing != null) trailing,
+          ?trailing,
         ],
       ),
     );
@@ -337,13 +351,7 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
       final decoratedChildren = <Widget>[];
       for (var i = 0; i < children.length; i++) {
         decoratedChildren.add(
-          _wrapGroupChild(
-            context,
-            children[i],
-            i,
-            children.length,
-            direction,
-          ),
+          _wrapGroupChild(context, children[i], i, children.length, direction),
         );
       }
       final slivers = <Widget>[
@@ -352,10 +360,7 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
           ...decoratedChildren.map(
             (child) => SliverPadding(
               padding: indentPadding,
-              sliver: Data.inherit(
-                data: childControlData,
-                child: child,
-              ),
+              sliver: Data.inherit(data: childControlData, child: child),
             ),
           ),
       ];
@@ -365,13 +370,7 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final decoratedChildren = <Widget>[];
     for (var i = 0; i < children.length; i++) {
       decoratedChildren.add(
-        _wrapGroupChild(
-          context,
-          children[i],
-          i,
-          children.length,
-          direction,
-        ),
+        _wrapGroupChild(context, children[i], i, children.length, direction),
       );
     }
     final childList = Data.inherit(
@@ -394,10 +393,9 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
         ClipRect(
           child: Hidden(
             hidden: !_isExpanded || !parentExpanded,
-            direction: Axis.vertical,
             // curve: Curves.easeInOut,
             duration: kDefaultDuration,
-            reverse: true,
+            theme: HiddenTheme(direction: Axis.vertical, reverse: true),
             child: childList,
           ),
         ),

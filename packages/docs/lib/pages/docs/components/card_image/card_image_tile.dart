@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class CardImageTile extends StatelessWidget implements IComponentPage {
   const CardImageTile({super.key});
@@ -34,7 +35,7 @@ class CardImageTile extends StatelessWidget implements IComponentPage {
                 ),
                 child: Center(
                   child: Icon(
-                    Icons.image,
+                    LucideIcons.image,
                     size: 48,
                     color: theme.colorScheme.mutedForeground,
                   ),
@@ -48,8 +49,8 @@ class CardImageTile extends StatelessWidget implements IComponentPage {
                     const Text('Card Title').bold().large(),
                     const Gap(8),
                     const Text(
-                            'This is a description of the card content. It provides additional information about the image above.')
-                        .muted(),
+                      'This is a description of the card content. It provides additional information about the image above.',
+                    ).muted(),
                     const Gap(16),
                     Row(
                       children: [

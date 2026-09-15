@@ -37,6 +37,7 @@ class SwiperExample extends StatelessWidget {
 ### Swiper Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SwiperExample1 extends StatefulWidget {
   const SwiperExample1({super.key});
@@ -70,36 +71,38 @@ class _SwiperExample1State extends State<SwiperExample1> {
     return Swiper(
       builder: (context) {
         return Container(
-          constraints: const BoxConstraints(
-            minWidth: 320,
-            minHeight: 320,
-          ),
+          constraints: const BoxConstraints(minWidth: 320, minHeight: 320),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('Hello!'),
               const Gap(24),
-              PrimaryButton(
-                onPressed: () {
-                  openDrawer(
-                      context: context,
+              OverlayAnchor(
+                anchor: #swiperCloseButton,
+                child: PrimaryButton(
+                  onPressed: () {
+                    showOverlay(
+                      context,
+                      DrawerConfiguration(
+                        anchor: LinkedAnchor(#swiperCloseButton),
+                        position: OverlayPosition.bottom,
+                      ),
                       builder: (context) {
                         return ListView.separated(
                           itemCount: 1000,
                           itemBuilder: (context, index) {
-                            return Card(
-                              child: Text('Item $index'),
-                            );
+                            return Card(child: Text('Item $index'));
                           },
                           separatorBuilder: (context, index) {
                             return const Gap(8);
                           },
                         );
                       },
-                      position: OverlayPosition.bottom);
-                },
-                child: const Text('Close'),
+                    );
+                  },
+                  child: const Text('Close'),
+                ),
               ),
             ],
           ),
@@ -118,33 +121,37 @@ class _SwiperExample1State extends State<SwiperExample1> {
               children: [
                 const Text('Swipe me!'),
                 const Gap(24),
-                ButtonGroup(children: [
-                  _buildSelectPosition(OverlayPosition.left, 'Left'),
-                  _buildSelectPosition(OverlayPosition.right, 'Right'),
-                  _buildSelectPosition(OverlayPosition.top, 'Top'),
-                  _buildSelectPosition(OverlayPosition.bottom, 'Bottom'),
-                ]),
+                ButtonGroup(
+                  children: [
+                    _buildSelectPosition(OverlayPosition.left, 'Left'),
+                    _buildSelectPosition(OverlayPosition.right, 'Right'),
+                    _buildSelectPosition(OverlayPosition.top, 'Top'),
+                    _buildSelectPosition(OverlayPosition.bottom, 'Bottom'),
+                  ],
+                ),
                 const Gap(24),
-                ButtonGroup(children: [
-                  Toggle(
-                    value: _typeDrawer,
-                    onChanged: (value) {
-                      setState(() {
-                        _typeDrawer = value;
-                      });
-                    },
-                    child: const Text('Drawer'),
-                  ),
-                  Toggle(
-                    value: !_typeDrawer,
-                    onChanged: (value) {
-                      setState(() {
-                        _typeDrawer = !value;
-                      });
-                    },
-                    child: const Text('Sheet'),
-                  ),
-                ]),
+                ButtonGroup(
+                  children: [
+                    Toggle(
+                      value: _typeDrawer,
+                      onChanged: (value) {
+                        setState(() {
+                          _typeDrawer = value;
+                        });
+                      },
+                      child: const Text('Drawer'),
+                    ),
+                    Toggle(
+                      value: !_typeDrawer,
+                      onChanged: (value) {
+                        setState(() {
+                          _typeDrawer = !value;
+                        });
+                      },
+                      child: const Text('Sheet'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -160,6 +167,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SwiperTile extends StatelessWidget implements IComponentPage {
   const SwiperTile({super.key});
@@ -178,9 +186,7 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
         child: Container(
           width: 300,
           height: 200,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           child: Stack(
             children: [
               // Swiper content
@@ -210,11 +216,12 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color:
-                          theme.colorScheme.background.withValues(alpha: 0.8),
+                      color: theme.colorScheme.background.withValues(
+                        alpha: 0.8,
+                      ),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.chevron_left, size: 20),
+                    child: const Icon(LucideIcons.chevronLeft, size: 20),
                   ),
                 ),
               ),
@@ -227,11 +234,12 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color:
-                          theme.colorScheme.background.withValues(alpha: 0.8),
+                      color: theme.colorScheme.background.withValues(
+                        alpha: 0.8,
+                      ),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.chevron_right, size: 20),
+                    child: const Icon(LucideIcons.chevronRight, size: 20),
                   ),
                 ),
               ),
@@ -256,8 +264,9 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                       width: 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primaryForeground
-                            .withValues(alpha: 0.5),
+                        color: theme.colorScheme.primaryForeground.withValues(
+                          alpha: 0.5,
+                        ),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -266,8 +275,9 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                       width: 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primaryForeground
-                            .withValues(alpha: 0.5),
+                        color: theme.colorScheme.primaryForeground.withValues(
+                          alpha: 0.5,
+                        ),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -313,3 +323,4 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
 | `barrierColor` | `Color?` | Color of the modal barrier. |
 | `child` | `Widget` | The child widget that responds to swipe gestures. |
 | `behavior` | `HitTestBehavior?` | Hit test behavior for gesture detection. |
+| `theme` | `SwiperTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

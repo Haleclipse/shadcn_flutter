@@ -24,8 +24,7 @@ class CodeSnippetExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Code Snippet Example',
-          path:
-              'lib/pages/docs/components/code_snippet/code_snippet_example_1.dart',
+          path: 'lib/pages/docs/components/code_snippet/code_snippet_example_1.dart',
           child: CodeSnippetExample1(),
         ),
       ],
@@ -47,9 +46,7 @@ class CodeSnippetExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CodeSnippet(
-      code: Text('flutter pub get'),
-    );
+    return const CodeSnippet(code: Text('flutter pub get'));
   }
 }
 
@@ -59,7 +56,6 @@ class CodeSnippetExample1 extends StatelessWidget {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:docs/pages/docs/components/code_snippet/code_snippet_example_1.dart';
-import 'package:flutter/material.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 class CodeSnippetTile extends StatelessWidget implements IComponentPage {
@@ -100,3 +96,4 @@ class CodeSnippetTile extends StatelessWidget implements IComponentPage {
 | `constraints` | `BoxConstraints?` | Optional constraints for the code display area.  Type: `BoxConstraints?`. Controls the maximum/minimum size of the scrollable code container. Useful for limiting height in layouts. |
 | `code` | `Widget` | The code widget to display (typically Text or RichText with syntax highlighting). |
 | `actions` | `List<Widget>` | Additional action widgets displayed in the top-right corner.  Type: `List<Widget>`. Custom action buttons shown alongside the default copy button. Useful for share, edit, or other operations. |
+| `theme` | `CodeSnippetTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

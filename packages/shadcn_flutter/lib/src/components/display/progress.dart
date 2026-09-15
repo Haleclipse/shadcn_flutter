@@ -63,8 +63,9 @@ class ProgressTheme extends ComponentThemeData {
   }) {
     return ProgressTheme(
       color: color == null ? this.color : color(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       minHeight: minHeight == null ? this.minHeight : minHeight(),
     );
@@ -81,12 +82,8 @@ class ProgressTheme extends ComponentThemeData {
   }
 
   @override
-  int get hashCode => Object.hash(
-        color,
-        backgroundColor,
-        borderRadius,
-        minHeight,
-      );
+  int get hashCode =>
+      Object.hash(color, backgroundColor, borderRadius, minHeight);
 }
 
 /// A linear progress indicator that visually represents task completion.
@@ -117,7 +114,7 @@ class ProgressTheme extends ComponentThemeData {
 ///   backgroundColor: Colors.grey.shade300,
 /// );
 /// ```
-class Progress extends StatelessWidget {
+class Progress extends StatelessWidget implements Styleable<ProgressTheme> {
   /// The current progress value within the specified range.
   ///
   /// Type: `double?`. If null, displays indeterminate progress animation.
@@ -147,6 +144,7 @@ class Progress extends StatelessWidget {
   ///
   /// Type: `Color?`. If null, uses the theme's progress color or
   /// the color specified in [ProgressTheme]. Overrides theme values.
+  @Deprecated('Use theme: ProgressTheme(color: ...) instead.')
   final Color? color;
 
   /// The background color of the progress track.
@@ -167,6 +165,10 @@ class Progress extends StatelessWidget {
     }
     return (progress! - min) / (max - min);
   }
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ProgressTheme? theme;
 
   /// Creates a [Progress] indicator.
   ///
@@ -201,26 +203,39 @@ class Progress extends StatelessWidget {
     this.disableAnimation = false,
     this.color,
     this.backgroundColor,
-  }) : assert(progress == null || progress >= min && progress <= max,
-            'Progress must be between min and max');
+    this.theme,
+  }) : assert(
+         progress == null || progress >= min && progress <= max,
+         'Progress must be between min and max',
+       );
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ProgressTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<ProgressTheme>(context);
     return LinearProgressIndicator(
       value: normalizedValue,
-      backgroundColor: styleValue(
+      theme: LinearProgressIndicatorTheme(
+        backgroundColor: styleValue(
           defaultValue: backgroundColor,
-          themeValue: compTheme?.backgroundColor),
-      color: styleValue(
-          themeValue: compTheme?.color, widgetValue: color, defaultValue: null),
-      minHeight: styleValue(
-          defaultValue: 8.0 * theme.scaling, themeValue: compTheme?.minHeight),
-      borderRadius: styleValue(
+          themeValue: compTheme?.backgroundColor,
+        ),
+        color: styleValue(
+          themeValue: compTheme?.color,
+          widgetValue: color,
+          defaultValue: null,
+        ),
+        minHeight: styleValue(
+          defaultValue: 8.0 * theme.scaling,
+          themeValue: compTheme?.minHeight,
+        ),
+        borderRadius: styleValue(
           defaultValue: theme.borderRadiusSm,
-          themeValue: compTheme?.borderRadius),
-      disableAnimation: disableAnimation,
+          themeValue: compTheme?.borderRadius,
+        ),
+        disableAnimation: disableAnimation,
+      ),
     );
   }
 }

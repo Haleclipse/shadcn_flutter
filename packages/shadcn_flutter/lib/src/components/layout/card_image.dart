@@ -96,8 +96,9 @@ class CardImageTheme extends ComponentThemeData {
       direction: direction == null ? this.direction : direction(),
       hoverScale: hoverScale == null ? this.hoverScale : hoverScale(),
       normalScale: normalScale == null ? this.normalScale : normalScale(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       borderColor: borderColor == null ? this.borderColor : borderColor(),
       gap: gap == null ? this.gap : gap(),
     );
@@ -117,14 +118,14 @@ class CardImageTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        style,
-        direction,
-        hoverScale,
-        normalScale,
-        backgroundColor,
-        borderColor,
-        gap,
-      );
+    style,
+    direction,
+    hoverScale,
+    normalScale,
+    backgroundColor,
+    borderColor,
+    gap,
+  );
 }
 
 /// Interactive card component with an image and optional text content.
@@ -148,7 +149,7 @@ class CardImageTheme extends ComponentThemeData {
 ///   onPressed: () => print('Card tapped'),
 /// );
 /// ```
-class CardImage extends StatefulWidget {
+class CardImage extends StatefulWidget implements Styleable<CardImageTheme> {
   /// The primary image widget to display.
   final Widget image;
 
@@ -171,25 +172,36 @@ class CardImage extends StatefulWidget {
   final bool? enabled;
 
   /// Custom button style for the card.
+  @Deprecated('Use theme: CardImageTheme(style: ...) instead.')
   final AbstractButtonStyle? style;
 
   /// Layout direction for content relative to image.
+  @Deprecated('Use theme: CardImageTheme(direction: ...) instead.')
   final Axis? direction;
 
   /// Scale factor applied to image on hover.
+  @Deprecated('Use theme: CardImageTheme(hoverScale: ...) instead.')
   final double? hoverScale;
 
   /// Normal scale factor for the image.
+  @Deprecated('Use theme: CardImageTheme(normalScale: ...) instead.')
   final double? normalScale;
 
   /// Background color for the image container.
+  @Deprecated('Use theme: CardImageTheme(backgroundColor: ...) instead.')
   final Color? backgroundColor;
 
   /// Border color for the image container.
+  @Deprecated('Use theme: CardImageTheme(borderColor: ...) instead.')
   final Color? borderColor;
 
   /// Gap between image and text content.
+  @Deprecated('Use theme: CardImageTheme(gap: ...) instead.')
   final double? gap;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CardImageTheme? theme;
 
   /// Creates a [CardImage].
   ///
@@ -240,6 +252,7 @@ class CardImage extends StatefulWidget {
     this.backgroundColor,
     this.borderColor,
     this.gap,
+    this.theme,
   });
 
   @override
@@ -260,37 +273,43 @@ class _CardImageState extends State<CardImage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<CardImageTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<CardImageTheme>(context);
     final style = styleValue(
-        widgetValue: widget.style,
-        themeValue: compTheme?.style,
-        defaultValue: const ButtonStyle.fixed(
-          density: ButtonDensity.compact,
-        ));
+      widgetValue: widget.style,
+      themeValue: compTheme?.style,
+      defaultValue: const ButtonStyle.fixed(density: ButtonDensity.compact),
+    );
     final direction = styleValue(
-        widgetValue: widget.direction,
-        themeValue: compTheme?.direction,
-        defaultValue: Axis.vertical);
+      widgetValue: widget.direction,
+      themeValue: compTheme?.direction,
+      defaultValue: Axis.vertical,
+    );
     final hoverScale = styleValue(
-        widgetValue: widget.hoverScale,
-        themeValue: compTheme?.hoverScale,
-        defaultValue: 1.05);
+      widgetValue: widget.hoverScale,
+      themeValue: compTheme?.hoverScale,
+      defaultValue: 1.05,
+    );
     final normalScale = styleValue(
-        widgetValue: widget.normalScale,
-        themeValue: compTheme?.normalScale,
-        defaultValue: 1.0);
+      widgetValue: widget.normalScale,
+      themeValue: compTheme?.normalScale,
+      defaultValue: 1.0,
+    );
     final backgroundColor = styleValue(
-        widgetValue: widget.backgroundColor,
-        themeValue: compTheme?.backgroundColor,
-        defaultValue: Colors.transparent);
+      widgetValue: widget.backgroundColor,
+      themeValue: compTheme?.backgroundColor,
+      defaultValue: Colors.transparent,
+    );
     final borderColor = styleValue(
-        widgetValue: widget.borderColor,
-        themeValue: compTheme?.borderColor,
-        defaultValue: Colors.transparent);
+      widgetValue: widget.borderColor,
+      themeValue: compTheme?.borderColor,
+      defaultValue: Colors.transparent,
+    );
     final gap = styleValue(
-        widgetValue: widget.gap,
-        themeValue: compTheme?.gap,
-        defaultValue: 12 * scaling);
+      widgetValue: widget.gap,
+      themeValue: compTheme?.gap,
+      defaultValue: 12 * scaling,
+    );
     return Button(
       statesController: _statesController,
       style: style,
@@ -303,23 +322,28 @@ class _CardImageState extends State<CardImage> {
           children: [
             Flexible(
               child: OutlinedContainer(
-                backgroundColor: backgroundColor,
-                borderColor: borderColor,
+                theme: OutlinedContainerTheme(
+                  backgroundColor: backgroundColor,
+                  borderColor: borderColor,
+                ),
                 child: AnimatedBuilder(
-                    animation: _statesController,
-                    builder: (context, child) {
-                      return AnimatedScale(
-                        duration: kDefaultDuration,
-                        scale: _statesController.value
-                                .contains(WidgetState.hovered)
-                            ? hoverScale
-                            : normalScale,
-                        child: widget.image,
-                      );
-                    }),
+                  animation: _statesController,
+                  builder: (context, child) {
+                    return AnimatedScale(
+                      duration: kDefaultDuration,
+                      scale:
+                          _statesController.value.contains(WidgetState.hovered)
+                          ? hoverScale
+                          : normalScale,
+                      child: widget.image,
+                    );
+                  },
+                ),
               ),
             ),
-            Gap(gap),
+            direction == Axis.horizontal
+                ? SizedBox(width: gap)
+                : SizedBox(height: gap),
             Basic(
               title: widget.title,
               subtitle: widget.subtitle,

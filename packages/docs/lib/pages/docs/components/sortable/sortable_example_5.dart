@@ -48,11 +48,15 @@ class _SortableExample5State extends State<SortableExample5> {
                   });
                 },
                 child: OutlinedContainer(
-                  padding: const EdgeInsets.all(12),
+                  theme: OutlinedContainerTheme(
+                    padding: const EdgeInsets.all(12),
+                  ),
                   child: Row(
                     children: [
                       // Only this handle starts the drag; the rest of the row is inert.
-                      const SortableDragHandle(child: Icon(Icons.drag_handle)),
+                      const SortableDragHandle(
+                        child: Icon(LucideIcons.gripHorizontal),
+                      ),
                       const SizedBox(width: 8),
                       Expanded(child: Text(names[i].data)),
                     ],

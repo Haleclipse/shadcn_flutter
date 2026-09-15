@@ -21,7 +21,8 @@ class AlertDialogExample1 extends StatelessWidget {
             return AlertDialog(
               title: const Text('Alert title'),
               content: const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+              ),
               actions: [
                 // Secondary action to cancel/dismiss.
                 OutlineButton(

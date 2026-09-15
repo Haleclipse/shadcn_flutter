@@ -1,3 +1,8 @@
+// `Avatar.size` and `Avatar.borderRadius` are getters that fall through to
+// `theme`, so the constructors assign private backing fields from
+// same-named public parameters. Initializing formals cannot express that.
+// ignore_for_file: prefer_initializing_formals
+
 import '../../../shadcn_flutter.dart';
 
 /// Theme configuration for [Avatar] and related avatar components.
@@ -102,10 +107,12 @@ class AvatarTheme extends ComponentThemeData {
     return AvatarTheme(
       size: size == null ? this.size : size(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
-      badgeAlignment:
-          badgeAlignment == null ? this.badgeAlignment : badgeAlignment(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
+      badgeAlignment: badgeAlignment == null
+          ? this.badgeAlignment
+          : badgeAlignment(),
       badgeGap: badgeGap == null ? this.badgeGap : badgeGap(),
       textStyle: textStyle == null ? this.textStyle : textStyle(),
     );
@@ -125,13 +132,13 @@ class AvatarTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        size,
-        borderRadius,
-        backgroundColor,
-        badgeAlignment,
-        badgeGap,
-        textStyle,
-      );
+    size,
+    borderRadius,
+    backgroundColor,
+    badgeAlignment,
+    badgeGap,
+    textStyle,
+  );
 }
 
 /// Abstract base class for avatar-related widgets.
@@ -188,7 +195,8 @@ abstract class AvatarWidget extends Widget {
 ///   ),
 /// );
 /// ```
-class Avatar extends StatefulWidget implements AvatarWidget {
+class Avatar extends StatefulWidget
+    implements AvatarWidget, Styleable<AvatarTheme> {
   /// Generates initials from a user's full name.
   ///
   /// Creates appropriate initials for avatar display from a given name string.
@@ -245,21 +253,33 @@ class Avatar extends StatefulWidget implements AvatarWidget {
   ///
   /// Type: `Color?`. Used as the container background color when showing
   /// [initials]. If null, defaults to the theme's muted color.
+  @Deprecated('Use theme: AvatarTheme(backgroundColor: ...) instead.')
   final Color? backgroundColor;
+
+  final double? _size;
+
+  final double? _borderRadius;
 
   /// Size of the avatar in logical pixels.
   ///
   /// Type: `double?`. Controls both width and height of the avatar container.
   /// If null, defaults to theme.scaling * 40 pixels.
+  ///
+  /// Falls through to [theme] so that containers laying avatars out — see
+  /// [AvatarGroup] — see the same size the avatar will paint itself at.
   @override
-  final double? size;
+  @Deprecated('Use theme: AvatarTheme(size: ...) instead.')
+  double? get size => _size ?? theme?.size;
 
   /// Border radius for avatar corners in logical pixels.
   ///
   /// Type: `double?`. Creates rounded corners on the avatar container.
   /// If null, defaults to theme.radius * size for proportional rounding.
+  ///
+  /// Falls through to [theme], like [size].
   @override
-  final double? borderRadius;
+  @Deprecated('Use theme: AvatarTheme(borderRadius: ...) instead.')
+  double? get borderRadius => _borderRadius ?? theme?.borderRadius;
 
   /// Optional badge widget to overlay on the avatar.
   ///
@@ -271,12 +291,14 @@ class Avatar extends StatefulWidget implements AvatarWidget {
   ///
   /// Type: `AlignmentGeometry?`. Controls where the [badge] is positioned.
   /// If null, uses a calculated offset based on avatar and badge sizes.
+  @Deprecated('Use theme: AvatarTheme(badgeAlignment: ...) instead.')
   final AlignmentGeometry? badgeAlignment;
 
   /// Spacing between the avatar and badge in logical pixels.
   ///
   /// Type: `double?`. Controls the gap between the avatar edge and badge edge.
   /// If null, defaults to theme.scaling * 4 pixels.
+  @Deprecated('Use theme: AvatarTheme(badgeGap: ...) instead.')
   final double? badgeGap;
 
   /// Image provider for displaying user photos.
@@ -284,6 +306,10 @@ class Avatar extends StatefulWidget implements AvatarWidget {
   /// Type: `ImageProvider?`. Can be any Flutter image provider (NetworkImage,
   /// AssetImage, etc.). If null or loading fails, shows [initials] instead.
   final ImageProvider? provider;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AvatarTheme? theme;
 
   /// Creates an [Avatar] widget with optional image provider.
   ///
@@ -322,13 +348,15 @@ class Avatar extends StatefulWidget implements AvatarWidget {
     super.key,
     required this.initials,
     this.backgroundColor,
-    this.size,
-    this.borderRadius,
+    double? size,
+    double? borderRadius,
     this.badge,
     this.badgeAlignment,
     this.badgeGap,
     this.provider,
-  });
+    this.theme,
+  }) : _size = size,
+       _borderRadius = borderRadius;
 
   /// Creates an [Avatar] with a network image.
   ///
@@ -363,19 +391,22 @@ class Avatar extends StatefulWidget implements AvatarWidget {
     super.key,
     required this.initials,
     this.backgroundColor,
-    this.size,
-    this.borderRadius,
+    double? size,
+    double? borderRadius,
     this.badge,
     this.badgeAlignment,
     this.badgeGap,
     int? cacheWidth,
     int? cacheHeight,
     required String photoUrl,
-  }) : provider = ResizeImage.resizeIfNeeded(
-          cacheWidth,
-          cacheHeight,
-          NetworkImage(photoUrl),
-        );
+    this.theme,
+  }) : _size = size,
+       _borderRadius = borderRadius,
+       provider = ResizeImage.resizeIfNeeded(
+         cacheWidth,
+         cacheHeight,
+         NetworkImage(photoUrl),
+       );
 
   @override
   State<Avatar> createState() => _AvatarState();
@@ -384,15 +415,18 @@ class Avatar extends StatefulWidget implements AvatarWidget {
 class _AvatarState extends State<Avatar> {
   Widget _build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<AvatarTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AvatarTheme>(context);
     double size = styleValue(
-        widgetValue: widget.size,
-        themeValue: compTheme?.size,
-        defaultValue: theme.scaling * 40);
+      widgetValue: widget.size,
+      themeValue: compTheme?.size,
+      defaultValue: theme.scaling * 40,
+    );
     double borderRadius = styleValue(
-        widgetValue: widget.borderRadius,
-        themeValue: compTheme?.borderRadius,
-        defaultValue: theme.radius * size);
+      widgetValue: widget.borderRadius,
+      themeValue: compTheme?.borderRadius,
+      defaultValue: theme.radius * size,
+    );
     if (widget.provider != null) {
       return SizedBox(
         width: size,
@@ -418,14 +452,16 @@ class _AvatarState extends State<Avatar> {
 
   Widget _buildInitials(BuildContext context, double borderRadius) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<AvatarTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AvatarTheme>(context);
     final densityGap = theme.density.baseGap * theme.scaling;
     return Container(
       decoration: BoxDecoration(
         color: styleValue(
-            widgetValue: widget.backgroundColor,
-            themeValue: compTheme?.backgroundColor,
-            defaultValue: theme.colorScheme.muted),
+          widgetValue: widget.backgroundColor,
+          themeValue: compTheme?.backgroundColor,
+          defaultValue: theme.colorScheme.muted,
+        ),
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: FittedBox(
@@ -433,11 +469,7 @@ class _AvatarState extends State<Avatar> {
         child: Padding(
           padding: EdgeInsets.all(densityGap),
           child: DefaultTextStyle.merge(
-            child: Center(
-              child: Text(
-                widget.initials,
-              ),
-            ),
+            child: Center(child: Text(widget.initials)),
             style: styleValue(
               themeValue: compTheme?.textStyle,
               defaultValue: TextStyle(
@@ -457,26 +489,31 @@ class _AvatarState extends State<Avatar> {
       return _build(context);
     }
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<AvatarTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AvatarTheme>(context);
     double size = styleValue(
-        widgetValue: widget.size,
-        themeValue: compTheme?.size,
-        defaultValue: theme.scaling * 40);
+      widgetValue: widget.size,
+      themeValue: compTheme?.size,
+      defaultValue: theme.scaling * 40,
+    );
     double borderRadius = styleValue(
-        widgetValue: widget.borderRadius,
-        themeValue: compTheme?.borderRadius,
-        defaultValue: theme.radius * size);
+      widgetValue: widget.borderRadius,
+      themeValue: compTheme?.borderRadius,
+      defaultValue: theme.radius * size,
+    );
     double badgeSize = widget.badge!.size ?? theme.scaling * 12;
     double offset = size / 2 - badgeSize / 2;
     offset = offset / size;
     final alignment = styleValue(
-        widgetValue: widget.badgeAlignment,
-        themeValue: compTheme?.badgeAlignment,
-        defaultValue: AlignmentDirectional(offset, offset));
+      widgetValue: widget.badgeAlignment,
+      themeValue: compTheme?.badgeAlignment,
+      defaultValue: AlignmentDirectional(offset, offset),
+    );
     final gap = styleValue(
-        widgetValue: widget.badgeGap,
-        themeValue: compTheme?.badgeGap,
-        defaultValue: theme.scaling * 4);
+      widgetValue: widget.badgeGap,
+      themeValue: compTheme?.badgeGap,
+      defaultValue: theme.scaling * 4,
+    );
     return AvatarGroup(
       alignment: alignment,
       gap: gap,
@@ -519,7 +556,7 @@ class _AvatarState extends State<Avatar> {
 /// AvatarBadge(
 ///   size: 16,
 ///   color: Colors.green,
-///   child: Icon(Icons.check, size: 10, color: Colors.white),
+///   child: Icon(LucideIcons.check, size: 10, color: Colors.white),
 /// );
 /// ```
 class AvatarBadge extends StatelessWidget implements AvatarWidget {
@@ -587,8 +624,9 @@ class AvatarBadge extends StatelessWidget implements AvatarWidget {
       height: size,
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).colorScheme.primary,
-        borderRadius:
-            BorderRadius.circular(borderRadius ?? theme.radius * size),
+        borderRadius: BorderRadius.circular(
+          borderRadius ?? theme.radius * size,
+        ),
       ),
       child: child,
     );
@@ -602,11 +640,7 @@ class _AvatarWidget extends StatelessWidget implements AvatarWidget {
   final double? borderRadius;
   final Widget child;
 
-  const _AvatarWidget({
-    required this.child,
-    this.size,
-    this.borderRadius,
-  });
+  const _AvatarWidget({required this.child, this.size, this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
@@ -902,13 +936,7 @@ class AvatarGroup extends StatelessWidget {
       AvatarWidget avatar = this.children[i];
       double size = avatar.size ?? theme.scaling * 40;
       if (i == 0) {
-        children.add(
-          Positioned(
-            left: currentX,
-            top: currentY,
-            child: avatar,
-          ),
-        );
+        children.add(Positioned(left: currentX, top: currentY, child: avatar));
         rect = Rect.fromLTWH(currentX, currentY, size, size);
         currentWidth = size;
         currentHeight = size;
@@ -963,17 +991,15 @@ class AvatarGroup extends StatelessWidget {
       child: Stack(
         clipBehavior: clipBehavior ?? Clip.none,
         alignment: Alignment.center,
-        children: children.map(
-          (e) {
-            return Positioned(
-              left: e.left! - rect.left,
-              top: e.top! - rect.top,
-              width: e.width,
-              height: e.height,
-              child: e.child,
-            );
-          },
-        ).toList(),
+        children: children.map((e) {
+          return Positioned(
+            left: e.left! - rect.left,
+            top: e.top! - rect.top,
+            width: e.width,
+            height: e.height,
+            child: e.child,
+          );
+        }).toList(),
       ),
     );
   }

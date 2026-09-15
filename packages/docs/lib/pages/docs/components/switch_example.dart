@@ -11,8 +11,7 @@ class SwitchExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'switch',
-      description:
-          'A switch is a visual toggle between two mutually exclusive states — on and off.',
+      description: 'A switch is a visual toggle between two mutually exclusive states — on and off.',
       displayName: 'Switch',
       children: [
         WidgetUsageExample(

@@ -10,8 +10,7 @@ class TabPaneExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'tab_pane',
-      description:
-          'A chrome-like tab pane that allows you to switch between different tabs.',
+      description: 'A chrome-like tab pane that allows you to switch between different tabs.',
       displayName: 'Tab Pane',
       children: [
         WidgetUsageExample(

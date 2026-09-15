@@ -15,7 +15,8 @@ class StepperExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'stepper',
-      description: 'A stepper is a fundamental part of material design '
+      description:
+          'A stepper is a fundamental part of material design '
           'guidelines. Steppers convey progress through numbered steps.',
       displayName: 'Stepper',
       children: [

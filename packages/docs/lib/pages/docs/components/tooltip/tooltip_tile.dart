@@ -1,6 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
-import 'package:flutter/material.dart' as material hide Card;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // paint a cursor
 class CursorPainter extends CustomPainter {
@@ -54,23 +54,19 @@ class TooltipTile extends StatelessWidget implements IComponentPage {
           Column(
             children: [
               DestructiveButton(
-                leading: const Icon(material.Icons.delete),
+                leading: const Icon(LucideIcons.trash),
                 child: const Text('Delete'),
                 onPressed: () {},
               ),
               const Gap(4),
-              const TooltipContainer(
-                child: Text('Click to delete this item'),
-              ),
+              const TooltipContainer(child: Text('Click to delete this item')),
             ],
           ),
           const Positioned(
             top: 25,
             left: 100,
-            child: CustomPaint(
-              painter: CursorPainter(),
-            ),
-          )
+            child: CustomPaint(painter: CursorPainter()),
+          ),
         ],
       ),
     );

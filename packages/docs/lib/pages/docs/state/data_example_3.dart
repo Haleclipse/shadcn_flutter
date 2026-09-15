@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DataExample3 extends StatefulWidget {
   const DataExample3({super.key});
@@ -26,7 +27,7 @@ class DataExample3State extends State<DataExample3> {
                 setState(() {});
               },
               density: ButtonDensity.icon,
-              child: const Icon(Icons.refresh),
+              child: const Icon(LucideIcons.refreshCw),
             ),
           ],
         ),
@@ -36,19 +37,13 @@ class DataExample3State extends State<DataExample3> {
           children: [
             DataMessenger<int>(
               child: InnerChildWidget(
-                child: MostInnerChildWidget(
-                  child: LeafWidget(),
-                ),
+                child: MostInnerChildWidget(child: LeafWidget()),
               ),
             ),
             Gap(24),
-            InnerChildWidget(
-              child: MostInnerChildWidget(
-                child: LeafWidget(),
-              ),
-            ),
+            InnerChildWidget(child: MostInnerChildWidget(child: LeafWidget())),
           ],
-        )
+        ),
       ],
     );
   }
@@ -77,19 +72,20 @@ class _InnerChildWidgetState extends State<InnerChildWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                  'Rebuild: $innerRebuildCount - Inner Data: $childCounterData'),
+                'Rebuild: $innerRebuildCount - Inner Data: $childCounterData',
+              ),
               const Gap(24),
               PrimaryButton(
                 onPressed: () {
                   setState(() {});
                 },
                 density: ButtonDensity.icon,
-                child: const Icon(Icons.refresh),
+                child: const Icon(LucideIcons.refreshCw),
               ),
             ],
           ),
           const Gap(24),
-          widget.child
+          widget.child,
         ],
       ),
     );
@@ -121,7 +117,8 @@ class _MostInnerChildState extends State<MostInnerChildWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                    'Rebuild: $mostInnerRebuildCount - Most Inner Data: $counter'),
+                  'Rebuild: $mostInnerRebuildCount - Most Inner Data: $counter',
+                ),
                 const Gap(24),
                 PrimaryButton(
                   onPressed: () {
@@ -130,12 +127,12 @@ class _MostInnerChildState extends State<MostInnerChildWidget> {
                     });
                   },
                   density: ButtonDensity.icon,
-                  child: const Icon(Icons.add),
+                  child: const Icon(LucideIcons.plus),
                 ),
               ],
             ),
             const Gap(24),
-            widget.child
+            widget.child,
           ],
         ),
       ),

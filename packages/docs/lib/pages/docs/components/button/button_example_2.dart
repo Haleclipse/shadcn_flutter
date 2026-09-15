@@ -8,9 +8,6 @@ class ButtonExample2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SecondaryButton(
-      onPressed: () {},
-      child: const Text('Secondary'),
-    );
+    return SecondaryButton(onPressed: () {}, child: const Text('Secondary'));
   }
 }

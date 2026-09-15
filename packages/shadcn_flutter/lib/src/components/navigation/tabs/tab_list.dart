@@ -87,10 +87,12 @@ class TabListTheme extends ComponentThemeData {
     return TabListTheme(
       borderColor: borderColor == null ? this.borderColor : borderColor(),
       borderWidth: borderWidth == null ? this.borderWidth : borderWidth(),
-      indicatorColor:
-          indicatorColor == null ? this.indicatorColor : indicatorColor(),
-      indicatorHeight:
-          indicatorHeight == null ? this.indicatorHeight : indicatorHeight(),
+      indicatorColor: indicatorColor == null
+          ? this.indicatorColor
+          : indicatorColor(),
+      indicatorHeight: indicatorHeight == null
+          ? this.indicatorHeight
+          : indicatorHeight(),
     );
   }
 
@@ -141,7 +143,7 @@ class TabListTheme extends ComponentThemeData {
 ///   ],
 /// )
 /// ```
-class TabList extends StatelessWidget {
+class TabList extends StatelessWidget implements Styleable<TabListTheme> {
   /// List of tab child widgets to display in the tab list.
   ///
   /// Type: `List<TabChild>`. Each TabChild represents one selectable tab
@@ -161,6 +163,10 @@ class TabList extends StatelessWidget {
   /// Type: `ValueChanged<int>?`. Called with the index of the newly selected
   /// tab when the user taps on a tab button. If null, tabs are not interactive.
   final ValueChanged<int>? onChanged;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TabListTheme? theme;
 
   /// Creates a [TabList] with horizontal tab selection.
   ///
@@ -195,6 +201,7 @@ class TabList extends StatelessWidget {
     required this.children,
     required this.index,
     required this.onChanged,
+    this.theme,
   });
 
   Widget _childBuilder(
@@ -203,7 +210,8 @@ class TabList extends StatelessWidget {
     Widget child,
   ) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<TabListTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<TabListTheme>(context);
     final indicatorColor = styleValue(
       defaultValue: theme.colorScheme.primary,
       themeValue: compTheme?.indicatorColor,
@@ -238,7 +246,8 @@ class TabList extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<TabListTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<TabListTheme>(context);
     final borderColor = styleValue(
       defaultValue: theme.colorScheme.border,
       themeValue: compTheme?.borderColor,

@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class LinearProgressExample2 extends StatefulWidget {
   const LinearProgressExample2({super.key});
@@ -58,7 +59,7 @@ class _LinearProgressExample2State extends State<LinearProgressExample2> {
               child: const Text('Decrease'),
             ),
           ],
-        )
+        ),
       ],
     );
   }

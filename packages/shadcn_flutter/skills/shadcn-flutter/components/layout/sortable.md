@@ -24,7 +24,8 @@ class SortableExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'sortable',
-      description: 'A sortable is a way of displaying a list of items in '
+      description:
+          'A sortable is a way of displaying a list of items in '
           'a way that allows the user to change the order of the items.',
       displayName: 'Sortable',
       children: [
@@ -68,6 +69,7 @@ class SortableExample extends StatelessWidget {
 ### Sortable Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SortableExample1 extends StatefulWidget {
   const SortableExample1({super.key});
@@ -114,7 +116,11 @@ class _SortableExample1State extends State<SortableExample1> {
                   onAccept: (value) {
                     setState(() {
                       swapItemInLists(
-                          [invited, reserved], value, invited, invited.length);
+                        [invited, reserved],
+                        value,
+                        invited,
+                        invited.length,
+                      );
                     });
                   },
                   child: Column(
@@ -122,23 +128,38 @@ class _SortableExample1State extends State<SortableExample1> {
                     children: [
                       for (int i = 0; i < invited.length; i++)
                         Sortable<String>(
+                          // Identity-based key: items move between the two
+                          // lists, so the key must follow the data (not the
+                          // index) or the per-item drag state rebinds to the
+                          // wrong item when a list changes length.
+                          key: ValueKey(invited[i].data),
                           data: invited[i],
                           // Insert above the current index when dropped at the top edge.
                           onAcceptTop: (value) {
                             setState(() {
                               swapItemInLists(
-                                  [invited, reserved], value, invited, i);
+                                [invited, reserved],
+                                value,
+                                invited,
+                                i,
+                              );
                             });
                           },
                           // Insert below the current index when dropped at the bottom edge.
                           onAcceptBottom: (value) {
                             setState(() {
                               swapItemInLists(
-                                  [invited, reserved], value, invited, i + 1);
+                                [invited, reserved],
+                                value,
+                                invited,
+                                i + 1,
+                              );
                             });
                           },
                           child: OutlinedContainer(
-                            padding: const EdgeInsets.all(12),
+                            theme: OutlinedContainerTheme(
+                              padding: const EdgeInsets.all(12),
+                            ),
                             child: Center(child: Text(invited[i].data)),
                           ),
                         ),
@@ -147,15 +168,19 @@ class _SortableExample1State extends State<SortableExample1> {
                 ),
               ),
             ),
-            gap(12),
+            Gap(12),
             Expanded(
               child: Card(
                 child: SortableDropFallback<String>(
                   // Same behavior for the second list.
                   onAccept: (value) {
                     setState(() {
-                      swapItemInLists([invited, reserved], value, reserved,
-                          reserved.length);
+                      swapItemInLists(
+                        [invited, reserved],
+                        value,
+                        reserved,
+                        reserved.length,
+                      );
                     });
                   },
                   child: Column(
@@ -163,21 +188,32 @@ class _SortableExample1State extends State<SortableExample1> {
                     children: [
                       for (int i = 0; i < reserved.length; i++)
                         Sortable<String>(
+                          key: ValueKey(reserved[i].data),
                           data: reserved[i],
                           onAcceptTop: (value) {
                             setState(() {
                               swapItemInLists(
-                                  [invited, reserved], value, reserved, i);
+                                [invited, reserved],
+                                value,
+                                reserved,
+                                i,
+                              );
                             });
                           },
                           onAcceptBottom: (value) {
                             setState(() {
                               swapItemInLists(
-                                  [invited, reserved], value, reserved, i + 1);
+                                [invited, reserved],
+                                value,
+                                reserved,
+                                i + 1,
+                              );
                             });
                           },
                           child: OutlinedContainer(
-                            padding: const EdgeInsets.all(12),
+                            theme: OutlinedContainerTheme(
+                              padding: const EdgeInsets.all(12),
+                            ),
                             child: Center(child: Text(reserved[i].data)),
                           ),
                         ),
@@ -233,7 +269,7 @@ class _SortableExample2State extends State<SortableExample2> {
             for (int i = 0; i < names.length; i++)
               Sortable<String>(
                 // Use a stable key for better drag/reorder behavior.
-                key: ValueKey(i),
+                key: ValueKey(names[i].data),
                 data: names[i],
                 // Swap into the target index when dropped on the top edge.
                 onAcceptTop: (value) {
@@ -248,7 +284,9 @@ class _SortableExample2State extends State<SortableExample2> {
                   });
                 },
                 child: OutlinedContainer(
-                  padding: const EdgeInsets.all(12),
+                  theme: OutlinedContainerTheme(
+                    padding: const EdgeInsets.all(12),
+                  ),
                   child: Center(child: Text(names[i].data)),
                 ),
               ),
@@ -300,7 +338,7 @@ class _SortableExample3State extends State<SortableExample3> {
             children: [
               for (int i = 0; i < names.length; i++)
                 Sortable<String>(
-                  key: ValueKey(i),
+                  key: ValueKey(names[i].data),
                   data: names[i],
                   // For horizontal sorting, drop on the left/right edges to reorder.
                   onAcceptLeft: (value) {
@@ -315,7 +353,9 @@ class _SortableExample3State extends State<SortableExample3> {
                   },
                   child: OutlinedContainer(
                     width: 100,
-                    padding: const EdgeInsets.all(12),
+                    theme: OutlinedContainerTheme(
+                      padding: const EdgeInsets.all(12),
+                    ),
                     child: Center(child: Text(names[i].data)),
                   ),
                 ),
@@ -386,8 +426,9 @@ class _SortableExample4State extends State<SortableExample4> {
               controller: controller,
               itemBuilder: (context, i) {
                 return Sortable<String>(
-                  // Stable key helps maintain drag state with virtualization.
-                  key: ValueKey(i),
+                  // Identity key: items reorder, so the key must follow the
+                  // data (not the index) to keep drag state with its item.
+                  key: ValueKey(names[i].data),
                   data: names[i],
                   onAcceptTop: (value) {
                     setState(() {
@@ -400,7 +441,9 @@ class _SortableExample4State extends State<SortableExample4> {
                     });
                   },
                   child: OutlinedContainer(
-                    padding: const EdgeInsets.all(12),
+                    theme: OutlinedContainerTheme(
+                      padding: const EdgeInsets.all(12),
+                    ),
                     child: Center(child: Text(names[i].data)),
                   ),
                 );
@@ -452,7 +495,7 @@ class _SortableExample5State extends State<SortableExample5> {
           children: [
             for (int i = 0; i < names.length; i++)
               Sortable<String>(
-                key: ValueKey(i),
+                key: ValueKey(names[i].data),
                 data: names[i],
                 // we only want user to drag the item from the handle,
                 // so we disable the drag on the item itself
@@ -468,11 +511,15 @@ class _SortableExample5State extends State<SortableExample5> {
                   });
                 },
                 child: OutlinedContainer(
-                  padding: const EdgeInsets.all(12),
+                  theme: OutlinedContainerTheme(
+                    padding: const EdgeInsets.all(12),
+                  ),
                   child: Row(
                     children: [
                       // Only this handle starts the drag; the rest of the row is inert.
-                      const SortableDragHandle(child: Icon(Icons.drag_handle)),
+                      const SortableDragHandle(
+                        child: Icon(LucideIcons.gripHorizontal),
+                      ),
                       const SizedBox(width: 8),
                       Expanded(child: Text(names[i].data)),
                     ],
@@ -522,69 +569,73 @@ class _SortableExample6State extends State<SortableExample6> {
   Widget build(BuildContext context) {
     return SortableLayer(
       child: Builder(
-          // this builder is needed to access the context of the SortableLayer
-          builder: (context) {
-        return SortableDropFallback<int>(
-          onAccept: (value) {
-            setState(() {
-              names.add(names.removeAt(value.data));
-            });
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              PrimaryButton(
-                onPressed: () {
-                  setState(() {
-                    _reset();
-                  });
-                },
-                child: const Text('Reset'),
-              ),
-              for (int i = 0; i < names.length; i++)
-                Sortable<String>(
-                  key: ValueKey(i),
-                  data: names[i],
-                  // we only want user to drag the item from the handle,
-                  // so we disable the drag on the item itself
-                  enabled: false,
-                  onAcceptTop: (value) {
+        // this builder is needed to access the context of the SortableLayer
+        builder: (context) {
+          return SortableDropFallback<int>(
+            onAccept: (value) {
+              setState(() {
+                names.add(names.removeAt(value.data));
+              });
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                PrimaryButton(
+                  onPressed: () {
                     setState(() {
-                      names.swapItem(value, i);
+                      _reset();
                     });
                   },
-                  onAcceptBottom: (value) {
-                    setState(() {
-                      names.swapItem(value, i + 1);
-                    });
-                  },
-                  onDropFailed: () {
-                    // Remove the item from the list if the drop failed
-                    setState(() {
-                      var removed = names.removeAt(i);
-                      // Ensure the drag overlay exists and then dismiss it so
-                      // the item does not animate back to its original position.
-                      SortableLayer.ensureAndDismissDrop(context, removed);
-                      // Dismissing drop will prevent the SortableLayer from
-                      // animating the item back to its original position
-                    });
-                  },
-                  child: OutlinedContainer(
-                    padding: const EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        const SortableDragHandle(
-                            child: Icon(Icons.drag_handle)),
-                        const SizedBox(width: 8),
-                        Expanded(child: Text(names[i].data)),
-                      ],
+                  child: const Text('Reset'),
+                ),
+                for (int i = 0; i < names.length; i++)
+                  Sortable<String>(
+                    key: ValueKey(names[i].data),
+                    data: names[i],
+                    // we only want user to drag the item from the handle,
+                    // so we disable the drag on the item itself
+                    enabled: false,
+                    onAcceptTop: (value) {
+                      setState(() {
+                        names.swapItem(value, i);
+                      });
+                    },
+                    onAcceptBottom: (value) {
+                      setState(() {
+                        names.swapItem(value, i + 1);
+                      });
+                    },
+                    onDropFailed: () {
+                      // Remove the item from the list if the drop failed
+                      setState(() {
+                        var removed = names.removeAt(i);
+                        // Ensure the drag overlay exists and then dismiss it so
+                        // the item does not animate back to its original position.
+                        SortableLayer.ensureAndDismissDrop(context, removed);
+                        // Dismissing drop will prevent the SortableLayer from
+                        // animating the item back to its original position
+                      });
+                    },
+                    child: OutlinedContainer(
+                      theme: OutlinedContainerTheme(
+                        padding: const EdgeInsets.all(12),
+                      ),
+                      child: Row(
+                        children: [
+                          const SortableDragHandle(
+                            child: Icon(LucideIcons.gripHorizontal),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(child: Text(names[i].data)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-            ],
-          ),
-        );
-      }),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -595,6 +646,7 @@ class _SortableExample6State extends State<SortableExample6> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SortableTile extends StatelessWidget implements IComponentPage {
   const SortableTile({super.key});
@@ -620,7 +672,7 @@ class SortableTile extends StatelessWidget implements IComponentPage {
                     padding: EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        Icon(Icons.drag_handle),
+                        Icon(LucideIcons.gripHorizontal),
                         Gap(8),
                         Text('Item 1'),
                       ],
@@ -633,7 +685,7 @@ class SortableTile extends StatelessWidget implements IComponentPage {
                     padding: EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        Icon(Icons.drag_handle),
+                        Icon(LucideIcons.gripHorizontal),
                         Gap(8),
                         Text('Item 2'),
                       ],
@@ -646,7 +698,7 @@ class SortableTile extends StatelessWidget implements IComponentPage {
                     padding: EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        Icon(Icons.drag_handle),
+                        Icon(LucideIcons.gripHorizontal),
                         Gap(8),
                         Text('Item 3'),
                       ],

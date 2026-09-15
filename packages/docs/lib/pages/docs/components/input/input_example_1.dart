@@ -7,8 +7,6 @@ class InputExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     // Basic text input using shadcn_flutter's TextField.
     // placeholder is rendered inside the input when it's empty.
-    return const TextField(
-      placeholder: Text('Enter your name'),
-    );
+    return const TextField(placeholder: Text('Enter your name'));
   }
 }

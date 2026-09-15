@@ -24,8 +24,7 @@ class TimePickerExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/time_picker/time_picker_example_1.dart',
+          path: 'lib/pages/docs/components/time_picker/time_picker_example_1.dart',
           child: TimePickerExample1(),
         ),
       ],
@@ -38,6 +37,7 @@ class TimePickerExample extends StatelessWidget {
 ### Time Picker Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates TimePicker in popover and dialog modes, updating state and
 // handling cancel by falling back to current time.
@@ -136,3 +136,4 @@ class TimePickerTile extends StatelessWidget implements IComponentPage {
 | `showSeconds` | `bool` | Whether to show seconds selection. |
 | `dialogTitle` | `Widget?` | Title widget for the dialog mode. |
 | `enabled` | `bool?` | Whether the time picker is enabled. |
+| `theme` | `TimePickerTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

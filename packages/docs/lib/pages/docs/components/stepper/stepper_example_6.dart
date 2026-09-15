@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class StepperExample6 extends StatefulWidget {
   const StepperExample6({super.key});
@@ -14,17 +15,9 @@ class _StepperExample6State extends State<StepperExample6> {
     StepVariant.circleAlt,
     StepVariant.line,
   ];
-  static const List<String> _variantNames = [
-    'Circle',
-    'Circle Alt',
-    'Line',
-  ];
+  static const List<String> _variantNames = ['Circle', 'Circle Alt', 'Line'];
   static const List<StepSize> _stepSize = StepSize.values;
-  static const List<String> _stepSizeNames = [
-    'Small',
-    'Medium',
-    'Large',
-  ];
+  static const List<String> _stepSizeNames = ['Small', 'Medium', 'Large'];
   final StepperController controller = StepperController();
   int _currentVariant = 0;
   int _currentStepSize = 0;
@@ -128,19 +121,15 @@ class _StepperExample6State extends State<StepperExample6> {
               contentBuilder: (context) {
                 return StepContainer(
                   actions: [
-                    const SecondaryButton(
-                      child: Text('Prev'),
-                    ),
+                    const SecondaryButton(child: Text('Prev')),
                     PrimaryButton(
-                        child: const Text('Next'),
-                        onPressed: () {
-                          controller.nextStep();
-                        }),
+                      child: const Text('Next'),
+                      onPressed: () {
+                        controller.nextStep();
+                      },
+                    ),
                   ],
-                  child: const NumberedContainer(
-                    index: 1,
-                    height: 200,
-                  ),
+                  child: const NumberedContainer(index: 1, height: 200),
                 );
               },
             ),
@@ -159,15 +148,13 @@ class _StepperExample6State extends State<StepperExample6> {
                       },
                     ),
                     PrimaryButton(
-                        child: const Text('Next'),
-                        onPressed: () {
-                          controller.nextStep();
-                        }),
+                      child: const Text('Next'),
+                      onPressed: () {
+                        controller.nextStep();
+                      },
+                    ),
                   ],
-                  child: const NumberedContainer(
-                    index: 2,
-                    height: 200,
-                  ),
+                  child: const NumberedContainer(index: 2, height: 200),
                 );
               },
             ),
@@ -183,15 +170,13 @@ class _StepperExample6State extends State<StepperExample6> {
                       },
                     ),
                     PrimaryButton(
-                        child: const Text('Finish'),
-                        onPressed: () {
-                          controller.nextStep();
-                        }),
+                      child: const Text('Finish'),
+                      onPressed: () {
+                        controller.nextStep();
+                      },
+                    ),
                   ],
-                  child: const NumberedContainer(
-                    index: 3,
-                    height: 200,
-                  ),
+                  child: const NumberedContainer(index: 3, height: 200),
                 );
               },
             ),

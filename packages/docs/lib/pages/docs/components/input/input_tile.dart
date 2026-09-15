@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart' as material;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
 
@@ -17,9 +16,7 @@ class InputTile extends StatelessWidget implements IComponentPage {
       example: Card(
         child: const TextField(
           initialValue: 'Hello World',
-          features: [
-            InputFeature.leading(Icon(material.Icons.edit)),
-          ],
+          features: [InputFeature.leading(Icon(LucideIcons.pencil))],
         ).sized(width: 250, height: 32),
       ).sized(height: 400),
     );

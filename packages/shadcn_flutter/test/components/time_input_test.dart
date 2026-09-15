@@ -9,10 +9,7 @@ void main() {
       final time = TimeOfDay(hour: 10, minute: 30);
       await tester.pumpWidget(
         SimpleApp(
-          child: TimeInput(
-            initialValue: time,
-            onChanged: (value) {},
-          ),
+          child: TimeInput(initialValue: time, onChanged: (value) {}),
         ),
       );
 

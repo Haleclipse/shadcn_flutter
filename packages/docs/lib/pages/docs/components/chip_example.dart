@@ -10,8 +10,7 @@ class ChipExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'chip',
-      description:
-          'A chip is a small, interactive element that represents an attribute, text, entity, or action.',
+      description: 'A chip is a small, interactive element that represents an attribute, text, entity, or action.',
       displayName: 'Chip',
       children: [
         WidgetUsageExample(

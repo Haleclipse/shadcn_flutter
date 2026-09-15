@@ -13,8 +13,8 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// ComponentTheme<CollapsibleTheme>(
 ///   data: CollapsibleTheme(
 ///     padding: 12.0,
-///     iconExpanded: Icons.keyboard_arrow_up,
-///     iconCollapsed: Icons.keyboard_arrow_down,
+///     iconExpanded: LucideIcons.chevronUp,
+///     iconCollapsed: LucideIcons.chevronDown,
 ///     iconGap: 8.0,
 ///     crossAxisAlignment: CrossAxisAlignment.start,
 ///   ),
@@ -30,12 +30,12 @@ class CollapsibleTheme extends ComponentThemeData {
 
   /// Icon displayed in the trigger when the collapsible is expanded.
   ///
-  /// If null, defaults to [Icons.unfold_less].
+  /// If null, defaults to [LucideIcons.chevronsDownUp].
   final IconData? iconExpanded;
 
   /// Icon displayed in the trigger when the collapsible is collapsed.
   ///
-  /// If null, defaults to [Icons.unfold_more].
+  /// If null, defaults to [LucideIcons.chevronsUpDown].
   final IconData? iconCollapsed;
 
   /// Cross-axis alignment for children in the [Collapsible] column.
@@ -100,8 +100,9 @@ class CollapsibleTheme extends ComponentThemeData {
     return CollapsibleTheme(
       padding: padding == null ? this.padding : padding(),
       iconExpanded: iconExpanded == null ? this.iconExpanded : iconExpanded(),
-      iconCollapsed:
-          iconCollapsed == null ? this.iconCollapsed : iconCollapsed(),
+      iconCollapsed: iconCollapsed == null
+          ? this.iconCollapsed
+          : iconCollapsed(),
       crossAxisAlignment: crossAxisAlignment == null
           ? this.crossAxisAlignment
           : crossAxisAlignment(),
@@ -162,7 +163,7 @@ class CollapsibleTheme extends ComponentThemeData {
 ///     CollapsibleTrigger(
 ///       child: Row(
 ///         children: [
-///           Icon(Icons.settings),
+///           Icon(LucideIcons.settings),
 ///           SizedBox(width: 8),
 ///           Text('Advanced Settings'),
 ///         ],
@@ -184,7 +185,8 @@ class CollapsibleTheme extends ComponentThemeData {
 /// ```
 ///
 /// For more information, visit: https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible
-class Collapsible extends StatefulWidget {
+class Collapsible extends StatefulWidget
+    implements Styleable<CollapsibleTheme> {
   /// The child widgets to display in the collapsible container.
   ///
   /// Typically includes a [CollapsibleTrigger] as the first child, followed by
@@ -204,6 +206,10 @@ class Collapsible extends StatefulWidget {
   /// widget is responsible for managing the expansion state. Called with the
   /// current expansion state when the user triggers a state change.
   final ValueChanged<bool>? onExpansionChanged;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CollapsibleTheme? theme;
 
   /// Creates a [Collapsible] widget with the specified children.
   ///
@@ -249,6 +255,7 @@ class Collapsible extends StatefulWidget {
     required this.children,
     this.isExpanded,
     this.onExpansionChanged,
+    this.theme,
   });
 
   @override
@@ -288,11 +295,14 @@ class CollapsibleState extends State<Collapsible> {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<CollapsibleTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<CollapsibleTheme>(context);
 
     return Data.inherit(
-      data:
-          CollapsibleStateData(isExpanded: _isExpanded, handleTap: _handleTap),
+      data: CollapsibleStateData(
+        isExpanded: _isExpanded,
+        handleTap: _handleTap,
+      ),
       child: IntrinsicWidth(
         child: Column(
           crossAxisAlignment:
@@ -355,7 +365,7 @@ class CollapsibleStateData {
 /// CollapsibleTrigger(
 ///   child: Row(
 ///     children: [
-///       Icon(Icons.folder),
+///       Icon(LucideIcons.folder),
 ///       SizedBox(width: 8),
 ///       Text('Project Files'),
 ///       Spacer(),
@@ -364,13 +374,18 @@ class CollapsibleStateData {
 ///   ),
 /// );
 /// ```
-class CollapsibleTrigger extends StatelessWidget {
+class CollapsibleTrigger extends StatelessWidget
+    implements Styleable<CollapsibleTheme> {
   /// The content widget to display within the trigger.
   ///
   /// Typically contains text, icons, or other UI elements that describe what
   /// will be expanded or collapsed. The child is automatically styled and
   /// positioned alongside the expand/collapse icon.
   final Widget child;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CollapsibleTheme? theme;
 
   /// Creates a [CollapsibleTrigger] with the specified child content.
   ///
@@ -389,7 +404,7 @@ class CollapsibleTrigger extends StatelessWidget {
   ///   child: Text('Click to toggle content'),
   /// );
   /// ```
-  const CollapsibleTrigger({super.key, required this.child});
+  const CollapsibleTrigger({super.key, required this.child, this.theme});
 
   @override
   Widget build(BuildContext context) {
@@ -399,22 +414,24 @@ class CollapsibleTrigger extends StatelessWidget {
     final densityContentPadding = theme.density.baseContentPadding * scaling;
     final state = Data.of<CollapsibleStateData>(context);
 
-    final compTheme = ComponentTheme.maybeOf<CollapsibleTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<CollapsibleTheme>(context);
 
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      Expanded(child: child.small().semiBold()),
-      Gap(compTheme?.iconGap ?? densityGap * 2),
-      GhostButton(
-        onPressed: state.handleTap,
-        child: Icon(
-          state.isExpanded
-              ? compTheme?.iconExpanded ?? Icons.unfold_less
-              : compTheme?.iconCollapsed ?? Icons.unfold_more,
-        ).iconXSmall(),
-      ),
-    ]).withPadding(
-      horizontal: compTheme?.padding ?? densityContentPadding,
-    );
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(child: child.small().semiBold()),
+        SizedBox(width: compTheme?.iconGap ?? densityGap * 2),
+        GhostButton(
+          onPressed: state.handleTap,
+          child: Icon(
+            state.isExpanded
+                ? compTheme?.iconExpanded ?? LucideIcons.chevronsDownUp
+                : compTheme?.iconCollapsed ?? LucideIcons.chevronsUpDown,
+          ).iconXSmall(),
+        ),
+      ],
+    ).withPadding(horizontal: compTheme?.padding ?? densityContentPadding);
   }
 }
 
@@ -495,9 +512,6 @@ class CollapsibleContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = Data.of<CollapsibleStateData>(context);
-    return Offstage(
-      offstage: !state.isExpanded && collapsible,
-      child: child,
-    );
+    return Offstage(offstage: !state.isExpanded && collapsible, child: child);
   }
 }

@@ -384,10 +384,7 @@ class ChipInputTheme extends ComponentThemeData {
   ///
   /// All parameters are optional and fall back to framework defaults when null.
   /// The theme can be applied globally or to specific chip input instances.
-  const ChipInputTheme({
-    this.spacing,
-    this.useChips,
-  });
+  const ChipInputTheme({this.spacing, this.useChips});
 
   /// Creates a copy of this theme with specified properties overridden.
   ///
@@ -549,10 +546,11 @@ class ChipEditingController<T> extends TextEditingController {
   }
 
   @override
-  TextSpan buildTextSpan(
-      {required BuildContext context,
-      TextStyle? style,
-      required bool withComposing}) {
+  TextSpan buildTextSpan({
+    required BuildContext context,
+    TextStyle? style,
+    required bool withComposing,
+  }) {
     final provider = Data.maybeOf<_ChipProvider<T>>(context);
     final theme = ComponentTheme.maybeOf<ChipInputTheme>(context);
     final spacing = theme?.spacing ?? 4.0;
@@ -573,30 +571,35 @@ class ChipEditingController<T> extends TextEditingController {
               buffer.clear();
             }
             T? chip = _chipMap[codeUnit - _chipStart];
-            Widget? chipWidget =
-                chip == null ? null : provider.buildChip(context, chip);
+            Widget? chipWidget = chip == null
+                ? null
+                : provider.buildChip(context, chip);
             if (chipWidget != null) {
-              bool previousIsChip = i > 0 &&
+              bool previousIsChip =
+                  i > 0 &&
                   text.codeUnitAt(i - 1) >= _chipStart &&
                   text.codeUnitAt(i - 1) <= _chipEnd;
-              bool nextIsChip = i < text.length - 1 &&
+              bool nextIsChip =
+                  i < text.length - 1 &&
                   text.codeUnitAt(i + 1) >= _chipStart &&
                   text.codeUnitAt(i + 1) <= _chipEnd;
-              children.add(ChipSpan<T>(
-                value: chip as T,
-                alignment: PlaceholderAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: previousIsChip
-                        ? spacing / 2
-                        : i == 0
-                            ? 0
-                            : spacing,
-                    right: nextIsChip ? spacing / 2 : spacing,
+              children.add(
+                ChipSpan<T>(
+                  value: chip as T,
+                  alignment: PlaceholderAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: previousIsChip
+                          ? spacing / 2
+                          : i == 0
+                          ? 0
+                          : spacing,
+                      right: nextIsChip ? spacing / 2 : spacing,
+                    ),
+                    child: chipWidget,
                   ),
-                  child: chipWidget,
                 ),
-              ));
+              );
             }
           } else {
             buffer.writeCharCode(codeUnit);
@@ -611,7 +614,7 @@ class ChipEditingController<T> extends TextEditingController {
 
       final TextStyle composingStyle =
           style?.merge(const TextStyle(decoration: TextDecoration.underline)) ??
-              const TextStyle(decoration: TextDecoration.underline);
+          const TextStyle(decoration: TextDecoration.underline);
       List<InlineSpan> children = [];
       String text = value.text;
       StringBuffer buffer = StringBuffer();
@@ -624,30 +627,35 @@ class ChipEditingController<T> extends TextEditingController {
             buffer.clear();
           }
           T? chip = _chipMap[codeUnit - _chipStart];
-          Widget? chipWidget =
-              chip == null ? null : provider.buildChip(context, chip);
+          Widget? chipWidget = chip == null
+              ? null
+              : provider.buildChip(context, chip);
           if (chipWidget != null) {
-            bool previousIsChip = i > 0 &&
+            bool previousIsChip =
+                i > 0 &&
                 text.codeUnitAt(i - 1) >= _chipStart &&
                 text.codeUnitAt(i - 1) <= _chipEnd;
-            bool nextIsChip = i < text.length - 1 &&
+            bool nextIsChip =
+                i < text.length - 1 &&
                 text.codeUnitAt(i + 1) >= _chipStart &&
                 text.codeUnitAt(i + 1) <= _chipEnd;
-            children.add(ChipSpan<T>(
-              value: chip as T,
-              alignment: PlaceholderAlignment.middle,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: previousIsChip
-                      ? spacing / 2
-                      : i == 0
-                          ? 0
-                          : spacing,
-                  right: nextIsChip ? spacing / 2 : spacing,
+            children.add(
+              ChipSpan<T>(
+                value: chip as T,
+                alignment: PlaceholderAlignment.middle,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: previousIsChip
+                        ? spacing / 2
+                        : i == 0
+                        ? 0
+                        : spacing,
+                    right: nextIsChip ? spacing / 2 : spacing,
+                  ),
+                  child: chipWidget,
                 ),
-                child: chipWidget,
               ),
-            ));
+            );
           }
         } else {
           // Check if current index is within composing range
@@ -657,8 +665,12 @@ class ChipEditingController<T> extends TextEditingController {
               children.add(TextSpan(style: style, text: buffer.toString()));
               buffer.clear();
             }
-            children.add(TextSpan(
-                style: composingStyle, text: String.fromCharCode(codeUnit)));
+            children.add(
+              TextSpan(
+                style: composingStyle,
+                text: String.fromCharCode(codeUnit),
+              ),
+            );
           } else {
             buffer.writeCharCode(codeUnit);
           }
@@ -671,7 +683,10 @@ class ChipEditingController<T> extends TextEditingController {
       return TextSpan(style: style, children: children);
     }
     return super.buildTextSpan(
-        context: context, style: style, withComposing: withComposing);
+      context: context,
+      style: style,
+      withComposing: withComposing,
+    );
   }
 
   /// Returns the plain text without chip characters.
@@ -813,8 +828,11 @@ class ChipEditingController<T> extends TextEditingController {
         break;
       }
     }
-    String newText = text.replaceRange(lastChipIndex + 1, lastChipIndex + 1,
-        String.fromCharCode(_chipStart + chipIndex));
+    String newText = text.replaceRange(
+      lastChipIndex + 1,
+      lastChipIndex + 1,
+      String.fromCharCode(_chipStart + chipIndex),
+    );
     super.value = value.copyWith(
       text: newText,
       selection: TextSelection.collapsed(offset: lastChipIndex + 2),
@@ -828,8 +846,11 @@ class ChipEditingController<T> extends TextEditingController {
     final boundaries = _findChipTextBoundaries(selection.baseOffset);
     String text = value.text;
     int chipIndex = _nextAvailableChipIndex;
-    String newText = text.replaceRange(boundaries.end, boundaries.end,
-        String.fromCharCode(_chipStart + chipIndex));
+    String newText = text.replaceRange(
+      boundaries.end,
+      boundaries.end,
+      String.fromCharCode(_chipStart + chipIndex),
+    );
     super.value = value.copyWith(
       text: newText,
       selection: TextSelection.collapsed(offset: boundaries.end + 1),
@@ -936,7 +957,8 @@ typedef ChipSubmissionCallback<T> = T? Function(String chipText);
 ///
 /// Allows users to create chip tokens within a text field, useful for
 /// tags, email recipients, or any multi-item input scenario.
-class ChipInput<T> extends TextInputStatefulWidget {
+class ChipInput<T> extends TextInputStatefulWidget
+    implements Styleable<ChipInputTheme> {
   /// Checks if a code unit represents a chip character.
   static bool isChipUnicode(int codeUnit) {
     return codeUnit >= ChipEditingController._chipStart &&
@@ -960,6 +982,7 @@ class ChipInput<T> extends TextInputStatefulWidget {
   final ValueChanged<List<T>>? onChipsChanged;
 
   /// Whether to display items as visual chips (defaults to theme setting).
+  @Deprecated('Use theme: ChipInputTheme(useChips: ...) instead.')
   final bool? useChips;
 
   /// Initial chips to display in the input.
@@ -973,6 +996,10 @@ class ChipInput<T> extends TextInputStatefulWidget {
   /// Defaults to a [DefaultChipClipboardHandler] that copies each chip using
   /// its [Object.toString] and pastes clipboard text as plain text.
   final ClipboardHandler<T>? clipboardHandler;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ChipInputTheme? theme;
 
   /// Creates a chip input widget.
   const ChipInput({
@@ -1055,6 +1082,7 @@ class ChipInput<T> extends TextInputStatefulWidget {
     this.useChips,
     this.initialChips,
     this.clipboardHandler,
+    this.theme,
   });
 
   @override
@@ -1079,7 +1107,8 @@ class ChipInputState<T> extends State<ChipInput<T>>
   }
 
   bool get _useChips {
-    final compTheme = ComponentTheme.maybeOf<ChipInputTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ChipInputTheme>(context);
     return styleValue<bool>(
       widgetValue: widget.useChips,
       themeValue: compTheme?.useChips,
@@ -1129,7 +1158,8 @@ class ChipInputState<T> extends State<ChipInput<T>>
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ??
+    _controller =
+        widget.controller ??
         ChipEditingController<T>(
           initialChips: widget.initialChips,
           text: widget.initialValue ?? '',
@@ -1178,69 +1208,72 @@ class ChipInputState<T> extends State<ChipInput<T>>
   @override
   Widget build(BuildContext context) {
     return Data<_ChipProvider<T>>.inherit(
-        data: this,
-        child: Shortcuts(
-          shortcuts: {
-            LogicalKeySet(LogicalKeyboardKey.enter): const ChipSubmitIntent(),
-          },
-          child: Actions(
-            actions: {
-              CopySelectionTextIntent: CallbackAction<CopySelectionTextIntent>(
-                onInvoke: (intent) {
-                  _handleCopySelection(intent);
-                  return null;
-                },
-              ),
-              PasteTextIntent: CallbackAction<PasteTextIntent>(
-                onInvoke: (intent) {
-                  _handlePaste(intent);
-                  return null;
-                },
-              ),
-              if (widget.autoInsertSuggestion)
-                AutoCompleteIntent: Action.overridable(
-                  defaultAction: CallbackAction<AutoCompleteIntent>(
-                    onInvoke: (intent) {
-                      _controller.insertChipAtCursor(
-                          (text) => widget.onChipSubmitted(intent.suggestion));
-                      widget.onChipsChanged?.call(_controller.chips);
-                      return;
-                    },
-                  ),
-                  context: context,
-                ),
-              ChipSubmitIntent: Action.overridable(
-                defaultAction: CallbackAction<ChipSubmitIntent>(
+      data: this,
+      child: Shortcuts(
+        shortcuts: {
+          LogicalKeySet(LogicalKeyboardKey.enter): const ChipSubmitIntent(),
+        },
+        child: Actions(
+          actions: {
+            CopySelectionTextIntent: CallbackAction<CopySelectionTextIntent>(
+              onInvoke: (intent) {
+                _handleCopySelection(intent);
+                return null;
+              },
+            ),
+            PasteTextIntent: CallbackAction<PasteTextIntent>(
+              onInvoke: (intent) {
+                _handlePaste(intent);
+                return null;
+              },
+            ),
+            if (widget.autoInsertSuggestion)
+              AutoCompleteIntent: Action.overridable(
+                defaultAction: CallbackAction<AutoCompleteIntent>(
                   onInvoke: (intent) {
                     _controller.insertChipAtCursor(
-                        (text) => widget.onChipSubmitted(text));
+                      (text) => widget.onChipSubmitted(intent.suggestion),
+                    );
                     widget.onChipsChanged?.call(_controller.chips);
                     return;
                   },
                 ),
                 context: context,
               ),
-            },
-            child: widget.copyWith(
-              controller: () => _controller,
-              onSubmitted: () => (value) {
-                _controller.insertChipAtCursor(widget.onChipSubmitted);
-              },
-              // Submitting a chip on a single-line field would otherwise fall
-              // back to the default editing-complete behavior, which unfocuses
-              // the field. Keep focus so the user can keep adding chips, unless
-              // the caller supplied their own onEditingComplete.
-              onEditingComplete: () =>
-                  widget.onEditingComplete ??
-                  () {
-                    _controller.clearComposing();
-                  },
-              onChanged: () => (text) {
-                widget.onChanged?.call(_controller.plainText);
-              },
+            ChipSubmitIntent: Action.overridable(
+              defaultAction: CallbackAction<ChipSubmitIntent>(
+                onInvoke: (intent) {
+                  _controller.insertChipAtCursor(
+                    (text) => widget.onChipSubmitted(text),
+                  );
+                  widget.onChipsChanged?.call(_controller.chips);
+                  return;
+                },
+              ),
+              context: context,
             ),
+          },
+          child: widget.copyWith(
+            controller: () => _controller,
+            onSubmitted: () => (value) {
+              _controller.insertChipAtCursor(widget.onChipSubmitted);
+            },
+            // Submitting a chip on a single-line field would otherwise fall
+            // back to the default editing-complete behavior, which unfocuses
+            // the field. Keep focus so the user can keep adding chips, unless
+            // the caller supplied their own onEditingComplete.
+            onEditingComplete: () =>
+                widget.onEditingComplete ??
+                () {
+                  _controller.clearComposing();
+                },
+            onChanged: () => (text) {
+              widget.onChanged?.call(_controller.plainText);
+            },
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   @override

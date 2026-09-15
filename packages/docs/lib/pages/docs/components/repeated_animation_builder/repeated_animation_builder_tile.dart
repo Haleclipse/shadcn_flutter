@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:flutter/material.dart' as material;
+
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
 
@@ -24,11 +24,7 @@ class RepeatedAnimationBuilderTile extends StatelessWidget
         builder: (context, value, child) {
           return Transform.rotate(
             angle: pi / 180 * value,
-            child: Container(
-              width: 100,
-              height: 100,
-              color: material.Colors.red,
-            ),
+            child: Container(width: 100, height: 100, color: Colors.red),
           );
         },
       ),

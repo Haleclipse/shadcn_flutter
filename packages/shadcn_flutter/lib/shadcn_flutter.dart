@@ -1,10 +1,7 @@
 library;
 
-// bundle from https://pub.dev/packages/country_flags
-export 'package:country_flags/country_flags.dart' show CountryFlag;
-
-// bundle cross_file
-export 'package:cross_file/cross_file.dart' show XFile;
+// Preview is now stable for 3.47.0
+export 'src/previewer/previewer.dart';
 
 // bundle from data_widget
 export 'package:data_widget/data_widget.dart';
@@ -13,14 +10,6 @@ export 'package:data_widget/extension.dart';
 // bundle from animation_kit
 export 'package:animation_kit/animation_kit.dart';
 
-// export text selection controls from cupertino
-export 'package:flutter/cupertino.dart'
-    show
-        cupertinoDesktopTextSelectionControls,
-        cupertinoDesktopTextSelectionHandleControls;
-// export Icons from material
-export 'package:flutter/material.dart'
-    show Icons, MaterialPageRoute, MaterialPage, SliverAppBar, FlutterLogo;
 export 'package:flutter/widgets.dart'
     hide
         // these widgets are patched, see the patch export below
@@ -40,12 +29,9 @@ export 'package:flutter/widgets.dart'
         TableCell,
         FormField,
         RadioGroup;
-// bundle from gap
-export 'package:gap/gap.dart';
-// bundle from https://pub.dev/packages/phonecodes
-export 'package:phonecodes/phonecodes.dart' show Countries, Country;
-// bundle from skeletonizer https://pub.dev/packages/skeletonizer
-export 'package:skeletonizer/skeletonizer.dart' show Bone, BoneMock;
+
+// bundled from https://pub.dev/packages/phonecodes, see the LICENSE next to it
+export 'src/vendor/phonecodes/phonecodes.dart';
 
 // patched flex with paint order
 export 'src/components/layout/flex.dart';
@@ -67,13 +53,13 @@ export 'src/components/display/carousel.dart';
 export 'src/components/display/chip.dart';
 export 'src/components/display/circular_progress_indicator.dart';
 export 'src/components/display/code_snippet.dart';
+export 'src/components/display/country_flag.dart';
 export 'src/components/display/divider.dart';
 export 'src/components/display/dot_indicator.dart';
 export 'src/components/display/keyboard_shortcut.dart';
 export 'src/components/display/linear_progress_indicator.dart';
 export 'src/components/display/number_ticker.dart';
 export 'src/components/display/progress.dart';
-export 'src/components/display/skeleton.dart';
 export 'src/components/form/autocomplete.dart';
 export 'src/components/form/checkbox.dart';
 export 'src/components/form/chip_input.dart';
@@ -124,12 +110,14 @@ export 'src/components/locale/shadcn_localizations.dart';
 export 'src/components/locale/shadcn_localizations_extensions.dart';
 export 'src/components/locale/locale_utils.dart';
 export 'src/components/menu/context_menu.dart';
+export 'src/components/menu/spell_check_suggestions_toolbar.dart';
 export 'src/components/menu/dropdown_menu.dart';
 export 'src/components/menu/menu.dart';
 export 'src/components/menu/menubar.dart';
 export 'src/components/menu/navigation_menu.dart';
 export 'src/components/menu/popup.dart';
 export 'src/components/navigation/navigation_bar.dart';
+export 'src/components/navigation/page_route.dart';
 export 'src/components/navigation/pagination.dart';
 export 'src/components/navigation/tabs/tab_container.dart';
 export 'src/components/navigation/tabs/tab_list.dart';
@@ -151,6 +139,7 @@ export 'src/components/overlay/swiper.dart';
 export 'src/components/overlay/toast.dart';
 export 'src/components/overlay/tooltip.dart';
 export 'src/components/text/selectable.dart';
+export 'src/components/text/selection_controls.dart';
 export 'src/components/text/text.dart';
 export 'src/icons/bootstrap_icons.dart';
 export 'src/icons/lucide_icons.dart';

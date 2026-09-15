@@ -244,66 +244,70 @@ class _TextAreaState extends State<TextArea> {
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
     return SizedBox(
-        height: _height,
-        width: _width,
-        child: Stack(
-          fit: StackFit.passthrough,
-          clipBehavior: Clip.none,
-          children: [
-            Positioned.fill(
-              child: widget.copyWith(
-                expands: () => true,
-                maxLines: () => null,
-                minLines: () => null,
-                textAlignVertical: () =>
-                    widget.textAlignVertical ?? TextAlignVertical.top,
-              ),
+      height: _height,
+      width: _width,
+      child: Stack(
+        fit: StackFit.passthrough,
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(
+            child: widget.copyWith(
+              expands: () => true,
+              maxLines: () => null,
+              minLines: () => null,
+              textAlignVertical: () =>
+                  widget.textAlignVertical ?? TextAlignVertical.top,
             ),
-            Positioned(
-              bottom: -1 * scaling,
-              right: -1 * scaling,
-              width: (8 + 8) * scaling,
-              height: (8 + 8) * scaling,
-              child: MouseRegion(
-                hitTestBehavior: HitTestBehavior.translucent,
-                cursor: widget.expandableWidth
-                    ? widget.expandableHeight
+          ),
+          Positioned(
+            bottom: -1 * scaling,
+            right: -1 * scaling,
+            width: (8 + 8) * scaling,
+            height: (8 + 8) * scaling,
+            child: MouseRegion(
+              hitTestBehavior: HitTestBehavior.translucent,
+              cursor: widget.expandableWidth
+                  ? widget.expandableHeight
                         ? SystemMouseCursors.resizeDownRight
                         : SystemMouseCursors.resizeLeftRight
-                    : widget.expandableHeight
-                        ? SystemMouseCursors.resizeUpDown
-                        : SystemMouseCursors.basic,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onPanUpdate: (details) {
-                    if (widget.expandableHeight && _height.isFinite) {
-                      setState(() {
-                        _height += details.delta.dy;
-                        _height =
-                            _height.clamp(widget.minHeight, widget.maxHeight);
-                        widget.onHeightChanged?.call(_height);
-                      });
-                    }
-                    if (widget.expandableWidth && _width.isFinite) {
-                      setState(() {
-                        _width += details.delta.dx;
-                        _width = _width.clamp(widget.minWidth, widget.maxWidth);
-                        widget.onWidthChanged?.call(_width);
-                      });
-                    }
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(densityGap * 0.5),
-                    child: CustomPaint(
-                      painter: _TextAreaDragHandlePainter(
-                          theme.colorScheme.foreground),
+                  : widget.expandableHeight
+                  ? SystemMouseCursors.resizeUpDown
+                  : SystemMouseCursors.basic,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onPanUpdate: (details) {
+                  if (widget.expandableHeight && _height.isFinite) {
+                    setState(() {
+                      _height += details.delta.dy;
+                      _height = _height.clamp(
+                        widget.minHeight,
+                        widget.maxHeight,
+                      );
+                      widget.onHeightChanged?.call(_height);
+                    });
+                  }
+                  if (widget.expandableWidth && _width.isFinite) {
+                    setState(() {
+                      _width += details.delta.dx;
+                      _width = _width.clamp(widget.minWidth, widget.maxWidth);
+                      widget.onWidthChanged?.call(_width);
+                    });
+                  }
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(densityGap * 0.5),
+                  child: CustomPaint(
+                    painter: _TextAreaDragHandlePainter(
+                      theme.colorScheme.foreground,
                     ),
                   ),
                 ),
               ),
-            )
-          ],
-        ));
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

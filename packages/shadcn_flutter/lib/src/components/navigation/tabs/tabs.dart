@@ -60,11 +60,13 @@ class TabsTheme extends ComponentThemeData {
     ValueGetter<BorderRadiusGeometry?>? borderRadius,
   }) {
     return TabsTheme(
-      containerPadding:
-          containerPadding == null ? this.containerPadding : containerPadding(),
+      containerPadding: containerPadding == null
+          ? this.containerPadding
+          : containerPadding(),
       tabPadding: tabPadding == null ? this.tabPadding : tabPadding(),
-      backgroundColor:
-          backgroundColor == null ? this.backgroundColor : backgroundColor(),
+      backgroundColor: backgroundColor == null
+          ? this.backgroundColor
+          : backgroundColor(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
     );
   }
@@ -132,7 +134,7 @@ class TabsTheme extends ComponentThemeData {
 ///   ],
 /// );
 /// ```
-class Tabs extends StatelessWidget {
+class Tabs extends StatelessWidget implements Styleable<TabsTheme> {
   /// The index of the currently selected tab (0-indexed).
   ///
   /// Must be between 0 and `children.length - 1` inclusive.
@@ -158,6 +160,10 @@ class Tabs extends StatelessWidget {
   /// uses the padding from [TabsTheme].
   final EdgeInsetsGeometry? padding;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TabsTheme? theme;
+
   /// Creates a tabs widget.
   ///
   /// Parameters:
@@ -172,6 +178,7 @@ class Tabs extends StatelessWidget {
     required this.children,
     this.padding,
     this.expand = false,
+    this.theme,
   });
 
   Widget _childBuilder(
@@ -183,7 +190,7 @@ class Tabs extends StatelessWidget {
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
     final densityContentPadding = theme.density.baseContentPadding * scaling;
-    final compTheme = ComponentTheme.maybeOf<TabsTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<TabsTheme>(context);
     final tabPadding = styleValue(
       defaultValue: EdgeInsets.symmetric(
         horizontal: densityContentPadding,
@@ -224,7 +231,7 @@ class Tabs extends StatelessWidget {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final compTheme = ComponentTheme.maybeOf<TabsTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<TabsTheme>(context);
     final containerPadding = styleValue(
       defaultValue: EdgeInsets.all(densityGap * 0.5),
       themeValue: compTheme?.containerPadding,

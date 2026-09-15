@@ -45,13 +45,17 @@ import '../../../shadcn_flutter.dart';
 ///   ],
 /// );
 /// ```
-class Accordion extends StatefulWidget {
+class Accordion extends StatefulWidget implements Styleable<AccordionTheme> {
   /// The list of accordion items to display.
   ///
   /// Each item should be an [AccordionItem] widget containing a trigger and content.
   /// The accordion automatically adds visual dividers between items and manages
   /// the expansion state to ensure only one item can be expanded at a time.
   final List<Widget> items;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AccordionTheme? theme;
 
   /// Creates an [Accordion] widget with the specified items.
   ///
@@ -79,7 +83,7 @@ class Accordion extends StatefulWidget {
   ///   ],
   /// );
   /// ```
-  const Accordion({super.key, required this.items});
+  const Accordion({super.key, required this.items, this.theme});
 
   @override
   AccordionState createState() => AccordionState();
@@ -96,23 +100,27 @@ class AccordionState extends State<Accordion> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final accTheme = ComponentTheme.maybeOf<AccordionTheme>(context);
+    final accTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AccordionTheme>(context);
     return Data.inherit(
-        data: this,
-        child: IntrinsicWidth(
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ...join(
-                    widget.items,
-                    Container(
-                      color: theme.colorScheme.muted,
-                      height: accTheme?.dividerHeight ?? 1 * scaling,
-                    )),
-                const Divider(),
-              ]),
-        ));
+      data: this,
+      child: IntrinsicWidth(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ...join(
+              widget.items,
+              Container(
+                color: theme.colorScheme.muted,
+                height: accTheme?.dividerHeight ?? 1 * scaling,
+              ),
+            ),
+            const Divider(),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -132,7 +140,7 @@ class AccordionState extends State<Accordion> {
 ///     duration: Duration(milliseconds: 300),
 ///     curve: Curves.easeInOut,
 ///     padding: 20.0,
-///     arrowIcon: Icons.expand_more,
+///     arrowIcon: LucideIcons.chevronDown,
 ///     arrowIconColor: Colors.blue,
 ///   ),
 ///   child: MyAccordionWidget(),
@@ -183,7 +191,7 @@ class AccordionTheme extends ComponentThemeData {
   /// Icon displayed in the trigger to indicate expand/collapse state.
   ///
   /// This icon is rotated 180 degrees when transitioning between states.
-  /// If null, defaults to [Icons.keyboard_arrow_up].
+  /// If null, defaults to [LucideIcons.chevronUp].
   final IconData? arrowIcon;
 
   /// Color of the expand/collapse arrow icon.
@@ -247,12 +255,14 @@ class AccordionTheme extends ComponentThemeData {
       reverseCurve: reverseCurve == null ? this.reverseCurve : reverseCurve(),
       padding: padding == null ? this.padding : padding(),
       iconGap: iconGap == null ? this.iconGap : iconGap(),
-      dividerHeight:
-          dividerHeight == null ? this.dividerHeight : dividerHeight(),
+      dividerHeight: dividerHeight == null
+          ? this.dividerHeight
+          : dividerHeight(),
       dividerColor: dividerColor == null ? this.dividerColor : dividerColor(),
       arrowIcon: arrowIcon == null ? this.arrowIcon : arrowIcon(),
-      arrowIconColor:
-          arrowIconColor == null ? this.arrowIconColor : arrowIconColor(),
+      arrowIconColor: arrowIconColor == null
+          ? this.arrowIconColor
+          : arrowIconColor(),
     );
   }
 
@@ -271,16 +281,16 @@ class AccordionTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        duration,
-        curve,
-        reverseCurve,
-        padding,
-        iconGap,
-        dividerHeight,
-        dividerColor,
-        arrowIcon,
-        arrowIconColor,
-      );
+    duration,
+    curve,
+    reverseCurve,
+    padding,
+    iconGap,
+    dividerHeight,
+    dividerColor,
+    arrowIcon,
+    arrowIconColor,
+  );
 
   @override
   String toString() {
@@ -311,7 +321,7 @@ class AccordionTheme extends ComponentThemeData {
 ///   trigger: AccordionTrigger(
 ///     child: Row(
 ///       children: [
-///         Icon(Icons.help_outline),
+///         Icon(LucideIcons.circleHelp),
 ///         SizedBox(width: 8),
 ///         Text('Frequently Asked Question'),
 ///       ],
@@ -323,7 +333,8 @@ class AccordionTheme extends ComponentThemeData {
 ///   ),
 /// );
 /// ```
-class AccordionItem extends StatefulWidget {
+class AccordionItem extends StatefulWidget
+    implements Styleable<AccordionTheme> {
   /// The clickable header widget that controls expansion.
   ///
   /// Typically an [AccordionTrigger] widget, but can be any widget that
@@ -343,6 +354,10 @@ class AccordionItem extends StatefulWidget {
   /// When true, the item begins expanded and its content is immediately visible.
   /// Only one item in an accordion should typically start expanded.
   final bool expanded;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AccordionTheme? theme;
 
   /// Creates an [AccordionItem] with the specified trigger and content.
   ///
@@ -372,6 +387,7 @@ class AccordionItem extends StatefulWidget {
     required this.trigger,
     required this.content,
     this.expanded = false,
+    this.theme,
   });
 
   @override
@@ -391,9 +407,7 @@ class _AccordionItemState extends State<AccordionItem>
   void initState() {
     super.initState();
     _expanded.value = widget.expanded;
-    _controller = AnimationController(
-      vsync: this,
-    );
+    _controller = AnimationController(vsync: this);
     _updateAnimations();
   }
 
@@ -419,7 +433,8 @@ class _AccordionItemState extends State<AccordionItem>
       accordion = newAccordion;
     }
 
-    final theme = ComponentTheme.maybeOf<AccordionTheme>(context);
+    final theme =
+        widget.theme ?? ComponentTheme.maybeOf<AccordionTheme>(context);
 
     if (_theme != theme) {
       _theme = theme;
@@ -487,7 +502,9 @@ class _AccordionItemState extends State<AccordionItem>
             SizeTransition(
               key: const ValueKey('accordion_size_transition'),
               sizeFactor: _easeInAnimation,
-              axisAlignment: -1,
+              // Pin the content to the top so it is revealed downwards; the
+              // equivalent of the old `axisAlignment: -1` on a vertical axis.
+              alignment: Alignment.topLeft,
               child: Padding(
                 padding: EdgeInsets.only(
                   bottom: _theme?.padding ?? 16 * scaling,
@@ -526,7 +543,7 @@ class _AccordionItemState extends State<AccordionItem>
 /// AccordionTrigger(
 ///   child: Row(
 ///     children: [
-///       Icon(Icons.info_outline),
+///       Icon(LucideIcons.info),
 ///       SizedBox(width: 12),
 ///       Expanded(
 ///         child: Column(
@@ -541,13 +558,18 @@ class _AccordionItemState extends State<AccordionItem>
 ///   ),
 /// );
 /// ```
-class AccordionTrigger extends StatefulWidget {
+class AccordionTrigger extends StatefulWidget
+    implements Styleable<AccordionTheme> {
   /// The content widget displayed within the trigger.
   ///
   /// Typically contains text, icons, or other UI elements that describe the
   /// accordion section. The child receives automatic text styling and hover
   /// effects from the trigger.
   final Widget child;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final AccordionTheme? theme;
 
   /// Creates an [AccordionTrigger] with the specified child content.
   ///
@@ -567,7 +589,7 @@ class AccordionTrigger extends StatefulWidget {
   ///   child: Text('Click to expand this section'),
   /// );
   /// ```
-  const AccordionTrigger({super.key, required this.child});
+  const AccordionTrigger({super.key, required this.child, this.theme});
 
   @override
   State<AccordionTrigger> createState() => _AccordionTriggerState();
@@ -607,7 +629,8 @@ class _AccordionTriggerState extends State<AccordionTrigger> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    final accTheme = ComponentTheme.maybeOf<AccordionTheme>(context);
+    final accTheme =
+        widget.theme ?? ComponentTheme.maybeOf<AccordionTheme>(context);
     final scaling = theme.scaling;
     return GestureDetector(
       onTap: () {
@@ -668,24 +691,26 @@ class _AccordionTriggerState extends State<AccordionTrigger> {
                 ),
                 SizedBox(width: accTheme?.iconGap ?? 18 * scaling),
                 TweenAnimationBuilder(
-                    tween: _expanded
-                        ? Tween(begin: 1.0, end: 0)
-                        : Tween(begin: 0, end: 1.0),
-                    duration: accTheme?.duration ?? kDefaultDuration,
-                    builder: (context, value, child) {
-                      return Transform.rotate(
-                        angle: value * pi,
-                        child: IconTheme(
-                          data: IconThemeData(
-                            color: accTheme?.arrowIconColor ??
-                                theme.colorScheme.mutedForeground,
-                          ),
-                          child: Icon(accTheme?.arrowIcon ??
-                                  Icons.keyboard_arrow_up)
-                              .iconMedium(),
+                  tween: _expanded
+                      ? Tween(begin: 1.0, end: 0)
+                      : Tween(begin: 0, end: 1.0),
+                  duration: accTheme?.duration ?? kDefaultDuration,
+                  builder: (context, value, child) {
+                    return Transform.rotate(
+                      angle: value * pi,
+                      child: IconTheme(
+                        data: IconThemeData(
+                          color:
+                              accTheme?.arrowIconColor ??
+                              theme.colorScheme.mutedForeground,
                         ),
-                      );
-                    }),
+                        child: Icon(
+                          accTheme?.arrowIcon ?? LucideIcons.chevronUp,
+                        ).iconMedium(),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ).medium().small(),

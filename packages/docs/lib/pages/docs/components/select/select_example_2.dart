@@ -17,7 +17,8 @@ class _SelectExample2State extends State<SelectExample2> {
   String? selectedValue;
 
   Iterable<MapEntry<String, List<String>>> _filteredFruits(
-      String searchQuery) sync* {
+    String searchQuery,
+  ) sync* {
     // Yield entries whose key or children match the current search query.
     for (final entry in fruits.entries) {
       final filteredValues = entry.value
@@ -55,17 +56,10 @@ class _SelectExample2State extends State<SelectExample2> {
               for (final entry in filteredFruits)
                 SelectGroup(
                   // Group by category (e.g., Apple, Banana) with a header label.
-                  headers: [
-                    SelectLabel(
-                      child: Text(entry.key),
-                    ),
-                  ],
+                  headers: [SelectLabel(child: Text(entry.key))],
                   children: [
                     for (final value in entry.value)
-                      SelectItemButton(
-                        value: value,
-                        child: Text(value),
-                      ),
+                      SelectItemButton(value: value, child: Text(value)),
                   ],
                 ),
             ],
@@ -77,9 +71,7 @@ class _SelectExample2State extends State<SelectExample2> {
           selectedValue = value;
         });
       },
-      constraints: const BoxConstraints(
-        minWidth: 200,
-      ),
+      constraints: const BoxConstraints(minWidth: 200),
       value: selectedValue,
       placeholder: const Text('Select a fruit'),
     );

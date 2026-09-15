@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// DatePicker in popover and dialog modes with disabled future dates.
 ///
@@ -20,7 +21,6 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
       children: [
         DatePicker(
           value: _value,
-          mode: PromptMode.popover,
           // Disable selecting dates after "today".
           stateBuilder: (date) {
             if (date.isAfter(DateTime.now())) {
@@ -33,11 +33,11 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
               _value = value;
             });
           },
+          theme: DatePickerTheme(mode: PromptMode.popover),
         ),
         const Gap(16),
         DatePicker(
           value: _value,
-          mode: PromptMode.dialog,
           // Title shown at the top of the dialog variant.
           dialogTitle: const Text('Select Date'),
           stateBuilder: (date) {
@@ -51,6 +51,7 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
               _value = value;
             });
           },
+          theme: DatePickerTheme(mode: PromptMode.dialog),
         ),
       ],
     );

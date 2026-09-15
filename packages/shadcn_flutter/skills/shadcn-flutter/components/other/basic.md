@@ -7,10 +7,10 @@ A versatile layout widget for arranging leading, title, subtitle, content, and t
 ### Basic Example
 ```dart
 Basic(
-  leading: Icon(Icons.person),
+  leading: Icon(LucideIcons.user),
   title: Text('John Doe'),
   subtitle: Text('john@example.com'),
-  trailing: Icon(Icons.chevron_right),
+  trailing: Icon(LucideIcons.chevronRight),
 )
 ```
 
@@ -39,3 +39,4 @@ Basic(
 | `titleSpacing` | `double?` | Spacing between title and subtitle (default: 4). |
 | `mainAxisAlignment` | `MainAxisAlignment?` | Main axis alignment for the overall layout. |
 | `padding` | `EdgeInsetsGeometry?` | Padding around the entire widget. |
+| `theme` | `BasicTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

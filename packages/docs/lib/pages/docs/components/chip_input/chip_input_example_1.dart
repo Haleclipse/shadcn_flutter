@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// ChipInput with inline autocomplete suggestions.
 ///
@@ -31,22 +32,20 @@ class _ChipInputExample1State extends State<ChipInputExample1> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(
-      () {
-        setState(() {
-          // IMPORTANT: use textAtCursor instead of text so we only consider
-          // the current token under the caret when filtering suggestions.
-          var value = _controller.textAtCursor;
-          if (value.isNotEmpty) {
-            _suggestions = _availableSuggestions.where((element) {
-              return element.startsWith(value);
-            }).toList();
-          } else {
-            _suggestions = [];
-          }
-        });
-      },
-    );
+    _controller.addListener(() {
+      setState(() {
+        // IMPORTANT: use textAtCursor instead of text so we only consider
+        // the current token under the caret when filtering suggestions.
+        var value = _controller.textAtCursor;
+        if (value.isNotEmpty) {
+          _suggestions = _availableSuggestions.where((element) {
+            return element.startsWith(value);
+          }).toList();
+        } else {
+          _suggestions = [];
+        }
+      });
+    });
   }
 
   @override
@@ -75,7 +74,7 @@ class _ChipInputExample1State extends State<ChipInputExample1> {
             },
           ),
         ),
-        gap(24),
+        Gap(24),
         ListenableBuilder(
           listenable: _controller,
           builder: (context, child) {

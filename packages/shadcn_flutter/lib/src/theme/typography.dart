@@ -115,10 +115,14 @@ class Typography {
 
   /// Creates a typography with Geist font family.
   const Typography.geist({
-    this.sans =
-        const TextStyle(fontFamily: 'GeistSans', package: 'shadcn_flutter'),
-    this.mono =
-        const TextStyle(fontFamily: 'GeistMono', package: 'shadcn_flutter'),
+    this.sans = const TextStyle(
+      fontFamily: 'GeistSans',
+      package: 'shadcn_flutter',
+    ),
+    this.mono = const TextStyle(
+      fontFamily: 'GeistMono',
+      package: 'shadcn_flutter',
+    ),
     this.xSmall = const TextStyle(fontSize: 12),
     this.small = const TextStyle(fontSize: 14),
     this.base = const TextStyle(fontSize: 16),
@@ -148,9 +152,15 @@ class Typography {
     this.h4 = const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
     this.p = const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
     this.blockQuote = const TextStyle(
-        fontSize: 16, fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      fontStyle: FontStyle.italic,
+    ),
     this.inlineCode = const TextStyle(
-        fontFamily: 'GeistMono', fontSize: 14, fontWeight: FontWeight.w600),
+      fontFamily: 'GeistMono',
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+    ),
     this.lead = const TextStyle(fontSize: 20),
     this.textLarge = const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
     this.textSmall = const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),

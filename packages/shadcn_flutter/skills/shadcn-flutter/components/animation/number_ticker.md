@@ -8,6 +8,7 @@ A widget that smoothly animates between numeric values with customizable display
 ```dart
 import 'package:intl/intl.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 // Demonstrates NumberTicker animating from its previous value to a new value.
 // The TextField lets you enter a target integer; committing the edit triggers
@@ -36,11 +37,11 @@ class _NumberTickerExample1State extends State<NumberTickerExample1> {
           // The live value to animate toward. When this changes, the ticker
           // interpolates between the previous and the new value.
           number: _number,
-          style: const TextStyle(fontSize: 32),
           formatter: (number) {
             // Optional display formatter: 1200 -> 1.2K, etc.
             return NumberFormat.compact().format(number);
           },
+          theme: NumberTickerTheme(style: const TextStyle(fontSize: 32)),
         ),
         const Gap(24),
         TextField(
@@ -56,7 +57,7 @@ class _NumberTickerExample1State extends State<NumberTickerExample1> {
               });
             }
           },
-        )
+        ),
       ],
     );
   }
@@ -188,3 +189,4 @@ class NumberTickerTile extends StatelessWidget implements IComponentPage {
 | `duration` | `Duration?` | Override duration for this widget's animations.  If null, uses the duration from [NumberTickerTheme] or defaults to 500 milliseconds. Controls how long transitions take when [number] changes. |
 | `curve` | `Curve?` | Override animation curve for this widget.  If null, uses the curve from [NumberTickerTheme] or defaults to [Curves.easeInOut]. Controls the timing function of number transitions. |
 | `style` | `TextStyle?` | Override text style for formatted number display.  Only used with default constructor. If null, uses the style from [NumberTickerTheme] or system default. Has no effect when using builder. |
+| `theme` | `NumberTickerTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

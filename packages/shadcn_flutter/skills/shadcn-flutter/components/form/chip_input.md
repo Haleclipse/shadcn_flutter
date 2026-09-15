@@ -19,8 +19,7 @@ class ChipInputExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'chip_input',
-      description:
-          'A chip input is a text input that allows users to input multiple chips.',
+      description: 'A chip input is a text input that allows users to input multiple chips.',
       displayName: 'Chip Input',
       children: [
         WidgetUsageExample(
@@ -39,6 +38,7 @@ class ChipInputExample extends StatelessWidget {
 ### Chip Input Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// ChipInput with inline autocomplete suggestions.
 ///
@@ -71,22 +71,20 @@ class _ChipInputExample1State extends State<ChipInputExample1> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(
-      () {
-        setState(() {
-          // IMPORTANT: use textAtCursor instead of text so we only consider
-          // the current token under the caret when filtering suggestions.
-          var value = _controller.textAtCursor;
-          if (value.isNotEmpty) {
-            _suggestions = _availableSuggestions.where((element) {
-              return element.startsWith(value);
-            }).toList();
-          } else {
-            _suggestions = [];
-          }
-        });
-      },
-    );
+    _controller.addListener(() {
+      setState(() {
+        // IMPORTANT: use textAtCursor instead of text so we only consider
+        // the current token under the caret when filtering suggestions.
+        var value = _controller.textAtCursor;
+        if (value.isNotEmpty) {
+          _suggestions = _availableSuggestions.where((element) {
+            return element.startsWith(value);
+          }).toList();
+        } else {
+          _suggestions = [];
+        }
+      });
+    });
   }
 
   @override
@@ -99,19 +97,23 @@ class _ChipInputExample1State extends State<ChipInputExample1> {
           suggestions: _suggestions,
           child: ChipInput<String>(
             controller: _controller,
+            clipboardHandler: DecoratedChipClipboardHandler(
+              prefix: '@',
+              delimiter: ';',
+              chipDeserializer: (inner) => inner,
+            ),
             onChipSubmitted: (value) {
               setState(() {
                 _suggestions = [];
               });
-              // Transform the chip value before storing it.
-              return '@$value';
+              return value;
             },
             chipBuilder: (context, chip) {
-              return Text(chip);
+              return Text('@$chip');
             },
           ),
         ),
-        gap(24),
+        Gap(24),
         ListenableBuilder(
           listenable: _controller,
           builder: (context, child) {
@@ -185,3 +187,5 @@ class ChipInputTile extends StatelessWidget implements IComponentPage {
 | `useChips` | `bool?` | Whether to display items as visual chips (defaults to theme setting). |
 | `initialChips` | `List<T>?` | Initial chips to display in the input. |
 | `autoInsertSuggestion` | `bool` | Whether to automatically insert autocomplete suggestions as chips. |
+| `clipboardHandler` | `ClipboardHandler<T>?` | Handles serializing copied chips and deserializing pasted content.  Defaults to a [DefaultChipClipboardHandler] that copies each chip using its [Object.toString] and pastes clipboard text as plain text. |
+| `theme` | `ChipInputTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

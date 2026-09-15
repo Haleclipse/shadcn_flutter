@@ -14,33 +14,32 @@ class CommandExample1 extends StatelessWidget {
           'Settings': ['Profile', 'Mail', 'Settings'],
         };
         Map<String, Widget> icons = {
-          'Calendar': const Icon(Icons.calendar_today),
-          'Search Emoji': const Icon(Icons.emoji_emotions_outlined),
-          'Launch': const Icon(Icons.rocket_launch_outlined),
-          'Profile': const Icon(Icons.person_outline),
-          'Mail': const Icon(Icons.mail_outline),
-          'Settings': const Icon(Icons.settings_outlined),
+          'Calendar': const Icon(LucideIcons.calendar),
+          'Search Emoji': const Icon(LucideIcons.smile),
+          'Launch': const Icon(LucideIcons.rocket),
+          'Profile': const Icon(LucideIcons.user),
+          'Mail': const Icon(LucideIcons.mail),
+          'Settings': const Icon(LucideIcons.settings),
         };
         for (final values in items.entries) {
           List<Widget> resultItems = [];
           for (final item in values.value) {
             if (query == null ||
                 item.toLowerCase().contains(query.toLowerCase())) {
-              resultItems.add(CommandItem(
-                title: Text(item),
-                leading: icons[item],
-                onTap: () {},
-              ));
+              resultItems.add(
+                CommandItem(
+                  title: Text(item),
+                  leading: icons[item],
+                  onTap: () {},
+                ),
+              );
             }
           }
           if (resultItems.isNotEmpty) {
             // Simulate latency to showcase incremental results.
             await Future.delayed(const Duration(seconds: 1));
             yield [
-              CommandCategory(
-                title: Text(values.key),
-                children: resultItems,
-              ),
+              CommandCategory(title: Text(values.key), children: resultItems),
             ];
           }
         }

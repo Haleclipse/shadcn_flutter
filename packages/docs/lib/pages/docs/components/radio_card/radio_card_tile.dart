@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class RadioCardTile extends StatelessWidget implements IComponentPage {
   const RadioCardTile({super.key});
@@ -24,11 +25,7 @@ class RadioCardTile extends StatelessWidget implements IComponentPage {
                   child: Padding(
                     padding: EdgeInsets.all(12),
                     child: Row(
-                      children: [
-                        Radio(value: true),
-                        Gap(8),
-                        Text('Option 1'),
-                      ],
+                      children: [Radio(value: true), Gap(8), Text('Option 1')],
                     ),
                   ),
                 ),
@@ -37,11 +34,7 @@ class RadioCardTile extends StatelessWidget implements IComponentPage {
                   child: Padding(
                     padding: EdgeInsets.all(12),
                     child: Row(
-                      children: [
-                        Radio(value: false),
-                        Gap(8),
-                        Text('Option 2'),
-                      ],
+                      children: [Radio(value: false), Gap(8), Text('Option 2')],
                     ),
                   ),
                 ),
@@ -50,11 +43,7 @@ class RadioCardTile extends StatelessWidget implements IComponentPage {
                   child: Padding(
                     padding: EdgeInsets.all(12),
                     child: Row(
-                      children: [
-                        Radio(value: false),
-                        Gap(8),
-                        Text('Option 3'),
-                      ],
+                      children: [Radio(value: false), Gap(8), Text('Option 3')],
                     ),
                   ),
                 ),

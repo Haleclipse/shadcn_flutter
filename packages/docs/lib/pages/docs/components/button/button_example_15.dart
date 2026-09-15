@@ -8,12 +8,11 @@ class ButtonExample15 extends StatelessWidget {
     return PrimaryButton(
       leading: const StatedWidget.map(
         states: {
-          'disabled': Icon(Icons.close),
-          {WidgetState.hovered, WidgetState.focused}:
-              Icon(Icons.add_a_photo_rounded),
-          WidgetState.hovered: Icon(Icons.add_a_photo),
+          'disabled': Icon(LucideIcons.x),
+          {WidgetState.hovered, WidgetState.focused}: Icon(LucideIcons.camera),
+          WidgetState.hovered: Icon(LucideIcons.camera),
         },
-        child: Icon(Icons.add_a_photo_outlined),
+        child: Icon(LucideIcons.camera),
       ),
       onPressed: () {},
       child: const StatedWidget(

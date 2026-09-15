@@ -22,8 +22,7 @@ class CarouselExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'carousel',
-      description:
-          'A carousel slider widget, support infinite scroll and custom child widget.',
+      description: 'A carousel slider widget, support infinite scroll and custom child widget.',
       displayName: 'Carousel',
       children: [
         WidgetUsageExample(
@@ -72,18 +71,15 @@ class NumberedContainer extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: fill
-            ? Colors.primaries[
-                (Colors.primaries.length - 1 - index) % Colors.primaries.length]
+            ? Colors.primaries[(Colors.primaries.length - 1 - index) %
+                  Colors.primaries.length]
             : null,
         borderRadius: theme.borderRadiusMd,
       ),
       child: Center(
         child: Text(
           index.toString(),
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-          ),
+          style: const TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),
     );
@@ -97,6 +93,8 @@ class NumberedContainer extends StatelessWidget {
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import '../carousel_example.dart';
+
+import 'package:gap/gap.dart';
 
 /// Horizontal carousel with manual next/previous controls.
 ///
@@ -118,12 +116,13 @@ class _CarouselExample1State extends State<CarouselExample1> {
       child: Row(
         children: [
           OutlineButton(
-              shape: ButtonShape.circle,
-              onPressed: () {
-                // Animate to previous slide.
-                controller.animatePrevious(const Duration(milliseconds: 500));
-              },
-              child: const Icon(Icons.arrow_back)),
+            shape: ButtonShape.circle,
+            onPressed: () {
+              // Animate to previous slide.
+              controller.animatePrevious(const Duration(milliseconds: 500));
+            },
+            child: const Icon(LucideIcons.arrowLeft),
+          ),
           const Gap(24),
           Expanded(
             child: SizedBox(
@@ -148,12 +147,13 @@ class _CarouselExample1State extends State<CarouselExample1> {
           ),
           const Gap(24),
           OutlineButton(
-              shape: ButtonShape.circle,
-              onPressed: () {
-                // Animate to next slide.
-                controller.animateNext(const Duration(milliseconds: 500));
-              },
-              child: const Icon(Icons.arrow_forward)),
+            shape: ButtonShape.circle,
+            onPressed: () {
+              // Animate to next slide.
+              controller.animateNext(const Duration(milliseconds: 500));
+            },
+            child: const Icon(LucideIcons.arrowRight),
+          ),
         ],
       ),
     );
@@ -167,6 +167,8 @@ class _CarouselExample1State extends State<CarouselExample1> {
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import '../carousel_example.dart';
+
+import 'package:gap/gap.dart';
 
 /// Vertical carousel centered in a column with manual controls.
 ///
@@ -189,12 +191,13 @@ class _CarouselExample2State extends State<CarouselExample2> {
         mainAxisSize: MainAxisSize.min,
         children: [
           OutlineButton(
-              shape: ButtonShape.circle,
-              onPressed: () {
-                // Move to previous item (upwards).
-                controller.animatePrevious(const Duration(milliseconds: 500));
-              },
-              child: const Icon(Icons.arrow_upward)),
+            shape: ButtonShape.circle,
+            onPressed: () {
+              // Move to previous item (upwards).
+              controller.animatePrevious(const Duration(milliseconds: 500));
+            },
+            child: const Icon(LucideIcons.arrowUp),
+          ),
           const Gap(24),
           Expanded(
             child: SizedBox(
@@ -216,12 +219,13 @@ class _CarouselExample2State extends State<CarouselExample2> {
           ),
           const Gap(24),
           OutlineButton(
-              shape: ButtonShape.circle,
-              onPressed: () {
-                // Move to next item (downwards).
-                controller.animateNext(const Duration(milliseconds: 500));
-              },
-              child: const Icon(Icons.arrow_downward)),
+            shape: ButtonShape.circle,
+            onPressed: () {
+              // Move to next item (downwards).
+              controller.animateNext(const Duration(milliseconds: 500));
+            },
+            child: const Icon(LucideIcons.arrowDown),
+          ),
         ],
       ),
     );
@@ -235,6 +239,8 @@ class _CarouselExample2State extends State<CarouselExample2> {
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import '../carousel_example.dart';
+
+import 'package:gap/gap.dart';
 
 /// Carousel with fading transition and dot indicators.
 ///
@@ -282,19 +288,20 @@ class _CarouselExample3State extends State<CarouselExample3> {
               CarouselDotIndicator(itemCount: 5, controller: controller),
               const Spacer(),
               OutlineButton(
-                  shape: ButtonShape.circle,
-                  onPressed: () {
-                    controller
-                        .animatePrevious(const Duration(milliseconds: 500));
-                  },
-                  child: const Icon(Icons.arrow_back)),
+                shape: ButtonShape.circle,
+                onPressed: () {
+                  controller.animatePrevious(const Duration(milliseconds: 500));
+                },
+                child: const Icon(LucideIcons.arrowLeft),
+              ),
               const Gap(8),
               OutlineButton(
-                  shape: ButtonShape.circle,
-                  onPressed: () {
-                    controller.animateNext(const Duration(milliseconds: 500));
-                  },
-                  child: const Icon(Icons.arrow_forward)),
+                shape: ButtonShape.circle,
+                onPressed: () {
+                  controller.animateNext(const Duration(milliseconds: 500));
+                },
+                child: const Icon(LucideIcons.arrowRight),
+              ),
             ],
           ),
         ],
@@ -358,6 +365,7 @@ class _CarouselExample4State extends State<CarouselExample4> {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../carousel/carousel_example_1.dart';
 
 class CarouselTile extends StatelessWidget implements IComponentPage {
@@ -415,3 +423,4 @@ class CarouselTile extends StatelessWidget implements IComponentPage {
 | `onIndexChanged` | `ValueChanged<int>?` | The index change callback. |
 | `disableOverheadScrolling` | `bool` | Whether to disable overhead scrolling. |
 | `disableDraggingVelocity` | `bool` | Whether to disable dragging velocity. |
+| `theme` | `CarouselTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

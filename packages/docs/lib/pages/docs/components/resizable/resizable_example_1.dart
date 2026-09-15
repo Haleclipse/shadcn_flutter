@@ -19,43 +19,23 @@ class _ResizableExample1State extends State<ResizableExample1> {
           ResizablePane(
             // Initial width in logical pixels for this pane.
             initialSize: 80,
-            child: NumberedContainer(
-              index: 0,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 0, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 1,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 1, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 120,
-            child: NumberedContainer(
-              index: 2,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 2, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 3,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 3, height: 200, fill: false),
           ),
           ResizablePane(
             initialSize: 80,
-            child: NumberedContainer(
-              index: 4,
-              height: 200,
-              fill: false,
-            ),
+            child: NumberedContainer(index: 4, height: 200, fill: false),
           ),
         ],
       ),

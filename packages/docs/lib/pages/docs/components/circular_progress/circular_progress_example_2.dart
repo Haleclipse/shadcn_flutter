@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Determinate circular progress indicator with controls.
 ///
@@ -23,7 +24,7 @@ class _CircularProgressExample2State extends State<CircularProgressExample2> {
         CircularProgressIndicator(
           // The widget expects a normalized value [0..1].
           value: _progress.clamp(0, 100) / 100,
-          size: 48,
+          theme: CircularProgressIndicatorTheme(size: 48),
         ),
         const Gap(48),
         Row(
@@ -58,7 +59,7 @@ class _CircularProgressExample2State extends State<CircularProgressExample2> {
               child: const Text('Increase by 10'),
             ),
           ],
-        )
+        ),
       ],
     );
   }

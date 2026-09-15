@@ -70,9 +70,7 @@ class InputExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     // Basic text input using shadcn_flutter's TextField.
     // placeholder is rendered inside the input when it's empty.
-    return const TextField(
-      placeholder: Text('Enter your name'),
-    );
+    return const TextField(placeholder: Text('Enter your name'));
   }
 }
 
@@ -96,28 +94,33 @@ class _InputExample2State extends State<InputExample2> {
     // - A leading search icon that reacts to the hover state when the field is empty
     // - A clear button that appears when there's text and the field is focused or hovered
     return TextField(
-        initialValue: 'Hello World!',
-        placeholder: const Text('Search something...'),
-        features: [
-          // Leading icon only visible when the text is empty
-          InputFeature.leading(StatedWidget.builder(
+      initialValue: 'Hello World!',
+      placeholder: const Text('Search something...'),
+      features: [
+        // Leading icon only visible when the text is empty
+        InputFeature.leading(
+          StatedWidget.builder(
             builder: (context, states) {
               // Use a muted icon normally, switch to the full icon on hover
               if (states.hovered) {
-                return const Icon(Icons.search);
+                return const Icon(LucideIcons.search);
               } else {
-                return const Icon(Icons.search).iconMutedForeground();
+                return const Icon(LucideIcons.search).iconMutedForeground();
               }
             },
-          ), visibility: InputFeatureVisibility.textEmpty),
-          // Clear button visible when there is text and the field is focused,
-          // or whenever the field is hovered
-          InputFeature.clear(
-            visibility: (InputFeatureVisibility.textNotEmpty &
-                    InputFeatureVisibility.focused) |
-                InputFeatureVisibility.hovered,
           ),
-        ]);
+          visibility: InputFeatureVisibility.textEmpty,
+        ),
+        // Clear button visible when there is text and the field is focused,
+        // or whenever the field is hovered
+        InputFeature.clear(
+          visibility:
+              (InputFeatureVisibility.textNotEmpty &
+                  InputFeatureVisibility.focused) |
+              InputFeatureVisibility.hovered,
+        ),
+      ],
+    );
   }
 }
 
@@ -126,6 +129,7 @@ class _InputExample2State extends State<InputExample2> {
 ### Input Example 3
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class InputExample3 extends StatelessWidget {
   const InputExample3({super.key});
@@ -142,7 +146,8 @@ class InputExample3 extends StatelessWidget {
             InputFeature.hint(
               popupBuilder: (context) {
                 return const TooltipContainer(
-                    child: Text('This is for your username'));
+                  child: Text('This is for your username'),
+                );
               },
             ),
             // Convenience actions for copying/pasting directly from the text field UI.
@@ -154,9 +159,7 @@ class InputExample3 extends StatelessWidget {
         const TextField(
           placeholder: Text('Enter your password'),
           features: [
-            InputFeature.clear(
-              visibility: InputFeatureVisibility.textNotEmpty,
-            ),
+            InputFeature.clear(visibility: InputFeatureVisibility.textNotEmpty),
             // Password toggle configured with `hold` mode: press-and-hold to peek,
             // release to hide again.
             InputFeature.passwordToggle(mode: PasswordPeekMode.hold),
@@ -221,44 +224,60 @@ class InputExample5 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 16,
       children: [
-        ButtonGroup(children: [
-          // Its important to set width constraints on the TextFields
-          SizedBox(
-            width: 75,
-            child: TextField(placeholder: Text('Red')),
-          ),
-          SizedBox(
-            width: 75,
-            child: TextField(placeholder: Text('Green')),
-          ),
-          SizedBox(
-            width: 75,
-            child: TextField(placeholder: Text('Blue')),
-          ),
-          SizedBox(
-            width: 75,
-            child: TextField(placeholder: Text('Alpha')),
-          ),
-        ]),
+        ButtonGroup(
+          children: [
+            // Its important to set width constraints on the TextFields
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 75,
+                child: TextField(placeholder: Text('Red')),
+              ),
+            ),
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 75,
+                child: TextField(placeholder: Text('Green')),
+              ),
+            ),
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 75,
+                child: TextField(placeholder: Text('Blue')),
+              ),
+            ),
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 75,
+                child: TextField(placeholder: Text('Alpha')),
+              ),
+            ),
+          ],
+        ),
         ButtonGroup.vertical(
           children: [
             // Its important to set width constraints on the TextFields
-            SizedBox(
-              width: 200,
-              child: TextField(placeholder: Text('First Name')),
+            ButtonGroupItem(
+              child: SizedBox(
+                width: 200,
+                child: TextField(placeholder: Text('First Name')),
+              ),
             ),
             ButtonGroup.horizontal(
               children: [
-                SizedBox(
-                  width: 100,
-                  child: TextField(placeholder: Text('Middle Name')),
+                ButtonGroupItem(
+                  child: SizedBox(
+                    width: 100,
+                    child: TextField(placeholder: Text('Middle Name')),
+                  ),
                 ),
-                SizedBox(
-                  width: 100,
-                  child: TextField(placeholder: Text('Last Name')),
+                ButtonGroupItem(
+                  child: SizedBox(
+                    width: 100,
+                    child: TextField(placeholder: Text('Last Name')),
+                  ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ],
@@ -270,7 +289,6 @@ class InputExample5 extends StatelessWidget {
 
 ### Input Tile
 ```dart
-import 'package:flutter/material.dart' as material;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
 
@@ -289,9 +307,7 @@ class InputTile extends StatelessWidget implements IComponentPage {
       example: Card(
         child: const TextField(
           initialValue: 'Hello World',
-          features: [
-            InputFeature.leading(Icon(material.Icons.edit)),
-          ],
+          features: [InputFeature.leading(Icon(LucideIcons.pencil))],
         ).sized(width: 250, height: 32),
       ).sized(height: 400),
     );
@@ -315,3 +331,4 @@ class InputTile extends StatelessWidget implements IComponentPage {
 | `icon` | `Widget?` | Custom icon to display (defaults to info icon). |
 | `position` | `InputFeaturePosition` | Position of the hint button. |
 | `enableShortcuts` | `bool` | Whether to enable keyboard shortcut (F1) to show the hint. |
+| `adaptiveOverlay` | `bool?` | Whether the hint popover may adapt to a different presentation on mobile platforms (see [showOverlay]'s `adaptive` parameter). Defaults to `true` when null. |

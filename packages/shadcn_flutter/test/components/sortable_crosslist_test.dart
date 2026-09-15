@@ -23,7 +23,10 @@ class _TwoListsState extends State<_TwoLists> {
     const SortableData('B1'),
   ];
 
-  Widget _list(List<SortableData<String>> list, List<List<SortableData<String>>> all) {
+  Widget _list(
+    List<SortableData<String>> list,
+    List<List<SortableData<String>>> all,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -36,7 +39,10 @@ class _TwoListsState extends State<_TwoLists> {
                 setState(() => swapItemInLists(all, v, list, i)),
             onAcceptBottom: (v) =>
                 setState(() => swapItemInLists(all, v, list, i + 1)),
-            child: SizedBox(height: 40, child: Center(child: Text(list[i].data))),
+            child: SizedBox(
+              height: 40,
+              child: Center(child: Text(list[i].data)),
+            ),
           ),
       ],
     );
@@ -77,7 +83,10 @@ Future<List<String>> _dragA2ToListB(WidgetTester tester) async {
   final start = tester.getCenter(find.text('A2'));
   final target = tester.getCenter(find.text('B0'));
   final deltas = target - start;
-  final gesture = await tester.startGesture(start, kind: PointerDeviceKind.touch);
+  final gesture = await tester.startGesture(
+    start,
+    kind: PointerDeviceKind.touch,
+  );
   await tester.pump(const Duration(milliseconds: 50));
   for (int i = 0; i < 10; i++) {
     await gesture.moveBy(deltas / 10);
@@ -98,8 +107,9 @@ void main() {
   // the per-item Sortable state (and its internal GlobalKey) rebinds to the
   // wrong item when a list changes length, which threw a duplicate-GlobalKey
   // error and removed/duplicated the wrong item on drop.
-  testWidgets('keyed cross-list drop removes the dragged item, not another',
-      (tester) async {
+  testWidgets('keyed cross-list drop removes the dragged item, not another', (
+    tester,
+  ) async {
     final left = await _dragA2ToListB(tester);
     // A2 moved to list B, so list A must still show A0, A1, A3 (and only those).
     expect(left, ['A0', 'A1', 'A3'], reason: 'left list after drop: $left');

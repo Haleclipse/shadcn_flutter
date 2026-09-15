@@ -7,12 +7,7 @@ void main() {
   group('StarRating', () {
     testWidgets('renders with initial value', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: StarRating(
-            value: 3.5,
-            onChanged: (value) {},
-          ),
-        ),
+        SimpleApp(child: StarRating(value: 3.5, onChanged: (value) {})),
       );
 
       expect(find.byType(StarRating), findsOneWidget);
@@ -70,11 +65,7 @@ void main() {
     testWidgets('works with controller', (tester) async {
       final controller = StarRatingController(0.0);
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledStarRating(
-            controller: controller,
-          ),
-        ),
+        SimpleApp(child: ControlledStarRating(controller: controller)),
       );
 
       expect(find.byType(StarRating), findsOneWidget);
@@ -88,11 +79,7 @@ void main() {
 
     testWidgets('works with initialValue', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledStarRating(
-            initialValue: 3.0,
-          ),
-        ),
+        SimpleApp(child: ControlledStarRating(initialValue: 3.0)),
       );
 
       expect(find.byType(StarRating), findsOneWidget);

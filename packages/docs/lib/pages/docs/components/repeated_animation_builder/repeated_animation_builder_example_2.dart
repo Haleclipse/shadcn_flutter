@@ -16,11 +16,7 @@ class RepeatedAnimationBuilderExample2 extends StatelessWidget {
       builder: (context, value, child) {
         return Transform.translate(
           offset: value,
-          child: Container(
-            width: 100,
-            height: 100,
-            color: Colors.red,
-          ),
+          child: Container(width: 100, height: 100, color: Colors.red),
         );
       },
     );

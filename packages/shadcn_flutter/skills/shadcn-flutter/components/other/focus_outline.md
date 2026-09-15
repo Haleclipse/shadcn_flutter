@@ -33,3 +33,4 @@ FocusOutline(
 | `align` | `double?` | Alignment offset for positioning the outline.  If `null`, uses the default from [FocusOutlineTheme]. |
 | `border` | `Border?` | The border style for the outline.  If `null`, uses the default from [FocusOutlineTheme]. |
 | `shape` | `BoxShape?` | The shape of the outline.  Can be [BoxShape.rectangle] or [BoxShape.circle]. |
+| `theme` | `FocusOutlineTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

@@ -12,7 +12,7 @@ class AvatarExample2 extends StatelessWidget {
     return Avatar(
       // Use initials when you don't have an image.
       initials: Avatar.getInitials('sunarya-thito'),
-      size: 64,
+      theme: AvatarTheme(size: 64),
     );
   }
 }

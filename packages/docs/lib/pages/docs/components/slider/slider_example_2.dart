@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SliderExample2 extends StatefulWidget {
   const SliderExample2({super.key});

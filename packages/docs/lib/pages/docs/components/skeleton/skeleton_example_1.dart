@@ -1,4 +1,6 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
+import 'package:shadcn_flutter_skeletonizer/shadcn_flutter_skeletonizer.dart';
 
 class SkeletonExample1 extends StatelessWidget {
   const SkeletonExample1({super.key});
@@ -9,24 +11,22 @@ class SkeletonExample1 extends StatelessWidget {
       children: [
         const Basic(
           title: Text('Skeleton Example 1'),
-          content:
-              Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-          leading: Avatar(
-            initials: '',
+          content: Text(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           ),
-          trailing: Icon(Icons.arrow_forward),
+          leading: Avatar(initials: ''),
+          trailing: Icon(LucideIcons.arrowRight),
         ),
         const Gap(24),
         Basic(
-          title: const Text('Skeleton Example 1'),
-          content: const Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-          leading: const Avatar(
-            initials: '',
-          ).asSkeleton(),
-          // Note: Avatar and other Image related widget needs its own skeleton
-          trailing: const Icon(Icons.arrow_forward),
-        )
+              title: const Text('Skeleton Example 1'),
+              content: const Text(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+              ),
+              leading: const Avatar(initials: '').asSkeleton(),
+              // Note: Avatar and other Image related widget needs its own skeleton
+              trailing: const Icon(LucideIcons.arrowRight),
+            )
             // Wrap the whole row in a skeleton to show a loading placeholder for text and icons.
             .asSkeleton(),
       ],

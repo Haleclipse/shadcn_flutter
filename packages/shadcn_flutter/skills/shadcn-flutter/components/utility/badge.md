@@ -65,9 +65,7 @@ class BadgeExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PrimaryBadge(
-      child: Text('Primary'),
-    );
+    return const PrimaryBadge(child: Text('Primary'));
   }
 }
 
@@ -85,9 +83,7 @@ class BadgeExample2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SecondaryBadge(
-      child: Text('Secondary'),
-    );
+    return const SecondaryBadge(child: Text('Secondary'));
   }
 }
 
@@ -105,9 +101,7 @@ class BadgeExample3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const OutlineBadge(
-      child: Text('Outline'),
-    );
+    return const OutlineBadge(child: Text('Outline'));
   }
 }
 
@@ -125,9 +119,7 @@ class BadgeExample4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DestructiveBadge(
-      child: Text('Destructive'),
-    );
+    return const DestructiveBadge(child: Text('Destructive'));
   }
 }
 

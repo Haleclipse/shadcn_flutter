@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
   const RefreshTriggerTile({super.key});
@@ -41,7 +42,7 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                       Transform.rotate(
                         angle: 0.5,
                         child: Icon(
-                          Icons.refresh,
+                          LucideIcons.refreshCw,
                           color: theme.colorScheme.primary,
                         ),
                       ),
@@ -72,8 +73,10 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                           color: theme.colorScheme.muted.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child:
-                            const Text('Item 1', textAlign: TextAlign.center),
+                        child: const Text(
+                          'Item 1',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       const Gap(4),
                       Container(
@@ -83,8 +86,10 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                           color: theme.colorScheme.muted.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child:
-                            const Text('Item 2', textAlign: TextAlign.center),
+                        child: const Text(
+                          'Item 2',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       const Gap(4),
                       Container(
@@ -94,8 +99,10 @@ class RefreshTriggerTile extends StatelessWidget implements IComponentPage {
                           color: theme.colorScheme.muted.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child:
-                            const Text('Item 3', textAlign: TextAlign.center),
+                        child: const Text(
+                          'Item 3',
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ],
                   ),

@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class AppBarTile extends StatelessWidget implements IComponentPage {
   const AppBarTile({super.key});
@@ -26,7 +27,7 @@ class AppBarTile extends StatelessWidget implements IComponentPage {
             children: [
               const Gap(16),
               Icon(
-                Icons.menu,
+                LucideIcons.menu,
                 color: theme.colorScheme.primaryForeground,
               ),
               const Gap(16),
@@ -39,12 +40,12 @@ class AppBarTile extends StatelessWidget implements IComponentPage {
               ),
               const Spacer(),
               Icon(
-                Icons.search,
+                LucideIcons.search,
                 color: theme.colorScheme.primaryForeground,
               ),
               const Gap(8),
               Icon(
-                Icons.more_vert,
+                LucideIcons.ellipsisVertical,
                 color: theme.colorScheme.primaryForeground,
               ),
               const Gap(16),

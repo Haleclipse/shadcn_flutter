@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class TabPaneTile extends StatelessWidget implements IComponentPage {
   const TabPaneTile({super.key});
@@ -39,7 +40,9 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: theme.colorScheme.primary,
                         borderRadius: BorderRadius.circular(4),
@@ -55,7 +58,9 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
                     const Gap(4),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: const Text(
                         'Tab 2',
                         style: TextStyle(fontSize: 14),
@@ -64,7 +69,9 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
                     const Gap(4),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       child: const Text(
                         'Tab 3',
                         style: TextStyle(fontSize: 14),
@@ -77,9 +84,7 @@ class TabPaneTile extends StatelessWidget implements IComponentPage {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Center(
-                    child: Text('Tab 1 Content'),
-                  ),
+                  child: const Center(child: Text('Tab 1 Content')),
                 ),
               ),
             ],

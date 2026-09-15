@@ -30,69 +30,73 @@ class _SortableExample6State extends State<SortableExample6> {
   Widget build(BuildContext context) {
     return SortableLayer(
       child: Builder(
-          // this builder is needed to access the context of the SortableLayer
-          builder: (context) {
-        return SortableDropFallback<int>(
-          onAccept: (value) {
-            setState(() {
-              names.add(names.removeAt(value.data));
-            });
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              PrimaryButton(
-                onPressed: () {
-                  setState(() {
-                    _reset();
-                  });
-                },
-                child: const Text('Reset'),
-              ),
-              for (int i = 0; i < names.length; i++)
-                Sortable<String>(
-                  key: ValueKey(names[i].data),
-                  data: names[i],
-                  // we only want user to drag the item from the handle,
-                  // so we disable the drag on the item itself
-                  enabled: false,
-                  onAcceptTop: (value) {
+        // this builder is needed to access the context of the SortableLayer
+        builder: (context) {
+          return SortableDropFallback<int>(
+            onAccept: (value) {
+              setState(() {
+                names.add(names.removeAt(value.data));
+              });
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                PrimaryButton(
+                  onPressed: () {
                     setState(() {
-                      names.swapItem(value, i);
+                      _reset();
                     });
                   },
-                  onAcceptBottom: (value) {
-                    setState(() {
-                      names.swapItem(value, i + 1);
-                    });
-                  },
-                  onDropFailed: () {
-                    // Remove the item from the list if the drop failed
-                    setState(() {
-                      var removed = names.removeAt(i);
-                      // Ensure the drag overlay exists and then dismiss it so
-                      // the item does not animate back to its original position.
-                      SortableLayer.ensureAndDismissDrop(context, removed);
-                      // Dismissing drop will prevent the SortableLayer from
-                      // animating the item back to its original position
-                    });
-                  },
-                  child: OutlinedContainer(
-                    padding: const EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        const SortableDragHandle(
-                            child: Icon(Icons.drag_handle)),
-                        const SizedBox(width: 8),
-                        Expanded(child: Text(names[i].data)),
-                      ],
+                  child: const Text('Reset'),
+                ),
+                for (int i = 0; i < names.length; i++)
+                  Sortable<String>(
+                    key: ValueKey(names[i].data),
+                    data: names[i],
+                    // we only want user to drag the item from the handle,
+                    // so we disable the drag on the item itself
+                    enabled: false,
+                    onAcceptTop: (value) {
+                      setState(() {
+                        names.swapItem(value, i);
+                      });
+                    },
+                    onAcceptBottom: (value) {
+                      setState(() {
+                        names.swapItem(value, i + 1);
+                      });
+                    },
+                    onDropFailed: () {
+                      // Remove the item from the list if the drop failed
+                      setState(() {
+                        var removed = names.removeAt(i);
+                        // Ensure the drag overlay exists and then dismiss it so
+                        // the item does not animate back to its original position.
+                        SortableLayer.ensureAndDismissDrop(context, removed);
+                        // Dismissing drop will prevent the SortableLayer from
+                        // animating the item back to its original position
+                      });
+                    },
+                    child: OutlinedContainer(
+                      theme: OutlinedContainerTheme(
+                        padding: const EdgeInsets.all(12),
+                      ),
+                      child: Row(
+                        children: [
+                          const SortableDragHandle(
+                            child: Icon(LucideIcons.gripHorizontal),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(child: Text(names[i].data)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-            ],
-          ),
-        );
-      }),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SwiperTile extends StatelessWidget implements IComponentPage {
   const SwiperTile({super.key});
@@ -18,9 +19,7 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
         child: Container(
           width: 300,
           height: 200,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           child: Stack(
             children: [
               // Swiper content
@@ -50,11 +49,12 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color:
-                          theme.colorScheme.background.withValues(alpha: 0.8),
+                      color: theme.colorScheme.background.withValues(
+                        alpha: 0.8,
+                      ),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.chevron_left, size: 20),
+                    child: const Icon(LucideIcons.chevronLeft, size: 20),
                   ),
                 ),
               ),
@@ -67,11 +67,12 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color:
-                          theme.colorScheme.background.withValues(alpha: 0.8),
+                      color: theme.colorScheme.background.withValues(
+                        alpha: 0.8,
+                      ),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.chevron_right, size: 20),
+                    child: const Icon(LucideIcons.chevronRight, size: 20),
                   ),
                 ),
               ),
@@ -96,8 +97,9 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                       width: 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primaryForeground
-                            .withValues(alpha: 0.5),
+                        color: theme.colorScheme.primaryForeground.withValues(
+                          alpha: 0.5,
+                        ),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -106,8 +108,9 @@ class SwiperTile extends StatelessWidget implements IComponentPage {
                       width: 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primaryForeground
-                            .withValues(alpha: 0.5),
+                        color: theme.colorScheme.primaryForeground.withValues(
+                          alpha: 0.5,
+                        ),
                         shape: BoxShape.circle,
                       ),
                     ),

@@ -50,7 +50,9 @@ class _SortableExample3State extends State<SortableExample3> {
                   },
                   child: OutlinedContainer(
                     width: 100,
-                    padding: const EdgeInsets.all(12),
+                    theme: OutlinedContainerTheme(
+                      padding: const EdgeInsets.all(12),
+                    ),
                     child: Center(child: Text(names[i].data)),
                   ),
                 ),

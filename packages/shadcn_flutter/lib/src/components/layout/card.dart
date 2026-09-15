@@ -81,8 +81,9 @@ class CardTheme extends ComponentThemeData {
       borderWidth: borderWidth == null ? this.borderWidth : borderWidth(),
       clipBehavior: clipBehavior == null ? this.clipBehavior : clipBehavior(),
       boxShadow: boxShadow == null ? this.boxShadow : boxShadow(),
-      surfaceOpacity:
-          surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
+      surfaceOpacity: surfaceOpacity == null
+          ? this.surfaceOpacity
+          : surfaceOpacity(),
       surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
       duration: duration == null ? this.duration : duration(),
     );
@@ -107,18 +108,18 @@ class CardTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        padding,
-        filled,
-        fillColor,
-        borderRadius,
-        borderColor,
-        borderWidth,
-        clipBehavior,
-        boxShadow,
-        surfaceOpacity,
-        surfaceBlur,
-        duration,
-      );
+    padding,
+    filled,
+    fillColor,
+    borderRadius,
+    borderColor,
+    borderWidth,
+    clipBehavior,
+    boxShadow,
+    surfaceOpacity,
+    surfaceBlur,
+    duration,
+  );
 }
 
 /// A versatile container widget that provides a card-like appearance with comprehensive styling options.
@@ -175,66 +176,81 @@ class CardTheme extends ComponentThemeData {
 ///   ),
 /// );
 /// ```
-class Card extends StatelessWidget {
+class Card extends StatelessWidget implements Styleable<CardTheme> {
   /// The child widget to display within the card.
   final Widget child;
 
   /// Padding inside the card around the [child].
   ///
   /// If `null`, uses default padding from the theme.
+  @Deprecated('Use theme: CardTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
 
   /// Whether the card has a filled background.
   ///
   /// When `true`, the card has a solid background color. When `false` or
   /// `null`, uses theme defaults.
+  @Deprecated('Use theme: CardTheme(filled: ...) instead.')
   final bool? filled;
 
   /// The background fill color of the card.
   ///
   /// Only applies when [filled] is `true`. If `null`, uses theme default.
+  @Deprecated('Use theme: CardTheme(fillColor: ...) instead.')
   final Color? fillColor;
 
   /// Border radius for rounded corners on the card.
   ///
   /// If `null`, uses default border radius from the theme.
+  @Deprecated('Use theme: CardTheme(borderRadius: ...) instead.')
   final BorderRadiusGeometry? borderRadius;
 
   /// Color of the card's border.
   ///
   /// If `null`, uses default border color from the theme.
+  @Deprecated('Use theme: CardTheme(borderColor: ...) instead.')
   final Color? borderColor;
 
   /// Width of the card's border in logical pixels.
   ///
   /// If `null`, uses default border width from the theme.
+  @Deprecated('Use theme: CardTheme(borderWidth: ...) instead.')
   final double? borderWidth;
 
   /// How to clip the card's content.
   ///
   /// Controls overflow clipping behavior. If `null`, uses [Clip.none].
+  @Deprecated('Use theme: CardTheme(clipBehavior: ...) instead.')
   final Clip? clipBehavior;
 
   /// Box shadows to apply to the card.
   ///
   /// Creates elevation and depth effects. If `null`, no shadows are applied.
+  @Deprecated('Use theme: CardTheme(boxShadow: ...) instead.')
   final List<BoxShadow>? boxShadow;
 
   /// Opacity of the card's surface effect.
   ///
   /// Controls the transparency of surface overlays. If `null`, uses theme default.
+  @Deprecated('Use theme: CardTheme(surfaceOpacity: ...) instead.')
   final double? surfaceOpacity;
 
   /// Blur amount for the card's surface effect.
   ///
   /// Creates a frosted glass or blur effect. If `null`, no blur is applied.
+  @Deprecated('Use theme: CardTheme(surfaceBlur: ...) instead.')
   final double? surfaceBlur;
 
   /// Duration for card appearance animations.
   ///
   /// Controls how long transitions take when card properties change. If `null`,
   /// uses default animation duration.
+  @Deprecated('Use theme: CardTheme(duration: ...) instead.')
   final Duration? duration;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CardTheme? theme;
 
   /// Creates a [Card].
   const Card({
@@ -251,12 +267,13 @@ class Card extends StatelessWidget {
     this.surfaceOpacity,
     this.surfaceBlur,
     this.duration,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<CardTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<CardTheme>(context);
     final scaling = theme.scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * scaling;
@@ -318,20 +335,20 @@ class Card extends StatelessWidget {
 
     return OutlinedContainer(
       clipBehavior: clipBehavior,
-      borderRadius: borderRadius,
-      borderWidth: borderWidth,
-      borderColor: borderColor,
-      backgroundColor: filled ? fillColor : theme.colorScheme.card,
-      boxShadow: boxShadow,
-      padding: padding,
-      surfaceOpacity: surfaceOpacity,
-      surfaceBlur: surfaceBlur,
       duration: duration,
+      theme: OutlinedContainerTheme(
+        borderRadius: borderRadius,
+        borderWidth: borderWidth,
+        borderColor: borderColor,
+        backgroundColor: filled ? fillColor : theme.colorScheme.card,
+        boxShadow: boxShadow,
+        padding: padding,
+        surfaceOpacity: surfaceOpacity,
+        surfaceBlur: surfaceBlur,
+      ),
       child: DefaultTextStyle.merge(
         child: child,
-        style: TextStyle(
-          color: theme.colorScheme.cardForeground,
-        ),
+        style: TextStyle(color: theme.colorScheme.cardForeground),
       ),
     );
   }
@@ -350,13 +367,14 @@ class Card extends StatelessWidget {
 ///   child: Text('Overlay content'),
 /// )
 /// ```
-class SurfaceCard extends StatelessWidget {
+class SurfaceCard extends StatelessWidget implements Styleable<CardTheme> {
   /// The child widget to display within the card.
   final Widget child;
 
   /// Padding inside the card around the [child].
   ///
   /// If `null`, uses default padding from the theme.
+  @Deprecated('Use theme: CardTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
 
   /// Whether the card has a filled background.
@@ -410,6 +428,10 @@ class SurfaceCard extends StatelessWidget {
   /// Controls how long transitions take when properties change.
   final Duration? duration;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final CardTheme? theme;
+
   /// Creates a [SurfaceCard].
   const SurfaceCard({
     super.key,
@@ -425,12 +447,13 @@ class SurfaceCard extends StatelessWidget {
     this.surfaceOpacity,
     this.surfaceBlur,
     this.duration,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<CardTheme>(context);
+    final compTheme = this.theme ?? ComponentTheme.maybeOf<CardTheme>(context);
     var isSheetOverlay =
         OverlayConfiguration.maybeOf(context) is SheetConfiguration;
     final scaling = theme.scaling;
@@ -442,24 +465,23 @@ class SurfaceCard extends StatelessWidget {
         themeValue: compTheme?.padding,
         defaultValue: EdgeInsets.all(densityContainerPadding),
       );
-      return Padding(
-        padding: padding,
-        child: child,
-      );
+      return Padding(padding: padding, child: child);
     }
     return Card(
-      clipBehavior: clipBehavior,
-      borderRadius: borderRadius,
-      borderWidth: borderWidth,
-      borderColor: borderColor,
-      filled: filled,
-      fillColor: fillColor,
-      boxShadow: boxShadow,
-      padding: padding,
-      surfaceOpacity:
-          surfaceOpacity ?? compTheme?.surfaceOpacity ?? theme.surfaceOpacity,
-      surfaceBlur: surfaceBlur ?? compTheme?.surfaceBlur ?? theme.surfaceBlur,
-      duration: duration ?? compTheme?.duration,
+      theme: CardTheme(
+        clipBehavior: clipBehavior,
+        borderRadius: borderRadius,
+        borderWidth: borderWidth,
+        borderColor: borderColor,
+        filled: filled,
+        fillColor: fillColor,
+        boxShadow: boxShadow,
+        padding: padding,
+        surfaceOpacity:
+            surfaceOpacity ?? compTheme?.surfaceOpacity ?? theme.surfaceOpacity,
+        surfaceBlur: surfaceBlur ?? compTheme?.surfaceBlur ?? theme.surfaceBlur,
+        duration: duration ?? compTheme?.duration,
+      ),
       child: child,
     );
   }

@@ -6,7 +6,10 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// animated number. The [number] parameter contains the current interpolated
 /// numeric value, while [child] is an optional widget for optimization.
 typedef NumberTickerBuilder = Widget Function(
-    BuildContext context, num number, Widget? child);
+  BuildContext context,
+  num number,
+  Widget? child,
+);
 
 /// A callback that formats a number into a string representation.
 ///
@@ -132,7 +135,8 @@ class NumberTickerTheme extends ComponentThemeData {
 ///   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
 /// );
 /// ```
-class NumberTicker extends StatelessWidget {
+class NumberTicker extends StatelessWidget
+    implements Styleable<NumberTickerTheme> {
   /// The initial number value to start animation from.
   ///
   /// If null, no initial animation occurs and the widget starts directly
@@ -170,19 +174,26 @@ class NumberTicker extends StatelessWidget {
   ///
   /// If null, uses the duration from [NumberTickerTheme] or defaults to
   /// 500 milliseconds. Controls how long transitions take when [number] changes.
+  @Deprecated('Use theme: NumberTickerTheme(duration: ...) instead.')
   final Duration? duration;
 
   /// Override animation curve for this widget.
   ///
   /// If null, uses the curve from [NumberTickerTheme] or defaults to
   /// [Curves.easeInOut]. Controls the timing function of number transitions.
+  @Deprecated('Use theme: NumberTickerTheme(curve: ...) instead.')
   final Curve? curve;
 
   /// Override text style for formatted number display.
   ///
   /// Only used with default constructor. If null, uses the style from
   /// [NumberTickerTheme] or system default. Has no effect when using builder.
+  @Deprecated('Use theme: NumberTickerTheme(style: ...) instead.')
   final TextStyle? style;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final NumberTickerTheme? theme;
 
   /// Creates a [NumberTicker] with custom builder for complete display control.
   ///
@@ -226,8 +237,9 @@ class NumberTicker extends StatelessWidget {
     this.child,
     this.duration,
     this.curve,
-  })  : formatter = null,
-        style = null;
+    this.theme,
+  }) : formatter = null,
+       style = null;
 
   /// Creates a [NumberTicker] with formatted text display.
   ///
@@ -264,12 +276,14 @@ class NumberTicker extends StatelessWidget {
     this.duration,
     this.curve,
     this.style,
-  })  : builder = null,
-        child = null;
+    this.theme,
+  }) : builder = null,
+       child = null;
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<NumberTickerTheme>(context);
+    final compTheme =
+        theme ?? ComponentTheme.maybeOf<NumberTickerTheme>(context);
     final duration = styleValue(
       widgetValue: this.duration,
       themeValue: compTheme?.duration,
@@ -292,10 +306,7 @@ class NumberTicker extends StatelessWidget {
         curve: curve,
         initialValue: initialNumber?.toDouble(),
         builder: (context, value, child) {
-          return Text(
-            formatter!(value),
-            style: textStyle,
-          );
+          return Text(formatter!(value), style: textStyle);
         },
       );
     }
@@ -318,28 +329,34 @@ class FlipperCharset {
   static const FlipperCharset numbers = FlipperCharset('0123456789');
 
   /// Uppercase Latin letters.
-  static const FlipperCharset uppercase =
-      FlipperCharset('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  static const FlipperCharset uppercase = FlipperCharset(
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  );
 
   /// Lowercase Latin letters.
-  static const FlipperCharset lowercase =
-      FlipperCharset('abcdefghijklmnopqrstuvwxyz');
+  static const FlipperCharset lowercase = FlipperCharset(
+    'abcdefghijklmnopqrstuvwxyz',
+  );
 
   /// Uppercase and lowercase Latin letters.
-  static const FlipperCharset letters =
-      FlipperCharset('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
+  static const FlipperCharset letters = FlipperCharset(
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+  );
 
   /// Alphanumeric characters.
   static const FlipperCharset alphanumeric = FlipperCharset(
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+  );
 
   /// Common symbol characters.
-  static const FlipperCharset symbols =
-      FlipperCharset('!@#\$%^&*()-_=+[]{}|;:\'",.<>?/`~');
+  static const FlipperCharset symbols = FlipperCharset(
+    '!@#\$%^&*()-_=+[]{}|;:\'",.<>?/`~',
+  );
 
   /// Letters, numbers, and symbols.
   static const FlipperCharset all = FlipperCharset(
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()-_=+[]{}|;:\'",.<>?/`~');
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()-_=+[]{}|;:\'",.<>?/`~',
+  );
 
   /// The characters available to flip through.
   final String characters;
@@ -533,12 +550,14 @@ class TextFlipper extends StatelessWidget {
         clipBehavior: Clip.none,
         mainAxisSize: MainAxisSize.min,
         children: text.characters
-            .map((char) => FlipperCharacter(
-                  charset: charset,
-                  character: char,
-                  duration: duration,
-                  curve: curve,
-                ))
+            .map(
+              (char) => FlipperCharacter(
+                charset: charset,
+                character: char,
+                duration: duration,
+                curve: curve,
+              ),
+            )
             .toList(),
       ),
     );

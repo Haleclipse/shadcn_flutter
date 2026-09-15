@@ -113,14 +113,13 @@ abstract class InputOTPChild {
     bool obscured = false,
     bool readOnly = false,
     TextInputType? keyboardType,
-  }) =>
-      CharacterInputOTPChild(
-        predicate: predicate,
-        transform: transform,
-        obscured: obscured,
-        readOnly: readOnly,
-        keyboardType: keyboardType,
-      );
+  }) => CharacterInputOTPChild(
+    predicate: predicate,
+    transform: transform,
+    obscured: obscured,
+    readOnly: readOnly,
+    keyboardType: keyboardType,
+  );
 
   /// Creates a character input with alphabet and digit filtering.
   ///
@@ -153,9 +152,12 @@ abstract class InputOTPChild {
     bool readOnly = false,
     TextInputType? keyboardType,
   }) {
-    assert(!(onlyUppercaseAlphabet && onlyLowercaseAlphabet),
-        'onlyUppercaseAlphabet and onlyLowercaseAlphabet cannot be true at the same time');
-    keyboardType ??= allowDigit &&
+    assert(
+      !(onlyUppercaseAlphabet && onlyLowercaseAlphabet),
+      'onlyUppercaseAlphabet and onlyLowercaseAlphabet cannot be true at the same time',
+    );
+    keyboardType ??=
+        allowDigit &&
             !allowLowercaseAlphabet &&
             !allowUppercaseAlphabet &&
             !onlyUppercaseAlphabet &&
@@ -414,7 +416,10 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
   }
 
   BorderRadius getBorderRadiusByRelativeIndex(
-      ThemeData theme, int relativeIndex, int groupLength) {
+    ThemeData theme,
+    int relativeIndex,
+    int groupLength,
+  ) {
     if (relativeIndex == 0) {
       return BorderRadius.only(
         topLeft: Radius.circular(theme.radiusMd),
@@ -444,9 +449,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
         ),
       );
     }
-    return Text(
-      String.fromCharCode(_value!),
-    ).small().foreground();
+    return Text(String.fromCharCode(_value!)).small().foreground();
   }
 
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
@@ -505,10 +508,12 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
                 builder: (context, child) {
                   return FocusOutline(
                     focused: widget.data.focusNode!.hasFocus,
-                    borderRadius: getBorderRadiusByRelativeIndex(
-                      theme,
-                      widget.data.relativeIndex,
-                      widget.data.groupLength,
+                    theme: FocusOutlineTheme(
+                      borderRadius: getBorderRadiusByRelativeIndex(
+                        theme,
+                        widget.data.relativeIndex,
+                        widget.data.groupLength,
+                      ),
                     ),
                     child: child!,
                   );
@@ -532,9 +537,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
             if (_value != null)
               Positioned.fill(
                 child: IgnorePointer(
-                  child: Center(
-                    child: getValueWidget(theme),
-                  ),
+                  child: Center(child: getValueWidget(theme)),
                 ),
               ),
             Positioned.fill(
@@ -546,7 +549,6 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
                     border: Border.fromBorderSide(BorderSide.none),
                   ),
                   child: TextField(
-                    border: const Border.fromBorderSide(BorderSide.none),
                     decoration: const BoxDecoration(),
                     expands: false,
                     maxLines: null,
@@ -557,6 +559,9 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
                     focusNode: widget.data.focusNode,
                     controller: _controller,
                     padding: EdgeInsets.zero,
+                    theme: TextFieldTheme(
+                      border: const Border.fromBorderSide(BorderSide.none),
+                    ),
                   ),
                 ),
               ),
@@ -571,9 +576,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
 class _FocusToFront extends StatefulWidget {
   final Widget child;
 
-  const _FocusToFront({
-    required this.child,
-  });
+  const _FocusToFront({required this.child});
 
   @override
   State<_FocusToFront> createState() => _FocusToFrontState();
@@ -606,7 +609,7 @@ class _FocusToFrontState extends State<_FocusToFront> {
 /// Example:
 /// ```dart
 /// WidgetInputOTPChild(
-///   Icon(Icons.arrow_forward),
+///   Icon(LucideIcons.arrowRight),
 /// )
 /// ```
 class WidgetInputOTPChild extends InputOTPChild {
@@ -625,9 +628,7 @@ class WidgetInputOTPChild extends InputOTPChild {
     return SizedBox(
       width: theme.scaling * 32,
       height: theme.scaling * 32,
-      child: Center(
-        child: child,
-      ),
+      child: Center(child: child),
     );
   }
 
@@ -738,13 +739,13 @@ class _InputOTPChild {
   }) : key = GlobalKey<_OTPCharacterInputState>();
 
   _InputOTPChild.withNewChild(_InputOTPChild old, InputOTPChild newChild)
-      : focusNode = old.focusNode,
-        value = old.value,
-        groupIndex = old.groupIndex,
-        relativeIndex = old.relativeIndex,
-        child = newChild,
-        groupLength = old.groupLength,
-        key = old.key;
+    : focusNode = old.focusNode,
+      value = old.value,
+      groupIndex = old.groupIndex,
+      relativeIndex = old.relativeIndex,
+      child = newChild,
+      groupLength = old.groupLength,
+      key = old.key;
 }
 
 /// A list of nullable codepoints representing OTP input values.
@@ -816,7 +817,7 @@ extension OTPCodepointListExtension on OTPCodepointList {
 ///   onSubmitted: (code) => _verifyOTP(code),
 /// );
 /// ```
-class InputOTP extends StatefulWidget {
+class InputOTP extends StatefulWidget implements Styleable<InputOTPTheme> {
   /// The list of children defining input fields, separators, and spaces.
   final List<InputOTPChild> children;
 
@@ -828,6 +829,10 @@ class InputOTP extends StatefulWidget {
 
   /// Called when the user submits the OTP (e.g., presses Enter on last field).
   final ValueChanged<OTPCodepointList>? onSubmitted;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final InputOTPTheme? theme;
 
   /// Creates an [InputOTP] widget.
   ///
@@ -842,6 +847,7 @@ class InputOTP extends StatefulWidget {
     this.initialValue,
     this.onChanged,
     this.onSubmitted,
+    this.theme,
   });
 
   @override
@@ -879,13 +885,15 @@ class _InputOTPState extends State<InputOTP>
     for (final child in widget.children) {
       if (child.hasValue) {
         int? value = getInitialValue(index);
-        _children.add(_InputOTPChild(
-          focusNode: FocusNode(),
-          child: child,
-          value: value,
-          groupIndex: groupIndex,
-          relativeIndex: relativeIndex,
-        ));
+        _children.add(
+          _InputOTPChild(
+            focusNode: FocusNode(),
+            child: child,
+            value: value,
+            groupIndex: groupIndex,
+            relativeIndex: relativeIndex,
+          ),
+        );
         index++;
         relativeIndex++;
       } else {
@@ -926,13 +934,15 @@ class _InputOTPState extends State<InputOTP>
               child,
             );
           } else {
-            _children.add(_InputOTPChild(
-              focusNode: FocusNode(),
-              child: child,
-              value: getInitialValue(index),
-              groupIndex: groupIndex,
-              relativeIndex: relativeIndex,
-            ));
+            _children.add(
+              _InputOTPChild(
+                focusNode: FocusNode(),
+                child: child,
+                value: getInitialValue(index),
+                groupIndex: groupIndex,
+                relativeIndex: relativeIndex,
+              ),
+            );
           }
           index++;
           relativeIndex++;
@@ -959,25 +969,29 @@ class _InputOTPState extends State<InputOTP>
     int i = 0;
     for (final child in widget.children) {
       if (child.hasValue) {
-        children.add(child.build(
-          context,
-          InputOTPChildData._(
-            this,
-            _children[i].key,
-            focusNode: _children[i].focusNode,
-            index: i,
-            groupIndex: _children[i].groupIndex,
-            relativeIndex: _children[i].relativeIndex,
-            previousFocusNode: i == 0 ? null : _children[i - 1].focusNode,
-            nextFocusNode:
-                i == _children.length - 1 ? null : _children[i + 1].focusNode,
-            value: _children[i].value,
-            groupLength: _children[i].groupLength,
+        children.add(
+          child.build(
+            context,
+            InputOTPChildData._(
+              this,
+              _children[i].key,
+              focusNode: _children[i].focusNode,
+              index: i,
+              groupIndex: _children[i].groupIndex,
+              relativeIndex: _children[i].relativeIndex,
+              previousFocusNode: i == 0 ? null : _children[i - 1].focusNode,
+              nextFocusNode: i == _children.length - 1
+                  ? null
+                  : _children[i + 1].focusNode,
+              value: _children[i].value,
+              groupLength: _children[i].groupLength,
+            ),
           ),
-        ));
+        );
         i++;
       } else {
-        children.add(child.build(
+        children.add(
+          child.build(
             context,
             InputOTPChildData._(
               this,
@@ -990,17 +1004,18 @@ class _InputOTPState extends State<InputOTP>
               nextFocusNode: null,
               value: null,
               groupLength: -1,
-            )));
+            ),
+          ),
+        );
       }
     }
-    final compTheme = ComponentTheme.maybeOf<InputOTPTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<InputOTPTheme>(context);
     return SizedBox(
       height: compTheme?.height ?? theme.scaling * 36,
       child: IntrinsicWidth(
         child: Row(
-          children: [
-            for (final child in children) _FocusToFront(child: child),
-          ],
+          children: [for (final child in children) _FocusToFront(child: child)],
         ),
       ),
     );

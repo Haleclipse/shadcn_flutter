@@ -18,7 +18,8 @@ class AccordionExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'accordion',
-      description: 'An accordion is a vertically stacked list of items. '
+      description:
+          'An accordion is a vertically stacked list of items. '
           'Each item can be "expanded" or "collapsed" to reveal the content associated with that item.',
       displayName: 'Accordion',
       children: [
@@ -26,7 +27,7 @@ class AccordionExample extends StatelessWidget {
           title: 'Accordion Example',
           path: 'lib/pages/docs/components/accordion/accordion_example_1.dart',
           child: AccordionExample1(),
-        )
+        ),
       ],
     );
   }
@@ -62,32 +63,39 @@ class AccordionExample1 extends StatelessWidget {
         AccordionItem(
           trigger: AccordionTrigger(child: Text('Lorem ipsum dolor sit amet')),
           content: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-              'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-              'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
-              'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. '
-              'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+            'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+            'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
+            'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. '
+            'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+          ),
         ),
         // Item 2: Another entry with its own header and body.
         AccordionItem(
           trigger: AccordionTrigger(
-              child: Text(
-                  'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua')),
+            child: Text(
+              'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+            ),
+          ),
           content: Text(
-              'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-              'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
-              'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. '
-              'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+            'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+            'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
+            'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. '
+            'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+          ),
         ),
         // Item 3: A third example to show multiple items expand independently.
         AccordionItem(
           trigger: AccordionTrigger(
-              child: Text(
-                  'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat')),
+            child: Text(
+              'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+            ),
+          ),
           content: Text(
-              'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
-              'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. '
-              'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+            'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
+            'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. '
+            'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+          ),
         ),
       ],
     );
@@ -153,3 +161,4 @@ class AccordionTile extends StatelessWidget implements IComponentPage {
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `items` | `List<Widget>` | The list of accordion items to display.  Each item should be an [AccordionItem] widget containing a trigger and content. The accordion automatically adds visual dividers between items and manages the expansion state to ensure only one item can be expanded at a time. |
+| `theme` | `AccordionTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

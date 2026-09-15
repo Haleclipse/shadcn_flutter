@@ -10,8 +10,7 @@ class ToastExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'toast',
-      description:
-          'A toast is a non-modal, unobtrusive window element used to display brief, auto-expiring information to the user.',
+      description: 'A toast is a non-modal, unobtrusive window element used to display brief, auto-expiring information to the user.',
       displayName: 'Toast',
       children: [
         WidgetUsageExample(

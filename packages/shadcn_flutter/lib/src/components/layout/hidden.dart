@@ -48,8 +48,9 @@ class HiddenTheme extends ComponentThemeData {
       keepCrossAxisSize: keepCrossAxisSize == null
           ? this.keepCrossAxisSize
           : keepCrossAxisSize(),
-      keepMainAxisSize:
-          keepMainAxisSize == null ? this.keepMainAxisSize : keepMainAxisSize(),
+      keepMainAxisSize: keepMainAxisSize == null
+          ? this.keepMainAxisSize
+          : keepMainAxisSize(),
     );
   }
 
@@ -67,13 +68,13 @@ class HiddenTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        direction,
-        duration,
-        curve,
-        reverse,
-        keepCrossAxisSize,
-        keepMainAxisSize,
-      );
+    direction,
+    duration,
+    curve,
+    reverse,
+    keepCrossAxisSize,
+    keepMainAxisSize,
+  );
 }
 
 /// A widget that conditionally hides its child with optional animation.
@@ -94,7 +95,7 @@ class HiddenTheme extends ComponentThemeData {
 ///   ),
 /// )
 /// ```
-class Hidden extends StatelessWidget {
+class Hidden extends StatelessWidget implements Styleable<HiddenTheme> {
   /// Whether the child widget should be hidden.
   ///
   /// When `true`, the child is hidden (optionally animated). When `false`,
@@ -107,34 +108,44 @@ class Hidden extends StatelessWidget {
   /// The axis along which to animate the hiding.
   ///
   /// If `null`, the widget is hidden without animation.
+  @Deprecated('Use theme: HiddenTheme(direction: ...) instead.')
   final Axis? direction;
 
   /// Whether to reverse the hide animation direction.
   ///
   /// When `true`, slides out in the opposite direction.
+  @Deprecated('Use theme: HiddenTheme(reverse: ...) instead.')
   final bool? reverse;
 
   /// Duration of the hide/show animation.
   ///
   /// If `null`, uses a default duration or hides instantly.
+  @Deprecated('Use theme: HiddenTheme(duration: ...) instead.')
   final Duration? duration;
 
   /// Animation curve for the hide/show transition.
   ///
   /// If `null`, uses a default curve.
+  @Deprecated('Use theme: HiddenTheme(curve: ...) instead.')
   final Curve? curve;
 
   /// Whether to maintain the widget's cross-axis size when hidden.
   ///
   /// When `true`, preserves width (for vertical slides) or height (for
   /// horizontal slides) during the animation.
+  @Deprecated('Use theme: HiddenTheme(keepCrossAxisSize: ...) instead.')
   final bool? keepCrossAxisSize;
 
   /// Whether to maintain the widget's main-axis size when hidden.
   ///
   /// When `true`, preserves the size along the animation axis, creating
   /// a fade-out effect instead of a slide.
+  @Deprecated('Use theme: HiddenTheme(keepMainAxisSize: ...) instead.')
   final bool? keepMainAxisSize;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final HiddenTheme? theme;
 
   /// Creates a [Hidden].
   ///
@@ -157,12 +168,13 @@ class Hidden extends StatelessWidget {
     this.reverse,
     this.keepCrossAxisSize,
     this.keepMainAxisSize,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
-    final compTheme = ComponentTheme.maybeOf<HiddenTheme>(context);
+    final compTheme = theme ?? ComponentTheme.maybeOf<HiddenTheme>(context);
     final directionValue = styleValue(
       widgetValue: direction,
       themeValue: compTheme?.direction,

@@ -27,11 +27,11 @@ class AdaptiveScaling {
   /// Parameters:
   /// - [scaling] (`double`, default: 1): Scaling factor for radius, size, and text.
   const AdaptiveScaling([double scaling = 1])
-      : this.only(
-          radiusScaling: scaling,
-          sizeScaling: scaling,
-          textScaling: scaling,
-        );
+    : this.only(
+        radiusScaling: scaling,
+        sizeScaling: scaling,
+        textScaling: scaling,
+      );
 
   /// Creates [AdaptiveScaling] with individual scaling factors.
   ///
@@ -58,10 +58,12 @@ class AdaptiveScaling {
     return theme.copyWith(
       radius: radiusScaling == 1 ? null : () => theme.radius * radiusScaling,
       scaling: sizeScaling == 1 ? null : () => theme.scaling * sizeScaling,
-      typography:
-          textScaling == 1 ? null : () => theme.typography.scale(textScaling),
-      iconTheme:
-          textScaling == 1 ? null : () => theme.iconTheme.scale(textScaling),
+      typography: textScaling == 1
+          ? null
+          : () => theme.typography.scale(textScaling),
+      iconTheme: textScaling == 1
+          ? null
+          : () => theme.iconTheme.scale(textScaling),
     );
   }
 
@@ -76,11 +78,7 @@ class AdaptiveScaling {
   /// - [t] (double, required): Interpolation position (0.0 to 1.0)
   ///
   /// Returns interpolated AdaptiveScaling.
-  static AdaptiveScaling lerp(
-    AdaptiveScaling a,
-    AdaptiveScaling b,
-    double t,
-  ) {
+  static AdaptiveScaling lerp(AdaptiveScaling a, AdaptiveScaling b, double t) {
     return AdaptiveScaling.only(
       radiusScaling: lerpDouble(a.radiusScaling, b.radiusScaling, t)!,
       sizeScaling: lerpDouble(a.sizeScaling, b.sizeScaling, t)!,
@@ -125,19 +123,12 @@ class AdaptiveScaler extends StatelessWidget {
   /// Parameters:
   /// - [scaling] (`AdaptiveScaling`, required): Scaling factors to apply.
   /// - [child] (`Widget`, required): Child widget.
-  const AdaptiveScaler({
-    super.key,
-    required this.scaling,
-    required this.child,
-  });
+  const AdaptiveScaler({super.key, required this.scaling, required this.child});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Theme(
-      data: scaling.scale(theme),
-      child: child,
-    );
+    return Theme(data: scaling.scale(theme), child: child);
   }
 }
 
@@ -183,7 +174,7 @@ class ThemeData {
   /// - [scaling] (`double`, default: 1): Size scaling factor.
   /// - [typography] (`Typography`, default: Geist): Typography settings.
   /// - [iconTheme] (`IconThemeProperties`, default: standard sizes): Icon theme.
-  /// - [platform] (`TargetPlatform?`, optional): Target platform override.
+  /// - [_platform] (`TargetPlatform?`, optional): Target platform override.
   /// - [surfaceOpacity] (`double?`, optional): Surface overlay opacity.
   /// - [surfaceBlur] (`double?`, optional): Surface blur radius.
   const ThemeData({
@@ -192,12 +183,12 @@ class ThemeData {
     this.scaling = 1,
     this.typography = const Typography.geist(),
     this.iconTheme = const IconThemeProperties(),
-    TargetPlatform? platform,
+    this._platform,
     this.surfaceOpacity,
     this.enableFeedback,
     this.surfaceBlur,
     this.density = Density.defaultDensity,
-  }) : _platform = platform;
+  });
 
   /// Creates a [ThemeData] with dark color scheme.
   ///
@@ -207,7 +198,7 @@ class ThemeData {
   /// - [scaling] (`double`, default: 1): Size scaling factor.
   /// - [typography] (`Typography`, default: Geist): Typography settings.
   /// - [iconTheme] (`IconThemeProperties`, default: standard sizes): Icon theme.
-  /// - [platform] (`TargetPlatform?`, optional): Target platform override.
+  /// - [_platform] (`TargetPlatform?`, optional): Target platform override.
   /// - [surfaceOpacity] (`double?`, optional): Surface overlay opacity.
   /// - [surfaceBlur] (`double?`, optional): Surface blur radius.
   const ThemeData.dark({
@@ -216,12 +207,12 @@ class ThemeData {
     this.scaling = 1,
     this.typography = const Typography.geist(),
     this.iconTheme = const IconThemeProperties(),
-    TargetPlatform? platform,
+    this._platform,
     this.surfaceOpacity,
     this.surfaceBlur,
     this.density = Density.defaultDensity,
     this.enableFeedback,
-  }) : _platform = platform;
+  });
 
   /// The current platform.
   TargetPlatform get platform => _platform ?? defaultTargetPlatform;
@@ -318,11 +309,13 @@ class ThemeData {
       platform: platform == null ? _platform : platform(),
       scaling: scaling == null ? this.scaling : scaling(),
       iconTheme: iconTheme == null ? this.iconTheme : iconTheme(),
-      surfaceOpacity:
-          surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
+      surfaceOpacity: surfaceOpacity == null
+          ? this.surfaceOpacity
+          : surfaceOpacity(),
       surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
-      enableFeedback:
-          enableFeedback == null ? this.enableFeedback : enableFeedback(),
+      enableFeedback: enableFeedback == null
+          ? this.enableFeedback
+          : enableFeedback(),
       density: density == null ? this.density : density(),
     );
   }
@@ -335,11 +328,7 @@ class ThemeData {
   /// - [t] (`double`, required): Interpolation position (0.0 to 1.0).
   ///
   /// Returns: `ThemeData` — interpolated theme.
-  static ThemeData lerp(
-    ThemeData a,
-    ThemeData b,
-    double t,
-  ) {
+  static ThemeData lerp(ThemeData a, ThemeData b, double t) {
     return ThemeData(
       colorScheme: ColorScheme.lerp(a.colorScheme, b.colorScheme, t),
       radius: lerpDouble(a.radius, b.radius, t)!,
@@ -401,11 +390,7 @@ class Theme extends InheritedTheme {
   /// Parameters:
   /// - [data] (`ThemeData`, required): Theme data to provide.
   /// - [child] (`Widget`, required): Child widget.
-  const Theme({
-    super.key,
-    required this.data,
-    required super.child,
-  });
+  const Theme({super.key, required this.data, required super.child});
 
   /// Gets the [ThemeData] from the closest [Theme] ancestor.
   ///
@@ -724,32 +709,64 @@ abstract class ComponentThemeData {
 /// )
 /// ```
 class ComponentTheme<T extends ComponentThemeData> extends InheritedTheme {
-  /// The component theme data to provide to descendants.
-  final T data;
+  final T? _data;
+
+  /// The component theme data provided to descendants.
+  ///
+  /// Only valid on a [ComponentTheme] built with the default constructor —
+  /// a [ComponentTheme.reset] deliberately provides no data, and reading this
+  /// on one throws. Use [maybeOf] to read the theme in scope instead of
+  /// reaching for this field.
+  T get data => _data!;
 
   /// Creates a [ComponentTheme].
   ///
   /// Parameters:
   /// - [data] (`T`, required): Theme data for this component type.
   /// - [child] (`Widget`, required): Child widget.
-  const ComponentTheme({
-    super.key,
-    required this.data,
-    required super.child,
-  });
+  const ComponentTheme({super.key, required T data, required super.child})
+    // `data` is the public parameter name, so it cannot be an initializing
+    // formal for the private nullable field behind it.
+    // ignore: prefer_initializing_formals
+    : _data = data;
+
+  /// Creates a [ComponentTheme] that clears the theme of type `T`.
+  ///
+  /// Inside [child], [maybeOf] returns null and [of] throws, exactly as if no
+  /// ancestor had ever provided a `T` — so components fall back to their
+  /// built-in defaults. Use it to carve a subtree out of an app-wide theme:
+  ///
+  /// ```dart
+  /// ComponentTheme<ButtonTheme>(
+  ///   data: const ButtonTheme(borderRadius: BorderRadius.zero),
+  ///   child: Column(
+  ///     children: [
+  ///       const PrimaryButton(child: Text('Square')),
+  ///       // Opts back out, and is rounded again.
+  ///       const ComponentTheme<ButtonTheme>.reset(
+  ///         child: PrimaryButton(child: Text('Default')),
+  ///       ),
+  ///     ],
+  ///   ),
+  /// );
+  /// ```
+  ///
+  /// Parameters:
+  /// - [child] (`Widget`, required): Child widget.
+  const ComponentTheme.reset({super.key, required super.child}) : _data = null;
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    ComponentTheme<T>? ancestorTheme =
-        context.findAncestorWidgetOfExactType<ComponentTheme<T>>();
+    ComponentTheme<T>? ancestorTheme = context
+        .findAncestorWidgetOfExactType<ComponentTheme<T>>();
     // if it's the same type, we don't need to wrap it
     if (identical(this, ancestorTheme)) {
       return child;
     }
-    return ComponentTheme<T>(
-      data: data,
-      child: child,
-    );
+    final data = _data;
+    return data == null
+        ? ComponentTheme<T>.reset(child: child)
+        : ComponentTheme<T>(data: data, child: child);
   }
 
   /// Gets the component theme data of type `T` from the closest ancestor.
@@ -769,17 +786,18 @@ class ComponentTheme<T extends ComponentThemeData> extends InheritedTheme {
   ///
   /// Returns: `T?` — the component theme data, or null.
   static T? maybeOf<T extends ComponentThemeData>(BuildContext context) {
-    final widget =
-        context.dependOnInheritedWidgetOfExactType<ComponentTheme<T>>();
+    final widget = context
+        .dependOnInheritedWidgetOfExactType<ComponentTheme<T>>();
     if (widget == null) {
       return null;
     }
-    return widget.data;
+    // Null for a ComponentTheme.reset, which shadows the ancestor theme.
+    return widget._data;
   }
 
   @override
   bool updateShouldNotify(covariant ComponentTheme<T> oldWidget) {
-    return oldWidget.data != data;
+    return oldWidget._data != _data;
   }
 }
 
@@ -797,4 +815,83 @@ enum ThemeMode {
 
   /// Always use dark theme.
   dark,
+}
+
+/// A widget whose appearance is configured by a [ComponentThemeData] of type
+/// `T`.
+///
+/// Implementing this marks which theme a component reads. It brings a [theme]
+/// argument for styling that one widget, and unlocks
+/// [ComponentDataExtension.inheritStyle] and
+/// [ComponentDataExtension.resetInheritedStyle] for styling a whole subtree:
+///
+/// ```dart
+/// class Tracker extends StatelessWidget implements Styleable<TrackerTheme> {
+///   // ...
+/// }
+///
+/// // This tracker only.
+/// Tracker(data: data, theme: const TrackerTheme(itemHeight: 48));
+///
+/// // This tracker and every Tracker below it.
+/// Tracker(data: data).inheritStyle(const TrackerTheme(itemHeight: 48));
+/// ```
+///
+/// A widget can name only one theme this way — the one it is primarily styled
+/// by. Components that also read other themes keep resolving those through
+/// [ComponentTheme.maybeOf].
+// ignore: use_key_in_widget_constructors
+abstract interface class Styleable<T extends ComponentThemeData>
+    extends Widget {
+  /// {@template shadcn_flutter.Styleable.theme}
+  /// Styling for this widget alone.
+  ///
+  /// Takes precedence over any `T` an ancestor [ComponentTheme] provides: when
+  /// this is non-null the ancestor is not consulted at all, so a field left
+  /// null here falls back to the component's built-in default rather than to
+  /// the ancestor's value. To adjust an ancestor theme instead of replacing it,
+  /// read it with [ComponentTheme.maybeOf] and `copyWith` the result.
+  ///
+  /// Prefer this over the per-property constructor arguments, which are
+  /// deprecated.
+  /// {@endtemplate}
+  T? get theme;
+}
+
+/// Inline theming for a [Styleable] widget.
+extension ComponentDataExtension<T extends ComponentThemeData> on Styleable<T> {
+  /// Wraps this widget in a [ComponentTheme] carrying [theme].
+  ///
+  /// The theme covers this widget *and everything below it*, so any descendant
+  /// styled by the same `T` inherits it as well — a `Card` given a theme this
+  /// way also restyles the cards nested inside it. To style only this one
+  /// widget, pass the theme to its own `theme` constructor argument
+  /// ([Styleable.theme]) instead.
+  Widget inheritStyle(T theme) {
+    return ComponentTheme<T>(data: theme, child: this);
+  }
+
+  /// Wraps this widget in a [ComponentTheme.reset], clearing any ambient `T`.
+  ///
+  /// Like [inheritStyle], this covers the whole subtree: this widget and every
+  /// descendant styled by `T` fall back to their built-in defaults, as if no
+  /// ancestor had provided one.
+  Widget resetInheritedStyle() {
+    return ComponentTheme<T>.reset(child: this);
+  }
+
+  /// Carries the `T` in scope at [context] onto this widget.
+  ///
+  /// Useful where a widget is built outside the tree it logically belongs to
+  /// — the contents of an overlay, say — and should still be styled by the
+  /// theme that surrounded the call site. Resets to defaults when [context]
+  /// had no `T`, so the widget never picks up the destination's theme by
+  /// accident.
+  Widget restoreInheritedStyle(BuildContext context) {
+    final theme = ComponentTheme.maybeOf<T>(context);
+    if (theme == null) {
+      return ComponentTheme<T>.reset(child: this);
+    }
+    return ComponentTheme<T>(data: theme, child: this);
+  }
 }

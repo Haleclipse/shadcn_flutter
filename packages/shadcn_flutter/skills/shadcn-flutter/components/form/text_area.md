@@ -21,8 +21,7 @@ class TextAreaExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'text_area',
-      description:
-          'TextArea is a component that allows users to enter multiple lines of text.',
+      description: 'TextArea is a component that allows users to enter multiple lines of text.',
       displayName: 'TextArea',
       children: [
         WidgetUsageExample(
@@ -122,6 +121,7 @@ class TextAreaExample3 extends StatelessWidget {
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:docs/pages/docs/components_page.dart';
+
 import '../text_area/text_area_example_3.dart';
 
 class TextAreaTile extends StatelessWidget implements IComponentPage {

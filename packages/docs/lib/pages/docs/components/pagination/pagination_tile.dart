@@ -19,8 +19,9 @@ class PaginationTile extends StatelessWidget implements IComponentPage {
         children: [
           const Card(child: PaginationExample1()),
           Transform.translate(
-              offset: const Offset(250, 0),
-              child: const Card(child: PaginationExample1())),
+            offset: const Offset(250, 0),
+            child: const Card(child: PaginationExample1()),
+          ),
         ],
       ).gap(16),
     );

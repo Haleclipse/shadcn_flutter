@@ -10,7 +10,8 @@ class AccordionExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'accordion',
-      description: 'An accordion is a vertically stacked list of items. '
+      description:
+          'An accordion is a vertically stacked list of items. '
           'Each item can be "expanded" or "collapsed" to reveal the content associated with that item.',
       displayName: 'Accordion',
       children: [
@@ -18,7 +19,7 @@ class AccordionExample extends StatelessWidget {
           title: 'Accordion Example',
           path: 'lib/pages/docs/components/accordion/accordion_example_1.dart',
           child: AccordionExample1(),
-        )
+        ),
       ],
     );
   }

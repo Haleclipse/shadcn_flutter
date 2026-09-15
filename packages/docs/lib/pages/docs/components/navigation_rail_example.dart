@@ -17,8 +17,7 @@ class NavigationRailExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/navigation_rail/navigation_rail_example_1.dart',
+          path: 'lib/pages/docs/components/navigation_rail/navigation_rail_example_1.dart',
           child: SizedBox(
             width: 500,
             height: 400,

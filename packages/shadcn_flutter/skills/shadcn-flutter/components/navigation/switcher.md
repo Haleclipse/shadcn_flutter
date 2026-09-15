@@ -19,8 +19,7 @@ class SwitcherExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'switcher',
-      description:
-          'A Switcher widget allows you to switch between different widgets with a transition effect.',
+      description: 'A Switcher widget allows you to switch between different widgets with a transition effect.',
       displayName: 'Switcher',
       children: [
         WidgetUsageExample(
@@ -44,6 +43,7 @@ class SwitcherExample extends StatelessWidget {
 ```dart
 import 'package:docs/pages/docs/components/carousel_example.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SwitcherExample1 extends StatefulWidget {
   const SwitcherExample1({super.key});
@@ -59,10 +59,7 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
     AxisDirection.left,
     AxisDirection.right,
   ];
-  List<Size> sizes = const [
-    Size(200, 300),
-    Size(300, 200),
-  ];
+  List<Size> sizes = const [Size(200, 300), Size(300, 200)];
   int directionIndex = 0;
   int index = 0;
 
@@ -72,22 +69,25 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
       mainAxisSize: MainAxisSize.min,
       children: [
         PrimaryButton(
-            child: Text(
-                'Switch Direction (${directions[directionIndex % directions.length]})'),
-            onPressed: () {
-              setState(() {
-                directionIndex++;
-              });
-            }),
-        gap(8),
+          child: Text(
+            'Switch Direction (${directions[directionIndex % directions.length]})',
+          ),
+          onPressed: () {
+            setState(() {
+              directionIndex++;
+            });
+          },
+        ),
+        Gap(8),
         PrimaryButton(
-            child: const Text('Next Item'),
-            onPressed: () {
-              setState(() {
-                index++;
-              });
-            }),
-        gap(24),
+          child: const Text('Next Item'),
+          onPressed: () {
+            setState(() {
+              index++;
+            });
+          },
+        ),
+        Gap(24),
         ClipRect(
           child: Switcher(
             // The index selects which child is visible; transitions are directional.
@@ -105,7 +105,7 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
                   // Demonstrate different sizes to show animated size transitions.
                   width: sizes[i % sizes.length].width,
                   height: sizes[i % sizes.length].height,
-                )
+                ),
             ],
           ),
         ),
@@ -162,8 +162,9 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                     FormValidationMode.submitted,
                   },
                   child: TextField(
-                    initialValue:
-                        _loginController.getValue(const TextFieldKey(#email)),
+                    initialValue: _loginController.getValue(
+                      const TextFieldKey(#email),
+                    ),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
                     enableSuggestions: false,
@@ -179,17 +180,16 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                   },
                   child: TextField(obscureText: true),
                 ),
-                const SubmitButton(
-                  child: Text('Login'),
-                ),
+                const SubmitButton(child: Text('Login')),
                 const Text('Don\'t have an account? ').thenButton(
-                    onPressed: () {
-                      setState(() {
-                        // Switch to the register form.
-                        _isRegister = true;
-                      });
-                    },
-                    child: const Text('Sign Up!')),
+                  onPressed: () {
+                    setState(() {
+                      // Switch to the register form.
+                      _isRegister = true;
+                    });
+                  },
+                  child: const Text('Sign Up!'),
+                ),
               ],
             ),
           ),
@@ -213,8 +213,9 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                     FormValidationMode.submitted,
                   },
                   child: TextField(
-                    initialValue: _registerController
-                        .getValue(const TextFieldKey(#email)),
+                    initialValue: _registerController.getValue(
+                      const TextFieldKey(#email),
+                    ),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
                     enableSuggestions: false,
@@ -224,8 +225,9 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                   key: TextFieldKey(#password),
                   label: Text('Password'),
                   validator: LengthValidator(
-                      min: 6,
-                      message: 'Password must be at least 6 characters'),
+                    min: 6,
+                    message: 'Password must be at least 6 characters',
+                  ),
                   showErrors: {
                     FormValidationMode.changed,
                     FormValidationMode.submitted,
@@ -235,30 +237,69 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                 const FormField(
                   key: TextFieldKey(#confirmPassword),
                   label: Text('Confirm Password'),
-                  validator: CompareWith.equal(TextFieldKey(#password),
-                      message: 'Passwords do not match'),
+                  validator: CompareWith.equal(
+                    TextFieldKey(#password),
+                    message: 'Passwords do not match',
+                  ),
                   showErrors: {
                     FormValidationMode.changed,
                     FormValidationMode.submitted,
                   },
                   child: TextField(obscureText: true),
                 ),
-                const SubmitButton(
-                  child: Text('Register'),
-                ),
+                const SubmitButton(child: Text('Register')),
                 const Text('Already have an account? ').thenButton(
-                    onPressed: () {
-                      setState(() {
-                        // Switch back to the login form.
-                        _isRegister = false;
-                      });
-                    },
-                    child: const Text('Login!')),
+                  onPressed: () {
+                    setState(() {
+                      // Switch back to the login form.
+                      _isRegister = false;
+                    });
+                  },
+                  child: const Text('Login!'),
+                ),
               ],
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+```
+
+### Switcher Tile
+```dart
+import 'package:docs/pages/docs/components/carousel_example.dart';
+import 'package:docs/pages/docs/components_page.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart';
+
+class SwitcherTile extends StatelessWidget implements IComponentPage {
+  const SwitcherTile({super.key});
+
+  @override
+  String get title => 'Switcher';
+
+  @override
+  Widget build(BuildContext context) {
+    return ComponentCard(
+      title: 'Switcher',
+      name: 'switcher',
+      center: true,
+      example: ClipRect(
+        child: SizedBox(
+          width: 160,
+          height: 120,
+          child: Switcher(
+            index: 0,
+            direction: AxisDirection.left,
+            children: [
+              for (int i = 0; i < 3; i++)
+                NumberedContainer(index: i, width: 160, height: 120),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

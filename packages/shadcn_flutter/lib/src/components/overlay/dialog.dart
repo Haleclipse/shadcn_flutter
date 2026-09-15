@@ -104,13 +104,8 @@ class ModalBackdropTheme extends ComponentThemeData {
   }
 
   @override
-  int get hashCode => Object.hash(
-        borderRadius,
-        padding,
-        barrierColor,
-        modal,
-        surfaceClip,
-      );
+  int get hashCode =>
+      Object.hash(borderRadius, padding, barrierColor, modal, surfaceClip);
 }
 
 /// A visual backdrop widget that creates modal-style overlays.
@@ -135,7 +130,8 @@ class ModalBackdropTheme extends ComponentThemeData {
 ///   child: MyDialogContent(),
 /// )
 /// ```
-class ModalBackdrop extends StatelessWidget {
+class ModalBackdrop extends StatelessWidget
+    implements Styleable<ModalBackdropTheme> {
   /// Determines if surface clipping should be enabled based on opacity.
   ///
   /// Returns `true` if [surfaceOpacity] is null or less than 1.0,
@@ -151,22 +147,31 @@ class ModalBackdrop extends StatelessWidget {
   final Widget child;
 
   /// Border radius for the backdrop cutout around the child.
+  @Deprecated('Use theme: ModalBackdropTheme(borderRadius: ...) instead.')
   final BorderRadiusGeometry? borderRadius;
 
   /// Padding around the child widget.
+  @Deprecated('Use theme: ModalBackdropTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
 
   /// Color of the backdrop barrier.
+  @Deprecated('Use theme: ModalBackdropTheme(barrierColor: ...) instead.')
   final Color? barrierColor;
 
   /// Animation for fade in/out transitions.
   final Animation<double>? fadeAnimation;
 
   /// Whether the backdrop should behave as a modal.
+  @Deprecated('Use theme: ModalBackdropTheme(modal: ...) instead.')
   final bool? modal;
 
   /// Whether to apply surface clipping effects.
+  @Deprecated('Use theme: ModalBackdropTheme(surfaceClip: ...) instead.')
   final bool? surfaceClip;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ModalBackdropTheme? theme;
 
   /// Creates a [ModalBackdrop].
   ///
@@ -199,31 +204,38 @@ class ModalBackdrop extends StatelessWidget {
     this.padding,
     this.fadeAnimation,
     required this.child,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<ModalBackdropTheme>(context);
+    final compTheme =
+        theme ?? ComponentTheme.maybeOf<ModalBackdropTheme>(context);
     final modal = styleValue(
-        widgetValue: this.modal,
-        themeValue: compTheme?.modal,
-        defaultValue: true);
+      widgetValue: this.modal,
+      themeValue: compTheme?.modal,
+      defaultValue: true,
+    );
     final surfaceClip = styleValue(
-        widgetValue: this.surfaceClip,
-        themeValue: compTheme?.surfaceClip,
-        defaultValue: true);
+      widgetValue: this.surfaceClip,
+      themeValue: compTheme?.surfaceClip,
+      defaultValue: true,
+    );
     final borderRadius = styleValue(
-        widgetValue: this.borderRadius,
-        themeValue: compTheme?.borderRadius,
-        defaultValue: BorderRadius.zero);
+      widgetValue: this.borderRadius,
+      themeValue: compTheme?.borderRadius,
+      defaultValue: BorderRadius.zero,
+    );
     final padding = styleValue(
-        widgetValue: this.padding,
-        themeValue: compTheme?.padding,
-        defaultValue: EdgeInsets.zero);
+      widgetValue: this.padding,
+      themeValue: compTheme?.padding,
+      defaultValue: EdgeInsets.zero,
+    );
     final barrierColor = styleValue(
-        widgetValue: this.barrierColor,
-        themeValue: compTheme?.barrierColor,
-        defaultValue: const Color.fromRGBO(0, 0, 0, 0.8));
+      widgetValue: this.barrierColor,
+      themeValue: compTheme?.barrierColor,
+      defaultValue: const Color.fromRGBO(0, 0, 0, 0.8),
+    );
     if (!modal) {
       return child;
     }
@@ -239,10 +251,7 @@ class ModalBackdrop extends StatelessWidget {
       ),
     );
     if (fadeAnimation != null) {
-      paintWidget = FadeTransition(
-        opacity: fadeAnimation!,
-        child: paintWidget,
-      );
+      paintWidget = FadeTransition(opacity: fadeAnimation!, child: paintWidget);
     }
     return RepaintBoundary(
       child: Stack(
@@ -250,18 +259,10 @@ class ModalBackdrop extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           if (!surfaceClip)
-            Positioned.fill(
-              child: IgnorePointer(
-                child: paintWidget,
-              ),
-            ),
+            Positioned.fill(child: IgnorePointer(child: paintWidget)),
           child,
           if (surfaceClip)
-            Positioned.fill(
-              child: IgnorePointer(
-                child: paintWidget,
-              ),
-            ),
+            Positioned.fill(child: IgnorePointer(child: paintWidget)),
         ],
       ),
     );
@@ -398,10 +399,10 @@ class ModalContainer extends StatelessWidget {
       filled: filled,
       fillColor: fillColor,
       boxShadow: fullScreenMode == true ? const [] : boxShadow,
-      padding: padding,
       surfaceOpacity: surfaceOpacity,
       surfaceBlur: surfaceBlur,
       duration: duration,
+      theme: CardTheme(padding: padding),
       child: child,
     );
   }
@@ -502,20 +503,19 @@ class SurfaceBarrierPainter extends CustomPainter {
       rect = _padRect(rect);
       Path path = Path()
         ..addRect(bigOffset & bigScreen)
-        ..addRRect(RRect.fromRectAndCorners(
-          rect,
-          topLeft: borderRadius.topLeft,
-          topRight: borderRadius.topRight,
-          bottomLeft: borderRadius.bottomLeft,
-          bottomRight: borderRadius.bottomRight,
-        ));
+        ..addRRect(
+          RRect.fromRectAndCorners(
+            rect,
+            topLeft: borderRadius.topLeft,
+            topRight: borderRadius.topRight,
+            bottomLeft: borderRadius.bottomLeft,
+            bottomRight: borderRadius.bottomRight,
+          ),
+        );
       path.fillType = PathFillType.evenOdd;
       canvas.clipPath(path);
     }
-    canvas.drawRect(
-      bigOffset & bigScreen,
-      paint,
-    );
+    canvas.drawRect(bigOffset & bigScreen, paint);
   }
 
   @override
@@ -584,44 +584,72 @@ class DialogRoute<T> extends RawDialogRoute<T> {
     this.fullScreen = false,
     this.data,
   }) : super(
-          pageBuilder: (BuildContext buildContext, Animation<double> animation,
-              Animation<double> secondaryAnimation) {
-            final Widget pageChild = Builder(
-              builder: (context) {
-                final theme = Theme.of(context);
-                final scaling = theme.scaling;
-                final densityContainerPadding =
-                    theme.density.baseContainerPadding * scaling;
-                return Padding(
-                  padding: fullScreen
-                      ? EdgeInsets.zero
-                      : EdgeInsets.all(densityContainerPadding),
-                  child: builder(context),
-                );
-              },
-            );
-            Widget dialog = themes?.wrap(pageChild) ?? pageChild;
-            if (data != null) {
-              dialog = data.wrap(dialog);
-            }
-            if (useSafeArea) {
-              dialog = SafeArea(child: dialog);
-            }
-            return dialog;
-          },
-          barrierLabel: barrierLabel ?? 'Dismiss',
-          transitionDuration: const Duration(milliseconds: 150),
-        );
+         pageBuilder:
+             (
+               BuildContext buildContext,
+               Animation<double> animation,
+               Animation<double> secondaryAnimation,
+             ) {
+               final Widget pageChild = Builder(
+                 builder: (context) {
+                   final theme = Theme.of(context);
+                   final scaling = theme.scaling;
+                   final densityContainerPadding =
+                       theme.density.baseContainerPadding * scaling;
+                   return Padding(
+                     padding: fullScreen
+                         ? EdgeInsets.zero
+                         : EdgeInsets.all(densityContainerPadding),
+                     child: builder(context),
+                   );
+                 },
+               );
+               Widget dialog = themes?.wrap(pageChild) ?? pageChild;
+               if (data != null) {
+                 dialog = data.wrap(dialog);
+               }
+               if (useSafeArea) {
+                 dialog = SafeArea(child: dialog);
+               }
+               return dialog;
+             },
+         barrierLabel: barrierLabel ?? 'Dismiss',
+         transitionDuration: const Duration(milliseconds: 150),
+       );
 }
 
+/// Builds the enter and exit transition for a shadcn dialog.
+///
+/// The dialog scales up from 70% while fading in, easing out on the way in and
+/// in on the way out. A [fullScreen] dialog fills the screen and advertises
+/// itself to descendants through [ModalContainer.kFullScreenMode]; otherwise it
+/// is positioned by [alignment].
+///
+/// This is the default used by [DialogRoute]; pass it to
+/// [RawDialogRoute.transitionBuilder] to match shadcn dialogs elsewhere.
+///
+/// Parameters:
+/// - [context] (`BuildContext`, required): Build context.
+/// - [borderRadius] (`BorderRadiusGeometry`, required): Corner radius of the
+///   dialog surface.
+/// - [alignment] (`AlignmentGeometry`, required): Where a non-fullscreen dialog
+///   sits on screen.
+/// - [animation] (`Animation<double>`, required): Drives this dialog.
+/// - [secondaryAnimation] (`Animation<double>`, required): Drives this dialog as
+///   another route covers it.
+/// - [fullScreen] (`bool`, required): Whether the dialog fills the screen.
+/// - [child] (`Widget`, required): The dialog content.
+///
+/// Returns: the transitioned dialog.
 Widget buildShadcnDialogTransitions(
-    BuildContext context,
-    BorderRadiusGeometry borderRadius,
-    AlignmentGeometry alignment,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    bool fullScreen,
-    Widget child) {
+  BuildContext context,
+  BorderRadiusGeometry borderRadius,
+  AlignmentGeometry alignment,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  bool fullScreen,
+  Widget child,
+) {
   var scaleTransition = ScaleTransition(
     scale: CurvedAnimation(
       parent: animation.drive(Tween<double>(begin: 0.7, end: 1.0)),
@@ -629,32 +657,34 @@ Widget buildShadcnDialogTransitions(
       reverseCurve: Curves.easeIn,
     ),
     child: FadeTransition(
-      opacity: CurvedAnimation(
-        parent: animation,
-        curve: Curves.easeOut,
-      ),
+      opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
       child: child,
     ),
   );
   return FocusScope(
     child: fullScreen
         ? MultiModel(
-            data: const [
-              Model(ModalContainer.kFullScreenMode, true),
-            ],
+            data: const [Model(ModalContainer.kFullScreenMode, true)],
             child: scaleTransition,
           )
-        : Align(
-            alignment: alignment,
-            child: scaleTransition,
-          ),
+        : Align(alignment: alignment, child: scaleTransition),
   );
 }
 
+/// Bridges a [DialogRoute] to the overlay API used by the rest of the package.
+///
+/// Wrapping dialog content in this widget publishes an [OverlayCompleter] to
+/// descendants, so content shown through `showDialog` can call [closeOverlay]
+/// to dismiss itself and return a result, exactly as it would inside a
+/// [PopoverConfiguration] or [DrawerConfiguration] overlay.
 class DialogOverlayContent<T> extends StatefulWidget {
+  /// The route this dialog is running on, used to pop it and carry the result.
   final DialogRoute<T> route;
+
+  /// The dialog content.
   final Widget child;
 
+  /// Creates a [DialogOverlayContent].
   const DialogOverlayContent({
     super.key,
     required this.route,
@@ -666,6 +696,7 @@ class DialogOverlayContent<T> extends StatefulWidget {
       DialogOverlayContentState<T>();
 }
 
+/// State for [DialogOverlayContent], which owns the [OverlayCompleter] adapter.
 class DialogOverlayContentState<T> extends State<DialogOverlayContent<T>> {
   late final _DialogOverlayContentCompleter<T> _completerAdapter =
       _DialogOverlayContentCompleter<T>(widget.route);
@@ -789,9 +820,9 @@ class DialogOverlayCompleter<T> extends OverlayCompleter<T> {
 
   @override
   Future<T> get future => route.popped.then((value) {
-        assert(value is T, 'Dialog route was closed without returning a value');
-        return value as T;
-      });
+    assert(value is T, 'Dialog route was closed without returning a value');
+    return value as T;
+  });
 
   @override
   bool get isAnimationCompleted => route.animation?.isCompleted ?? true;

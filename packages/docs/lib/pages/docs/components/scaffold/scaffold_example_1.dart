@@ -30,19 +30,19 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
             OutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
-              child: const Icon(Icons.menu),
+              child: const Icon(LucideIcons.menu),
             ),
           ],
           trailing: [
             OutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
-              child: const Icon(Icons.search),
+              child: const Icon(LucideIcons.search),
             ),
             OutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
-              child: const Icon(Icons.add),
+              child: const Icon(LucideIcons.plus),
             ),
           ],
         ),
@@ -55,13 +55,11 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
           children: <Widget>[
             // The .p() extension adds default padding around the widget.
             const Text('You have pushed the button this many times:').p(),
-            Text(
-              '$_counter',
-            ).h1(),
+            Text('$_counter').h1(),
             PrimaryButton(
               onPressed: _incrementCounter,
               density: ButtonDensity.icon,
-              child: const Icon(Icons.add),
+              child: const Icon(LucideIcons.plus),
             ).p(),
           ],
         ),

@@ -8,11 +8,7 @@ void main() {
   group('ClickDetector', () {
     testWidgets('renders child', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: ClickDetector(
-            child: Text('Child'),
-          ),
-        ),
+        SimpleApp(child: ClickDetector(child: Text('Child'))),
       );
 
       expect(find.text('Child'), findsOneWidget);

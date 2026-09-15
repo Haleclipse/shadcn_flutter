@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class NavigationMenuExample1 extends StatelessWidget {
   const NavigationMenuExample1({super.key});
@@ -19,40 +20,42 @@ class NavigationMenuExample1 extends StatelessWidget {
               NavigationMenuContent(
                 title: const Text('Introduction'),
                 content: const Text(
-                    'Component library for Flutter based on Shadcn/UI design.'),
+                  'Component library for Flutter based on Shadcn/UI design.',
+                ),
                 onPressed: () {},
               ),
               NavigationMenuContent(
                 title: const Text('Installation'),
                 content: const Text(
-                    'How to install this package in your Flutter project.'),
+                  'How to install this package in your Flutter project.',
+                ),
                 onPressed: () {},
               ),
               NavigationMenuContent(
                 title: const Text('Typography'),
                 content: const Text(
-                    'Styles and usage of typography in this package.'),
+                  'Styles and usage of typography in this package.',
+                ),
                 onPressed: () {},
               ),
               Clickable(
-                mouseCursor:
-                    const WidgetStatePropertyAll(SystemMouseCursors.click),
+                mouseCursor: const WidgetStatePropertyAll(
+                  SystemMouseCursors.click,
+                ),
                 child: Card(
-                  borderRadius: theme.borderRadiusMd,
+                  theme: CardTheme(borderRadius: theme.borderRadiusMd),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const FlutterLogo(
-                        size: 32,
-                      ),
+                      const FlutterLogo(size: 32),
                       const Gap(16),
                       const Text('shadcn_flutter').mono().semiBold().large(),
                       const Gap(8),
                       const Text(
-                              'Beautifully designed components from Shadcn/UI is now available for Flutter')
-                          .muted(),
+                        'Beautifully designed components from Shadcn/UI is now available for Flutter',
+                      ).muted(),
                     ],
                   ),
                 ).constrained(maxWidth: 192),

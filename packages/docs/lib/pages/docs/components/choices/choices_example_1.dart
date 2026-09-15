@@ -15,10 +15,6 @@ class _ChoicesExample1State extends State<ChoicesExample1> {
     // example keeps an empty Column to demonstrate the container itself.
     // In practical examples, you would place choice items (e.g., ChoiceTile,
     // Checkboxes/Radio or custom widgets) inside the child.
-    return const MultipleChoice(
-      child: Column(
-        children: [],
-      ),
-    );
+    return const MultipleChoice(child: Column(children: []));
   }
 }

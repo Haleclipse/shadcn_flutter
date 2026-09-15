@@ -69,8 +69,9 @@ class OverflowMarqueeTheme extends ComponentThemeData {
     return OverflowMarqueeTheme(
       direction: direction == null ? this.direction : direction(),
       duration: duration == null ? this.duration : duration(),
-      delayDuration:
-          delayDuration == null ? this.delayDuration : delayDuration(),
+      delayDuration: delayDuration == null
+          ? this.delayDuration
+          : delayDuration(),
       step: step == null ? this.step : step(),
       fadePortion: fadePortion == null ? this.fadePortion : fadePortion(),
       curve: curve == null ? this.curve : curve(),
@@ -132,39 +133,49 @@ class OverflowMarqueeTheme extends ComponentThemeData {
 ///   ),
 /// )
 /// ```
-class OverflowMarquee extends StatefulWidget {
+class OverflowMarquee extends StatefulWidget
+    implements Styleable<OverflowMarqueeTheme> {
   /// The child widget to display and potentially scroll.
   final Widget child;
 
   /// Scroll direction (horizontal or vertical).
   ///
   /// If `null`, uses theme default or [Axis.horizontal].
+  @Deprecated('Use theme: OverflowMarqueeTheme(direction: ...) instead.')
   final Axis? direction;
 
   /// Total duration for one complete scroll cycle.
   ///
   /// If `null`, uses theme default.
+  @Deprecated('Use theme: OverflowMarqueeTheme(duration: ...) instead.')
   final Duration? duration;
 
   /// Distance to scroll per animation step.
   ///
   /// If `null`, scrolls the entire overflow amount.
+  @Deprecated('Use theme: OverflowMarqueeTheme(step: ...) instead.')
   final double? step;
 
   /// Pause duration between scroll cycles.
   ///
   /// If `null`, uses theme default.
+  @Deprecated('Use theme: OverflowMarqueeTheme(delayDuration: ...) instead.')
   final Duration? delayDuration;
 
   /// Portion of edges to apply fade effect (0.0 to 1.0).
   ///
   /// For example, 0.15 fades 15% of each edge. If `null`, uses theme default.
+  @Deprecated('Use theme: OverflowMarqueeTheme(fadePortion: ...) instead.')
   final double? fadePortion;
 
   /// Animation curve for scroll motion.
   ///
   /// If `null`, uses theme default or [Curves.linear].
   final Curve? curve;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final OverflowMarqueeTheme? theme;
 
   /// Creates an [OverflowMarquee] widget with customizable scrolling behavior.
   ///
@@ -198,6 +209,7 @@ class OverflowMarquee extends StatefulWidget {
     this.step,
     this.fadePortion,
     this.curve,
+    this.theme,
   });
 
   @override
@@ -231,27 +243,33 @@ class _OverflowMarqueeState extends State<OverflowMarquee>
   @override
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
-    final compTheme = ComponentTheme.maybeOf<OverflowMarqueeTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<OverflowMarqueeTheme>(context);
     final direction = styleValue(
-        widgetValue: widget.direction,
-        themeValue: compTheme?.direction,
-        defaultValue: Axis.horizontal);
+      widgetValue: widget.direction,
+      themeValue: compTheme?.direction,
+      defaultValue: Axis.horizontal,
+    );
     final fadePortion = styleValue(
-        widgetValue: widget.fadePortion,
-        themeValue: compTheme?.fadePortion,
-        defaultValue: 25.0);
+      widgetValue: widget.fadePortion,
+      themeValue: compTheme?.fadePortion,
+      defaultValue: 25.0,
+    );
     final duration = styleValue(
-        widgetValue: widget.duration,
-        themeValue: compTheme?.duration,
-        defaultValue: const Duration(seconds: 1));
+      widgetValue: widget.duration,
+      themeValue: compTheme?.duration,
+      defaultValue: const Duration(seconds: 1),
+    );
     final delayDuration = styleValue(
-        widgetValue: widget.delayDuration,
-        themeValue: compTheme?.delayDuration,
-        defaultValue: const Duration(milliseconds: 500));
+      widgetValue: widget.delayDuration,
+      themeValue: compTheme?.delayDuration,
+      defaultValue: const Duration(milliseconds: 500),
+    );
     final step = styleValue(
-        widgetValue: widget.step,
-        themeValue: compTheme?.step,
-        defaultValue: 100.0);
+      widgetValue: widget.step,
+      themeValue: compTheme?.step,
+      defaultValue: 100.0,
+    );
     final curve = widget.curve ?? compTheme?.curve ?? Curves.linear;
     return ClipRect(
       child: _OverflowMarqueeLayout(
@@ -311,7 +329,9 @@ class _OverflowMarqueeLayout extends SingleChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, _RenderOverflowMarqueeLayout renderObject) {
+    BuildContext context,
+    _RenderOverflowMarqueeLayout renderObject,
+  ) {
     bool hasChanged = false;
     if (renderObject.direction != direction) {
       renderObject.direction = direction;
@@ -425,13 +445,9 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox {
   @override
   Size computeDryLayout(covariant BoxConstraints constraints) {
     if (direction == Axis.horizontal) {
-      constraints = constraints.copyWith(
-        maxWidth: double.infinity,
-      );
+      constraints = constraints.copyWith(maxWidth: double.infinity);
     } else {
-      constraints = constraints.copyWith(
-        maxHeight: double.infinity,
-      );
+      constraints = constraints.copyWith(maxHeight: double.infinity);
     }
     final child = this.child;
     if (child != null) {
@@ -452,7 +468,8 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox {
     int delayDurationInMicros = delayDuration.inMicroseconds;
     double elapsedInMicros = elapsed.inMicroseconds.toDouble();
     // includes the reverse
-    double overalCycleDuration = delayDurationInMicros +
+    double overalCycleDuration =
+        delayDurationInMicros +
         durationInMicros +
         delayDurationInMicros +
         durationInMicros;
@@ -499,7 +516,11 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox {
   }
 
   Shader _createAlphaShader(
-      bool fadeStart, bool fadeEnd, Rect bounds, double fadePortion) {
+    bool fadeStart,
+    bool fadeEnd,
+    Rect bounds,
+    double fadePortion,
+  ) {
     double portionSize;
     if (direction == Axis.horizontal) {
       portionSize = fadePortion / bounds.width;
@@ -586,13 +607,9 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox {
     if (child != null) {
       var constraints = this.constraints;
       if (direction == Axis.horizontal) {
-        constraints = constraints.copyWith(
-          maxWidth: double.infinity,
-        );
+        constraints = constraints.copyWith(maxWidth: double.infinity);
       } else {
-        constraints = constraints.copyWith(
-          maxHeight: double.infinity,
-        );
+        constraints = constraints.copyWith(maxHeight: double.infinity);
       }
       child.layout(constraints, parentUsesSize: true);
       size = this.constraints.constrain(child.size);

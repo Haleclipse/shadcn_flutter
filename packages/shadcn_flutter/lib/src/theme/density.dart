@@ -118,11 +118,17 @@ class Density {
   /// - [t] (`double`, required): The interpolation factor (0.0 to 1.0).
   static Density lerp(Density a, Density b, double t) {
     return Density(
-      baseContainerPadding:
-          lerpDouble(a.baseContainerPadding, b.baseContainerPadding, t)!,
+      baseContainerPadding: lerpDouble(
+        a.baseContainerPadding,
+        b.baseContainerPadding,
+        t,
+      )!,
       baseGap: lerpDouble(a.baseGap, b.baseGap, t)!,
-      baseContentPadding:
-          lerpDouble(a.baseContentPadding, b.baseContentPadding, t)!,
+      baseContentPadding: lerpDouble(
+        a.baseContentPadding,
+        b.baseContentPadding,
+        t,
+      )!,
     );
   }
 
@@ -268,8 +274,12 @@ class DirectionalEdgeInsetsDensity extends EdgeInsetsDirectional
   }
 
   @override
-  DirectionalEdgeInsetsDensity copyWith(
-      {double? start, double? top, double? end, double? bottom}) {
+  DirectionalEdgeInsetsDensity copyWith({
+    double? start,
+    double? top,
+    double? end,
+    double? bottom,
+  }) {
     return DirectionalEdgeInsetsDensity.only(
       start: start ?? this.start,
       top: top ?? this.top,
@@ -322,8 +332,12 @@ class EdgeInsetsDensity extends EdgeInsets
   }
 
   @override
-  EdgeInsetsDensity copyWith(
-      {double? left, double? top, double? right, double? bottom}) {
+  EdgeInsetsDensity copyWith({
+    double? left,
+    double? top,
+    double? right,
+    double? bottom,
+  }) {
     return EdgeInsetsDensity.only(
       left: left ?? this.left,
       top: top ?? this.top,
@@ -340,10 +354,13 @@ class EdgeInsetsDensity extends EdgeInsets
 ///
 /// This function is used internally by density widgets to resolve padding.
 EdgeInsetsGeometry resolveEdgeInsets(
-    EdgeInsetsGeometry padding, double basePadding) {
+  EdgeInsetsGeometry padding,
+  double basePadding,
+) {
   return switch (padding) {
-    DensityEdgeInsetsGeometry densityPadding =>
-      densityPadding.resolveDensity(basePadding),
+    DensityEdgeInsetsGeometry densityPadding => densityPadding.resolveDensity(
+      basePadding,
+    ),
     _ => padding,
   };
 }
@@ -388,10 +405,7 @@ class DensityContentPadding extends StatelessWidget {
       padding,
       theme.density.baseContentPadding * theme.scaling,
     );
-    return Padding(
-      padding: resolvedPadding,
-      child: child,
-    );
+    return Padding(padding: resolvedPadding, child: child);
   }
 }
 
@@ -432,10 +446,7 @@ class DensityContainerPadding extends StatelessWidget {
       padding,
       theme.density.baseContainerPadding * theme.scaling,
     );
-    return Padding(
-      padding: resolvedPadding,
-      child: child,
-    );
+    return Padding(padding: resolvedPadding, child: child);
   }
 }
 
@@ -458,20 +469,26 @@ class DensityGap extends StatelessWidget {
   /// The gap multiplier, applied to [Density.baseGap].
   final double gap;
 
+  /// The axis the gap spaces along.
+  ///
+  /// [Axis.vertical] — the default — puts the space between the children of a
+  /// [Column]; pass [Axis.horizontal] inside a [Row].
+  final Axis direction;
+
   /// Creates a [DensityGap].
   ///
   /// Parameters:
   /// - [gap] (`double`, required): Gap multiplier (use constants like [gapLg]).
-  const DensityGap(
-    this.gap, {
-    super.key,
-  });
+  /// - [direction] (`Axis`, default [Axis.vertical]): Axis to space along.
+  const DensityGap(this.gap, {super.key, this.direction = Axis.vertical});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final adjustedGap = gap * theme.density.baseGap * theme.scaling;
-    return Gap(adjustedGap);
+    return direction == Axis.horizontal
+        ? SizedBox(width: adjustedGap)
+        : SizedBox(height: adjustedGap);
   }
 }
 
@@ -485,7 +502,7 @@ class DensityGap extends StatelessWidget {
 /// DensityRow(
 ///   spacing: padLg,
 ///   children: [
-///     Icon(Icons.star),
+///     Icon(LucideIcons.star),
 ///     Text('Rating'),
 ///   ],
 /// )
@@ -709,7 +726,6 @@ class DensityFlex extends StatelessWidget {
   }
 }
 
-
 /// A [Wrap] widget with density-aware spacing between children.
 ///
 /// Use instead of [Wrap] when you want the spacing to adapt to density settings.
@@ -911,8 +927,7 @@ class DensityWrap extends StatelessWidget {
 
     return Wrap(
       spacing: spacing * theme.density.baseGap * theme.scaling,
-      runSpacing:
-          runSpacing * theme.density.baseGap * theme.scaling,
+      runSpacing: runSpacing * theme.density.baseGap * theme.scaling,
       alignment: alignment,
       crossAxisAlignment: crossAxisAlignment,
       runAlignment: runAlignment,

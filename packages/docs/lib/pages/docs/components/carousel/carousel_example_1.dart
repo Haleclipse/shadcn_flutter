@@ -2,6 +2,8 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import '../carousel_example.dart';
 
+import 'package:gap/gap.dart';
+
 /// Horizontal carousel with manual next/previous controls.
 ///
 /// Uses a [CarouselController] to programmatically navigate slides and
@@ -22,12 +24,13 @@ class _CarouselExample1State extends State<CarouselExample1> {
       child: Row(
         children: [
           OutlineButton(
-              shape: ButtonShape.circle,
-              onPressed: () {
-                // Animate to previous slide.
-                controller.animatePrevious(const Duration(milliseconds: 500));
-              },
-              child: const Icon(Icons.arrow_back)),
+            shape: ButtonShape.circle,
+            onPressed: () {
+              // Animate to previous slide.
+              controller.animatePrevious(const Duration(milliseconds: 500));
+            },
+            child: const Icon(LucideIcons.arrowLeft),
+          ),
           const Gap(24),
           Expanded(
             child: SizedBox(
@@ -52,12 +55,13 @@ class _CarouselExample1State extends State<CarouselExample1> {
           ),
           const Gap(24),
           OutlineButton(
-              shape: ButtonShape.circle,
-              onPressed: () {
-                // Animate to next slide.
-                controller.animateNext(const Duration(milliseconds: 500));
-              },
-              child: const Icon(Icons.arrow_forward)),
+            shape: ButtonShape.circle,
+            onPressed: () {
+              // Animate to next slide.
+              controller.animateNext(const Duration(milliseconds: 500));
+            },
+            child: const Icon(LucideIcons.arrowRight),
+          ),
         ],
       ),
     );

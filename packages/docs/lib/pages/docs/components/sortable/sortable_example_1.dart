@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class SortableExample1 extends StatefulWidget {
   const SortableExample1({super.key});
@@ -45,7 +46,11 @@ class _SortableExample1State extends State<SortableExample1> {
                   onAccept: (value) {
                     setState(() {
                       swapItemInLists(
-                          [invited, reserved], value, invited, invited.length);
+                        [invited, reserved],
+                        value,
+                        invited,
+                        invited.length,
+                      );
                     });
                   },
                   child: Column(
@@ -63,18 +68,28 @@ class _SortableExample1State extends State<SortableExample1> {
                           onAcceptTop: (value) {
                             setState(() {
                               swapItemInLists(
-                                  [invited, reserved], value, invited, i);
+                                [invited, reserved],
+                                value,
+                                invited,
+                                i,
+                              );
                             });
                           },
                           // Insert below the current index when dropped at the bottom edge.
                           onAcceptBottom: (value) {
                             setState(() {
                               swapItemInLists(
-                                  [invited, reserved], value, invited, i + 1);
+                                [invited, reserved],
+                                value,
+                                invited,
+                                i + 1,
+                              );
                             });
                           },
                           child: OutlinedContainer(
-                            padding: const EdgeInsets.all(12),
+                            theme: OutlinedContainerTheme(
+                              padding: const EdgeInsets.all(12),
+                            ),
                             child: Center(child: Text(invited[i].data)),
                           ),
                         ),
@@ -83,15 +98,19 @@ class _SortableExample1State extends State<SortableExample1> {
                 ),
               ),
             ),
-            gap(12),
+            Gap(12),
             Expanded(
               child: Card(
                 child: SortableDropFallback<String>(
                   // Same behavior for the second list.
                   onAccept: (value) {
                     setState(() {
-                      swapItemInLists([invited, reserved], value, reserved,
-                          reserved.length);
+                      swapItemInLists(
+                        [invited, reserved],
+                        value,
+                        reserved,
+                        reserved.length,
+                      );
                     });
                   },
                   child: Column(
@@ -104,17 +123,27 @@ class _SortableExample1State extends State<SortableExample1> {
                           onAcceptTop: (value) {
                             setState(() {
                               swapItemInLists(
-                                  [invited, reserved], value, reserved, i);
+                                [invited, reserved],
+                                value,
+                                reserved,
+                                i,
+                              );
                             });
                           },
                           onAcceptBottom: (value) {
                             setState(() {
                               swapItemInLists(
-                                  [invited, reserved], value, reserved, i + 1);
+                                [invited, reserved],
+                                value,
+                                reserved,
+                                i + 1,
+                              );
                             });
                           },
                           child: OutlinedContainer(
-                            padding: const EdgeInsets.all(12),
+                            theme: OutlinedContainerTheme(
+                              padding: const EdgeInsets.all(12),
+                            ),
                             child: Center(child: Text(reserved[i].data)),
                           ),
                         ),

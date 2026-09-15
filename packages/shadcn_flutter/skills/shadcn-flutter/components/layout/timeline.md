@@ -19,7 +19,8 @@ class TimelineExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'timeline',
-      description: 'A timeline is a way of displaying a list of events in '
+      description:
+          'A timeline is a way of displaying a list of events in '
           'chronological order, sometimes described as a project artifact.',
       displayName: 'Timeline',
       children: [
@@ -54,13 +55,15 @@ class TimelineExample1 extends StatelessWidget {
           time: const Text('2022-01-01'),
           title: const Text('First event'),
           content: const Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio euismod lacinia at quis risus sed vulputate odio ut. Quam viverra orci sagittis eu volutpat odio facilisis mauris.'),
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio euismod lacinia at quis risus sed vulputate odio ut. Quam viverra orci sagittis eu volutpat odio facilisis mauris.',
+          ),
         ),
         TimelineData(
           time: const Text('2022-01-02'),
           title: const Text('Second event'),
           content: const Text(
-              'Aut eius excepturi ex recusandae eius est minima molestiae. Nam dolores iusto ad fugit reprehenderit hic dolorem quisquam et quia omnis non suscipit nihil sit libero distinctio. Ad dolorem tempora sit nostrum voluptatem qui tempora unde? Sit rerum magnam nam ipsam nesciunt aut rerum necessitatibus est quia esse non magni quae.'),
+            'Aut eius excepturi ex recusandae eius est minima molestiae. Nam dolores iusto ad fugit reprehenderit hic dolorem quisquam et quia omnis non suscipit nihil sit libero distinctio. Ad dolorem tempora sit nostrum voluptatem qui tempora unde? Sit rerum magnam nam ipsam nesciunt aut rerum necessitatibus est quia esse non magni quae.',
+          ),
         ),
         TimelineData(
           time: const Text('2022-01-03'),
@@ -114,3 +117,4 @@ class TimelineTile extends StatelessWidget implements IComponentPage {
 | :--- | :--- | :--- |
 | `data` | `List<TimelineData>` | List of timeline entries to display.  Each [TimelineData] object represents one row in the timeline with time information, title, optional content, and optional custom color. The timeline renders entries in the order provided in this list. |
 | `timeConstraints` | `BoxConstraints?` | Override constraints for the time column width.  When provided, overrides the theme's [TimelineTheme.timeConstraints] for this specific timeline instance. Controls how much space is allocated for displaying time information. If null, uses theme or default constraints. |
+| `theme` | `TimelineTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

@@ -120,7 +120,7 @@ class ToastTheme extends ComponentThemeData {
   ///   child: ListTile(
   ///     title: Text('Notification'),
   ///     trailing: IconButton(
-  ///       icon: Icon(Icons.close),
+  ///       icon: Icon(LucideIcons.x),
   ///       onPressed: overlay.close,
   ///     ),
   ///   ),
@@ -146,38 +146,43 @@ class ToastTheme extends ComponentThemeData {
           : maxStackedEntries(),
       padding: padding == null ? this.padding : padding(),
       expandMode: expandMode == null ? this.expandMode : expandMode(),
-      collapsedOffset:
-          collapsedOffset == null ? this.collapsedOffset : collapsedOffset(),
-      collapsedScale:
-          collapsedScale == null ? this.collapsedScale : collapsedScale(),
-      expandingCurve:
-          expandingCurve == null ? this.expandingCurve : expandingCurve(),
+      collapsedOffset: collapsedOffset == null
+          ? this.collapsedOffset
+          : collapsedOffset(),
+      collapsedScale: collapsedScale == null
+          ? this.collapsedScale
+          : collapsedScale(),
+      expandingCurve: expandingCurve == null
+          ? this.expandingCurve
+          : expandingCurve(),
       expandingDuration: expandingDuration == null
           ? this.expandingDuration
           : expandingDuration(),
-      collapsedOpacity:
-          collapsedOpacity == null ? this.collapsedOpacity : collapsedOpacity(),
+      collapsedOpacity: collapsedOpacity == null
+          ? this.collapsedOpacity
+          : collapsedOpacity(),
       entryOpacity: entryOpacity == null ? this.entryOpacity : entryOpacity(),
       spacing: spacing == null ? this.spacing : spacing(),
-      toastConstraints:
-          toastConstraints == null ? this.toastConstraints : toastConstraints(),
+      toastConstraints: toastConstraints == null
+          ? this.toastConstraints
+          : toastConstraints(),
     );
   }
 
   @override
   int get hashCode => Object.hash(
-        maxStackedEntries,
-        padding,
-        expandMode,
-        collapsedOffset,
-        collapsedScale,
-        expandingCurve,
-        expandingDuration,
-        collapsedOpacity,
-        entryOpacity,
-        spacing,
-        toastConstraints,
-      );
+    maxStackedEntries,
+    padding,
+    expandMode,
+    collapsedOffset,
+    collapsedScale,
+    expandingCurve,
+    expandingDuration,
+    collapsedOpacity,
+    entryOpacity,
+    spacing,
+    toastConstraints,
+  );
 
   @override
   bool operator ==(Object other) {
@@ -211,7 +216,9 @@ class ToastTheme extends ComponentThemeData {
 ///
 /// Returns a widget representing the toast.
 typedef ToastBuilder = Widget Function(
-    BuildContext context, ToastOverlay overlay);
+  BuildContext context,
+  ToastOverlay overlay,
+);
 
 /// Displays a toast notification with sophisticated positioning and animation.
 ///
@@ -440,7 +447,7 @@ enum ExpandMode {
 ///   child: MyAppContent(),
 /// );
 /// ```
-class ToastLayer extends StatefulWidget {
+class ToastLayer extends StatefulWidget implements Styleable<ToastTheme> {
   /// The child widget to wrap with toast functionality.
   ///
   /// Type: `Widget`, required. The main application content that will have
@@ -513,6 +520,10 @@ class ToastLayer extends StatefulWidget {
   /// size and theme scaling. Defines maximum and minimum toast dimensions.
   final BoxConstraints? toastConstraints;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final ToastTheme? theme;
+
   /// Creates a [ToastLayer].
   ///
   /// The [child] parameter is required as the content to wrap with toast
@@ -556,6 +567,7 @@ class ToastLayer extends StatefulWidget {
     this.entryOpacity = 0.0,
     this.spacing = 8,
     this.toastConstraints,
+    this.theme,
   });
 
   @override
@@ -597,8 +609,7 @@ class _ToastLayerState extends State<ToastLayer> {
   }
 
   void removeEntry(ToastEntry entry) {
-    _AttachedToastEntry? last = entries[entry.location]!
-        .entries
+    _AttachedToastEntry? last = entries[entry.location]!.entries
         .where((e) => e.entry == entry)
         .lastOrNull;
     if (last != null) {
@@ -614,19 +625,23 @@ class _ToastLayerState extends State<ToastLayer> {
     final scaling = theme.scaling;
     final baseGap = theme.density.baseGap;
     final baseContainerPadding = theme.density.baseContainerPadding;
-    final compTheme = ComponentTheme.maybeOf<ToastTheme>(context);
+    final compTheme =
+        widget.theme ?? ComponentTheme.maybeOf<ToastTheme>(context);
     final maxStackedEntries =
         compTheme?.maxStackedEntries ?? widget.maxStackedEntries;
     final expandMode = compTheme?.expandMode ?? widget.expandMode;
-    final collapsedOffset = (compTheme?.collapsedOffset ??
+    final collapsedOffset =
+        (compTheme?.collapsedOffset ??
             widget.collapsedOffset ??
             Offset(0, baseGap * 1.5)) *
         scaling;
-    final padding = (compTheme?.padding?.optionallyResolve(context) ??
+    final padding =
+        (compTheme?.padding?.optionallyResolve(context) ??
             widget.padding?.optionallyResolve(context) ??
             EdgeInsets.all(baseContainerPadding * 1.5)) *
         scaling;
-    final toastConstraints = compTheme?.toastConstraints ??
+    final toastConstraints =
+        compTheme?.toastConstraints ??
         widget.toastConstraints ??
         BoxConstraints.tightFor(width: 320 * scaling);
     final collapsedScale = compTheme?.collapsedScale ?? widget.collapsedScale;
@@ -638,9 +653,7 @@ class _ToastLayerState extends State<ToastLayer> {
     final entryOpacity = compTheme?.entryOpacity ?? widget.entryOpacity;
     final spacing = compTheme?.spacing ?? widget.spacing;
     int reservedEntries = maxStackedEntries;
-    List<Widget> children = [
-      widget.child,
-    ];
+    List<Widget> children = [widget.child];
     for (var locationEntry in entries.entries) {
       var location = locationEntry.key;
       var entries = locationEntry.value.entries;
@@ -792,7 +805,7 @@ abstract class ToastOverlay {
   ///   return AlertCard(
   ///     title: 'Auto-close',
   ///     trailing: IconButton(
-  ///       icon: Icon(Icons.close),
+  ///       icon: Icon(LucideIcons.x),
   ///       onPressed: overlay.close,
   ///     ),
   ///   );
@@ -1063,72 +1076,73 @@ class _ToastEntryLayoutState extends State<ToastEntryLayout> {
           }
         },
         child: AnimatedBuilder(
-            animation: widget.closing,
-            builder: (context, child) {
-              return AnimatedValueBuilder(
-                  value: widget.closing.value ? 0.0 : _dismissOffset,
-                  duration: _dismissing && !widget.closing.value
-                      ? Duration.zero
-                      : kDefaultDuration,
-                  builder: (context, dismissProgress, child) {
+          animation: widget.closing,
+          builder: (context, child) {
+            return AnimatedValueBuilder(
+              value: widget.closing.value ? 0.0 : _dismissOffset,
+              duration: _dismissing && !widget.closing.value
+                  ? Duration.zero
+                  : kDefaultDuration,
+              builder: (context, dismissProgress, child) {
+                return AnimatedValueBuilder(
+                  value: widget.closing.value ? 0.0 : _closeDismissing ?? 0.0,
+                  duration: kDefaultDuration,
+                  onEnd: (value) {
+                    if (value == -1.0 || value == 1.0) {
+                      widget.onClosed();
+                    }
+                  },
+                  builder: (context, closeDismissingProgress, child) {
                     return AnimatedValueBuilder(
-                        value: widget.closing.value
-                            ? 0.0
-                            : _closeDismissing ?? 0.0,
-                        duration: kDefaultDuration,
-                        onEnd: (value) {
-                          if (value == -1.0 || value == 1.0) {
-                            widget.onClosed();
-                          }
-                        },
-                        builder: (context, closeDismissingProgress, child) {
-                          return AnimatedValueBuilder(
-                              value: widget.index.toDouble(),
+                      value: widget.index.toDouble(),
+                      curve: widget.curve,
+                      duration: widget.duration,
+                      builder: (context, indexProgress, child) {
+                        return AnimatedValueBuilder(
+                          initialValue: widget.index > 0 ? 1.0 : 0.0,
+                          value: widget.closing.value && !_dismissing
+                              ? 0.0
+                              : 1.0,
+                          curve: widget.curve,
+                          duration: widget.duration,
+                          onEnd: (value) {
+                            if (value == 0.0 && widget.closing.value) {
+                              widget.onClosed();
+                            }
+                          },
+                          builder: (context, showingProgress, child) {
+                            return AnimatedValueBuilder(
+                              value: widget.visible ? 1.0 : 0.0,
                               curve: widget.curve,
                               duration: widget.duration,
-                              builder: (context, indexProgress, child) {
+                              builder: (context, visibleProgress, child) {
                                 return AnimatedValueBuilder(
-                                  initialValue: widget.index > 0 ? 1.0 : 0.0,
-                                  value: widget.closing.value && !_dismissing
-                                      ? 0.0
-                                      : 1.0,
-                                  curve: widget.curve,
-                                  duration: widget.duration,
-                                  onEnd: (value) {
-                                    if (value == 0.0 && widget.closing.value) {
-                                      widget.onClosed();
-                                    }
-                                  },
-                                  builder: (context, showingProgress, child) {
-                                    return AnimatedValueBuilder(
-                                        value: widget.visible ? 1.0 : 0.0,
-                                        curve: widget.curve,
-                                        duration: widget.duration,
-                                        builder:
-                                            (context, visibleProgress, child) {
-                                          return AnimatedValueBuilder(
-                                              value:
-                                                  widget.expanded ? 1.0 : 0.0,
-                                              curve: widget.expandingCurve,
-                                              duration:
-                                                  widget.expandingDuration,
-                                              builder: (context, expandProgress,
-                                                  child) {
-                                                return buildToast(
-                                                    expandProgress,
-                                                    showingProgress,
-                                                    visibleProgress,
-                                                    indexProgress,
-                                                    dismissProgress,
-                                                    closeDismissingProgress);
-                                              });
-                                        });
+                                  value: widget.expanded ? 1.0 : 0.0,
+                                  curve: widget.expandingCurve,
+                                  duration: widget.expandingDuration,
+                                  builder: (context, expandProgress, child) {
+                                    return buildToast(
+                                      expandProgress,
+                                      showingProgress,
+                                      visibleProgress,
+                                      indexProgress,
+                                      dismissProgress,
+                                      closeDismissingProgress,
+                                    );
                                   },
                                 );
-                              });
-                        });
-                  });
-            }),
+                              },
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
     if (widget.themes != null) {
@@ -1141,18 +1155,20 @@ class _ToastEntryLayoutState extends State<ToastEntryLayout> {
   }
 
   Widget buildToast(
-      double expandProgress,
-      double showingProgress,
-      double visibleProgress,
-      double indexProgress,
-      double dismissProgress,
-      double closeDismissingProgress) {
+    double expandProgress,
+    double showingProgress,
+    double visibleProgress,
+    double indexProgress,
+    double dismissProgress,
+    double closeDismissingProgress,
+  ) {
     double nonCollapsingProgress = (1.0 - expandProgress) * showingProgress;
     var offset = widget.entryOffset * (1.0 - showingProgress);
 
     // when its behind another toast, shift it up based on index
     var previousAlignment = widget.previousAlignment.optionallyResolve(context);
-    offset += Offset(
+    offset +=
+        Offset(
           (widget.collapsedOffset.dx * previousAlignment.x) *
               nonCollapsingProgress,
           (widget.collapsedOffset.dy * previousAlignment.y) *
@@ -1171,7 +1187,8 @@ class _ToastEntryLayoutState extends State<ToastEntryLayout> {
     offset += expandingShift;
 
     // and then add the spacing when its in expanded mode
-    offset += Offset(
+    offset +=
+        Offset(
           (widget.spacing * previousAlignment.x) * expandProgress,
           (widget.spacing * previousAlignment.y) * expandProgress,
         ) *
@@ -1183,13 +1200,11 @@ class _ToastEntryLayoutState extends State<ToastEntryLayout> {
       entryAlignment.y * (1.0 - showingProgress),
     );
 
-    fractionalOffset += Offset(
-      closeDismissingProgress + dismissProgress,
-      0,
-    );
+    fractionalOffset += Offset(closeDismissingProgress + dismissProgress, 0);
 
     // when its behind another toast AND is expanded, shift it up based on index and the size of self
-    fractionalOffset += Offset(
+    fractionalOffset +=
+        Offset(
           expandProgress * previousAlignment.x,
           expandProgress * previousAlignment.y,
         ) *
@@ -1202,8 +1217,10 @@ class _ToastEntryLayoutState extends State<ToastEntryLayout> {
     );
 
     // fade out the toast behind
-    opacity *=
-        pow(widget.collapsedOpacity, indexProgress * nonCollapsingProgress);
+    opacity *= pow(
+      widget.collapsedOpacity,
+      indexProgress * nonCollapsingProgress,
+    );
 
     opacity *= 1 - (closeDismissingProgress + dismissProgress).abs();
 
@@ -1218,10 +1235,7 @@ class _ToastEntryLayoutState extends State<ToastEntryLayout> {
           translation: fractionalOffset,
           child: Opacity(
             opacity: opacity.clamp(0, 1),
-            child: Transform.scale(
-              scale: scale,
-              child: widget.child,
-            ),
+            child: Transform.scale(scale: scale, child: widget.child),
           ),
         ),
       ),

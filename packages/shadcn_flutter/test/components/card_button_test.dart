@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+
 import '../test_helper.dart';
 
 void main() {
@@ -7,10 +8,7 @@ void main() {
     testWidgets('renders with basic content', (tester) async {
       await tester.pumpWidget(
         SimpleApp(
-          child: CardButton(
-            onPressed: () {},
-            child: const Text('Test Button'),
-          ),
+          child: CardButton(onPressed: () {}, child: const Text('Test Button')),
         ),
       );
 
@@ -56,11 +54,7 @@ void main() {
 
     testWidgets('is disabled when onPressed is null', (tester) async {
       await tester.pumpWidget(
-        SimpleApp(
-          child: CardButton(
-            child: const Text('Test Button'),
-          ),
-        ),
+        SimpleApp(child: CardButton(child: const Text('Test Button'))),
       );
 
       final button = tester.widget<Button>(find.byType(Button));

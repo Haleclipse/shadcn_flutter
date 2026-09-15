@@ -8,7 +8,7 @@ void main() {
     await tester.pumpWidget(
       SimpleApp(
         child: ChatBubble(
-          widthFactor: 0.8,
+          theme: ChatTheme(widthFactor: 0.8),
           child: Text('Hello'),
         ),
       ),
@@ -25,9 +25,7 @@ void main() {
       SimpleApp(
         child: ComponentTheme<ChatTheme>(
           data: ChatTheme(widthFactor: 0.7),
-          child: ChatBubble(
-            child: Text('Hello'),
-          ),
+          child: ChatBubble(child: Text('Hello')),
         ),
       ),
     );
@@ -38,14 +36,15 @@ void main() {
     expect(chatConstrainedBox.widthFactor, 0.7);
   });
 
-  testWidgets('ChatBubble prefers local widthFactor over ChatTheme',
-      (tester) async {
+  testWidgets('ChatBubble prefers local widthFactor over ChatTheme', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       SimpleApp(
         child: ComponentTheme<ChatTheme>(
           data: ChatTheme(widthFactor: 0.7),
           child: ChatBubble(
-            widthFactor: 0.6,
+            theme: ChatTheme(widthFactor: 0.6),
             child: Text('Hello'),
           ),
         ),
@@ -59,13 +58,7 @@ void main() {
   });
 
   testWidgets('ChatBubble defaults to 0.5 widthFactor', (tester) async {
-    await tester.pumpWidget(
-      SimpleApp(
-        child: ChatBubble(
-          child: Text('Hello'),
-        ),
-      ),
-    );
+    await tester.pumpWidget(SimpleApp(child: ChatBubble(child: Text('Hello'))));
 
     final chatConstrainedBox = tester.widget<ChatConstrainedBox>(
       find.byType(ChatConstrainedBox),

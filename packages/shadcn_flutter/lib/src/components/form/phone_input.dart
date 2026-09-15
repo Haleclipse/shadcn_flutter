@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:country_flags/country_flags.dart';
 import 'package:flutter/services.dart';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -16,24 +15,27 @@ class PhoneNumberValid extends Validator<PhoneNumber> {
   final String? emptyMessage;
 
   /// Creates a [PhoneNumberValid] validator with optional custom error messages.
-  const PhoneNumberValid({
-    this.invalidMessage,
-    this.emptyMessage,
-  });
+  const PhoneNumberValid({this.invalidMessage, this.emptyMessage});
 
   @override
   FutureOr<ValidationResult?> validate(
-      BuildContext context, PhoneNumber? value, FormValidationMode lifecycle) {
+    BuildContext context,
+    PhoneNumber? value,
+    FormValidationMode lifecycle,
+  ) {
     if (value == null) {
       var localizations = Localizations.of(context, ShadcnLocalizations);
-      return InvalidResult(emptyMessage ?? localizations.formPhoneNumberEmpty,
-          state: lifecycle);
+      return InvalidResult(
+        emptyMessage ?? localizations.formPhoneNumberEmpty,
+        state: lifecycle,
+      );
     }
     if (value.country == null || value.number.isEmpty) {
       var localizations = Localizations.of(context, ShadcnLocalizations);
       return InvalidResult(
-          invalidMessage ?? localizations.formPhoneNumberInvalid,
-          state: lifecycle);
+        invalidMessage ?? localizations.formPhoneNumberInvalid,
+        state: lifecycle,
+      );
     }
     return null;
   }
@@ -135,7 +137,7 @@ class PhoneInputTheme extends ComponentThemeData {
   final double? countryGap;
 
   /// The shape of the flag.
-  final Shape? flagShape;
+  final ShapeBorder? flagShape;
 
   /// Theme data for [PhoneInput].
   const PhoneInputTheme({
@@ -160,13 +162,14 @@ class PhoneInputTheme extends ComponentThemeData {
     ValueGetter<double?>? flagWidth,
     ValueGetter<double?>? flagGap,
     ValueGetter<double?>? countryGap,
-    ValueGetter<Shape?>? flagShape,
+    ValueGetter<ShapeBorder?>? flagShape,
   }) {
     return PhoneInputTheme(
       padding: padding != null ? padding() : this.padding,
       borderRadius: borderRadius != null ? borderRadius() : this.borderRadius,
-      popupConstraints:
-          popupConstraints != null ? popupConstraints() : this.popupConstraints,
+      popupConstraints: popupConstraints != null
+          ? popupConstraints()
+          : this.popupConstraints,
       maxWidth: maxWidth != null ? maxWidth() : this.maxWidth,
       flagHeight: flagHeight != null ? flagHeight() : this.flagHeight,
       flagWidth: flagWidth != null ? flagWidth() : this.flagWidth,
@@ -194,16 +197,16 @@ class PhoneInputTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        padding,
-        borderRadius,
-        popupConstraints,
-        maxWidth,
-        flagHeight,
-        flagWidth,
-        flagGap,
-        countryGap,
-        flagShape,
-      );
+    padding,
+    borderRadius,
+    popupConstraints,
+    maxWidth,
+    flagHeight,
+    flagWidth,
+    flagGap,
+    countryGap,
+    flagShape,
+  );
 
   @override
   String toString() {
@@ -234,7 +237,7 @@ class PhoneInputTheme extends ComponentThemeData {
 ///   searchPlaceholder: Text('Search countries...'),
 /// );
 /// ```
-class PhoneInput extends StatefulWidget {
+class PhoneInput extends StatefulWidget implements Styleable<PhoneInputTheme> {
   /// The default country to display when no initial value is provided.
   ///
   /// If both [initialCountry] and [initialValue] are null, defaults to
@@ -301,6 +304,10 @@ class PhoneInput extends StatefulWidget {
   /// to guide users on how to search for countries.
   final Widget? searchPlaceholder;
 
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final PhoneInputTheme? theme;
+
   /// Creates a [PhoneInput] widget.
   ///
   /// The widget can be initialized with a specific country or complete phone
@@ -335,13 +342,15 @@ class PhoneInput extends StatefulWidget {
     this.controller,
     @Deprecated('Plus code is now mandatory') this.filterPlusCode = true,
     @Deprecated(
-        'Plus code is now mandatory, leading zero is not a valid format')
+      'Plus code is now mandatory, leading zero is not a valid format',
+    )
     this.filterZeroCode = true,
     @Deprecated('Country code is now determined from input')
     this.filterCountryCode = true,
     this.onlyNumber = true,
     this.countries,
     this.searchPlaceholder,
+    this.theme,
   });
 
   @override
@@ -357,9 +366,11 @@ class _PhoneInputState extends State<PhoneInput>
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ??
+    _controller =
+        widget.controller ??
         TextEditingController(text: widget.initialValue?.number);
-    _lastValidCountry = widget.initialValue?.country ??
+    _lastValidCountry =
+        widget.initialValue?.country ??
         widget.initialCountry ??
         Country.unitedStates;
     _updateCountry(_lastValidCountry);
@@ -395,10 +406,7 @@ class _PhoneInputState extends State<PhoneInput>
       baseOffset: selection.baseOffset + newDialCode.length,
       extentOffset: selection.extentOffset + newDialCode.length,
     );
-    _controller.value = TextEditingValue(
-      text: number,
-      selection: selection,
-    );
+    _controller.value = TextEditingValue(text: number, selection: selection);
     _lastValidCountry = country;
     _updatingPhone = false;
   }
@@ -469,7 +477,8 @@ class _PhoneInputState extends State<PhoneInput>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final componentTheme = ComponentTheme.maybeOf<PhoneInputTheme>(context);
+    final componentTheme =
+        widget.theme ?? ComponentTheme.maybeOf<PhoneInputTheme>(context);
     return IntrinsicHeight(
       child: ButtonGroup.horizontal(
         children: [
@@ -501,15 +510,15 @@ class _PhoneInputState extends State<PhoneInput>
                 }
               },
               itemBuilder: (context, item) {
-                return CountryFlag.fromCountryCode(
-                  item.code,
-                  theme: ImageTheme(
-                    shape: styleValue(
-                      defaultValue: RoundedRectangle(
-                        theme.radiusSm,
-                      ),
-                      themeValue: componentTheme?.flagShape,
+                return CountryFlag(
+                  item,
+                  shape: styleValue(
+                    defaultValue: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(theme.radiusSmRadius),
                     ),
+                    themeValue: componentTheme?.flagShape,
+                  ),
+                  theme: CountryFlagTheme(
                     height: styleValue(
                       defaultValue: theme.scaling * 18,
                       themeValue: componentTheme?.flagHeight,
@@ -530,51 +539,55 @@ class _PhoneInputState extends State<PhoneInput>
               ),
               popup: SelectPopup.builder(
                 builder: (context, searchQuery) {
-                  return SelectItemList(children: [
-                    for (final country in widget.countries ?? Country.values)
-                      if (searchQuery == null ||
-                          _filterCountryCode(country, searchQuery))
-                        SelectItemButton(
-                          value: country,
-                          child: Row(
-                            children: [
-                              CountryFlag.fromCountryCode(
-                                country.code,
-                                theme: ImageTheme(
+                  return SelectItemList(
+                    children: [
+                      for (final country in widget.countries ?? Country.values)
+                        if (searchQuery == null ||
+                            _filterCountryCode(country, searchQuery))
+                          SelectItemButton(
+                            value: country,
+                            child: Row(
+                              children: [
+                                CountryFlag(
+                                  country,
                                   shape: styleValue(
-                                    defaultValue: RoundedRectangle(
-                                      theme.radiusSm,
+                                    defaultValue: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        theme.radiusSmRadius,
+                                      ),
                                     ),
                                     themeValue: componentTheme?.flagShape,
                                   ),
-                                  height: styleValue(
-                                    defaultValue: theme.scaling * 18,
-                                    themeValue: componentTheme?.flagHeight,
+                                  theme: CountryFlagTheme(
+                                    height: styleValue(
+                                      defaultValue: theme.scaling * 18,
+                                      themeValue: componentTheme?.flagHeight,
+                                    ),
+                                    width: styleValue(
+                                      defaultValue: theme.scaling * 24,
+                                      themeValue: componentTheme?.flagWidth,
+                                    ),
                                   ),
+                                ),
+                                SizedBox(
                                   width: styleValue(
-                                    defaultValue: theme.scaling * 24,
-                                    themeValue: componentTheme?.flagWidth,
+                                    defaultValue: theme.scaling * 8,
+                                    themeValue: componentTheme?.flagGap,
                                   ),
                                 ),
-                              ),
-                              Gap(
-                                styleValue(
-                                  defaultValue: theme.scaling * 8,
-                                  themeValue: componentTheme?.flagGap,
+                                Expanded(child: Text(country.name)),
+                                SizedBox(
+                                  width: styleValue(
+                                    defaultValue: 16 * theme.scaling,
+                                    themeValue: componentTheme?.countryGap,
+                                  ),
                                 ),
-                              ),
-                              Expanded(child: Text(country.name)),
-                              Gap(
-                                styleValue(
-                                  defaultValue: 16 * theme.scaling,
-                                  themeValue: componentTheme?.countryGap,
-                                ),
-                              ),
-                              Text(country.dialCode).muted(),
-                            ],
+                                Text(country.dialCode).muted(),
+                              ],
+                            ),
                           ),
-                        ),
-                  ]);
+                    ],
+                  );
                 },
               ).asBuilder,
             ),
@@ -597,7 +610,7 @@ class _PhoneInputState extends State<PhoneInput>
               ),
               initialValue: widget.initialValue?.number,
             ),
-          )
+          ),
         ],
       ),
     );
@@ -612,7 +625,9 @@ class _PhoneInputState extends State<PhoneInput>
 class _AlwaysPrefixedPlus extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     String text = newValue.text;
     if (text.startsWith('+')) {
       return newValue;

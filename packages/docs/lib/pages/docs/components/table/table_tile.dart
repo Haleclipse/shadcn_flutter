@@ -52,19 +52,23 @@ class TableTile extends StatelessWidget implements IComponentPage {
                       flex: 1,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text('Active',
-                            style: TextStyle(color: Colors.green)),
+                        child: const Text(
+                          'Active',
+                          style: TextStyle(color: Colors.green),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const Divider(height: 1),
+              const Divider(theme: DividerTheme(height: 1)),
               Container(
                 padding: const EdgeInsets.all(12),
                 child: Row(
@@ -75,19 +79,23 @@ class TableTile extends StatelessWidget implements IComponentPage {
                       flex: 1,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.orange.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text('Away',
-                            style: TextStyle(color: Colors.orange)),
+                        child: const Text(
+                          'Away',
+                          style: TextStyle(color: Colors.orange),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const Divider(height: 1),
+              const Divider(theme: DividerTheme(height: 1)),
               Container(
                 padding: const EdgeInsets.all(12),
                 child: Row(
@@ -98,13 +106,17 @@ class TableTile extends StatelessWidget implements IComponentPage {
                       flex: 1,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text('Active',
-                            style: TextStyle(color: Colors.green)),
+                        child: const Text(
+                          'Active',
+                          style: TextStyle(color: Colors.green),
+                        ),
                       ),
                     ),
                   ],

@@ -47,8 +47,10 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
     }
     setState(() {
       _currentSuggestions = suggestions
-          .where((element) =>
-              element.toLowerCase().contains(currentWord.toLowerCase()))
+          .where(
+            (element) =>
+                element.toLowerCase().contains(currentWord.toLowerCase()),
+          )
           .toList();
     });
   }
@@ -62,9 +64,7 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
         controller: _controller,
         // Each keystroke recalculates the suggestions.
         onChanged: _updateSuggestions,
-        features: const [
-          InputFeature.clear(),
-        ],
+        features: const [InputFeature.clear()],
       ),
     );
   }

@@ -18,8 +18,7 @@ class ToastExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'toast',
-      description:
-          'A toast is a non-modal, unobtrusive window element used to display brief, auto-expiring information to the user.',
+      description: 'A toast is a non-modal, unobtrusive window element used to display brief, auto-expiring information to the user.',
       displayName: 'Toast',
       children: [
         WidgetUsageExample(
@@ -56,13 +55,14 @@ class _ToastExample1State extends State<ToastExample1> {
         title: const Text('Event has been created'),
         subtitle: const Text('Sunday, July 07, 2024 at 12:00 PM'),
         trailing: PrimaryButton(
-            size: ButtonSize.small,
-            onPressed: () {
-              // Close the toast programmatically when clicking Undo.
-              overlay.close();
-            },
-            child: const Text('Undo')),
-        trailingAlignment: Alignment.center,
+          size: ButtonSize.small,
+          onPressed: () {
+            // Close the toast programmatically when clicking Undo.
+            overlay.close();
+          },
+          child: const Text('Undo'),
+        ),
+        theme: BasicTheme(trailingAlignment: Alignment.center),
       ),
     );
   }
@@ -163,10 +163,11 @@ class ToastTile extends StatelessWidget implements IComponentPage {
         title: const Text('Event has been created'),
         subtitle: const Text('Sunday, July 07, 2024 at 12:00 PM'),
         trailing: PrimaryButton(
-            size: ButtonSize.small,
-            onPressed: () {},
-            child: const Text('Undo')),
-        trailingAlignment: Alignment.center,
+          size: ButtonSize.small,
+          onPressed: () {},
+          child: const Text('Undo'),
+        ),
+        theme: BasicTheme(trailingAlignment: Alignment.center),
       ),
     );
   }
@@ -184,20 +185,14 @@ class ToastTile extends StatelessWidget implements IComponentPage {
             offset: const Offset(0, -24),
             child: Transform.scale(
               scale: 0.9 * 0.9,
-              child: Opacity(
-                opacity: 0.5,
-                child: _buildToast(),
-              ),
+              child: Opacity(opacity: 0.5, child: _buildToast()),
             ),
           ),
           Transform.translate(
             offset: const Offset(0, -12),
             child: Transform.scale(
               scale: 0.9,
-              child: Opacity(
-                opacity: 0.75,
-                child: _buildToast(),
-              ),
+              child: Opacity(opacity: 0.75, child: _buildToast()),
             ),
           ),
           _buildToast(),

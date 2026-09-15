@@ -13,15 +13,11 @@ class AppExample1 extends StatelessWidget {
       home: Scaffold(
         headers: [
           // Use Shadcn AppBar in the Scaffold header area.
-          AppBar(
-            title: Text('Shadcn App Example'),
-          ),
+          AppBar(title: Text('Shadcn App Example')),
           // A divider beneath the AppBar to separate header and body.
           Divider(),
         ],
-        child: Center(
-          child: Text('Hello, Shadcn Flutter!'),
-        ),
+        child: Center(child: Text('Hello, Shadcn Flutter!')),
       ),
     );
   }

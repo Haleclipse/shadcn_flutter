@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Dialog with a simple profile edit form.
 ///
@@ -25,29 +26,30 @@ class DialogExample1 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                      'Make changes to your profile here. Click save when you\'re done'),
+                    'Make changes to your profile here. Click save when you\'re done',
+                  ),
                   const Gap(16),
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 400),
                     child: Form(
                       controller: controller,
-                      child: const FormTableLayout(rows: [
-                        FormField<String>(
-                          key: FormKey(#name),
-                          label: Text('Name'),
-                          child: TextField(
-                            initialValue: 'Thito Yalasatria Sunarya',
-                            autofocus: true,
+                      child: const FormTableLayout(
+                        rows: [
+                          FormField<String>(
+                            key: FormKey(#name),
+                            label: Text('Name'),
+                            child: TextField(
+                              initialValue: 'Thito Yalasatria Sunarya',
+                              autofocus: true,
+                            ),
                           ),
-                        ),
-                        FormField<String>(
-                          key: FormKey(#username),
-                          label: Text('Username'),
-                          child: TextField(
-                            initialValue: '@sunaryathito',
+                          FormField<String>(
+                            key: FormKey(#username),
+                            label: Text('Username'),
+                            child: TextField(initialValue: '@sunaryathito'),
                           ),
-                        ),
-                      ]),
+                        ],
+                      ),
                     ).withPadding(vertical: 16),
                   ),
                 ],

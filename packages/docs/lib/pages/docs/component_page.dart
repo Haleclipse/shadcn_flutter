@@ -81,11 +81,7 @@ class _ComponentPageState extends State<ComponentPage> {
         continue;
       }
       remappedChildren.add(
-        PageItemWidget(
-          onThisPage: onThisPage[title]!,
-          key: key,
-          child: child,
-        ),
+        PageItemWidget(onThisPage: onThisPage[title]!, key: key, child: child),
       );
       i++;
     }

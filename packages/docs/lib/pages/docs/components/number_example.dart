@@ -12,20 +12,17 @@ class NumberTickerExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'number_ticker',
-      description:
-          'A widget that animates a number from an initial value to a final value.',
+      description: 'A widget that animates a number from an initial value to a final value.',
       displayName: 'Number Ticker',
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/number_ticker/number_ticker_example_1.dart',
+          path: 'lib/pages/docs/components/number_ticker/number_ticker_example_1.dart',
           child: NumberTickerExample1(),
         ),
         WidgetUsageExample(
           title: 'Flipper Example',
-          path:
-              'lib/pages/docs/components/number_ticker/number_ticker_example_2.dart',
+          path: 'lib/pages/docs/components/number_ticker/number_ticker_example_2.dart',
           child: NumberTickerExample2(),
         ),
       ],

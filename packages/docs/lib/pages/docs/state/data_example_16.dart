@@ -2,10 +2,7 @@ class MyComplexData {
   final int myInt;
   final bool myBool;
 
-  const MyComplexData({
-    required this.myInt,
-    required this.myBool,
-  });
+  const MyComplexData({required this.myInt, required this.myBool});
 
   @override
   bool operator ==(Object other) {

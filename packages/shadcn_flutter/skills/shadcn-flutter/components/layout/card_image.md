@@ -53,10 +53,7 @@ class CardImageExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
-        dragDevices: {
-          PointerDeviceKind.touch,
-          PointerDeviceKind.mouse,
-        },
+        dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -69,8 +66,9 @@ class CardImageExample1 extends StatelessWidget {
                 CardImage(
                   // Simple interaction: open a dialog on tap.
                   onPressed: () {
-                    showDialog(
-                      context: context,
+                    showOverlay(
+                      context,
+                      DialogConfiguration(),
                       builder: (context) {
                         return AlertDialog(
                           title: const Text('Card Image'),
@@ -88,9 +86,7 @@ class CardImageExample1 extends StatelessWidget {
                     );
                   },
                   // Network image; replace with your own provider as needed.
-                  image: Image.network(
-                    'https://picsum.photos/200/300',
-                  ),
+                  image: Image.network('https://picsum.photos/200/300'),
                   // Title and subtitle appear over the image.
                   title: Text('Card Number ${i + 1}'),
                   subtitle: const Text('Lorem ipsum dolor sit amet'),
@@ -109,6 +105,7 @@ class CardImageExample1 extends StatelessWidget {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class CardImageTile extends StatelessWidget implements IComponentPage {
   const CardImageTile({super.key});
@@ -143,7 +140,7 @@ class CardImageTile extends StatelessWidget implements IComponentPage {
                 ),
                 child: Center(
                   child: Icon(
-                    Icons.image,
+                    LucideIcons.image,
                     size: 48,
                     color: theme.colorScheme.mutedForeground,
                   ),
@@ -157,8 +154,8 @@ class CardImageTile extends StatelessWidget implements IComponentPage {
                     const Text('Card Title').bold().large(),
                     const Gap(8),
                     const Text(
-                            'This is a description of the card content. It provides additional information about the image above.')
-                        .muted(),
+                      'This is a description of the card content. It provides additional information about the image above.',
+                    ).muted(),
                     const Gap(16),
                     Row(
                       children: [
@@ -215,3 +212,4 @@ class CardImageTile extends StatelessWidget implements IComponentPage {
 | `backgroundColor` | `Color?` | Background color for the image container. |
 | `borderColor` | `Color?` | Border color for the image container. |
 | `gap` | `double?` | Gap between image and text content. |
+| `theme` | `CardImageTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

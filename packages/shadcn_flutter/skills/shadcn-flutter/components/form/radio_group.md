@@ -8,7 +8,6 @@ A group of radio buttons for single-selection input.
 ```dart
 import 'package:docs/pages/docs/components/radio_group/radio_group_example_1.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 import '../component_page.dart';
@@ -25,8 +24,7 @@ class RadioGroupExample extends StatelessWidget {
       children: [
         WidgetUsageExample(
           title: 'Example',
-          path:
-              'lib/pages/docs/components/radio_group/radio_group_example_1.dart',
+          path: 'lib/pages/docs/components/radio_group/radio_group_example_1.dart',
           child: RadioGroupExample1(),
         ),
       ],
@@ -39,6 +37,7 @@ class RadioGroupExample extends StatelessWidget {
 ### Radio Group Example 1
 ```dart
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class RadioGroupExample1 extends StatefulWidget {
   const RadioGroupExample1({super.key});
@@ -69,18 +68,9 @@ class _RadioGroupExample1State extends State<RadioGroupExample1> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Each RadioItem represents a single choice with an associated integer value.
-              RadioItem(
-                value: 1,
-                trailing: Text('Option 1'),
-              ),
-              RadioItem(
-                value: 2,
-                trailing: Text('Option 2'),
-              ),
-              RadioItem(
-                value: 3,
-                trailing: Text('Option 3'),
-              ),
+              RadioItem(value: 1, trailing: Text('Option 1')),
+              RadioItem(value: 2, trailing: Text('Option 2')),
+              RadioItem(value: 3, trailing: Text('Option 3')),
             ],
           ),
         ),
@@ -117,18 +107,9 @@ class RadioGroupTile extends StatelessWidget implements IComponentPage {
           child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RadioItem<int>(
-                trailing: Text('Option 1'),
-                value: 0,
-              ),
-              RadioItem<int>(
-                trailing: Text('Option 2'),
-                value: 1,
-              ),
-              RadioItem<int>(
-                trailing: Text('Option 3'),
-                value: 2,
-              ),
+              RadioItem<int>(trailing: Text('Option 1'), value: 0),
+              RadioItem<int>(trailing: Text('Option 2'), value: 1),
+              RadioItem<int>(trailing: Text('Option 3'), value: 2),
             ],
           ).gap(4),
         ).sized(width: 300),

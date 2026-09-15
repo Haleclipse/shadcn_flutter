@@ -19,7 +19,8 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
   Iterable<String>? selectedValues;
 
   Iterable<MapEntry<String, List<String>>> _filteredFruits(
-      String searchQuery) sync* {
+    String searchQuery,
+  ) sync* {
     for (final entry in fruits.entries) {
       final filteredValues = entry.value
           .where((value) => _filterName(value, searchQuery))
@@ -61,14 +62,10 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
       popup: SelectPopup.builder(
         searchPlaceholder: const Text('Search fruit'),
         emptyBuilder: (context) {
-          return const Center(
-            child: Text('No fruit found'),
-          );
+          return const Center(child: Text('No fruit found'));
         },
         loadingBuilder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         },
         builder: (context, searchQuery) async {
           final filteredFruits = searchQuery == null
@@ -82,11 +79,7 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
             builder: (context, index) {
               final entry = filteredFruits[index % filteredFruits.length];
               return SelectGroup(
-                headers: [
-                  SelectLabel(
-                    child: Text(entry.key),
-                  ),
-                ],
+                headers: [SelectLabel(child: Text(entry.key))],
                 children: [
                   for (final value in entry.value)
                     SelectItemButton(
@@ -107,9 +100,7 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
           selectedValues = value;
         });
       },
-      constraints: const BoxConstraints(
-        minWidth: 200,
-      ),
+      constraints: const BoxConstraints(minWidth: 200),
       value: selectedValues,
       placeholder: const Text('Select a fruit'),
     );

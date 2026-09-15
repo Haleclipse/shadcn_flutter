@@ -40,8 +40,9 @@ class MenuPopupTheme extends ComponentThemeData {
     ValueGetter<BorderRadiusGeometry?>? borderRadius,
   }) {
     return MenuPopupTheme(
-      surfaceOpacity:
-          surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
+      surfaceOpacity: surfaceOpacity == null
+          ? this.surfaceOpacity
+          : surfaceOpacity(),
       surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
       padding: padding == null ? this.padding : padding(),
       fillColor: fillColor == null ? this.fillColor : fillColor(),
@@ -64,13 +65,13 @@ class MenuPopupTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-        surfaceOpacity,
-        surfaceBlur,
-        padding,
-        fillColor,
-        borderColor,
-        borderRadius,
-      );
+    surfaceOpacity,
+    surfaceBlur,
+    padding,
+    fillColor,
+    borderColor,
+    borderRadius,
+  );
 }
 
 /// A styled container widget for displaying popup menus.
@@ -107,43 +108,53 @@ class MenuPopupTheme extends ComponentThemeData {
 /// - [MenuPopupTheme] for theming options
 /// - [MenuItem] for individual menu items
 /// - [DropdownMenu] for complete dropdown menu implementation
-class MenuPopup extends StatelessWidget {
+class MenuPopup extends StatelessWidget implements Styleable<MenuPopupTheme> {
   /// Opacity of the surface blur effect.
   ///
   /// Controls the transparency of the backdrop blur. Higher values make
   /// the blur more visible. If `null`, uses theme default.
+  @Deprecated('Use theme: MenuPopupTheme(surfaceOpacity: ...) instead.')
   final double? surfaceOpacity;
 
   /// Amount of blur to apply to the surface behind the popup.
   ///
   /// Higher values create more blur effect. If `null`, uses theme default.
+  @Deprecated('Use theme: MenuPopupTheme(surfaceBlur: ...) instead.')
   final double? surfaceBlur;
 
   /// Internal padding around the menu items.
   ///
   /// Defines the space between the popup's border and its content.
   /// If `null`, uses theme default or adaptive default based on overlay type.
+  @Deprecated('Use theme: MenuPopupTheme(padding: ...) instead.')
   final EdgeInsetsGeometry? padding;
 
   /// Background fill color of the popup.
   ///
   /// If `null`, uses the theme's popover color.
+  @Deprecated('Use theme: MenuPopupTheme(fillColor: ...) instead.')
   final Color? fillColor;
 
   /// Border color of the popup.
   ///
   /// If `null`, uses the theme's border color.
+  @Deprecated('Use theme: MenuPopupTheme(borderColor: ...) instead.')
   final Color? borderColor;
 
   /// Corner radius of the popup border.
   ///
   /// If `null`, uses the theme's medium border radius.
+  @Deprecated('Use theme: MenuPopupTheme(borderRadius: ...) instead.')
   final BorderRadiusGeometry? borderRadius;
 
   /// The menu items to display inside the popup.
   ///
   /// Typically a list of [MenuItem] widgets or similar menu components.
   final List<Widget> children;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final MenuPopupTheme? theme;
 
   /// Creates a menu popup container.
   ///
@@ -164,6 +175,7 @@ class MenuPopup extends StatelessWidget {
     this.borderColor,
     this.borderRadius,
     required this.children,
+    this.theme,
   });
 
   Widget _buildIntrinsicContainer(Widget child, Axis direction, bool wrap) {
@@ -183,42 +195,49 @@ class MenuPopup extends StatelessWidget {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContentPadding =
         theme.density.baseContentPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<MenuPopupTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<MenuPopupTheme>(context);
     final isSheetOverlay =
         OverlayConfiguration.maybeOf(context) is SheetConfiguration;
     final isDialogOverlay =
         OverlayConfiguration.maybeOf(context) is DialogConfiguration;
     final pad = styleValue(
-        widgetValue: padding,
-        themeValue: compTheme?.padding,
-        defaultValue: isSheetOverlay
-            ? EdgeInsets.symmetric(
-                vertical: densityContentPadding * 0.75,
-                horizontal: densityGap * 0.5,
-              )
-            : EdgeInsets.all(densityGap * 0.5));
+      widgetValue: padding,
+      themeValue: compTheme?.padding,
+      defaultValue: isSheetOverlay
+          ? EdgeInsets.symmetric(
+              vertical: densityContentPadding * 0.75,
+              horizontal: densityGap * 0.5,
+            )
+          : EdgeInsets.all(densityGap * 0.5),
+    );
     return ModalContainer(
       borderRadius: styleValue(
-          widgetValue: borderRadius,
-          themeValue: compTheme?.borderRadius,
-          defaultValue: theme.borderRadiusMd),
+        widgetValue: borderRadius,
+        themeValue: compTheme?.borderRadius,
+        defaultValue: theme.borderRadiusMd,
+      ),
       filled: true,
       fillColor: styleValue(
-          widgetValue: fillColor,
-          themeValue: compTheme?.fillColor,
-          defaultValue: theme.colorScheme.popover),
+        widgetValue: fillColor,
+        themeValue: compTheme?.fillColor,
+        defaultValue: theme.colorScheme.popover,
+      ),
       borderColor: styleValue(
-          widgetValue: borderColor,
-          themeValue: compTheme?.borderColor,
-          defaultValue: theme.colorScheme.border),
+        widgetValue: borderColor,
+        themeValue: compTheme?.borderColor,
+        defaultValue: theme.colorScheme.border,
+      ),
       surfaceBlur: styleValue(
-          widgetValue: surfaceBlur,
-          themeValue: compTheme?.surfaceBlur,
-          defaultValue: theme.surfaceBlur),
+        widgetValue: surfaceBlur,
+        themeValue: compTheme?.surfaceBlur,
+        defaultValue: theme.surfaceBlur,
+      ),
       surfaceOpacity: styleValue(
-          widgetValue: surfaceOpacity,
-          themeValue: compTheme?.surfaceOpacity,
-          defaultValue: theme.surfaceOpacity),
+        widgetValue: surfaceOpacity,
+        themeValue: compTheme?.surfaceOpacity,
+        defaultValue: theme.surfaceOpacity,
+      ),
       padding: pad,
       child: SingleChildScrollView(
         scrollDirection: data?.direction ?? Axis.vertical,

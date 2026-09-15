@@ -14,12 +14,13 @@ class _DotIndicatorExample1State extends State<DotIndicatorExample1> {
     // A simple pager-like dot indicator with 5 steps.
     // Tap/click updates the current index via onChanged.
     return DotIndicator(
-        index: _index,
-        length: 5,
-        onChanged: (index) {
-          setState(() {
-            _index = index;
-          });
+      index: _index,
+      length: 5,
+      onChanged: (index) {
+        setState(() {
+          _index = index;
         });
+      },
+    );
   }
 }

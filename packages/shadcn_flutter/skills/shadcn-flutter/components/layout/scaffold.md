@@ -25,9 +25,7 @@ class ScaffoldExample extends StatelessWidget {
           title: 'Scaffold Example',
           path: 'lib/pages/docs/components/scaffold/scaffold_example_1.dart',
           child: OutlinedContainer(
-            child: const ScaffoldExample1().sized(
-              height: 400,
-            ),
+            child: const ScaffoldExample1().sized(height: 400),
           ),
         ),
       ],
@@ -71,19 +69,19 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
             OutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
-              child: const Icon(Icons.menu),
+              child: const Icon(LucideIcons.menu),
             ),
           ],
           trailing: [
             OutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
-              child: const Icon(Icons.search),
+              child: const Icon(LucideIcons.search),
             ),
             OutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
-              child: const Icon(Icons.add),
+              child: const Icon(LucideIcons.plus),
             ),
           ],
         ),
@@ -96,13 +94,11 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
           children: <Widget>[
             // The .p() extension adds default padding around the widget.
             const Text('You have pushed the button this many times:').p(),
-            Text(
-              '$_counter',
-            ).h1(),
+            Text('$_counter').h1(),
             PrimaryButton(
               onPressed: _incrementCounter,
               density: ButtonDensity.icon,
-              child: const Icon(Icons.add),
+              child: const Icon(LucideIcons.plus),
             ).p(),
           ],
         ),
@@ -117,6 +113,7 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
 ```dart
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ScaffoldTile extends StatelessWidget implements IComponentPage {
   const ScaffoldTile({super.key});
@@ -154,8 +151,10 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.menu,
-                        color: theme.colorScheme.primaryForeground),
+                    Icon(
+                      LucideIcons.menu,
+                      color: theme.colorScheme.primaryForeground,
+                    ),
                     const Gap(16),
                     Text(
                       'Scaffold',
@@ -171,9 +170,7 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Center(
-                    child: Text('Scaffold Body Content'),
-                  ),
+                  child: const Center(child: Text('Scaffold Body Content')),
                 ),
               ),
               // Bottom Navigation
@@ -189,9 +186,9 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Icon(Icons.home),
-                    Icon(Icons.search),
-                    Icon(Icons.settings),
+                    Icon(LucideIcons.house),
+                    Icon(LucideIcons.search),
+                    Icon(LucideIcons.settings),
                   ],
                 ),
               ),
@@ -228,3 +225,4 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
 | `backgroundColor` | `Color?` | Background color for the scaffold. |
 | `showLoadingSparks` | `bool?` | Whether to show loading sparks effect. |
 | `resizeToAvoidBottomInset` | `bool?` | Whether to resize when keyboard appears. |
+| `theme` | `ScaffoldTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

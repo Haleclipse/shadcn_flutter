@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class LinearProgressTile extends StatelessWidget implements IComponentPage {
   const LinearProgressTile({super.key});

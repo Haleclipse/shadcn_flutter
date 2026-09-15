@@ -35,8 +35,9 @@ void main() {
         ),
       );
 
-      final transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      final transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, 0); // Initially collapsed
     });
 
@@ -57,8 +58,9 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      final transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, greaterThan(0)); // Should be expanded
     });
 
@@ -79,8 +81,9 @@ void main() {
       await tester.tap(find.text('Trigger'));
       await tester.pumpAndSettle();
 
-      final transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      final transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, greaterThan(0)); // Should be expanded
     });
 
@@ -104,8 +107,9 @@ void main() {
       await tester.tap(find.text('Trigger'));
       await tester.pumpAndSettle();
 
-      final transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      final transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, 0); // Should be collapsed
     });
 
@@ -131,8 +135,9 @@ void main() {
       await tester.tap(find.text('Trigger 1'));
       await tester.pumpAndSettle();
 
-      var transitionElements =
-          find.byKey(const ValueKey('accordion_size_transition'));
+      var transitionElements = find.byKey(
+        const ValueKey('accordion_size_transition'),
+      );
       expect(transitionElements, findsNWidgets(2));
       var firstSize = tester.getSize(transitionElements.first);
       var secondSize = tester.getSize(transitionElements.last);
@@ -235,8 +240,9 @@ void main() {
       await tester.tap(find.text('Trigger'));
       await tester.pumpAndSettle();
 
-      var transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      var transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, greaterThan(0));
 
       // Rebuild with same widget
@@ -253,8 +259,9 @@ void main() {
         ),
       );
 
-      transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, greaterThan(0)); // Should remain expanded
     });
 
@@ -296,16 +303,20 @@ void main() {
       await tester.pump(); // Start animation
       await tester.pump(const Duration(milliseconds: 150)); // Mid animation
 
-      final transitionSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
+      final transitionSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
       expect(transitionSize.height, greaterThan(0)); // Partially expanded
 
       await tester.pumpAndSettle(); // Complete animation
 
-      final finalSize = tester
-          .getSize(find.byKey(const ValueKey('accordion_size_transition')));
-      expect(finalSize.height,
-          greaterThan(transitionSize.height)); // Fully expanded
+      final finalSize = tester.getSize(
+        find.byKey(const ValueKey('accordion_size_transition')),
+      );
+      expect(
+        finalSize.height,
+        greaterThan(transitionSize.height),
+      ); // Fully expanded
     });
   });
 }

@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class NumberInputExample2 extends StatefulWidget {
   const NumberInputExample2({super.key});
@@ -32,7 +33,7 @@ class _NumberInputExample2State extends State<NumberInputExample2> {
             ],
           ),
         ),
-        gap(8),
+        Gap(8),
         Text('Value: $value'),
       ],
     );

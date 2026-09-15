@@ -9,10 +9,7 @@ void main() {
       final date = DateTime(2023, 1, 1);
       await tester.pumpWidget(
         SimpleApp(
-          child: DatePicker(
-            value: date,
-            onChanged: (value) {},
-          ),
+          child: DatePicker(value: date, onChanged: (value) {}),
         ),
       );
 
@@ -39,8 +36,8 @@ void main() {
         SimpleApp(
           child: DatePicker(
             value: null,
-            onChanged: (value) {},
-            mode: PromptMode.dialog, // Use dialog for easier testing
+            onChanged: (value) {}, // Use dialog for easier testing,
+            theme: DatePickerTheme(mode: PromptMode.dialog),
           ),
         ),
       );
@@ -58,11 +55,7 @@ void main() {
       final controller = DatePickerController(date);
 
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledDatePicker(
-            controller: controller,
-          ),
-        ),
+        SimpleApp(child: ControlledDatePicker(controller: controller)),
       );
 
       expect(find.text('January 1, 2023'), findsOneWidget);
@@ -76,11 +69,7 @@ void main() {
     testWidgets('works with initialValue', (tester) async {
       final date = DateTime(2023, 1, 1);
       await tester.pumpWidget(
-        SimpleApp(
-          child: ControlledDatePicker(
-            initialValue: date,
-          ),
-        ),
+        SimpleApp(child: ControlledDatePicker(initialValue: date)),
       );
 
       expect(find.text('January 1, 2023'), findsOneWidget);

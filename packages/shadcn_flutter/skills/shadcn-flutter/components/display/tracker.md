@@ -53,10 +53,12 @@ class _TrackerExample1State extends State<TrackerExample1> {
     // Build a simple sequence of tracker cells with different severity levels.
     List<TrackerData> data = [];
     for (int i = 0; i < 80; i++) {
-      data.add(const TrackerData(
-        tooltip: Text('Tracker Fine'),
-        level: TrackerLevel.fine,
-      ));
+      data.add(
+        const TrackerData(
+          tooltip: Text('Tracker Fine'),
+          level: TrackerLevel.fine,
+        ),
+      );
     }
     // Mark some indices as warnings.
     data[40] = data[35] = const TrackerData(
@@ -122,3 +124,4 @@ class TrackerTile extends StatelessWidget implements IComponentPage {
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `data` | `List<TrackerData>` | List of data points to display as tracker segments.  Type: `List<TrackerData>`. Each data point contains a status level for visual styling and tooltip content for user interaction. The segments are displayed in the order provided, each taking equal horizontal space. |
+| `theme` | `TrackerTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |

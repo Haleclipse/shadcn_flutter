@@ -1,5 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class ExpandableSidebarTile extends StatelessWidget implements IComponentPage {
   const ExpandableSidebarTile({super.key});
@@ -29,11 +30,11 @@ class ExpandableSidebarTile extends StatelessWidget implements IComponentPage {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    const Icon(Icons.menu),
+                    const Icon(LucideIcons.menu),
                     const Gap(12),
                     const Text('Menu').bold(),
                     const Spacer(),
-                    const Icon(Icons.chevron_left),
+                    const Icon(LucideIcons.chevronLeft),
                   ],
                 ),
               ),
@@ -45,7 +46,7 @@ class ExpandableSidebarTile extends StatelessWidget implements IComponentPage {
                       padding: const EdgeInsets.all(12),
                       child: const Row(
                         children: [
-                          Icon(Icons.home),
+                          Icon(LucideIcons.house),
                           Gap(12),
                           Text('Home'),
                         ],
@@ -55,7 +56,7 @@ class ExpandableSidebarTile extends StatelessWidget implements IComponentPage {
                       padding: const EdgeInsets.all(12),
                       child: const Row(
                         children: [
-                          Icon(Icons.settings),
+                          Icon(LucideIcons.settings),
                           Gap(12),
                           Text('Settings'),
                         ],
@@ -65,7 +66,7 @@ class ExpandableSidebarTile extends StatelessWidget implements IComponentPage {
                       padding: const EdgeInsets.all(12),
                       child: const Row(
                         children: [
-                          Icon(Icons.person),
+                          Icon(LucideIcons.user),
                           Gap(12),
                           Text('Profile'),
                         ],

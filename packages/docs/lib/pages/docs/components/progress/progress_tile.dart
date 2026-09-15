@@ -12,9 +12,7 @@ class ProgressTile extends StatelessWidget implements IComponentPage {
     return ComponentCard(
       title: 'Progress',
       name: 'progress',
-      example: const Progress(
-        progress: 0.75,
-      ).sized(width: 200),
+      example: const Progress(progress: 0.75).sized(width: 200),
       center: true,
     );
   }

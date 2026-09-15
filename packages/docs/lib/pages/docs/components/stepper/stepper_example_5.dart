@@ -21,24 +21,20 @@ class _StepperExample5State extends State<StepperExample5> {
           title: const Text('Step 1'),
           icon: const StepNumber(
             // You can customize the step icon, e.g., use a person icon.
-            icon: Icon(Icons.person),
+            icon: Icon(LucideIcons.user),
           ),
           contentBuilder: (context) {
             return StepContainer(
               actions: [
-                const SecondaryButton(
-                  child: Text('Prev'),
-                ),
+                const SecondaryButton(child: Text('Prev')),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 1,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 1, height: 200),
             );
           },
         ),
@@ -46,7 +42,7 @@ class _StepperExample5State extends State<StepperExample5> {
           title: const Text('Step 2'),
           icon: const StepNumber(
             // Another custom icon for the second step.
-            icon: Icon(Icons.house_outlined),
+            icon: Icon(LucideIcons.house),
           ),
           contentBuilder: (context) {
             return StepContainer(
@@ -58,15 +54,13 @@ class _StepperExample5State extends State<StepperExample5> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Next'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Next'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 2,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 2, height: 200),
             );
           },
         ),
@@ -74,7 +68,7 @@ class _StepperExample5State extends State<StepperExample5> {
           title: const Text('Step 3'),
           icon: const StepNumber(
             // And a briefcase icon for the third.
-            icon: Icon(Icons.work_outline),
+            icon: Icon(LucideIcons.briefcase),
           ),
           contentBuilder: (context) {
             return StepContainer(
@@ -86,15 +80,13 @@ class _StepperExample5State extends State<StepperExample5> {
                   },
                 ),
                 PrimaryButton(
-                    child: const Text('Finish'),
-                    onPressed: () {
-                      controller.nextStep();
-                    }),
+                  child: const Text('Finish'),
+                  onPressed: () {
+                    controller.nextStep();
+                  },
+                ),
               ],
-              child: const NumberedContainer(
-                index: 3,
-                height: 200,
-              ),
+              child: const NumberedContainer(index: 3, height: 200),
             );
           },
         ),

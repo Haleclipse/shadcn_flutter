@@ -45,10 +45,12 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
         constraints: const BoxConstraints(minWidth: 150),
         child: Label(
           leading: OutlinedContainer(
-            backgroundColor: Colors.white,
             width: 18,
             height: 18,
-            borderRadius: Theme.of(context).borderRadiusMd,
+            theme: OutlinedContainerTheme(
+              backgroundColor: Colors.white,
+              borderRadius: Theme.of(context).borderRadiusMd,
+            ),
             child: Center(
               child: Text(
                 data.count.toString(),
@@ -59,7 +61,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
           trailing: IconButton.ghost(
             shape: ButtonShape.circle,
             size: ButtonSize.xSmall,
-            icon: const Icon(Icons.close),
+            icon: const Icon(LucideIcons.x),
             onPressed: () {
               setState(() {
                 tabs.removeAt(index);
@@ -97,7 +99,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
       // Optional leading/trailing actions for the tab strip.
       leading: [
         IconButton.secondary(
-          icon: const Icon(Icons.arrow_drop_down),
+          icon: const Icon(LucideIcons.chevronDown),
           size: ButtonSize.small,
           density: ButtonDensity.iconDense,
           onPressed: () {},
@@ -105,7 +107,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
       ],
       trailing: [
         IconButton.ghost(
-          icon: const Icon(Icons.add),
+          icon: const Icon(LucideIcons.plus),
           size: ButtonSize.small,
           density: ButtonDensity.iconDense,
           onPressed: () {
@@ -115,18 +117,19 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
                     ? element.data.count
                     : previousValue;
               });
-              tabs.add(TabPaneData(
-                  MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}')));
+              tabs.add(
+                TabPaneData(
+                  MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}'),
+                ),
+              );
             });
           },
-        )
+        ),
       ],
       // The content area; you can render based on the focused index.
       child: SizedBox(
         height: 400,
-        child: Center(
-          child: Text('Tab ${focused + 1}').xLarge().bold(),
-        ),
+        child: Center(child: Text('Tab ${focused + 1}').xLarge().bold()),
       ),
     );
   }

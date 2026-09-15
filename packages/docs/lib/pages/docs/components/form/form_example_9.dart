@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 /// Compares standard vs Controlled component boilerplate.
 ///
@@ -53,13 +54,9 @@ class _FormExample9State extends State<FormExample9> {
           // ── Controlled: zero boilerplate ──
           const Text('Controlled (no manual state)').semiBold,
           const Gap(24),
-          const ControlledCheckbox(
-            trailing: Text('Accept terms'),
-          ),
+          const ControlledCheckbox(trailing: Text('Accept terms')),
           const Gap(8),
-          const ControlledSwitch(
-            trailing: Text('Dark mode'),
-          ),
+          const ControlledSwitch(trailing: Text('Dark mode')),
         ],
       ),
     );

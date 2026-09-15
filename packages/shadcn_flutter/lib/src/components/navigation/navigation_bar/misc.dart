@@ -1,6 +1,19 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:shadcn_flutter/src/components/layout/hidden.dart';
 
+/// A sliver that takes [extent] along [direction] and nothing across it.
+///
+/// Stands in for `package:gap`'s `SliverGap`, which shadcn_flutter no longer
+/// depends on. Unlike that one it cannot read the axis off its parent, so pass
+/// the scroll direction it lives in.
+Widget sliverGap(double extent, Axis direction) {
+  return SliverToBoxAdapter(
+    child: direction == Axis.horizontal
+        ? SizedBox(width: extent)
+        : SizedBox(height: extent),
+  );
+}
+
 /// Returns the padding at the start of the axis.
 double startPadding(EdgeInsets padding, Axis direction) {
   if (direction == Axis.vertical) {
@@ -33,16 +46,21 @@ class NavigationGap extends StatelessWidget {
 
   /// Builds the gap widget for box-based navigation containers.
   ///
-  /// Returns a [Gap] widget with the specified gap size.
+  /// Spaces along the navigation container's own direction, defaulting to
+  /// vertical when there is no navigation data in scope.
   Widget buildBox(BuildContext context) {
-    return Gap(gap);
+    final data = Data.maybeOf<NavigationControlData>(context);
+    return data?.direction == Axis.horizontal
+        ? SizedBox(width: gap)
+        : SizedBox(height: gap);
   }
 
   /// Builds the gap widget for sliver-based navigation containers.
   ///
-  /// Returns a [SliverGap] widget with the specified gap size.
+  /// Spaces along the navigation container's own scroll direction.
   Widget buildSliver(BuildContext context) {
-    return SliverGap(gap);
+    final data = Data.maybeOf<NavigationControlData>(context);
+    return sliverGap(gap, data?.direction ?? Axis.vertical);
   }
 
   @override
@@ -83,10 +101,12 @@ class NavigationDivider extends StatelessWidget {
     Widget child;
     if (direction == Axis.vertical) {
       child = Divider(
-        indent: -parentPadding.left,
-        endIndent: -parentPadding.right,
-        thickness: thickness ?? (1 * scaling),
-        color: color ?? theme.colorScheme.muted,
+        theme: DividerTheme(
+          indent: -parentPadding.left,
+          endIndent: -parentPadding.right,
+          thickness: thickness ?? (1 * scaling),
+          color: color ?? theme.colorScheme.muted,
+        ),
       );
     } else {
       child = VerticalDivider(
@@ -166,23 +186,27 @@ class NavigationLabeled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var direction = position == NavigationLabelPosition.top ||
+    var direction =
+        position == NavigationLabelPosition.top ||
             position == NavigationLabelPosition.bottom
         ? Axis.vertical
         : Axis.horizontal;
     var animatedSize = Flexible(
       child: Hidden(
         hidden: !showLabel,
-        direction: direction,
-        duration: kDefaultDuration,
-        reverse: position == NavigationLabelPosition.start ||
-            position == NavigationLabelPosition.top,
-        keepCrossAxisSize: (this.direction != direction
-            ? keepCrossAxisSize
-            : keepMainAxisSize),
-        keepMainAxisSize: (this.direction != direction
-            ? keepMainAxisSize
-            : keepCrossAxisSize),
+        theme: HiddenTheme(
+          direction: direction,
+          duration: kDefaultDuration,
+          reverse:
+              position == NavigationLabelPosition.start ||
+              position == NavigationLabelPosition.top,
+          keepCrossAxisSize: (this.direction != direction
+              ? keepCrossAxisSize
+              : keepMainAxisSize),
+          keepMainAxisSize: (this.direction != direction
+              ? keepMainAxisSize
+              : keepCrossAxisSize),
+        ),
         child: Padding(
           padding: EdgeInsets.only(
             top: position == NavigationLabelPosition.bottom ? spacing : 0,
@@ -191,13 +215,14 @@ class NavigationLabeled extends StatelessWidget {
             right: position == NavigationLabelPosition.start ? spacing : 0,
           ),
           child: Align(
-              alignment: switch (position) {
-                NavigationLabelPosition.top => Alignment.bottomCenter,
-                NavigationLabelPosition.bottom => Alignment.topCenter,
-                NavigationLabelPosition.start => AlignmentDirectional.centerEnd,
-                NavigationLabelPosition.end => AlignmentDirectional.centerStart,
-              },
-              child: label),
+            alignment: switch (position) {
+              NavigationLabelPosition.top => Alignment.bottomCenter,
+              NavigationLabelPosition.bottom => Alignment.topCenter,
+              NavigationLabelPosition.start => AlignmentDirectional.centerEnd,
+              NavigationLabelPosition.end => AlignmentDirectional.centerStart,
+            },
+            child: label,
+          ),
         ),
       ),
     );
@@ -291,9 +316,11 @@ class NavigationGroup extends StatelessWidget {
     bool expanded = data?.expanded ?? true;
     return Hidden(
       hidden: !expanded,
-      direction: data?.direction ?? Axis.vertical,
-      reverse: true,
-      duration: kDefaultDuration,
+      theme: HiddenTheme(
+        direction: data?.direction ?? Axis.vertical,
+        reverse: true,
+        duration: kDefaultDuration,
+      ),
       child: DefaultTextStyle.merge(
         textAlign: TextAlign.center,
         maxLines: 1,
@@ -307,7 +334,9 @@ class NavigationGroup extends StatelessWidget {
 
   /// Builds a SliverPersistentHeader for the label and a SliverMainAxisGroup for the children.
   Widget buildSliverLabelChild(
-      BuildContext context, NavigationControlData? data) {
+    BuildContext context,
+    NavigationControlData? data,
+  ) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityContentPadding = theme.density.baseContentPadding * scaling;
@@ -325,24 +354,28 @@ class NavigationGroup extends StatelessWidget {
           delegate: _NavigationLabelDelegate(
             maxExtent: densityContainerPadding * 3 * value,
             minExtent: densityContainerPadding * 3 * value,
-            child: Builder(builder: (context) {
-              return GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  Scrollable.ensureVisible(
-                    context,
-                    duration: kDefaultDuration,
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Container(
-                  alignment: labelAlignment ?? AlignmentDirectional.centerStart,
-                  padding: labelPadding ??
-                      EdgeInsets.symmetric(horizontal: densityContentPadding),
-                  child: child!.semiBold().large(),
-                ),
-              );
-            }),
+            child: Builder(
+              builder: (context) {
+                return GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    Scrollable.ensureVisible(
+                      context,
+                      duration: kDefaultDuration,
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Container(
+                    alignment:
+                        labelAlignment ?? AlignmentDirectional.centerStart,
+                    padding:
+                        labelPadding ??
+                        EdgeInsets.symmetric(horizontal: densityContentPadding),
+                    child: child!.semiBold().large(),
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
@@ -358,7 +391,8 @@ class NavigationGroup extends StatelessWidget {
     final labelWidget = buildLabelChild(context, data);
     final paddedLabel = Container(
       alignment: labelAlignment ?? Alignment.center,
-      padding: labelPadding ??
+      padding:
+          labelPadding ??
           EdgeInsets.symmetric(horizontal: densityContentPadding * padXs),
       child: labelWidget,
     );
@@ -383,13 +417,16 @@ class NavigationGroup extends StatelessWidget {
             keepCrossAxisSize: data.keepCrossAxisSize,
             keepMainAxisSize: data.keepMainAxisSize,
           );
+    final direction = data?.direction ?? Axis.vertical;
     final flexChildren = [
       if (labelPosition == NavigationLabelPosition.top ||
           labelPosition == NavigationLabelPosition.start) ...[
         paddedLabel,
         AnimatedValueBuilder<double>(
           value: data?.expanded == true ? gap : 0,
-          builder: (_, gap, __) => Gap(gap),
+          builder: (_, gap, _) => direction == Axis.horizontal
+              ? SizedBox(width: gap)
+              : SizedBox(height: gap),
           duration: kDefaultDuration,
           // curve: Curves.easeInOut,
         ),
@@ -409,7 +446,9 @@ class NavigationGroup extends StatelessWidget {
           labelPosition == NavigationLabelPosition.end) ...[
         AnimatedValueBuilder<double>(
           value: data?.expanded == true ? gap : 0,
-          builder: (_, gap, __) => Gap(gap),
+          builder: (_, gap, _) => direction == Axis.horizontal
+              ? SizedBox(width: gap)
+              : SizedBox(height: gap),
           duration: kDefaultDuration,
           // curve: Curves.easeInOut,
         ),
@@ -418,7 +457,7 @@ class NavigationGroup extends StatelessWidget {
     ];
 
     return Flex(
-      direction: data?.direction ?? Axis.vertical,
+      direction: direction,
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: flexChildren,
@@ -452,27 +491,25 @@ class NavigationGroup extends StatelessWidget {
             keepMainAxisSize: data.keepMainAxisSize,
           );
 
+    final direction = data?.direction ?? Axis.vertical;
     final sliverChildren = [
       if (labelPosition == NavigationLabelPosition.top ||
           labelPosition == NavigationLabelPosition.start) ...[
         labelWidget,
-        SliverGap(gap),
+        sliverGap(gap, direction),
       ],
       Data.inherit(
-          data: childControlData,
-          child: SliverMainAxisGroup(
-            slivers: items,
-          )),
+        data: childControlData,
+        child: SliverMainAxisGroup(slivers: items),
+      ),
       if (labelPosition == NavigationLabelPosition.bottom ||
           labelPosition == NavigationLabelPosition.end) ...[
-        SliverGap(gap),
+        sliverGap(gap, direction),
         labelWidget,
       ],
     ];
 
-    return SliverMainAxisGroup(
-      slivers: sliverChildren,
-    );
+    return SliverMainAxisGroup(slivers: sliverChildren);
   }
 }
 
@@ -600,7 +637,9 @@ class NavigationChildOverflowHandle extends StatelessWidget {
 ///
 /// Returns a widget that adapts to selection state.
 typedef NavigationWidgetBuilder = Widget Function(
-    BuildContext context, bool selected);
+  BuildContext context,
+  bool selected,
+);
 
 /// Custom widget wrapper for navigation items.
 ///
@@ -625,10 +664,7 @@ class NavigationWidget extends StatelessWidget {
   ///
   /// Parameters:
   /// - [builder] (NavigationWidgetBuilder, required): Builder receiving selection state
-  const NavigationWidget({
-    super.key,
-    required this.builder,
-  });
+  const NavigationWidget({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {
@@ -684,25 +720,22 @@ class NavigationSlot extends StatelessWidget {
     final scaling = theme.scaling;
     double densityGap = theme.density.baseGap * scaling;
     final expanded = data?.expanded ?? true;
-    final style = (expanded
-            ? ButtonStyle.ghost(
-                density: ButtonDensity.compact,
-              )
-            : ButtonStyle.text(density: ButtonDensity.compact))
-        .copyWith(
-      margin: (context, state, margin) =>
-          -EdgeInsetsDensity.all(expanded ? padXs : 0)
-              .resolveDensity(theme.density.baseContainerPadding * scaling),
-    );
+    final style =
+        (expanded
+                ? ButtonStyle.ghost(density: ButtonDensity.compact)
+                : ButtonStyle.text(density: ButtonDensity.compact))
+            .copyWith(
+              margin: (context, state, margin) => -EdgeInsetsDensity.all(
+                expanded ? padXs : 0,
+              ).resolveDensity(theme.density.baseContainerPadding * scaling),
+            );
     final titleColumn = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        title,
-        if (subtitle != null) subtitle!,
-      ],
+      children: [title, ?subtitle],
     );
 
-    final showLabel = data == null ||
+    final showLabel =
+        data == null ||
         data.parentLabelType == NavigationLabelType.all ||
         (data.parentLabelType == NavigationLabelType.expanded && expanded);
 
@@ -712,15 +745,17 @@ class NavigationSlot extends StatelessWidget {
         leading,
         AnimatedValueBuilder<double>(
           value: showLabel ? densityGap : 0,
-          builder: (_, gap, __) => Gap(gap),
+          builder: (_, gap, _) => SizedBox(width: gap),
           duration: kDefaultDuration,
           // curve: Curves.easeInOut,
         ),
         Flexible(
           child: Hidden(
             hidden: !showLabel,
-            duration: kDefaultDuration,
-            direction: Axis.horizontal,
+            theme: HiddenTheme(
+              duration: kDefaultDuration,
+              direction: Axis.horizontal,
+            ),
             child: DefaultTextStyle.merge(
               maxLines: 1,
               overflow: TextOverflow.clip,
@@ -731,7 +766,7 @@ class NavigationSlot extends StatelessWidget {
                   if (trailing != null) ...[
                     AnimatedValueBuilder<double>(
                       value: showLabel ? (trailingGap ?? densityGap) : 0,
-                      builder: (_, gap, __) => Gap(gap),
+                      builder: (_, gap, _) => SizedBox(width: gap),
                       duration: kDefaultDuration,
                       // curve: Curves.easeInOut,
                     ),
@@ -745,11 +780,7 @@ class NavigationSlot extends StatelessWidget {
       ],
     );
 
-    Widget button = Button(
-      onPressed: onPressed,
-      style: style,
-      child: content,
-    );
+    Widget button = Button(onPressed: onPressed, style: style, child: content);
 
     if (data?.parentLabelType == NavigationLabelType.tooltip) {
       if (title is! SizedBox) {

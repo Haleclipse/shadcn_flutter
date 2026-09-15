@@ -100,8 +100,9 @@ class TimelineTheme extends ComponentThemeData {
     ValueGetter<double?>? rowGap,
   }) {
     return TimelineTheme(
-      timeConstraints:
-          timeConstraints == null ? this.timeConstraints : timeConstraints(),
+      timeConstraints: timeConstraints == null
+          ? this.timeConstraints
+          : timeConstraints(),
       spacing: spacing == null ? this.spacing : spacing(),
       dotSize: dotSize == null ? this.dotSize : dotSize(),
       connectorThickness: connectorThickness == null
@@ -126,7 +127,13 @@ class TimelineTheme extends ComponentThemeData {
 
   @override
   int get hashCode => Object.hash(
-      timeConstraints, spacing, dotSize, connectorThickness, color, rowGap);
+    timeConstraints,
+    spacing,
+    dotSize,
+    connectorThickness,
+    color,
+    rowGap,
+  );
 }
 
 /// Data model for individual timeline entries.
@@ -233,7 +240,7 @@ class TimelineData {
 ///   ],
 /// );
 /// ```
-class Timeline extends StatelessWidget {
+class Timeline extends StatelessWidget implements Styleable<TimelineTheme> {
   /// List of timeline entries to display.
   ///
   /// Each [TimelineData] object represents one row in the timeline with
@@ -247,6 +254,10 @@ class Timeline extends StatelessWidget {
   /// for this specific timeline instance. Controls how much space is allocated
   /// for displaying time information. If null, uses theme or default constraints.
   final BoxConstraints? timeConstraints;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final TimelineTheme? theme;
 
   /// Creates a [Timeline] widget with the specified data entries.
   ///
@@ -285,14 +296,17 @@ class Timeline extends StatelessWidget {
     //   maxWidth: 120,
     // ),
     this.timeConstraints,
+    this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<TimelineTheme>(context);
-    final timeConstraints = this.timeConstraints ??
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<TimelineTheme>(context);
+    final timeConstraints =
+        this.timeConstraints ??
         compTheme?.timeConstraints ??
         BoxConstraints(minWidth: 120 * scaling, maxWidth: 120 * scaling);
     final spacing = compTheme?.spacing ?? 16 * scaling;
@@ -304,65 +318,65 @@ class Timeline extends StatelessWidget {
     List<Widget> rows = [];
     for (int i = 0; i < data.length; i++) {
       final data = this.data[i];
-      rows.add(IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ConstrainedBox(
-              constraints: timeConstraints,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: data.time.medium().small(),
-              ),
-            ),
-            Gap(spacing),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: densityGap * 0.5),
-                  width: dotSize,
-                  height: dotSize,
-                  decoration: BoxDecoration(
-                    shape: theme.radius == 0
-                        ? BoxShape.rectangle
-                        : BoxShape.circle,
-                    color: data.color ?? defaultColor,
-                  ),
+      rows.add(
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ConstrainedBox(
+                constraints: timeConstraints,
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: data.time.medium().small(),
                 ),
-                if (i != this.data.length - 1)
-                  Expanded(
-                    child: VerticalDivider(
-                      thickness: connectorThickness,
+              ),
+              SizedBox(width: spacing),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: densityGap * 0.5),
+                    width: dotSize,
+                    height: dotSize,
+                    decoration: BoxDecoration(
+                      shape: theme.radius == 0
+                          ? BoxShape.rectangle
+                          : BoxShape.circle,
                       color: data.color ?? defaultColor,
-                      endIndent: (-4 - spacing) * scaling,
                     ),
                   ),
-              ],
-            ),
-            Gap(spacing),
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  data.title
-                      .semiBold()
-                      .secondaryForeground()
-                      .base()
-                      .withPadding(left: densityGap * 0.5),
-                  if (data.content != null) Gap(densityGap),
-                  if (data.content != null)
-                    Expanded(child: data.content!.muted().small()),
+                  if (i != this.data.length - 1)
+                    Expanded(
+                      child: VerticalDivider(
+                        thickness: connectorThickness,
+                        color: data.color ?? defaultColor,
+                        endIndent: (-4 - spacing) * scaling,
+                      ),
+                    ),
                 ],
               ),
-            )
-          ],
+              SizedBox(width: spacing),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    data.title
+                        .semiBold()
+                        .secondaryForeground()
+                        .base()
+                        .withPadding(left: densityGap * 0.5),
+                    if (data.content != null) SizedBox(height: densityGap),
+                    if (data.content != null)
+                      Expanded(child: data.content!.muted().small()),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ));
+      );
     }
-    return Column(
-      children: rows,
-    ).gap(rowGap);
+    return Column(children: rows).gap(rowGap);
   }
 }

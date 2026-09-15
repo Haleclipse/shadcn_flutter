@@ -1,12 +1,12 @@
 import 'package:docs/pages/docs/components_page.dart';
-import 'package:flutter/material.dart' as material hide Card;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class CursorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = material.Colors.black
+      ..color = Colors.black
       ..strokeWidth = 2
       ..style = PaintingStyle.fill;
 
@@ -50,7 +50,8 @@ class HoverCardTile extends StatelessWidget implements IComponentPage {
                   leading: FlutterLogo(),
                   title: Text('@flutter'),
                   content: Text(
-                      'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.'),
+                    'The Flutter SDK provides the tools to build beautiful apps for mobile, web, and desktop from a single codebase.',
+                  ),
                 ),
               ).sized(width: 300),
             ],
@@ -58,9 +59,7 @@ class HoverCardTile extends StatelessWidget implements IComponentPage {
           Positioned(
             top: 13,
             left: 160,
-            child: CustomPaint(
-              painter: CursorPainter(),
-            ),
+            child: CustomPaint(painter: CursorPainter()),
           ),
         ],
       ),

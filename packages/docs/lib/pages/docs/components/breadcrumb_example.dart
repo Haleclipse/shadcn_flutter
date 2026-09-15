@@ -11,8 +11,7 @@ class BreadcrumbExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const ComponentPage(
       name: 'breadcrumb',
-      description:
-          'Breadcrumbs are a secondary navigation scheme that reveals the user’s location in a website or web application.',
+      description: 'Breadcrumbs are a secondary navigation scheme that reveals the user’s location in a website or web application.',
       displayName: 'Breadcrumb',
       children: [
         WidgetUsageExample(

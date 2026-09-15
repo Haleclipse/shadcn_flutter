@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DataExample5 extends StatefulWidget {
   const DataExample5({super.key});
@@ -28,19 +29,17 @@ class DataExample5State extends State<DataExample5> {
                 });
               },
               density: ButtonDensity.icon,
-              child: const Icon(Icons.add),
-            )
+              child: const Icon(LucideIcons.plus),
+            ),
           ],
         ),
         const Gap(24),
         Data.inherit(
           data: counter,
           child: const InnerWidget(
-            child: MostInnerWidget(
-              child: MostInnerWidget(),
-            ),
+            child: MostInnerWidget(child: MostInnerWidget()),
           ),
-        )
+        ),
       ],
     );
   }
@@ -66,7 +65,7 @@ class _InnerWidgetState extends State<InnerWidget> {
         children: [
           Text('InnerWidget Rebuild Count: $innerRebuildCount'),
           const Gap(12),
-          widget.child
+          widget.child,
         ],
       ),
     );
@@ -95,21 +94,19 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                  'MostInnerWidget Data: $parentCounter - Rebuild Count: $mostInnerRebuildCount'),
+                'MostInnerWidget Data: $parentCounter - Rebuild Count: $mostInnerRebuildCount',
+              ),
               const Gap(24),
               PrimaryButton(
                 onPressed: () {
                   setState(() {});
                 },
                 density: ButtonDensity.icon,
-                child: const Icon(Icons.refresh),
+                child: const Icon(LucideIcons.refreshCw),
               ),
             ],
           ),
-          if (widget.child != null) ...[
-            const Gap(12),
-            widget.child!,
-          ],
+          if (widget.child != null) ...[const Gap(12), widget.child!],
         ],
       ),
     );

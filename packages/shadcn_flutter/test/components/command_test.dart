@@ -19,7 +19,8 @@ void main() {
       );
       await tester.pump(); // Process microtasks
       await tester.pump(
-          const Duration(milliseconds: 10)); // Process zero-duration timers
+        const Duration(milliseconds: 10),
+      ); // Process zero-duration timers
 
       expect(find.byType(TextField), findsOneWidget);
       expect(find.byIcon(LucideIcons.search), findsOneWidget);
@@ -64,7 +65,7 @@ void main() {
                   yield [CommandItem(title: const Text('Apple'), onTap: () {})];
                 } else if ('Banana'.contains(query)) {
                   yield [
-                    CommandItem(title: const Text('Banana'), onTap: () {})
+                    CommandItem(title: const Text('Banana'), onTap: () {}),
                   ];
                 } else {
                   yield [];
@@ -121,11 +122,13 @@ void main() {
             builder: (context, query) async* {
               yield [
                 CommandItem(
-                    title: const Text('Item 1'),
-                    onTap: () => item1Tapped = true),
+                  title: const Text('Item 1'),
+                  onTap: () => item1Tapped = true,
+                ),
                 CommandItem(
-                    title: const Text('Item 2'),
-                    onTap: () => item2Tapped = true),
+                  title: const Text('Item 2'),
+                  onTap: () => item2Tapped = true,
+                ),
               ];
             },
           ),

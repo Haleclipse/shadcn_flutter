@@ -1,4 +1,5 @@
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:gap/gap.dart';
 
 class DataExample10 extends StatefulWidget {
   const DataExample10({super.key});
@@ -24,7 +25,8 @@ class DataExample10State extends State<DataExample10> {
               valueListenable: counter,
               builder: (context, value, child) {
                 return Text(
-                    'Current Value: $value - Rebuild Count: $rebuildCount');
+                  'Current Value: $value - Rebuild Count: $rebuildCount',
+                );
               },
             ),
             const Gap(24),
@@ -46,20 +48,15 @@ class DataExample10State extends State<DataExample10> {
                 counter.value++;
               },
               density: ButtonDensity.icon,
-              child: const Icon(Icons.add),
+              child: const Icon(LucideIcons.plus),
             ),
           ],
         ),
         const Gap(24),
         MultiData(
-          data: [
-            DataNotifier(counter),
-            DataNotifier(toggle),
-          ],
-          child: const InnerWidget(
-            child: MostInnerWidget(),
-          ),
-        )
+          data: [DataNotifier(counter), DataNotifier(toggle)],
+          child: const InnerWidget(child: MostInnerWidget()),
+        ),
       ],
     );
   }
@@ -86,11 +83,12 @@ class _InnerWidgetState extends State<InnerWidget> {
           DataBuilder<int>(
             builder: (context, data, child) {
               return Text(
-                  'Data: $data - InnerWidget Rebuild Count: $innerRebuildCount');
+                'Data: $data - InnerWidget Rebuild Count: $innerRebuildCount',
+              );
             },
           ),
           const Gap(12),
-          widget.child
+          widget.child,
         ],
       ),
     );
@@ -113,7 +111,8 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
       child: DataBuilder<bool>(
         builder: (context, data, child) {
           return Text(
-              'Data: $data - MostInnerWidget Rebuild Count: $mostInnerRebuildCount');
+            'Data: $data - MostInnerWidget Rebuild Count: $mostInnerRebuildCount',
+          );
         },
       ),
     );

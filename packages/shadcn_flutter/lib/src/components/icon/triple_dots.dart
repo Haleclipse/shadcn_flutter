@@ -80,32 +80,30 @@ class MoreDots extends StatelessWidget {
     double size = this.size ?? (style.fontSize ?? 12) * 0.2;
     List<Widget> children = [];
     for (int i = 0; i < count; i++) {
-      children.add(Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(size / 2),
+      children.add(
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(size / 2),
+          ),
         ),
-      ));
+      );
       if (i < count - 1) {
-        children.add(SizedBox(
-          width: direction == Axis.horizontal ? spacing : null,
-          height: direction == Axis.vertical ? spacing : null,
-        ));
+        children.add(
+          SizedBox(
+            width: direction == Axis.horizontal ? spacing : null,
+            height: direction == Axis.vertical ? spacing : null,
+          ),
+        );
       }
     }
     return Padding(
       padding: padding ?? EdgeInsets.zero,
       child: direction == Axis.horizontal
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: children,
-            )
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: children,
-            ),
+          ? Row(mainAxisSize: MainAxisSize.min, children: children)
+          : Column(mainAxisSize: MainAxisSize.min, children: children),
     );
   }
 }

@@ -8,8 +8,7 @@
   "@formLessThan": {
     "placeholders": {
       "value": {
-        "type": "double",
-        "format": "decimalPattern"
+        "type": "String"
       }
     }
   },
@@ -17,8 +16,7 @@
   "@formGreaterThan": {
     "placeholders": {
       "value": {
-        "type": "double",
-        "format": "decimalPattern"
+        "type": "String"
       }
     }
   },
@@ -26,8 +24,7 @@
   "@formLessThanOrEqualTo": {
     "placeholders": {
       "value": {
-        "type": "double",
-        "format": "decimalPattern"
+        "type": "String"
       }
     }
   },
@@ -37,8 +34,7 @@
   "@formGreaterThanOrEqualTo": {
     "placeholders": {
       "value": {
-        "type": "double",
-        "format": "decimalPattern"
+        "type": "String"
       }
     }
   },
@@ -46,12 +42,18 @@
   "@formBetweenInclusively": {
     "placeholders": {
       "min": {
-        "type": "double",
-        "format": "decimalPattern"
+        "type": "String"
       },
       "max": {
-        "type": "double",
-        "format": "decimalPattern"
+        "type": "String"
+      }
+    }
+  },
+  "formEqualTo": "Must be equal to {value}",
+  "@formEqualTo": {
+    "placeholders": {
+      "value": {
+        "type": "String"
       }
     }
   },
@@ -59,12 +61,10 @@
   "@formBetweenExclusively": {
     "placeholders": {
       "min": {
-        "type": "double",
-        "format": "decimalPattern"
+        "type": "String"
       },
       "max": {
-        "type": "double",
-        "format": "decimalPattern"
+        "type": "String"
       }
     }
   },
@@ -141,6 +141,7 @@
   "menuCopy": "Copy",
   "menuPaste": "Paste",
   "menuSelectAll": "Select All",
+  "noSpellCheckReplacements": "No Replacements Found",
   "menuUndo": "Undo",
   "menuRedo": "Redo",
   "menuDelete": "Delete",

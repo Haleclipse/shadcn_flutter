@@ -40,30 +40,22 @@ class PopoverExample1 extends StatelessWidget {
                             FormField<double>(
                               key: FormKey(#width),
                               label: Text('Width'),
-                              child: TextField(
-                                initialValue: '100%',
-                              ),
+                              child: TextField(initialValue: '100%'),
                             ),
                             FormField<double>(
                               key: FormKey(#maxWidth),
                               label: Text('Max. Width'),
-                              child: TextField(
-                                initialValue: '300px',
-                              ),
+                              child: TextField(initialValue: '300px'),
                             ),
                             FormField<double>(
                               key: FormKey(#height),
                               label: Text('Height'),
-                              child: TextField(
-                                initialValue: '25px',
-                              ),
+                              child: TextField(initialValue: '25px'),
                             ),
                             FormField<double>(
                               key: FormKey(#maxHeight),
                               label: Text('Max. Height'),
-                              child: TextField(
-                                initialValue: 'none',
-                              ),
+                              child: TextField(initialValue: 'none'),
                             ),
                           ],
                           spacing: 8,

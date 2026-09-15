@@ -23,11 +23,7 @@ class KeyboardShortcutTheme extends ComponentThemeData {
   final List<BoxShadow>? keyShadow;
 
   /// Creates a [KeyboardShortcutTheme].
-  const KeyboardShortcutTheme({
-    this.spacing,
-    this.keyPadding,
-    this.keyShadow,
-  });
+  const KeyboardShortcutTheme({this.spacing, this.keyPadding, this.keyShadow});
 
   /// Creates a copy with the given values replaced.
   KeyboardShortcutTheme copyWith({
@@ -147,10 +143,7 @@ class _KeyboardShortcutDisplayMapperState
 
   @override
   Widget build(BuildContext context) {
-    return Data.inherit(
-      data: _handle,
-      child: widget.child,
-    );
+    return Data.inherit(data: _handle, child: widget.child);
   }
 }
 
@@ -180,7 +173,8 @@ class _KeyboardShortcutDisplayMapperState
 ///   spacing: 4.0,
 /// )
 /// ```
-class KeyboardDisplay extends StatelessWidget {
+class KeyboardDisplay extends StatelessWidget
+    implements Styleable<KeyboardShortcutTheme> {
   /// List of keyboard keys to display when using direct key specification.
   final List<LogicalKeyboardKey>? _keys;
 
@@ -191,7 +185,12 @@ class KeyboardDisplay extends StatelessWidget {
   ///
   /// Controls the horizontal gap between adjacent key representations.
   /// When null, uses theme-appropriate default spacing.
+  @Deprecated('Use theme: KeyboardShortcutTheme(spacing: ...) instead.')
   final double? spacing;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final KeyboardShortcutTheme? theme;
 
   /// Creates a [KeyboardDisplay] from a list of keyboard keys.
   ///
@@ -200,7 +199,7 @@ class KeyboardDisplay extends StatelessWidget {
   /// over which keys are displayed.
   ///
   /// Parameters:
-  /// - [keys] (`List<LogicalKeyboardKey>`, required): Keys to display
+  /// - [_keys] (`List<LogicalKeyboardKey>`, required): Keys to display
   /// - [spacing] (double?, optional): Gap between key displays
   ///
   /// Example:
@@ -212,10 +211,10 @@ class KeyboardDisplay extends StatelessWidget {
   /// ```
   const KeyboardDisplay({
     super.key,
-    required List<LogicalKeyboardKey> keys,
+    required List<LogicalKeyboardKey> this._keys,
     this.spacing,
-  })  : _keys = keys,
-        _activator = null;
+    this.theme,
+  }) : _activator = null;
 
   /// Creates a [KeyboardDisplay] from a shortcut activator.
   ///
@@ -224,7 +223,7 @@ class KeyboardDisplay extends StatelessWidget {
   /// This constructor is convenient when working with Flutter's shortcut system.
   ///
   /// Parameters:
-  /// - [activator] (ShortcutActivator, required): Shortcut to extract keys from
+  /// - [_activator] (ShortcutActivator, required): Shortcut to extract keys from
   /// - [spacing] (double?, optional): Gap between key displays
   ///
   /// Example:
@@ -236,26 +235,28 @@ class KeyboardDisplay extends StatelessWidget {
   /// ```
   const KeyboardDisplay.fromActivator({
     super.key,
-    required ShortcutActivator activator,
+    required ShortcutActivator this._activator,
     this.spacing,
-  })  : _keys = null,
-        _activator = activator;
+    this.theme,
+  }) : _keys = null;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<KeyboardShortcutTheme>(context);
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<KeyboardShortcutTheme>(context);
     var keys = _keys ?? shortcutActivatorToKeySet(_activator!);
     final spacing = styleValue(
-        widgetValue: this.spacing,
-        themeValue: compTheme?.spacing,
-        defaultValue: 2 * theme.scaling);
+      widgetValue: this.spacing,
+      themeValue: compTheme?.spacing,
+      defaultValue: 2 * theme.scaling,
+    );
     return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: keys
-                .map((key) => KeyboardKeyDisplay(keyboardKey: key))
-                .toList())
-        .gap(spacing);
+      mainAxisSize: MainAxisSize.min,
+      children: keys
+          .map((key) => KeyboardKeyDisplay(keyboardKey: key))
+          .toList(),
+    ).gap(spacing);
   }
 }
 
@@ -276,7 +277,8 @@ class KeyboardDisplay extends StatelessWidget {
 ///   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
 /// )
 /// ```
-class KeyboardKeyDisplay extends StatelessWidget {
+class KeyboardKeyDisplay extends StatelessWidget
+    implements Styleable<KeyboardShortcutTheme> {
   /// The keyboard key to display.
   ///
   /// Specifies which keyboard key should be rendered. The display
@@ -294,6 +296,10 @@ class KeyboardKeyDisplay extends StatelessWidget {
   /// Creates visual depth to simulate the appearance of physical
   /// keyboard keys. When null, uses theme default shadows.
   final List<BoxShadow>? boxShadow;
+
+  /// {@macro shadcn_flutter.Styleable.theme}
+  @override
+  final KeyboardShortcutTheme? theme;
 
   /// Creates a [KeyboardKeyDisplay] for the specified keyboard key.
   ///
@@ -318,6 +324,7 @@ class KeyboardKeyDisplay extends StatelessWidget {
     required this.keyboardKey,
     this.padding,
     this.boxShadow,
+    this.theme,
   });
 
   @override
@@ -325,19 +332,22 @@ class KeyboardKeyDisplay extends StatelessWidget {
     final displayMapper = Data.of<KeyboardShortcutDisplayHandle>(context);
     final theme = Theme.of(context);
     final directionality = Directionality.of(context);
-    final compTheme = ComponentTheme.maybeOf<KeyboardShortcutTheme>(context);
-    final padding = styleValue(
-                widgetValue: this.padding,
-                themeValue: compTheme?.keyPadding,
-                defaultValue:
-                    const EdgeInsets.symmetric(horizontal: 6, vertical: 4))
-            .resolve(directionality) *
+    final compTheme =
+        this.theme ?? ComponentTheme.maybeOf<KeyboardShortcutTheme>(context);
+    final padding =
+        styleValue(
+          widgetValue: this.padding,
+          themeValue: compTheme?.keyPadding,
+          defaultValue: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+        ).resolve(directionality) *
         theme.scaling;
     return Card(
-      padding: padding,
-      borderRadius: theme.borderRadiusMd,
-      fillColor: theme.colorScheme.background.scaleAlpha(0.7),
-      filled: true,
+      theme: CardTheme(
+        padding: padding,
+        borderRadius: theme.borderRadiusMd,
+        fillColor: theme.colorScheme.background.scaleAlpha(0.7),
+        filled: true,
+      ),
       child: displayMapper.buildKeyboardDisplay(context, keyboardKey),
     );
   }
@@ -355,7 +365,8 @@ class KeyboardKeyDisplay extends StatelessWidget {
 ///
 /// Supports [CharacterActivator] and [SingleActivator] types.
 List<LogicalKeyboardKey> shortcutActivatorToKeySet(
-    ShortcutActivator activator) {
+  ShortcutActivator activator,
+) {
   List<LogicalKeyboardKey> keys = [];
   if (activator is CharacterActivator) {
     if (activator.control) {

@@ -43,3 +43,4 @@ ColorInput(
 | `enabled` | `bool?` | Whether the color input is enabled. |
 | `orientation` | `Axis?` | The layout orientation of the color input. |
 | `showHistory` | `bool` | Whether to show the color history button. |
+| `theme` | `ColorInputTheme?` | Styling for this widget alone. Takes precedence over any `T` an ancestor [ComponentTheme] provides: when this is non-null the ancestor is not consulted at all, so a field left null here falls back to the component's built-in default rather than to the ancestor's value. To adjust an ancestor theme instead of replacing it, read it with [ComponentTheme.maybeOf] and `copyWith` the result. Prefer this over the per-property constructor arguments, which are deprecated. |
