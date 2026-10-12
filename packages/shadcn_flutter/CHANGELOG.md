@@ -2,12 +2,8 @@
 
 ### Breaking
 
-- `Gap`, `SliverGap` and `MaxGap` are no longer exported, and the top-level
-  `gap(double, {double? crossGap})` helper is removed. Use `SizedBox`,
-  `Column(...).gap(8)`, `Row(...).gap(8)` or `DensityGap`. Add `package:gap` to
-  your own pubspec if you want `Gap` back.
-- `DensityGap` takes a `direction`, defaulting to `Axis.vertical`. Pass
-  `Axis.horizontal` for the ones inside a `Row`.
+- The top-level `gap(double, {double? crossGap})` helper is removed. Use `Gap`,
+  `SizedBox`, `Column(...).gap(8)`, `Row(...).gap(8)` or `DensityGap` instead.
 - Skeleton loading moved to the new `shadcn_flutter_skeletonizer` package.
   `asSkeleton`, `Bone` and `BoneMock` come from there now, and you need a
   `SkeletonizerLayer` in the tree. Its README has the three-step migration.
@@ -31,12 +27,12 @@
   `formGreaterThanOrEqualTo`, `formBetweenInclusively` and
   `formBetweenExclusively`. `formEqualTo` is new and also required. Wrap numbers
   in `formatDecimal` to keep the old output.
-- Dropped the `skeletonizer`, `country_flags`, `phonecodes`, `gap`,
-  `expressions`, `email_validator`, `web`, `intl` and `flutter_localizations`
-  dependencies. Only `data_widget` and `animation_kit` are left. `Country`,
-  `Countries`, `Currency`, `Filter` and `EmailValidator` are still exported and
-  unchanged, and `TextInputFormatters.mathExpression` still accepts the same
-  syntax.
+- Dropped the `skeletonizer`, `country_flags`, `phonecodes`, `expressions`,
+  `email_validator`, `web`, `intl` and `flutter_localizations` dependencies.
+  The core package now depends only on `data_widget`, `animation_kit` and `gap`.
+  `Country`, `Countries`, `Currency`, `Filter` and `EmailValidator` are still
+  exported and unchanged, and `TextInputFormatters.mathExpression` still
+  accepts the same syntax.
 
 ### Added
 
@@ -113,6 +109,22 @@
 - **[#426]**: a Material or Cupertino widget inside a shadcn toast threw for
   want of an ancestor. `MaterialShadcnApp` and `CupertinoShadcnApp` install
   theirs above the overlay layers now.
+- **[#435]**: closed modal `PinnedSheet`s no longer swallow taps meant for the
+  backdrop. A fully closed sheet also stops painting, while a visible sheet
+  still blocks interaction with controls underneath it.
+- The backdrop-transform `PinnedSheet` example is edge-to-edge again, with its
+  spacing applied inside the sheet instead of around the entire example.
+- **[#434]**, **[#433]**, **[#432]**: switches, tree indent guides and navigation
+  labels now mirror their horizontal positioning correctly in right-to-left
+  layouts.
+- **[#430]**: horizontally scrolling text fields no longer paint text over
+  leading or trailing input features. Chip input overflow remains available
+  inside the editable area.
+- **[#429]**: tooltips dispose their overlay controller and ignore delayed hover
+  callbacks after unmounting.
+- **[#267]**: showing a toast from a sheet or drawer overlay no longer fails
+  while capturing inherited themes and data.
+- **[#235]**: taps on iOS no longer request Android-style system click sounds.
 - `CompareWith.equal` and `CompareTo.equal` threw `NoSuchMethodError` instead of
   reporting a validation failure.
 - `MenuGap` and `NavigationGap` spaced along the wrong axis inside a horizontal
