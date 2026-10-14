@@ -1,0 +1,98 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+/// Sends one framework user edit through the real editor/IME synchronization
+/// path. IntegrationTest leaves TestTextInput unregistered, so pretending to
+/// receive an IME update can leave its real native peer with the old value.
+/// This is framework input, not an OS keyboard/IME acceptance claim.
+/// [beforeValueVerification] lets the explicit native-candidate target wait for
+/// its one real candidate commit; the same exact value assertion still follows.
+Future<void> enterCatalogText(
+  WidgetTester tester,
+  Finder target,
+  String text, {
+  Future<void> Function()? beforeValueVerification,
+}) async {
+  final editor = tester.state<EditableTextState>(target);
+  editor.requestKeyboard();
+  await tester.pump();
+  expect(
+    editor.widget.focusNode.hasPrimaryFocus,
+    isTrue,
+    reason: 'The intended Catalog editor must receive focus before editing.',
+  );
+  final value = TextEditingValue(
+    text: text,
+    selection: TextSelection.collapsed(offset: text.length),
+  );
+  editor.userUpdateTextEditingValue(value, SelectionChangedCause.keyboard);
+  await tester.pump();
+  await beforeValueVerification?.call();
+  expect(editor.textEditingValue, value);
+  expect(editor.widget.focusNode.hasPrimaryFocus, isTrue);
+}
+
+/// Reveals [target] and taps once its center can be hit at a stable position.
+///
+/// A mounted widget can still be clipped or moving after a disclosure changes
+/// scroll geometry. Repeated reveals are safe; repeated taps could submit twice.
+/// This deliberately avoids pumpAndSettle because Catalog contains live timers.
+Future<void> tapCatalogTarget(
+  WidgetTester tester,
+  Finder target, {
+  Duration timeout = const Duration(seconds: 2),
+  Duration frameInterval = const Duration(milliseconds: 16),
+  Future<void> Function(Duration)? pump,
+  void Function()? beforeActivation,
+}) async {
+  assert(timeout > Duration.zero);
+  assert(frameInterval > Duration.zero);
+  final attempts = (timeout.inMicroseconds / frameInterval.inMicroseconds)
+      .ceil();
+  Rect? previousRect;
+  var stableFrames = 0;
+  var lastState = 'not found';
+
+  for (var attempt = 0; attempt < attempts; attempt++) {
+    final matches = target.evaluate().toList();
+    if (matches.length != 1) {
+      throw TestFailure(
+        'Cannot tap $target: expected exactly one mounted target, '
+        'found ${matches.length}.',
+      );
+    }
+    await Scrollable.ensureVisible(matches.single, alignment: 0.5);
+    await (pump?.call(frameInterval) ?? tester.pump(frameInterval));
+
+    if (target.evaluate().length != 1) {
+      previousRect = null;
+      stableFrames = 0;
+      lastState = 'target changed during reveal';
+      continue;
+    }
+    final rect = tester.getRect(target);
+    final hitTestable = target.hitTestable().evaluate().length == 1;
+    // Fractional device-pixel ratios can leave harmless floating-point drift
+    // after a scroll offset is resolved. Actual hit testing remains mandatory.
+    final stationary =
+        previousRect != null &&
+        (rect.topLeft - previousRect.topLeft).distance <= 0.25 &&
+        (rect.bottomRight - previousRect.bottomRight).distance <= 0.25;
+    stableFrames = hitTestable ? (stationary ? stableFrames + 1 : 1) : 0;
+    previousRect = rect;
+    lastState = hitTestable
+        ? 'position has not remained stable across three frames ($rect)'
+        : 'center is not hit-testable ($rect)';
+
+    if (stableFrames >= 3) {
+      // Keep normal missed-hit diagnostics enabled. There is no pointer event
+      // until this point, and no retry after this single activation.
+      beforeActivation?.call();
+      await tester.tap(target);
+      return;
+    }
+  }
+  throw TestFailure(
+    'Cannot tap $target after ${timeout.inMilliseconds} ms: $lastState.',
+  );
+}

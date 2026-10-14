@@ -1,0 +1,917 @@
+{
+  "captured_on": "2026-09-02",
+  "flutter": {
+    "version": "3.47.0",
+    "channel": "stable",
+    "framework_revision": "4cf2416426",
+    "engine_revision": "5f77625673"
+  },
+  "dart": {
+    "version": "3.13.0"
+  },
+  "host": {
+    "os": "macOS 15.7.9",
+    "architecture": "arm64",
+    "locale": "zh-Hans-CN",
+    "hardware_model": "MacBookPro18,1",
+    "cpu": "Apple M1 Pro",
+    "physical_memory_bytes": 34359738368
+  },
+  "source_pins": {
+    "shadcn_flutter": "5a2376e416fca6c8cc5feb2b5fcf5bf160fa5f73",
+    "shadcn_flutter_tag": "v0.0.54",
+    "beautiful_ui": "dd1ba4f323c29ef6c383b2dbf1d7100f2c26ccac"
+  },
+  "local_capabilities": {
+    "captured_on": "2026-09-03",
+    "chrome_web": "available_with_recorded_prior_local_journey",
+    "chrome_version": "152.0.7977.66",
+    "chromedriver_version": "152.0.7977.75",
+    "macos_release_build": "passed",
+    "macos_native_shared_journey": "passed",
+    "macos_native_ax": "verified_without_web_semantics_compile_flag",
+    "xcode": "available_for_verified_macos_release_build",
+    "android_sdk": "not_rechecked_in_this_pass",
+    "ios_simulator_local_journey": "not_recorded",
+    "cocoapods": "not_rechecked_in_this_pass"
+  },
+  "golden": {
+    "canonical_platform": "Ubuntu 24.04 x64",
+    "font_families": [
+      "packages/shadcn_flutter/GeistSans",
+      "packages/shadcn_flutter/GeistMono"
+    ],
+    "linux_canonical_status": "accepted_from_ci_run_33622890532",
+    "linux_canonical_sha256": {
+      "light": "6a23a9d0f9615830da9790ffa23cb2a6c170f8e30db5183462393987ece710c8",
+      "dark": "dc8175f4aefe985ca81de7cfd8e215002cc8a9aec431c4d77aa9de5eec6847ac"
+    },
+    "local_supplemental_platform": "macOS arm64",
+    "local_supplemental_sha256": {
+      "light": "3ae29e4b19b6f507a1b32696e870e1643d0f82ef90103922d83453695d96b262",
+      "dark": "255dba2d56b0b1f6e1d254bf03a80f6f51b93e709dbe932291fd439d34624112"
+    },
+    "p1_linux_canonical_status": "accepted_from_run_33736546039_strictly_verified_in_final_run_33748054504",
+    "p1_linux_canonical_sha256": {
+      "light": "ed6c635d6bc5b6d95b0b2e5992e91b485593b9bb0ebf9386eb4f0c24d1f1c804",
+      "dark": "e9a74941d0748717fdda013e356aea1a2d0040fb45f9a62a35f981912548b739"
+    },
+    "p2_linux_canonical_status": "accepted_from_run_33736546039_strictly_verified_in_final_run_33748054504",
+    "p2_linux_missing_baseline_behavior": "export_review_candidate_and_fail_without_accepting_canonical",
+    "p2_local_supplemental_platform": "macOS arm64",
+    "p2_local_supplemental_status": "visually_accepted_2026-09-03",
+    "p2_local_supplemental_viewport": "1440x1400, DPR 1, motion disabled",
+    "p2_local_supplemental_sha256": {
+      "light": "efbd7c6b59ab835a67213f771e7ea8364a4223af4cca157c9a110a70513f9c87",
+      "dark": "6ae62ff7a1ce40df2759d10b13ba03a7fdf2d39ba9002e960b91be82c6a546eb"
+    },
+    "p2_linux_canonical_sha256": {
+      "light": "3ed35168aca99aaf6694bc6900457969f690c347fb22377aeed37f992b56a196",
+      "dark": "42b5e21d7c6a768a17a5786f24cff821ce227c7ea4a76632073c3de7baa01e19"
+    },
+    "p2_linux_comparison_verified_run": 33748054504,
+    "p3_local_supplemental_status": "visually_accepted_macos_2026-09-03",
+    "p3_local_supplemental_sha256": {
+      "p3_content_dark_macos.png": "ea33323da2da2790acc736b2d286d550c77d6c2432e3be5b77d0de90bc974637",
+      "p3_content_light_macos.png": "ef8770682d81bc1c42e3c4981245747a94c48283eac371675f97f1bc02663c91",
+      "p3_workspace_dark_macos.png": "52c3f5abbba0968dde1fee89dc4918f39e2a9d054df6a33b3c49de4b8009ab51",
+      "p3_workspace_light_macos.png": "14c975cee19a5aae826ad278663a5aa30c82a26916757eaaf46e98e0137ead51"
+    },
+    "p3_linux_canonical_status": "accepted_from_run_33736546039_strictly_verified_in_final_run_33748054504",
+    "p3_linux_canonical_sha256": {
+      "p3_content_light.png": "cdc3423e2b93bea5b9e52955ac4a8d9b7c95c83fe0bf5f2d21348f9e6427e99e",
+      "p3_content_dark.png": "687e22dfad354fad4c649fe44488793f9ff9e894a011ab026c960349771b2ea4",
+      "p3_workspace_light.png": "55ae0c9c88f18d7f9729c0ddcebfd21ac5f4623fb3a9d954b2ab4688e9cf182f",
+      "p3_workspace_dark.png": "2a0f77fe737d82476fd05b309de354bcbca927db231dba7f949e4d7a58ccea93"
+    },
+    "release_readiness_refresh": {
+      "verified_on": "2026-09-03",
+      "macos_checks_passed": 12,
+      "updated_supplemental_images": 8,
+      "linux_current_changes": "accepted_baselines_strictly_verified_in_final_run_33748054504",
+      "historical_baselines": "earlier_hashes_above_are_retained_for_their_original_implementation_runs",
+      "current_supplemental_images": 10,
+      "current_supplemental_sha256": {
+        "loading_state_dark_macos.png": "255dba2d56b0b1f6e1d254bf03a80f6f51b93e709dbe932291fd439d34624112",
+        "loading_state_light_macos.png": "3ae29e4b19b6f507a1b32696e870e1643d0f82ef90103922d83453695d96b262",
+        "p1_components_dark_macos.png": "727816a3c5d49388b86325fc7e67eb2ca1483a366bceb2bd5d76a5b9bf7744b5",
+        "p1_components_light_macos.png": "d61f46b7729bd89c1c01d97270f31ca402d490b941d5e7362972c0f29fabfdd1",
+        "p2_components_dark_macos.png": "0355532a0982cbcc1a1880a68b7f01f05dde9139a4d7731b49c41f6e17c7d90e",
+        "p2_components_light_macos.png": "90b5012efaf5fe640ad2844b5a35773cbdeadcb2095252c04c02ce700bd25f5a",
+        "p3_content_dark_macos.png": "2e7bc3ffeea13e52a27117f6c23e2fe2d58e8e8bbef8852214f250720adde626",
+        "p3_content_light_macos.png": "66febbc0067f16f735abb7f3000bcf9321613f5b6c7bf5676f198dcc739398d0",
+        "p3_workspace_dark_macos.png": "ac4818a37a83bc1e22a3a328e108d4c7f8d4cee56c3aa790f716cf0a063f098a",
+        "p3_workspace_light_macos.png": "1021c7707bc32dee70f19aad9550c5ae0cd6dd39b65b7b705cb9ba4e3cd4d6cf"
+      },
+      "hash_source": "packages/beautiful_ai_ui/build/release_review/macos-golden-final-after.json",
+      "linux_acceptance_evidence": "docs/beautiful-ui/quality_evidence/2026-09-03-linux-golden-acceptance-33736546039.json",
+      "linux_accepted_sha256": {
+        "p1_components_light.png": "ed6c635d6bc5b6d95b0b2e5992e91b485593b9bb0ebf9386eb4f0c24d1f1c804",
+        "p1_components_dark.png": "e9a74941d0748717fdda013e356aea1a2d0040fb45f9a62a35f981912548b739",
+        "p2_components_light.png": "3ed35168aca99aaf6694bc6900457969f690c347fb22377aeed37f992b56a196",
+        "p2_components_dark.png": "42b5e21d7c6a768a17a5786f24cff821ce227c7ea4a76632073c3de7baa01e19",
+        "p3_content_light.png": "cdc3423e2b93bea5b9e52955ac4a8d9b7c95c83fe0bf5f2d21348f9e6427e99e",
+        "p3_content_dark.png": "687e22dfad354fad4c649fe44488793f9ff9e894a011ab026c960349771b2ea4",
+        "p3_workspace_light.png": "55ae0c9c88f18d7f9729c0ddcebfd21ac5f4623fb3a9d954b2ab4688e9cf182f",
+        "p3_workspace_dark.png": "2a0f77fe737d82476fd05b309de354bcbca927db231dba7f949e4d7a58ccea93"
+      },
+      "linux_strict_comparison_run_id": 33748054504,
+      "linux_strict_comparison_commit": "c2bde85dd5da7c33b0f7881234ae312f3be1826c",
+      "linux_strict_comparison_attempt": 1
+    },
+    "previous_linux_canonical_baselines_before_33736546039": {
+      "p1_linux_canonical_status": "accepted_from_ci_run_33632807691",
+      "p1_linux_canonical_sha256": {
+        "light": "82ddbd3a7826c42a91bf737eb73cb74104f2b04dff58d13fc016d9fc69b0e3c8",
+        "dark": "30374f224b600c29022a3f6fb1a657f494525325bd5e2ba4beedf0f2c23d4fbe"
+      },
+      "p2_linux_canonical_status": "accepted_from_ci_run_33701530733",
+      "p2_linux_canonical_sha256": {
+        "light": "ddf4f13f053059645e734d640fb379416a4c8578927136a431997c351440864c",
+        "dark": "12a22b2e88f9f11c611757211fcbe26651dc0146fb9a7af003ea81545b19e36a"
+      },
+      "p2_linux_comparison_verified_run": 33707996401,
+      "p3_linux_canonical_status": "accepted_from_ci_run_33723609480",
+      "p3_linux_canonical_sha256": {
+        "p3_content_light.png": "7185fb90cc18f278236f88089effc30f42e789f37116944115d8c23267d0a432",
+        "p3_content_dark.png": "5664d066076a58ad1f5b845e0a11ef11f852b71de90d7f325a915885febf9584",
+        "p3_workspace_light.png": "2492281897444b81199ad37aa56f758182a464c6b9fb81e887323206b7ae57e5",
+        "p3_workspace_dark.png": "71be8a58526d0f2ebffec87e9e812351f2d3b52a25f1f00cf4c03d74496435d9"
+      }
+    }
+  },
+  "p1_journeys": {
+    "chrome_local": "passed_complete_p1_interaction_path",
+    "chrome_local_viewport": "1440x900 desktop, DPR 1 without mobile emulation",
+    "chrome_ci": "passed_run_33634769448",
+    "linux_xvfb_ci": "passed_run_33634769448",
+    "android_emulator_ci": "passed_run_33634769448",
+    "verified_commit": "29dc443efe1bc4db67946024bf66f91d98f8128f",
+    "verified_run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33634769448",
+    "verified_on": "2026-09-03"
+  },
+  "p2_journeys": {
+    "verified_on": "2026-09-03",
+    "chrome_local": "passed_complete_p1_and_p2_interaction_path",
+    "chrome_local_version": "152.0.7977.66",
+    "chromedriver_local_version": "152.0.7977.75",
+    "chrome_local_viewport": "1440x900 desktop, DPR 1 without mobile emulation",
+    "chrome_ci": "passed_run_33707996401",
+    "linux_xvfb_ci": "passed_run_33707996401",
+    "android_emulator_ci": "passed_run_33707996401",
+    "verified_commit": "bc6a72959dfa84543abc844fa8fef4fcd15e7629",
+    "verified_run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33707996401"
+  },
+  "p2_local_validation": {
+    "verified_on": "2026-09-03",
+    "scoped_strict_analyzers": "passed_three_package_scopes",
+    "repository_root_analyzer": "41_pre_existing_infos_in_unchanged_packages_docs",
+    "package_suite": "passed_full_suite_with_linux_candidate_safety_test",
+    "catalog_tests_passed": 7,
+    "upstream_tests_passed": 571,
+    "web_javascript_release": "passed",
+    "web_wasm_release": "passed",
+    "wasm_browser_review": "chat_prompt_editable_no_error_logs",
+    "wasm_browser_limitation": "single_thread_skwasm_warning_from_localhost_isolation_headers",
+    "publish_dry_run": "passed_zero_warnings_1_mb_archive",
+    "package_tests_passed": 257
+  },
+  "p2_remote_validation": {
+    "run_id": 33707996401,
+    "commit": "bc6a72959dfa84543abc844fa8fef4fcd15e7629",
+    "run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33707996401",
+    "jobs_passed": 10,
+    "platform_builds": "all_six_passed_including_web_js_and_wasm",
+    "device_journeys": "chrome_linux_xvfb_android_passed",
+    "quality": "passed_including_strict_p2_linux_golden_comparison",
+    "publish_dry_run": "passed",
+    "initial_run": {
+      "run_id": 33701530733,
+      "commit": "92992e48ec0f361be9015e443bd15bff95b7b4d6",
+      "platform_builds": "all_six_passed_including_web_js_and_wasm",
+      "device_journeys": "chrome_linux_xvfb_android_passed",
+      "quality": "first_run_failed_only_missing_p2_linux_goldens",
+      "publish_dry_run": "skipped_in_first_run_due_to_quality_dependency"
+    }
+  },
+  "p3_validation": {
+    "evidence_path": "docs/beautiful-ui/quality_evidence/2026-09-03-p3-modules.md",
+    "contracts_path": "docs/beautiful-ui/p3_contracts.md",
+    "implementation_status": "all_seven_exported_in_progress",
+    "integrated_execution_status": "local_results_and_complete_final_remote_results_recorded",
+    "remote_ci_status": "current_automated_release_all_12_jobs_passed_run_33748054504_on_c2bde85dd5da7c33b0f7881234ae312f3be1826c",
+    "profile_release_performance": "final_source_macOS_capture_114308Z_complete_budgets_repeatability_and_other_platform_acceptance_open"
+  },
+  "p3_local_validation": {
+    "verified_on": "2026-09-03",
+    "package_tests_passed": 457,
+    "catalog_tests_passed": 12,
+    "package_strict_analysis": "passed",
+    "catalog_strict_analysis": "passed",
+    "chrome_journey": "passed_full_p1_p2_p3",
+    "chrome_version": "152.0.7977.66",
+    "chromedriver_version": "152.0.7977.75",
+    "chrome_viewport": "1440x900 desktop DPR1",
+    "web_javascript_release": "passed",
+    "web_wasm_release": "passed",
+    "publish_dry_run": "passed_zero_warnings_2_mb",
+    "upstream_tests_passed": 571,
+    "upstream_strict_analysis": "passed",
+    "wasm_browser_review": "records_search_enabled_editable_no_errors_compact_adaptations_verified",
+    "catalog_tap_readiness": "passed_bounded_hit_testable_stable_three_frame_regressions_and_chrome_journey",
+    "catalog_response_lifecycle": "explicit_complete_or_stop_verified_after_ten_second_delay"
+  },
+  "p3_remote_validation": {
+    "run_id": 33723609480,
+    "commit": "a27de98e909fe64a59d4d0f4f3c760f34501efa2",
+    "platform_builds": "all_six_passed_including_web_js_wasm",
+    "chrome_journey": "passed",
+    "linux_xvfb_journey": "passed",
+    "android_emulator_journey": "passed",
+    "quality": "first_run_failed_only_four_missing_p3_goldens",
+    "publish_dry_run": "skipped_in_first_run_due_to_quality_dependency"
+  },
+  "p3_baseline_verification": {
+    "run_id": 33724227835,
+    "commit": "6f546209c5b9a6717b37c4a95ab17b195f181bfc",
+    "quality_and_goldens": "passed",
+    "all_platform_builds": "passed",
+    "chrome_linux_journeys": "passed",
+    "publish_validation": "passed",
+    "android_journey": "failed_citation_center_not_hit_testable_after_reveal",
+    "remediation": "bounded_stable_hit_target_helper_with_single_pointer_activation"
+  },
+  "p3_tap_verification": {
+    "run_id": 33725759397,
+    "commit": "a7e15d198cf21584e5a01a69e3ddfee22671a5f0",
+    "android_journey": "passed",
+    "quality_goldens_builds_publish": "passed",
+    "chrome_journey": "failed_demo_auto_completion_preceded_stop",
+    "remediation": "manual_catalog_response_completion_no_reply_timer"
+  },
+  "p3_final_validation": {
+    "run_id": 33726848975,
+    "commit": "74178098705aa83b5452857aece6a3b10bb3ce4f",
+    "run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33726848975",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_passed": 10,
+    "platform_builds": "all_six_passed_including_web_js_and_wasm",
+    "chrome_journey": "passed",
+    "linux_xvfb_journey": "passed",
+    "android_emulator_journey": "passed",
+    "quality_and_goldens": "passed_including_strict_ubuntu_p3_canonical_comparison",
+    "publish_dry_run": "passed"
+  },
+  "updated_on": "2026-09-03",
+  "initial_local_capabilities": {
+    "chrome_web": "available",
+    "chrome_version": "152.0.7977.66",
+    "chromedriver_version": "152.0.7977.75",
+    "chrome_webdriver_journey": "passed",
+    "android_sdk": "missing",
+    "xcode": "incomplete",
+    "cocoapods": "missing",
+    "captured_on": "2026-09-02"
+  },
+  "release_readiness_validation": {
+    "verified_on": "2026-09-03",
+    "evidence_path": "docs/beautiful-ui/quality_evidence/2026-09-03-release-readiness.md",
+    "all_registry_statuses": "in_progress",
+    "gallery_implementations": 20,
+    "registry_items": 27,
+    "package_tests_passed": 528,
+    "catalog_tests_passed": 26,
+    "strict_analysis": "final_library_and_catalog_passed",
+    "macos_golden_checks_passed": 12,
+    "supplemental_visual_images_reviewed": 49,
+    "visual_evidence_path": "docs/beautiful-ui/quality_evidence/2026-09-03-accessibility-visual-review.md",
+    "source_font_files_verified": 43,
+    "runtime_font_files_verified": 37,
+    "transitive_flag_files_verified": 266,
+    "original_web_images_verified": 5,
+    "complete_license_registry_labels_verified": 13,
+    "release_asset_audits": {
+      "macos": "docs/beautiful-ui/quality_evidence/native-release-assets.json",
+      "web_javascript": "docs/beautiful-ui/quality_evidence/web-js-release-assets.json",
+      "web_wasm": "docs/beautiful-ui/quality_evidence/web-wasm-release-assets.json"
+    },
+    "typography_decision": "verified_inherited_GeistSans_and_GeistMono_no_bundled_Inter_or_JetBrainsMono",
+    "native_macos_shared_journey": "passed",
+    "native_macos_ax": "no_flag_A_B_verified_Web_flag_now_gated_by_kIsWeb",
+    "profile": {
+      "role": "final_source_success",
+      "evidence_path": "docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/summary.json",
+      "readme_path": "docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final/README.md",
+      "run_id": "20260903T114308Z",
+      "status": "complete",
+      "validated_code_commit": "c2bde85dd5da7c33b0f7881234ae312f3be1826c",
+      "integration_driver_exit_code": 0,
+      "script_exit_code": 0,
+      "teardown": "passed",
+      "workloads_completed": 7,
+      "frame_samples": 4495,
+      "rss_samples": 478,
+      "native_view_logical_dp": {
+        "width": 1728.0,
+        "height": 1080.0
+      },
+      "device_pixel_ratio": 2.0,
+      "display_refresh_rate_hz": 120.0,
+      "renderer": "Impeller_Metal_verified_from_native_timeline",
+      "source_manifest_sha256": "4c4cf5d6606596f8f7ce45f07d4e37a0309aad1d60f42ea7d50d0af850390dac",
+      "runtime_build_inputs_matching_revision": 50,
+      "worktree_clean": false,
+      "dirty_scope": "documentation_and_evidence_only",
+      "source_matches_revision": true,
+      "platform_semantics_enabled": false,
+      "framework_semantics_requested_by_test": true,
+      "partial_vm_timelines": 6,
+      "independent_frame_arrays_complete": true,
+      "peak_ui_build_ms": {
+        "prompt_bar": 45.962,
+        "records_table": 22.06,
+        "insight_cards": 45.395
+      },
+      "performance_budget_acceptance": "not_assessed",
+      "direct_regression_comparison_with_historical_baseline": false,
+      "limitations": "one_macOS_run_instrumented_process_RSS_programmatic_inputs_other_platform_and_physical_AT_acceptance_open"
+    },
+    "remote_ci": {
+      "workflow": ".github/workflows/beautiful_ai_ui.yml",
+      "configured_jobs": 12,
+      "run_id": 33748054504,
+      "attempt": 1,
+      "run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33748054504",
+      "commit": "c2bde85dd5da7c33b0f7881234ae312f3be1826c",
+      "status": "completed",
+      "conclusion": "success",
+      "job_counts": {
+        "success": 12,
+        "failure": 0,
+        "skipped": 0
+      },
+      "all_jobs_passed": true,
+      "job_results": {
+        "Detect generated targets": "success",
+        "Build Android catalog": "success",
+        "Run Edge journey": "success",
+        "Run Firefox journey": "success",
+        "Run Chrome and Linux journeys": "success",
+        "Format, analyze, and test": "success",
+        "Build Web catalog": "success",
+        "Run Android journey": "success",
+        "Build Apple catalogs": "success",
+        "Build Linux catalog": "success",
+        "Build Windows catalog": "success",
+        "Validate pub.dev package": "success"
+      },
+      "apple_job_id": 100625050615,
+      "apple_artifact_id": 9890828917,
+      "ios_driver_validation": {
+        "apple_job_id": 100625050615,
+        "artifact_id": 9890828917,
+        "source_result_file": "artifacts/apple/ios-journey.json",
+        "source_result_sha256": "3f178a21ceb6f677f2679a2285cc5342d0fd3b1165590900fc4d4eed4a4d85bd",
+        "passed": true,
+        "launch": {
+          "passed": true,
+          "exit_code": 0,
+          "elapsed_seconds": 7.582
+        },
+        "vm_discovery": {
+          "passed": true,
+          "elapsed_seconds": 12.396,
+          "elapsed_includes_launch": true,
+          "validated_pid": 26615,
+          "scoped_history_queries": 1
+        },
+        "native_driver": {
+          "passed": true,
+          "exit_code": 0,
+          "elapsed_seconds": 50.234,
+          "reported_result": "All tests passed."
+        },
+        "journey_tests_passed": 1,
+        "suite_setup_and_teardown": "passed",
+        "strict_semantics_leak_checks": "preserved",
+        "terminate": {
+          "passed": true,
+          "exit_code": 0
+        }
+      },
+      "current_linux_goldens": "strict_comparison_passed",
+      "follow_up": "automated_driver_gate_closed_remaining_manual_GUI_profile_and_release_acceptance_separate"
+    },
+    "native_semantics_evidence_path": "docs/beautiful-ui/quality_evidence/2026-09-03-native-semantics.md",
+    "latest_frozen_source_wasm_release": "passed_after_portable_hosted_adapter_and_notice_changes",
+    "final_local_logs": {
+      "package_tests": "/tmp/release-portable-package-tests.log",
+      "wasm_build": "/tmp/release-portable-wasm-build.log",
+      "native_build": "/tmp/release-portable-native-build.log",
+      "catalog_tests": "/tmp/release-fourth-catalog-tests.log"
+    },
+    "final_visual_capture": {
+      "images_reviewed": 49,
+      "renderer_manifest_sha256": "c0f46b73679b5ee81b2e920371f6310a6acd37ffd3a9a2916262221b7cdd91c6",
+      "source_inventory_entries": 249,
+      "source_inventory_fingerprint_sha256": "27790be59b89b36743994b9cc141e7fd3ca922c9bd2c4218543b6151b1e14131",
+      "fingerprint_format": "UTF-8 JSON with sorted keys, compact separators and no trailing newline",
+      "captured_at_utc": "2026-09-03T09:22:39.878578+00:00",
+      "source_alignment": "portable_hosted_adapter_source_pixels_unchanged_from_accepted_final_visuals",
+      "all_review_and_golden_pixels_unchanged_after_adapter_fix": true
+    },
+    "last_frozen_source_fixes": {
+      "normal_ink_subtle": {
+        "light": "#66696f",
+        "dark": "#9c9fa5",
+        "tested_text_minimum_contrast": 4.5
+      },
+      "light_accent_ink": {
+        "value": "#0067cb",
+        "contrast_on_accent_tint": 4.925,
+        "previous_contrast": 4.294,
+        "graphic_accent": "unchanged"
+      },
+      "palette_regressions_added": 4,
+      "muted_ticker_action_color_fix": "Duration.zero when TickerMode.valuesOf(context).enabled is false",
+      "paint_regressions_added": 3,
+      "paint_regression_scope": "includes_real_1200dp_Flowchart_canvas_after_theme_change",
+      "hosted_adapter": "private_adapter_verified_with_unchanged_hosted_0.0.54_atomic_theme_state_and_focus"
+    },
+    "latest_frozen_source_macos_release": "passed_after_portable_hosted_adapter_and_notice_changes",
+    "hosted_consumer": {
+      "status": "passed",
+      "evidence_path": "docs/beautiful-ui/quality_evidence/2026-09-03-hosted-consumer.md",
+      "before_result": "docs/beautiful-ui/quality_evidence/hosted-consumer-before.json",
+      "after_result": "docs/beautiful-ui/quality_evidence/hosted-consumer-after.json",
+      "dependency": "unmodified_hosted_shadcn_flutter_0.0.54",
+      "hosted_runtime_files_matched": 209,
+      "isolated_cache_and_no_overrides": true,
+      "atomic_theme_observations": 12,
+      "complete_expected_notice_labels": 13,
+      "publication_notice_sha256": "30ea1bec73647df83b3716f1107ab27a56c945ec4cc2693b8e1cdc13768854e7",
+      "generated_notices_sha256": "803026de97a191d81e842aedf1285d2daa52c68184f8a5ea4cae65d8d076995f",
+      "scope": "temporary_BAI_publication_surface_path_dependency_not_actual_pubdev_publication",
+      "ci_validation": {
+        "run_id": 33748054504,
+        "repository_head": "c2bde85dd5da7c33b0f7881234ae312f3be1826c",
+        "artifact_id": 9890573744,
+        "result_sha256": "cfe7abbf71529b044e236fe93b53de05d36e0cfa9f82d3bd3cbd49ba4f28be45",
+        "passed": true,
+        "hosted_dependency": {
+          "source": "hosted",
+          "version": "0.0.54",
+          "sha256": "403a9e790447dc4b6bae73a810d7ffa52baece4d7b29b32de56d0dd769be080e",
+          "url": "https://pub.dev"
+        },
+        "unmodified_files": 209,
+        "theme_observations": 12,
+        "license_labels": 13,
+        "notices_sha256": "fd9ead85153b31917747fa668bff0e0a3921f66f7445d475b7a3074b7b9db84a",
+        "synthetic_license_entries": false
+      },
+      "ci_validation_history": [
+        {
+          "run_id": 33741053163,
+          "repository_head": "896bcfe8fd6419382f21ba6a311d37f5f017d875",
+          "artifact_id": 9887907974,
+          "result_sha256": "ff2e38c34a3eb304567c1e40ee0692bddc0f3d0a5d0fcc2191f524281b00ef40",
+          "passed": true,
+          "hosted_dependency": {
+            "source": "hosted",
+            "version": "0.0.54",
+            "sha256": "403a9e790447dc4b6bae73a810d7ffa52baece4d7b29b32de56d0dd769be080e",
+            "url": "https://pub.dev"
+          },
+          "unmodified_files": 209,
+          "theme_observations": 12,
+          "license_labels": 13,
+          "notices_sha256": "fd9ead85153b31917747fa668bff0e0a3921f66f7445d475b7a3074b7b9db84a",
+          "publish_dry_run": {
+            "warnings": 0,
+            "archive_size": "3 MB"
+          }
+        },
+        {
+          "run_id": 33742943774,
+          "repository_head": "57efe1a3f9bb72c1a7b8668dec127ad261eaedda",
+          "artifact_id": 9888622880,
+          "result_sha256": "96fc50d78e61c89136129333e7547eb57e6f7b6bd6f7600a2e7f1b1b63b4cb76",
+          "passed": true,
+          "hosted_dependency": {
+            "source": "hosted",
+            "version": "0.0.54",
+            "sha256": "403a9e790447dc4b6bae73a810d7ffa52baece4d7b29b32de56d0dd769be080e",
+            "url": "https://pub.dev"
+          },
+          "unmodified_files": 209,
+          "theme_observations": 12,
+          "license_labels": 13,
+          "notices_sha256": "fd9ead85153b31917747fa668bff0e0a3921f66f7445d475b7a3074b7b9db84a",
+          "synthetic_license_entries": false
+        }
+      ]
+    },
+    "external_execution_condition": {
+      "local_mac_session": "unlocked_usable",
+      "final_checks_status": "complete",
+      "final_source_profile": "completed_run_20260903T114308Z",
+      "safari_post_ticker_visual_recheck": "targeted_gate_passed",
+      "prior_lock_delay": {
+        "state": "locked_at_earlier_stage",
+        "effect": "delayed_local_checks_only"
+      },
+      "later_preparation_attempt": "113737Z_failed_due_to_uncompleted_viewport_preparation_not_lock",
+      "prior_capture_anomalies": "white_frames_noWindows_resolved_without_code_change_cause_unproven",
+      "restored_safari_state": {
+        "window": "ordinary",
+        "theme": "light",
+        "motion": "reduced"
+      },
+      "gui_testing_finished": true,
+      "historical_evidence_substitution": false
+    },
+    "remote_ci_history": [
+      {
+        "workflow": ".github/workflows/beautiful_ai_ui.yml",
+        "configured_jobs": 12,
+        "run_id": 33736546039,
+        "run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33736546039",
+        "commit": "19c80c17e5346f7415b52af9583ba6770cfbee50",
+        "status": "completed",
+        "conclusion": "failure",
+        "job_counts": {
+          "success": 9,
+          "failure": 2,
+          "skipped": 1
+        },
+        "all_jobs_passed": false,
+        "job_results": {
+          "Detect generated targets": "success",
+          "Build Android catalog": "success",
+          "Run Edge journey": "success",
+          "Run Firefox journey": "success",
+          "Run Chrome and Linux journeys": "success",
+          "Format, analyze, and test": "failure_eight_linux_golden_differences_only",
+          "Build Web catalog": "success_including_asset_audits",
+          "Run Android journey": "success",
+          "Build Apple catalogs": "failure_simulator_runner_timeout_actual_test_execution_unconfirmed",
+          "Build Linux catalog": "success",
+          "Build Windows catalog": "success_including_native_journey",
+          "Validate pub.dev package": "skipped_due_to_quality_dependency"
+        },
+        "apple_steps": {
+          "ios_no_codesign_release_build": "success",
+          "macos_release_build": "success",
+          "macos_native_journey": "success",
+          "select_and_boot_ios_simulator": "success",
+          "ios_simulator_journey": "runner_timeout_without_reported_widget_test_start_or_results_actual_execution_unconfirmed",
+          "ios_journey_started_at": "2026-09-03T09:11:51Z",
+          "ios_journey_completed_at": "2026-09-03T09:32:04Z"
+        },
+        "new_browser_jobs": {
+          "firefox": "success",
+          "edge": "success"
+        },
+        "follow_up": "launcher_remediation_accepted_goldens_and_portable_changes_need_next_committed_tree_run",
+        "current_linux_goldens": "eight_candidates_accepted_followup_strict_comparison_pending"
+      },
+      {
+        "workflow": ".github/workflows/beautiful_ai_ui.yml",
+        "configured_jobs": 12,
+        "run_id": 33741053163,
+        "run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33741053163",
+        "commit": "896bcfe8fd6419382f21ba6a311d37f5f017d875",
+        "status": "completed",
+        "conclusion": "failure",
+        "job_counts": {
+          "success": 11,
+          "failure": 1,
+          "skipped": 0
+        },
+        "all_jobs_passed": false,
+        "job_results": {
+          "Detect generated targets": "success",
+          "Build Android catalog": "success",
+          "Run Edge journey": "success",
+          "Run Firefox journey": "success",
+          "Run Chrome and Linux journeys": "success",
+          "Format, analyze, and test": "success_including_strict_linux_goldens",
+          "Build Web catalog": "success_including_asset_audits",
+          "Run Android journey": "success",
+          "Build Apple catalogs": "failure_bounded_launcher_self_test_cleanup_EPERM",
+          "Build Linux catalog": "success",
+          "Build Windows catalog": "success_including_native_journey",
+          "Validate pub.dev package": "success_including_isolated_hosted_consumer_and_publish_dry_run"
+        },
+        "apple_steps": {
+          "ios_no_codesign_release_build": "success",
+          "macos_release_build": "success",
+          "macos_native_journey": "success",
+          "select_and_boot_ios_simulator": "success",
+          "bounded_launcher_self_test": "failure_two_of_four_cases_process_group_cleanup_EPERM",
+          "ios_simulator_build": "skipped_after_self_test_failure",
+          "ios_simulator_journey": "skipped_not_started"
+        },
+        "new_browser_jobs": {
+          "firefox": "success",
+          "edge": "success"
+        },
+        "current_linux_goldens": "strict_comparison_passed_against_eight_accepted_baselines",
+        "follow_up": "launcher_cleanup_fix_implemented_six_local_regressions_and_actionlint_passed_remote_simulator_execution_pending",
+        "launcher_follow_up_local": {
+          "implementation": "complete",
+          "regression_checks_passed": 6,
+          "actionlint": "passed",
+          "remote_simulator_execution": "pending"
+        }
+      },
+      {
+        "workflow": ".github/workflows/beautiful_ai_ui.yml",
+        "configured_jobs": 12,
+        "run_id": 33742943774,
+        "run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33742943774",
+        "commit": "57efe1a3f9bb72c1a7b8668dec127ad261eaedda",
+        "status": "completed",
+        "conclusion": "failure",
+        "job_counts": {
+          "success": 11,
+          "failure": 1,
+          "skipped": 0
+        },
+        "all_jobs_passed": false,
+        "job_results": {
+          "Detect generated targets": "success",
+          "Build Android catalog": "success",
+          "Run Edge journey": "success",
+          "Run Firefox journey": "success",
+          "Run Chrome and Linux journeys": "success",
+          "Format, analyze, and test": "success_including_strict_linux_goldens",
+          "Build Web catalog": "success_including_asset_audits",
+          "Run Android journey": "success",
+          "Build Apple catalogs": "failure_driver_VM_discovery_timeout_and_logged_test_teardown_SemanticsHandle_error",
+          "Build Linux catalog": "success",
+          "Build Windows catalog": "success_including_native_journey",
+          "Validate pub.dev package": "success_including_isolated_hosted_consumer_and_publish_dry_run"
+        },
+        "apple_steps": {
+          "bounded_launcher_self_tests": "success_all_six",
+          "ios_no_codesign_release_build": "success",
+          "macos_release_build": "success",
+          "macos_native_journey": "success",
+          "select_and_boot_ios_simulator": "success",
+          "ios_simulator_build": "success_about_five_minutes",
+          "app_installation": "success_about_22_seconds",
+          "console_vm_discovery": "reported_timeout_after_120_seconds",
+          "driver_attached": false,
+          "actual_app_and_catalog_test_execution": "confirmed_by_downloaded_unified_logs",
+          "vm_announcement_log_time": "10:27:01",
+          "catalog_test_start_log_time": "10:27:02",
+          "test_teardown_about_46_seconds_later": "_endOfTestVerifications_active_SemanticsHandle_failure",
+          "other_test_body_assertion_failure_recorded": false,
+          "failure_screenshot": "Test finished"
+        },
+        "new_browser_jobs": {
+          "firefox": "success",
+          "edge": "success"
+        },
+        "current_linux_goldens": "strict_comparison_passed_against_eight_accepted_baselines",
+        "apple_artifact_id": 9889094131,
+        "apple_job_id": 100608850829,
+        "quality_job_id": 100608850605,
+        "publish_job_id": 100609924559,
+        "follow_up": "PID_and_launch_time_scoped_unified_log_VM_discovery_and_stable_iOS_platform_semantics_baseline",
+        "leak_check_policy": "strict_no_semantics_handle_leak_exemption",
+        "historical_boundary": "third_run_execution_and_semantics_evidence_is_not_inferred_for_first_run",
+        "local_follow_up": {
+          "native_startup_focused_regressions_passed": 7,
+          "enlarged_catalog_full_suite": "passed_26",
+          "leak_checks": "preserved_without_exemption",
+          "local_catalog_tests_passed": 26,
+          "focused_startup_regressions_included_in_full_suite": true,
+          "last_verified_third_ci_catalog_tests": 19,
+          "format_check": {
+            "files_checked": 3,
+            "changed": 0
+          },
+          "diff_check": "passed"
+        }
+      },
+      {
+        "workflow": ".github/workflows/beautiful_ai_ui.yml",
+        "configured_jobs": 12,
+        "run_id": 33745883748,
+        "attempt": 1,
+        "result_scope": "attempt_1_actual_executions",
+        "run_url": "https://github.com/pawaovo/shadcn_flutter/actions/runs/33745883748",
+        "commit": "26d908e0ca4eb97063ea2e54b34816e648c9dbf8",
+        "status": "completed",
+        "conclusion": "failure",
+        "job_counts": {
+          "success": 10,
+          "failure": 2,
+          "skipped": 0
+        },
+        "all_jobs_passed": false,
+        "job_results": {
+          "Detect generated targets": "success",
+          "Build Android catalog": "success",
+          "Run Edge journey": "failure_pre_test_renderer_timeout_attempt_1",
+          "Run Firefox journey": "success",
+          "Run Chrome and Linux journeys": "success",
+          "Format, analyze, and test": "success_including_strict_linux_goldens",
+          "Build Web catalog": "success_including_asset_audits",
+          "Run Android journey": "success",
+          "Build Apple catalogs": "failure_driver_discovery_despite_actual_iOS_tests_and_strict_teardown_passing",
+          "Build Linux catalog": "success",
+          "Build Windows catalog": "success_including_native_journey",
+          "Validate pub.dev package": "success_including_isolated_hosted_consumer_and_publish_dry_run"
+        },
+        "apple_steps": {
+          "launcher_self_tests": "success",
+          "ios_no_codesign_release_build": "success",
+          "macos_release_build": "success",
+          "macos_native_journey": "success",
+          "select_and_boot_ios_simulator": "success",
+          "ios_simulator_build": "success",
+          "app_installation": "success",
+          "semantics_readiness": {
+            "log_time": "10:56:30",
+            "platform": true,
+            "lifecycle": "resumed",
+            "handles": 2
+          },
+          "actual_catalog_integration_tests": {
+            "journey_tests_passed": 1,
+            "runner_passed_events_including_suite_hooks": 3,
+            "duration_seconds_reported": 49,
+            "completion_log_time": "10:57:18",
+            "strict_teardown": "passed"
+          },
+          "native_semantics_baseline_race": "resolved_in_recorded_simulator_run_without_leak_exemptions",
+          "launcher_discovery": "failed_no_matching_VM_service_before_deadline",
+          "history_queries": [],
+          "launch_pid_timing": "console_pty_PID_output_flushed_only_during_shutdown",
+          "driver_stage_executed": false,
+          "driver_attached": false
+        },
+        "edge_initial_failure": {
+          "stage": "Window.setLocation(Point(0,0))_before_test_execution",
+          "error": "renderer_timeout_300_seconds",
+          "browser_version": "151.0.4129.101",
+          "driver_version": "151.0.4129.101",
+          "configuration_matches_two_prior_passes_byte_for_byte": true,
+          "cause": "unconfirmed"
+        },
+        "apple_artifact_id": 9890070160,
+        "apple_launcher_result_sha256": "23fc93512914608ba183bfe761653ceac2379f744161076622b4958df5eb2aa4",
+        "apple_unified_log_sha256": "d9cbf7f229ac5bed1f6057e1dee5c821ba702036c3c4aad6a14961257cd776dd",
+        "current_linux_goldens": "strict_comparison_passed",
+        "launcher_follow_up_local": {
+          "implementation": "bounded_one_shot_non_console_launch_then_validate_PID_scoped_history_and_original_driver",
+          "tests_passed": 11,
+          "review": "passed",
+          "source_frozen": true,
+          "remote_driver_completion": "pending"
+        },
+        "follow_up": "verify_revised_launcher_driver_completion_remotely"
+      }
+    ],
+    "publish_dry_run_ci": {
+      "run_id": 33748054504,
+      "passed": true,
+      "warnings": 0,
+      "archive_size": "3 MB",
+      "hosted_consumer_pass_reported_utc": "2026-09-03T11:13:30Z",
+      "archive_reported_utc": "2026-09-03T11:13:31Z",
+      "zero_warnings_reported_utc": "2026-09-03T11:13:41Z",
+      "source_log": "/tmp/release-final-publish-raw.log",
+      "package_published": false
+    },
+    "quality_test_breakdown": {
+      "verified_run_id": 33748054504,
+      "attempt": 1,
+      "library_total": 528,
+      "catalog": 26,
+      "upstream_core": 571
+    },
+    "edge_retry": {
+      "run_id": 33745883748,
+      "attempt": 2,
+      "job_id": 100622856132,
+      "commit": "26d908e0ca4eb97063ea2e54b34816e648c9dbf8",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-09-03T11:00:55Z",
+      "completed_at": "2026-09-03T11:04:51Z",
+      "targeted_job_only": "Run Edge journey",
+      "source_or_configuration_changed": false,
+      "other_jobs_reused_not_reexecuted": true,
+      "overall_attempt_conclusion": "failure_due_to_reused_Apple_failure",
+      "interpretation": "same_SHA_retry_passed_original_timeout_cause_not_established"
+    },
+    "quality_test_breakdown_history": [
+      {
+        "verified_run_id": 33742943774,
+        "behavior": 410,
+        "semantics": 106,
+        "goldens": 12,
+        "library_total": 528,
+        "catalog": 19,
+        "upstream_core": 571
+      },
+      {
+        "verified_run_id": 33745883748,
+        "attempt": 1,
+        "library_total": 528,
+        "catalog": 26,
+        "upstream_core": 571
+      }
+    ],
+    "ios_simulator_native_semantics_validation": {
+      "verified_run_id": 33748054504,
+      "attempt": 1,
+      "journey_tests_passed": 1,
+      "suite_setup_and_teardown": "passed",
+      "semantics_race_gate": "closed_for_recorded_simulator_runs",
+      "driver_completion_gate": "closed_by_actual_driver_exit_0",
+      "native_driver_elapsed_seconds": 50.234,
+      "historical_fourth_runner_count": {
+        "passed_events_including_suite_hooks": 3,
+        "journey_tests": 1
+      }
+    },
+    "validated_code_commit": "c2bde85dd5da7c33b0f7881234ae312f3be1826c",
+    "documentation_commit_scope": "evidence_only_does_not_replace_validated_code_commit",
+    "final_ci_evidence_path": "docs/beautiful-ui/quality_evidence/2026-09-03-final-ci-33748054504.json",
+    "profile_history": [
+      {
+        "evidence_path": "docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile/summary.json",
+        "run_id": "20260903T080855Z",
+        "status": "historical_baseline_complete",
+        "integration_driver_exit_code": 0,
+        "script_exit_code": 0,
+        "teardown": "completed",
+        "workloads_completed": 7,
+        "frame_samples": 4524,
+        "rss_samples": 480,
+        "native_view_logical_dp": {
+          "width": 1728.0,
+          "height": 963.0
+        },
+        "device_pixel_ratio": 2.0,
+        "display_refresh_rate_hz": 120.0,
+        "renderer": "Impeller_Metal_verified_from_native_timeline",
+        "acceptance_limitations": "single_machine_run_product_budgets_repeatability_and_other_platform_or_device_evidence_open",
+        "readme_path": "docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile/README.md",
+        "source_alignment": "historical_source_predates_palette_muted_ticker_and_hosted_adapter_fixes",
+        "source_manifest_sha256": "ed8f40f37ddb6e276683e1bfba622d17e13deee272dd5e84af57281e2cbd9637",
+        "role": "historical_earlier_source_success"
+      },
+      {
+        "role": "failed_window_preparation",
+        "run_id": "20260903T113737Z",
+        "evidence_path": "docs/beautiful-ui/quality_evidence/performance/2026-09-03-macos-profile-final-attempt/summary.json",
+        "status": "failed",
+        "completed_workloads": 0,
+        "frame_samples": 0,
+        "rss_samples": 0,
+        "observed_viewport_dp": {
+          "width": 800,
+          "height": 600
+        },
+        "preparation_timeout_seconds": 120,
+        "integration_driver_exit_code": 0,
+        "final_script_exit_code": 1,
+        "reason": "available_zoom_action_not_completed_before_preparation_deadline",
+        "not_a_resize_incapability_or_lock_proof": true
+      }
+    ],
+    "safari_targeted_visual_validation": {
+      "status": "passed",
+      "evidence_path": "docs/beautiful-ui/quality_evidence/2026-09-03-safari-flowchart-theme-reduced.md",
+      "json_path": "docs/beautiful-ui/quality_evidence/2026-09-03-safari-flowchart-theme-reduced.json",
+      "browser": "Safari 26.6.1",
+      "source_commit_identified_by_operator": "c2bde85dd5da7c33b0f7881234ae312f3be1826c",
+      "bootstrap_sha256": "52d7a025b9bca8c5843524ed87dc9e3f802f04bb0338ca35e31e31b990d19a9d",
+      "independently_reviewed_captures": 3,
+      "captured_sequence": [
+        "light",
+        "dark",
+        "light"
+      ],
+      "motion": "reduced",
+      "saved_image_dimensions_px": {
+        "width": 1229,
+        "height": 768
+      },
+      "css_viewport_or_dpr_inferred": false,
+      "gate": "Flowchart_condition_theme_colors_update_without_stale_dark_background",
+      "operator_reported_system_dark_intermediate": "not_independently_accepted",
+      "overall_browser_status": "Partial",
+      "complete_browser_input_AT_matrix": "not_completed",
+      "earlier_white_frame_noWindows_cause": "unproven_recovered_without_application_change"
+    }
+  }
+}
